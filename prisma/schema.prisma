@@ -10,6 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PrivacySetting {
+  hideEmail
+  hidePhoneNumber
+  hideLinkedIn
+  hideTwitter
+  hideWebsite
+}
+
 model User {
   id                String              @id @default(cuid())
   name              String
@@ -17,6 +25,7 @@ model User {
   emailVerified     DateTime?
   picture           String?
   phoneNumber       String?
+  privacySettings   PrivacySetting[] @default([])
   accounts          Account[]
   session           Session[]
   ownerOf           Organization[]
