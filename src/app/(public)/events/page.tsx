@@ -30,11 +30,6 @@ export default function Page() {
       const user = await getUser()
       setUser(user)
     }
-
-    fetchUser()
-  }, [])
-
-  useEffect(() => {
     const fetchData = async () => {
       const { events: fetchedEvents, locations: fetchedLocations } =
         await getPublicEvents({})
@@ -47,6 +42,7 @@ export default function Page() {
       setFilteredEvents(fetchedEvents)
     }
 
+    fetchUser()
     fetchData()
   }, [])
 
