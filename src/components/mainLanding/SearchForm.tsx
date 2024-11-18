@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import { ChevronUpIcon, Cross2Icon } from '@radix-ui/react-icons'
 import { EventTypeEnum } from '@/schemas/eventSchema'
 import { ChevronDownIcon } from 'lucide-react'
+import useWindowSize from '@/hooks/useWindowSize'
 
 interface SearchFormProps {
   onSearch: (filters: {
@@ -17,11 +18,6 @@ interface SearchFormProps {
   locations: string[] // Recibimos las ubicaciones como prop
 }
 
-interface WindowSize {
-  width: number
-  height: number
-}
-
 export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const [location, setLocation] = useState('')
   const [title, setTitle] = useState('')
@@ -29,29 +25,6 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const [endDate, setEndDate] = useState('')
   const [type, setType] = useState<EventTypeEnum | ''>('')
   const [showAdditionalFilters, setShowAdditionalFilters] = useState(false)
-
-  const useWindowSize = (): WindowSize => {
-    const [windowSize, setWindowSize] = useState<WindowSize>({
-      width: window.innerWidth, // Initialize with current window size
-      height: window.innerHeight
-    })
-
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight
-        })
-      }
-
-      window.addEventListener('resize', handleResize)
-
-      return () => window.removeEventListener('resize', handleResize)
-    }, [])
-
-    return windowSize
-  }
-
   const { width } = useWindowSize()
 
   const isMobile = width <= 768

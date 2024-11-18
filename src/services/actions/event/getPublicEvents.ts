@@ -4,10 +4,6 @@ import prisma from '@/lib/prisma'
 import { PublicEventSchema } from '@/schemas/eventSchema'
 import { EventTypes, Prisma } from '@prisma/client'
 
-// Variable para cache de ubicaciones
-let locationCache: { data: string[]; timestamp: number } | null = null
-const CACHE_EXPIRATION = 18000000 // 5 horas en milisegundos
-
 export async function getPublicEvents(filters: {
   title?: string
   location?: string
@@ -55,41 +51,10 @@ export async function getPublicEvents(filters: {
     orderBy: { startDate: 'asc' }
   })
 
-  // Verificar cache en memoria
-  let locationsList: string[]
-  if (
-    locationCache &&
-    now.getTime() - locationCache.timestamp < CACHE_EXPIRATION
-  ) {
-    // Si el cache es válido (menos de 5 horas)
-    console.log('proviene del cache')
-    locationsList = locationCache.data
-  } else {
-    const locations = await prisma.event.findMany({
-      where: whereClause,
-      select: {
-        location: true
-      },
-      distinct: ['location']
+  return events.map(event =>
+    PublicEventSchema.parse({
+      ...event,
+      registrations: event.registrations.length
     })
-
-    locationsList = locations.map(event => event.location ?? '')
-    console.log('proviene de la db')
-
-    // Guardar las ubicaciones en cache en memoria con timestamp
-    locationCache = {
-      data: locationsList,
-      timestamp: now.getTime()
-    }
-  }
-
-  return {
-    events: events.map(event =>
-      PublicEventSchema.parse({
-        ...event,
-        registrations: event.registrations.length
-      })
-    ),
-    locations: locationsList
-  }
+  )
 }

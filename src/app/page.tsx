@@ -9,11 +9,7 @@ import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
 
 export default async function Home() {
   const user = await getUser()
-  const response = await getPublicEvents({})
-
-  console.log(response)
-
-  const events = Array.isArray(response.events) ? response.events : []
+  const events = await getPublicEvents({})
 
   return (
     <>
@@ -29,7 +25,9 @@ export default async function Home() {
         {/* Community Highlights */}
         <CommunityHighlights />
         {/* Upcoming Events Section */}
-        <PublicEventsList events={events} />
+        <PublicEventsList
+          events={Array.isArray(events) ? events.slice(0, 8) : []}
+        />
       </div>
       <Footer />
     </>
