@@ -1,10 +1,36 @@
 'use server'
 
 import importUsers from '@/lib/importUsers'
+import { z } from 'zod'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
-export async function importUsersAction(formData: FormData) {
+const ImportResponseSchema = z.object({
+  success: z.boolean(),
+  totalCreated: z.number().optional(),
+  totalUpdated: z.number().optional(),
+  errors: z
+    .array(
+      z.object({
+        email: z.string(),
+        error: z.string().optional(),
+        success: z.boolean()
+      })
+    )
+    .transform(results => {
+      return results
+        .filter(result => !result.success)
+        .map(result => {
+          return {
+            message: result.email + ' failed due to ' + result?.error
+          }
+        })
+    })
+})
+
+export async function importUsersAction(
+  formData: FormData
+): Promise<z.infer<typeof ImportResponseSchema>> {
   try {
     const file = formData.get('file')
     const orgId = formData.get('orgId') as string
@@ -22,13 +48,24 @@ export async function importUsersAction(formData: FormData) {
     const buffer = Buffer.from(await file.arrayBuffer())
     const text = buffer.toString('utf-8')
 
-    await importUsers(orgId, text)
+    const importResume = await importUsers(orgId, text)
 
-    return { success: true }
+    const response = {
+      success: true,
+      totalCreated: importResume.created,
+      totalUpdated: importResume.updated,
+      errors: importResume.results
+    }
+    return ImportResponseSchema.parse(response)
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error occurred'
+      errors: [
+        {
+          message:
+            error instanceof Error ? error.message : 'Unknown error occurred'
+        }
+      ]
     }
   }
 }
