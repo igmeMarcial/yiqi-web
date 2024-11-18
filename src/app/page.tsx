@@ -9,7 +9,11 @@ import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
 
 export default async function Home() {
   const user = await getUser()
-  const events = await getPublicEvents()
+  const response = await getPublicEvents({})
+
+  console.log(response)
+
+  const events = Array.isArray(response.events) ? response.events : []
 
   return (
     <>
