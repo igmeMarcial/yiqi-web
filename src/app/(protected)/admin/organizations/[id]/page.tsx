@@ -13,8 +13,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!organization) {
     return <div>Organization not found</div>
   }
-  const { hasContacts, hasEvents, hasNotifications, isStripeSetup } =
-    await getNewOrgWelcomeProps(params.id)
+  const {
+    hasContacts,
+    hasEvents,
+    hasNotifications,
+    isStripeSetup,
+    hasFirstRegistration
+  } = await getNewOrgWelcomeProps(params.id)
 
   const user = await getUser()
 
@@ -35,13 +40,16 @@ export default async function Page({ params }: { params: { id: string } }) {
           }}
         >
           <div className="container mx-auto p-4">
-            <WelcomeScreen
-              importedContacts={hasContacts}
-              paymentsIsSetup={isStripeSetup}
-              eventCreated={hasEvents}
-              notificationsSent={hasNotifications}
-              orgId={params.id}
-            />
+            {/* we only show welcome screen until they got their first event regirstation Maybe change in the future */}
+            {!hasFirstRegistration && (
+              <WelcomeScreen
+                importedContacts={hasContacts}
+                paymentsIsSetup={isStripeSetup}
+                eventCreated={hasEvents}
+                notificationsSent={hasNotifications}
+                orgId={params.id}
+              />
+            )}
           </div>
         </OrganizationLayout>
       </main>

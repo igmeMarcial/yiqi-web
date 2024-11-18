@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma'
 
 export async function getNewOrgWelcomeProps(organizationId: string) {
-  const [org, contacts, hasEvents, hasNotifications] = await Promise.all([
+  const [org, contacts, event, hasNotifications] = await Promise.all([
     prisma.organization.findUnique({
       where: { id: organizationId },
       select: { stripeAccountId: true }
@@ -21,8 +21,13 @@ export async function getNewOrgWelcomeProps(organizationId: string) {
 
   return {
     hasContacts: !!contacts,
-    hasEvents: !!hasEvents,
+    hasEvents: !!event,
     hasNotifications: !!hasNotifications,
-    isStripeSetup: !!org?.stripeAccountId
+    isStripeSetup: !!org?.stripeAccountId,
+    hasFirstRegistration: event
+      ? (await prisma.eventRegistration.findFirst({
+          where: { eventId: event.id }
+        })) !== null
+      : false
   }
 }
