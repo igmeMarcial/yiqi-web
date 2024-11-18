@@ -39,7 +39,7 @@ import { OrganizationType } from '@/schemas/organizerSchema'
 interface UserProps {
   name: string
   email: string
-  picture: string
+  picture: string | null
   id: string
 }
 
@@ -148,7 +148,7 @@ export default function OrganizationLayout({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={userProps.picture} alt="User" />
+                  <AvatarImage src={userProps.picture ?? ''} alt="User" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
