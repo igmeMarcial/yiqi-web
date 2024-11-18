@@ -17,6 +17,10 @@ interface SearchFormProps {
   locations: string[] // Recibimos las ubicaciones como prop
 }
 
+interface WindowSize {
+  width: number
+  height: number
+}
 
 export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const [location, setLocation] = useState('')
@@ -25,13 +29,13 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const [endDate, setEndDate] = useState('')
   const [type, setType] = useState<EventTypeEnum | ''>('')
   const [showAdditionalFilters, setShowAdditionalFilters] = useState(false)
-  
-  const useWindowSize = () => {
-    const [windowSize, setWindowSize] = useState({
-      width: undefined,
-      height: undefined
+
+  const useWindowSize = (): WindowSize => {
+    const [windowSize, setWindowSize] = useState<WindowSize>({
+      width: window.innerWidth, // Initialize with current window size
+      height: window.innerHeight
     })
-  
+
     useEffect(() => {
       const handleResize = () => {
         setWindowSize({
@@ -39,13 +43,12 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
           height: window.innerHeight
         })
       }
-  
+
       window.addEventListener('resize', handleResize)
-      handleResize() // Set initial size
-  
+
       return () => window.removeEventListener('resize', handleResize)
     }, [])
-  
+
     return windowSize
   }
 
@@ -61,8 +64,8 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
       type === EventTypeEnum.ONLINE
         ? EventTypeEnum.ONLINE
         : type === EventTypeEnum.IN_PERSON
-        ? EventTypeEnum.IN_PERSON
-        : ''
+          ? EventTypeEnum.IN_PERSON
+          : ''
     const filters = {
       title,
       location,
@@ -149,23 +152,24 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
           </div>
 
           {/* Botón para mostrar u ocultar los filtros adicionales (solo en mobile) */}
-          {isMobile && <div className="w-full sm:hidden flex justify-between items-center mt-4">
-            <button
-              type="button"
-              className="text-sm text-white flex items-center"
-              onClick={() => setShowAdditionalFilters(prev => !prev)}
-            >
-              {showAdditionalFilters ? (
-                <ChevronUpIcon className="w-5 h-5 mr-2" />
-              ) : (
-                <ChevronDownIcon className="w-5 h-5 mr-2" />
-              )}
-              {showAdditionalFilters ? 'Hide Filters' : 'Show More Filters'}
-            </button>
-          </div>
-          }
+          {isMobile && (
+            <div className="w-full sm:hidden flex justify-between items-center mt-4">
+              <button
+                type="button"
+                className="text-sm text-white flex items-center"
+                onClick={() => setShowAdditionalFilters(prev => !prev)}
+              >
+                {showAdditionalFilters ? (
+                  <ChevronUpIcon className="w-5 h-5 mr-2" />
+                ) : (
+                  <ChevronDownIcon className="w-5 h-5 mr-2" />
+                )}
+                {showAdditionalFilters ? 'Hide Filters' : 'Show More Filters'}
+              </button>
+            </div>
+          )}
 
-            {(!isMobile || (isMobile && showAdditionalFilters)) && 
+          {(!isMobile || (isMobile && showAdditionalFilters)) && (
             <>
               <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
                 <label className="text-gray-500 text-sm">Start Date</label>
@@ -231,7 +235,8 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                   )}
                 </div>
               </div>
-            </>}
+            </>
+          )}
 
           <div className="w-full sm:w-auto mt-6 sm:mt-0 sm:pl-2 flex justify-center sm:col-span-6 pt-0 md:pt-6">
             <Button
