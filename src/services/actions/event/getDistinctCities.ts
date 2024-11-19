@@ -36,7 +36,9 @@ export async function getDistinctCities() {
         }
       }
     })
-    .then(events => events.map(event => event.city))
+    .then(events =>
+      events.map(event => ({ city: event.city, country: event.country }))
+    )
 
   cache.cities = cities.filter(v => typeof v === 'string')
   cache.timeCalculated = new Date()
