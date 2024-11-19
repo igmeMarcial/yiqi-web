@@ -13,8 +13,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { UserType } from '@/schemas/userSchema'
-
 import {
   LayoutDashboard,
   LogOut,
@@ -23,13 +21,17 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-export function AccountDropdown({
-  user,
-  signOut
-}: {
-  user: UserType | null
-  signOut: () => void
-}) {
+interface User {
+  name?: string
+  picture?: string
+  email?: string
+}
+interface AccountDropdownProps {
+  readonly user: User | null
+  readonly signOut: () => void
+}
+
+export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
@@ -38,7 +40,6 @@ export function AccountDropdown({
             <DropdownMenuTrigger asChild>
               <Avatar className="w-8 h-8 cursor-pointer">
                 <AvatarImage
-                  //   className="w-8 h-8"
                   src={
                     user?.picture ?? 'https://avatar.vercel.sh/' + user?.email
                   }
@@ -58,17 +59,17 @@ export function AccountDropdown({
         <DropdownMenuItem asChild>
           <Link href={'/admin'} className="cursor-pointer">
             <LayoutDashboard className=" mr-2 h-4 w-4 text-muted-foreground " />
-            <span> Admin</span>
+            <span>Organization</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={'/user'} className="cursor-pointer">
             <UserIcon className=" mr-2 h-4 w-4 text-muted-foreground" />
-            <span> View Perfile</span>
+            <span> Profile</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={'/settings'} className="cursor-pointer">
+          <Link href={'/user/edit'} className="cursor-pointer">
             <Settings className=" mr-2 h-4 w-4 text-muted-foreground" />
             <span> Settings</span>
           </Link>

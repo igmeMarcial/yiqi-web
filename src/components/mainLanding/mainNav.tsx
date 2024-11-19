@@ -12,17 +12,20 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
+import { AccountDropdown } from '../AccountDropdown'
 
 interface User {
   name?: string
   picture?: string
+  email?: string
 }
 
 interface HeaderProps {
   user: User | null
+  logOut: () => void
 }
 
-export default function MainLandingNav({ user }: HeaderProps) {
+export default function MainLandingNav({ user, logOut }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -75,14 +78,7 @@ export default function MainLandingNav({ user }: HeaderProps) {
                 </Button>
               </Link>
             ) : (
-              <Link href={'/admin'}>
-                <Avatar className="w-8 h-8">
-                  <AvatarImage alt={user.name ?? ''} src={user.picture ?? ''} />
-                  <AvatarFallback>
-                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                  </AvatarFallback>
-                </Avatar>
-              </Link>
+              <AccountDropdown user={user} signOut={logOut} />
             )}
           </nav>
 

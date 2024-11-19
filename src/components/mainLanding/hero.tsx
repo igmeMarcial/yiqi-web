@@ -7,12 +7,11 @@ import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <div className="bg-black relative overflow-hidden mt-10">
+    <div className="bg-black relative overflow-hidden mt-10 ">
       {/* Gradient Orbs */}
       {/* <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#04F1FF] rounded-full filter blur-[128px] opacity-20 -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[#6de4e8] rounded-full filter blur-[128px] opacity-20 translate-x-1/2" /> */}
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="relative max-w-7xl mx-auto pt-20 pb-12 sm:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column - Text Content */}
           <motion.div
@@ -43,9 +42,11 @@ export default function Hero() {
             <Link href={'/admin/organizations'} className="block">
               <Button
                 size="lg"
-                className="font-bold  bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
+                className="font-bold  bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-[40%] sm:w-auto"
               >
-                Create your first event
+                <span className="text-[12px] md:text-base text-gray-800">
+                  Create your first event
+                </span>
               </Button>
             </Link>
           </motion.div>

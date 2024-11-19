@@ -1,45 +1,80 @@
-import { getOrganization } from '@/services/actions/organizationActions'
-import Link from 'next/link'
-import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 import { getEvent } from '@/services/actions/event/getEvent'
-import { Edit } from 'lucide-react'
+import { getUser } from '@/lib/auth/lucia'
+import OrganizationLayout from '@/components/orgs/OrganizationLayout'
+import { redirect } from 'next/navigation'
+import { Roles } from '@prisma/client'
+import Link from 'next/link'
 import { EventAdminView } from '@/components/EventAdminView'
-import { DeleteButton } from '@/components/events/DeleteButton'
+import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 
 export default async function EventDetailsPage({
   params
 }: {
   params: { id: string; eventId: string }
 }) {
-  const organization = await getOrganization(params.id)
-
   const event = await getEvent(params.eventId)
+  const user = await getUser()
   const attendees = await getEventRegistrations(params.eventId)
 
-  if (!organization || !event) {
-    return <div>Event or Organization not found</div>
+  if (!event) {
+    return <div>Event not found</div>
   }
 
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Event: {event.title}</h1>
-      <Link
-        href={`/admin/organizations/${params.id}/events/${params.eventId}/edit`}
-      >
-        <Edit className="w-4 h-4 mr-2" /> Edit Event Details
-      </Link>
-      <p>Start: {new Date(event.startDate).toLocaleString()}</p>
-      <p>End: {new Date(event.endDate).toLocaleString()}</p>
-      <p>Description: {event.description}</p>
-      <DeleteButton eventId={event.id} organizationId={params.id} />
-      <h2 className="text-xl font-bold mt-4 mb-2">Attendees:</h2>
-      <Link
-        href={`/admin/organizations/${params.id}/events`}
-        className="mt-4 inline-block text-blue-500 hover:underline"
-      >
-        Back to Events
-      </Link>
-      <EventAdminView registrations={attendees} eventId={params.eventId} />
-    </div>
-  )
+  if (!user) {
+    redirect('/auth')
+  }
+
+  if (user.role === Roles.ADMIN) {
+    return (
+      <main className="flex flex-col items-center justify-center">
+        <OrganizationLayout
+          orgId={params.id}
+          userProps={{
+            id: user.id,
+            picture: user.picture!,
+            email: user.email,
+            name: user.name
+          }}
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl font-bold">Event: {event.title}</h1>
+            <div className="flex space-x-2">
+              <Link
+                href={`/admin/organizations/${params.id}/events`}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
+              >
+                Back to Events
+              </Link>
+              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white hover:bg-red-700 h-10 px-4 py-2">
+                Delete Event
+              </button>
+            </div>
+          </div>
+
+          <section className="border rounded-md p-4">
+            <h2 className="text-xl font-bold mb-2">Event Details</h2>
+            <div className="flex justify-between mb-2">
+              <div>
+                <span className="font-semibold">Start Date</span>
+                <p>{new Date(event.startDate).toLocaleString()}</p>
+              </div>
+              <div>
+                <span className="font-semibold">End Date</span>
+                <p>{new Date(event.endDate).toLocaleString()}</p>
+              </div>
+            </div>
+            <div>
+              <span className="font-semibold">Description</span>
+              <p>{event.description}</p>
+            </div>
+          </section>
+          <EventAdminView registrations={attendees} eventId={params.eventId} />
+        </OrganizationLayout>
+      </main>
+    )
+  } else if (user.role === Roles.NEW_USER) {
+    redirect('/newuser')
+  } else if (user.role === Roles.USER) {
+    redirect('/user')
+  }
 }

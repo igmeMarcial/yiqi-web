@@ -104,6 +104,7 @@ model Organization {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   queueJobs   QueueJob[]
+  stripeAccountId String? // This is where you store the Stripe account ID
 
   integration Integration[]
 
@@ -119,11 +120,13 @@ model Organization {
 }
 
 model OrganizationContact {
-  id String @id @default(cuid())
+  id             String       @id @default(cuid())
   organizationId String
-  organization Organization @relation(fields: [organizationId], references: [id])
-  user User @relation(fields: [userId], references: [id])
-  userId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+
+  @@unique([organizationId, userId])
 }
 
 model Organizer {

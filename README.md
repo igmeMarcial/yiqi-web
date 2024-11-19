@@ -68,8 +68,6 @@ Upcoming features:
 
 Copy the contents of `.env.example` to a new file named `.env` and fill in the values:
 
-- `NEXTAUTH_URL`: Your app's URL (e.g., `http://localhost:3000`)
-- `NEXTAUTH_SECRET`: A secret key for NextAuth
 - `CALLBACK`: OAuth callback URL
 - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: Google OAuth credentials
 - `DIRECT_URL` and `DATABASE_URL`: PostgreSQL database URLs

@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function Features() {
   return (
     <section className="w-full py-12 bg-black/95">
-      <div className="container">
+      <div className="container max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">

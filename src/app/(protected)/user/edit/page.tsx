@@ -1,4 +1,5 @@
 import UpdateProfileForm from '@/components/profile-settings/UpdateProfileForm'
+import UserLayout from '@/components/user/UserLayout'
 import { getUser } from '@/lib/auth/lucia'
 import { getUserProfile } from '@/services/actions/userActions'
 import React from 'react'
@@ -16,5 +17,11 @@ export default async function page() {
     return <div>User not found</div>
   }
 
-  return <UpdateProfileForm user={user} />
+  return (
+    <main className="flex flex-col items-center justify-center">
+      <UserLayout userProps={user}>
+        <UpdateProfileForm user={user} />
+      </UserLayout>
+    </main>
+  )
 }

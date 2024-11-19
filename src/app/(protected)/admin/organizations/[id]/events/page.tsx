@@ -17,6 +17,7 @@ export default async function EventsPage({
   if (!organization) {
     return <div>Organization not found</div>
   }
+
   if (!user) {
     redirect('/auth')
   }

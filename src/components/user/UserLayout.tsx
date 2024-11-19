@@ -1,16 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import {
-  MessageSquare,
-  Users,
-  LogOut,
-  Calendar,
-  BookUser,
-  ChevronDown,
-  Building2,
-  Banknote
-} from 'lucide-react'
+import { LogOut, User, CreditCard, History, Ticket } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -25,16 +16,12 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
   SidebarTrigger
 } from '../ui/sidebar'
-import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
-import { useEffect, useMemo, useState } from 'react'
-import { OrganizationType } from '@/schemas/organizerSchema'
 
 interface UserProps {
   name: string
@@ -43,88 +30,39 @@ interface UserProps {
   id: string
 }
 
-interface AdminLayoutProps {
+interface UserLayoutProps {
   children: React.ReactNode
   userProps: UserProps
-  orgId: string
 }
 
-export default function OrganizationLayout({
-  children,
-  userProps,
-  orgId
-}: AdminLayoutProps) {
-  const [organizations, setOrganizations] = useState<OrganizationType[]>([])
-
-  useEffect(() => {
-    async function fetchOrganizations() {
-      try {
-        const orgs = await getAllOrganizationsForCurrentUser()
-        setOrganizations(orgs)
-      } catch (error) {
-        console.error('Failed to fetch organizations:', error)
-      }
-    }
-    fetchOrganizations()
-  }, [])
-
+export default function UserLayout({ children, userProps }: UserLayoutProps) {
   const navItems = [
     {
-      name: 'Chat',
-      icon: MessageSquare,
-      href: `/admin/organizations/${orgId}/chat`
+      name: 'Profile Settings',
+      icon: User,
+      href: `/user/profile`
     },
     {
-      name: 'Eventos',
-      icon: Calendar,
-      href: `/admin/organizations/${orgId}/events`
+      name: 'Payments',
+      icon: CreditCard,
+      href: `/user/payments`
     },
     {
-      name: 'Personas',
-      icon: BookUser,
-      href: `/admin/organizations/${orgId}/contacts`
+      name: 'History',
+      icon: History,
+      href: `/user/history`
     },
     {
-      name: 'Organizadores',
-      icon: Users,
-      href: `/admin/organizations/${orgId}/organizers`
-    },
-    {
-      name: 'Billing',
-      icon: Banknote,
-      href: `/admin/organizations/${orgId}/billing`
+      name: 'Tickets',
+      icon: Ticket,
+      href: `/user/tickets`
     }
   ]
 
-  const currentOrg = useMemo(
-    () => organizations.find(org => org.id === orgId),
-    [organizations, orgId]
-  )
-
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full">
+      <div className="flex h-screen overflow-hidden w-full">
         <Sidebar collapsible="icon">
-          <SidebarHeader>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <Building2 />
-                  {currentOrg?.name}
-                  <ChevronDown className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                {organizations.map(org => (
-                  <DropdownMenuItem key={org.id}>
-                    <Link href={`/admin/organizations/${org.id}`}>
-                      {org.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
               <SidebarMenu>
@@ -142,9 +80,10 @@ export default function OrganizationLayout({
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 overflow-auto bg-gray-100">
+        <div className="flex-1 overflow-auto bg-gray-100">
           <header className="flex items-center justify-between bg-white p-4 shadow-md">
             <SidebarTrigger />
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-8 w-8">
@@ -176,7 +115,7 @@ export default function OrganizationLayout({
             </DropdownMenu>
           </header>
           <div className="p-4">{children}</div>
-        </main>
+        </div>
       </div>
     </SidebarProvider>
   )
