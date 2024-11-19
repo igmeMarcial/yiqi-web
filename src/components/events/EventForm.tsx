@@ -38,10 +38,20 @@ import { AddressAutocomplete } from '../forms/AddressAutocomplete'
 import { getLocationDetails } from '@/lib/utils'
 import { updateEvent } from '@/services/actions/event/updateEvent'
 import { defaultValue, MarkdownEditor } from './editor/mdEditor'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '@/components/ui/dialog'
+import Link from 'next/link'
 
 type Props = {
   organizationId: string
   event?: SavedEventType
+  hasStripeAccount: boolean
 }
 
 export const EventFormInputSchema = EventInputSchema.extend({
@@ -73,7 +83,7 @@ const defaultMinEndTimeStr = defaultEndDate
   .split('T')[1]
   .slice(0, 5)
 
-export function EventForm({ organizationId, event }: Props) {
+export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const [tickets, setTickets] = useState<
     EventTicketInputType[] | SavedTicketType[]
@@ -93,6 +103,7 @@ export function EventForm({ organizationId, event }: Props) {
 
   const [loading, setLoading] = useState(false)
   const [showTicketManager, setShowTicketManager] = useState(false)
+  const [showStripeDialog, setShowStripeDialog] = useState(false)
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [minStartTime, setMinStartTime] = useState<string | number>(
@@ -492,7 +503,13 @@ export function EventForm({ organizationId, event }: Props) {
             {/* Tickets */}
             <div
               className="flex items-center justify-between cursor-pointer"
-              onClick={() => setShowTicketManager(!showTicketManager)}
+              onClick={() => {
+                if (hasStripeAccount) {
+                  setShowTicketManager(!showTicketManager)
+                } else {
+                  setShowStripeDialog(true)
+                }
+              }}
             >
               <span>Tickets</span>
               <span>{showTicketManager ? 'Ocultar' : 'Editar'}</span>
@@ -532,6 +549,29 @@ export function EventForm({ organizationId, event }: Props) {
                 }}
               />
             )}
+
+            {/* Stripe Account Dialog */}
+            <Dialog open={showStripeDialog} onOpenChange={setShowStripeDialog}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Stripe Account Required</DialogTitle>
+                  <DialogDescription>
+                    To charge for tickets, please set up your Stripe account in
+                    the billing settings.
+                    <Link
+                      href={`/admin/organizations/${organizationId}/billing`}
+                    >
+                      Click here start
+                    </Link>
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button onClick={() => setShowStripeDialog(false)}>
+                    Close
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
 
             {/* Submit Button */}
             <div className="pt-4">

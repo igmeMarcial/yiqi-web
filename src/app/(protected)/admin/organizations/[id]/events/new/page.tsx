@@ -1,7 +1,15 @@
 import { EventForm } from '@/components/events/EventForm'
+import { getOrganization } from '@/services/actions/organizationActions'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-export default function NewEventPage({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
+  const organization = await getOrganization(params.id)
+
+  if (!organization) {
+    notFound()
+  }
+
   return (
     <div className="min-h-screen p-6 bg-white">
       <div className="max-w-4xl mx-auto">
@@ -14,7 +22,10 @@ export default function NewEventPage({ params }: { params: { id: string } }) {
             Cancel
           </Link>
         </div>
-        <EventForm organizationId={params.id} />
+        <EventForm
+          organizationId={params.id}
+          hasStripeAccount={organization?.stripeAccountId !== null}
+        />
       </div>
     </div>
   )

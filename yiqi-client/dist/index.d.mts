@@ -1,6 +1,11 @@
 import * as superjson from 'superjson';
 import * as _trpc_server from '@trpc/server';
 
+declare enum EventTypeEnum {
+    ONLINE = "ONLINE",
+    IN_PERSON = "IN_PERSON"
+}
+
 declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<{
     ctx: object;
     meta: object;
@@ -60,6 +65,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         createdAt: Date;
         updatedAt: Date;
         requiresApproval: boolean;
+        type: EventTypeEnum;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
@@ -106,6 +112,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         createdAt: Date;
         updatedAt: Date;
         requiresApproval: boolean;
+        type: EventTypeEnum;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
