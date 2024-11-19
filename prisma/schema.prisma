@@ -47,6 +47,7 @@ model User {
 
   QueueJob QueueJob[]
 
+  // for actual shape of this checkout userDataCollectedShema
   dataCollected Json?
 
   registeredEvents EventRegistration[] @relation("registrationUser")
@@ -58,6 +59,9 @@ model User {
   OrganizationContact OrganizationContact[]
 
   deletedAt DateTime?
+
+  linkedinAccessToken String?
+  
 }
 
 enum Roles {

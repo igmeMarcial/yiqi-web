@@ -33,6 +33,7 @@ export const userDataCollectedShema = z.object({
     .optional()
     .or(z.literal(''))
 })
+
 export type UserType = z.infer<typeof userSchema>
 export const baseProfileSchema = userDataCollectedShema.extend({
   name: z.string().min(4, 'Name must be at least 4 characters'),
