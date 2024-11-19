@@ -1,10 +1,22 @@
 import React from 'react'
 import StripeConnect from '@/components/billing/StripeConnect'
+import OrganizationLayout from '@/components/orgs/OrganizationLayout'
+import { getUser } from '@/lib/auth/lucia'
+import { redirect } from 'next/navigation'
 
-export default function OrganizationBillingPage({
+export default async function OrganizationBillingPage({
   params
 }: {
   params: { id: string }
 }) {
-  return <StripeConnect accountId={params.id} />
+  const user = await getUser()
+  if (!user) {
+    redirect('/login')
+  }
+
+  return (
+    <OrganizationLayout orgId={params.id} userProps={user}>
+      <StripeConnect accountId={params.id} />
+    </OrganizationLayout>
+  )
 }
