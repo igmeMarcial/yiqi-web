@@ -12,17 +12,15 @@ interface SearchFormProps {
     title: string
     location: string
     startDate: string
-    endDate: string
     type: string
   }) => void
-  locations: string[] // Recibimos las ubicaciones como prop
+  locations: string[]
 }
 
 export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const [location, setLocation] = useState('')
   const [title, setTitle] = useState('')
   const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
   const [type, setType] = useState<EventTypeEnum | ''>('')
   const [showAdditionalFilters, setShowAdditionalFilters] = useState(false)
   const { width } = useWindowSize()
@@ -32,7 +30,6 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Asegúrate de comparar con los valores del enum
     const backendEventType =
       type === EventTypeEnum.ONLINE
         ? EventTypeEnum.ONLINE
@@ -43,7 +40,6 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
       title,
       location,
       startDate,
-      endDate,
       type: backendEventType
     }
 
@@ -54,11 +50,11 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
     <div className="bg-black relative overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-16 lg:py-16 lg:pb-0 pb-0 sm:py-16">
         <form
-          className="flex flex-wrap justify-start items-center gap-4 p-4 bg-gray-900/80 backdrop-blur-sm rounded-lg shadow-md mx-auto max-w-7xl"
+          className="flex flex-wrap justify-start items-center gap-6 p-4 bg-gray-900/80 backdrop-blur-sm rounded-lg shadow-md mx-auto max-w-5xl"
           onSubmit={handleSubmit}
         >
           {/* Campo para Título */}
-          <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
+          <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
             <label className="text-gray-500 text-sm">Event Title</label>
             <div className="relative">
               <input
@@ -76,7 +72,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                 <button
                   type="button"
                   className="absolute top-2 right-2"
-                  onClick={() => setTitle('')} // Limpia el valor
+                  onClick={() => setTitle('')}
                 >
                   <Cross2Icon
                     className="w-5 h-5 text-gray-500"
@@ -88,7 +84,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
           </div>
 
           {/* Campo para Ubicación */}
-          <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
+          <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
             <label className="text-gray-500 text-sm">Location</label>
             <div className="relative">
               <select
@@ -113,7 +109,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                 <button
                   type="button"
                   className="absolute top-2 right-2"
-                  onClick={() => setLocation('')} // Limpia el valor
+                  onClick={() => setLocation('')}
                 >
                   <Cross2Icon
                     className="w-5 h-5 text-gray-500"
@@ -144,7 +140,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
 
           {(!isMobile || (isMobile && showAdditionalFilters)) && (
             <>
-              <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
+              <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
                 <label className="text-gray-500 text-sm">Start Date</label>
                 <div className="relative">
                   <input
@@ -160,23 +156,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
-                <label className="text-gray-500 text-sm">End Date</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    className={`border-b-2 text-sm p-2 w-full rounded-md ${
-                      !endDate
-                        ? 'border-gray-400 text-gray-500'
-                        : 'border-gray-300 focus:outline-none focus:border-blue-500'
-                    }`}
-                    value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/6">
+              <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
                 <label className="text-gray-500 text-sm">Event Type</label>
                 <div className="relative">
                   <select

@@ -5,12 +5,12 @@ import Hero from '@/components/mainLanding/hero'
 import MainLandingNav from '@/components/mainLanding/mainNav'
 import PublicEventsList from '@/components/events/PublicEventsList'
 import { getUser } from '@/lib/auth/lucia'
-import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
+import { getUpcomingEvents } from '@/services/actions/event/getUpcomingEvents'
 import { logOut } from '@/services/auth/auth'
 
 export default async function Home() {
   const user = await getUser()
-  const { events } = await getPublicEvents({ page: 1, limit: 8 })
+  const events = await getUpcomingEvents()
 
   return (
     <>

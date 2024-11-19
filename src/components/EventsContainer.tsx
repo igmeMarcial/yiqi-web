@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react'
 import PublicEventsList from '@/components/events/PublicEventsList'
 import SearchForm from '@/components/mainLanding/SearchForm'
 import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
-//import { getFilterableLocations } from '@/services/actions/event/getFilterableLocations'
+import { getDistinctCities } from '@/services/actions/event/getDistinctCities'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { Button } from '@/components/ui/button'
 
 const EventsContainer = () => {
-  //const [locations, setLocations] = useState<string[]>([])
+  const [locations, setLocations] = useState<string[]>([])
   const [filteredEvents, setFilteredEvents] = useState<PublicEventType[]>([])
   const [totalCount, setTotalCount] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -17,16 +17,27 @@ const EventsContainer = () => {
     title: string
     location: string
     startDate: string
-    endDate: string
     type: string
   }>({
     title: '',
     location: '',
     startDate: '',
-    endDate: '',
     type: ''
   })
   const eventsPerPage = 8
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const cities = await getDistinctCities()
+
+      const formattedCities = cities.map(
+        location => `${location.city}, ${location.country}`
+      )
+      setLocations(formattedCities)
+    }
+
+    fetchCities()
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +57,6 @@ const EventsContainer = () => {
     title: string
     location: string
     startDate: string
-    endDate: string
     type: string
   }) => {
     setFilters(newFilters)
@@ -62,7 +72,7 @@ const EventsContainer = () => {
   return (
     <div className="lg:max-w-[80%] max-w-[90%] mx-auto flex flex-col lg:flex-row">
       <div className="flex-1">
-        <SearchForm onSearch={handleSearch} locations={[]} />
+        <SearchForm onSearch={handleSearch} locations={locations} />
         <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mt-8" />
         <PublicEventsList showHeader={false} events={filteredEvents} />
         <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />

@@ -7,7 +7,7 @@ interface WindowSize {
 
 const useWindowSize = (): WindowSize => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
-    width: window.innerWidth, // Initialize with current window size
+    width: window.innerWidth,
     height: window.innerHeight
   })
 

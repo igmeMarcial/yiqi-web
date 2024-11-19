@@ -8,12 +8,11 @@ export async function getPublicEvents(filters: {
   title?: string
   location?: string
   startDate?: string
-  endDate?: string
   type?: string
   page?: number
   limit?: number
 }) {
-  console.log('Filters received:', filters)
+  //console.log('Filters received:', filters)
 
   const now = new Date()
   const whereClause: Prisma.EventWhereInput = {
@@ -25,12 +24,26 @@ export async function getPublicEvents(filters: {
   }
 
   if (filters.location) {
-    whereClause.location = { contains: filters.location, mode: 'insensitive' }
+    const [city, country] = filters.location.split(',').map(str => str.trim())
+
+    if (city && country) {
+      whereClause.city = { contains: city, mode: 'insensitive' }
+      whereClause.country = { contains: country, mode: 'insensitive' }
+    } else if (city) {
+      whereClause.city = { contains: city, mode: 'insensitive' }
+    } else if (country) {
+      whereClause.country = { contains: country, mode: 'insensitive' }
+    }
   }
 
-  if (filters.startDate && filters.endDate) {
-    whereClause.startDate = { gte: new Date(filters.startDate) }
-    whereClause.endDate = { lte: new Date(filters.endDate) }
+  if (filters.startDate) {
+    const startOfDay = Date.parse(`${filters.startDate}T00:00:00Z`)
+    const endOfDay = Date.parse(`${filters.startDate}T23:59:59Z`)
+
+    whereClause.startDate = {
+      gte: new Date(startOfDay),
+      lte: new Date(endOfDay)
+    }
   }
 
   if (filters.type) {
