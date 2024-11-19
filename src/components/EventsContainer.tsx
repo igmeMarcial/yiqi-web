@@ -4,61 +4,69 @@ import React, { useState, useEffect } from 'react'
 import PublicEventsList from '@/components/events/PublicEventsList'
 import SearchForm from '@/components/mainLanding/SearchForm'
 import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
-import { getFilterableLocations } from '@/services/actions/event/getFilterableLocations'
+//import { getFilterableLocations } from '@/services/actions/event/getFilterableLocations'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { Button } from '@/components/ui/button'
 
 const EventsContainer = () => {
-  const [locations, setLocations] = useState<string[]>([])
+  //const [locations, setLocations] = useState<string[]>([])
   const [filteredEvents, setFilteredEvents] = useState<PublicEventType[]>([])
+  const [totalCount, setTotalCount] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [filters, setFilters] = useState<{
+    title: string
+    location: string
+    startDate: string
+    endDate: string
+    type: string
+  }>({
+    title: '',
+    location: '',
+    startDate: '',
+    endDate: '',
+    type: ''
+  })
   const eventsPerPage = 8
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedEvents = await getPublicEvents({})
-      const fetchedLocations = await getFilterableLocations()
-
-      const validLocations: string[] = fetchedLocations.filter(
-        location => location !== null
-      ) as string[]
-
-      setLocations(validLocations)
-      setFilteredEvents(fetchedEvents)
+      const { events, totalCount } = await getPublicEvents({
+        ...filters,
+        page: currentPage,
+        limit: eventsPerPage
+      })
+      setFilteredEvents(events)
+      setTotalCount(totalCount)
     }
 
     fetchData()
-  }, [])
+  }, [filters, currentPage])
 
-  const handleSearch = async (filters: {
+  const handleSearch = (newFilters: {
     title: string
     location: string
     startDate: string
     endDate: string
     type: string
   }) => {
-    const fetchedEvents = await getPublicEvents(filters)
-    setFilteredEvents(fetchedEvents)
+    setFilters(newFilters)
     setCurrentPage(1)
   }
 
-  const startIndex = (currentPage - 1) * eventsPerPage
-  const currentEvents = filteredEvents.slice(
-    startIndex,
-    startIndex + eventsPerPage
-  )
+  const totalPages = Math.ceil(totalCount / eventsPerPage)
 
-  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage)
-  const handlePageChange = (page: number) => setCurrentPage(page)
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
     <div className="lg:max-w-[80%] max-w-[90%] mx-auto flex flex-col lg:flex-row">
       <div className="flex-1">
-        <SearchForm onSearch={handleSearch} locations={locations} />
+        <SearchForm onSearch={handleSearch} locations={[]} />
         <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mt-8" />
-        <PublicEventsList showHeader={false} events={currentEvents} />
+        <PublicEventsList showHeader={false} events={filteredEvents} />
         <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-        {filteredEvents.length > eventsPerPage && (
+        {totalPages > 1 && (
           <div className="flex justify-center space-x-2 mt-6">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
               <Button

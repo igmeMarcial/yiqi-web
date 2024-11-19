@@ -10,7 +10,11 @@ export async function getPublicEvents(filters: {
   startDate?: string
   endDate?: string
   type?: string
+  page?: number
+  limit?: number
 }) {
+  console.log('Filters received:', filters)
+
   const now = new Date()
   const whereClause: Prisma.EventWhereInput = {
     endDate: { gte: now }
@@ -33,8 +37,15 @@ export async function getPublicEvents(filters: {
     whereClause.type = { equals: filters.type as EventTypes }
   }
 
+  const totalCount = await prisma.event.count({
+    where: whereClause
+  })
+
   const events = await prisma.event.findMany({
     where: whereClause,
+    skip:
+      filters.page && filters.limit ? (filters.page - 1) * filters.limit : 0,
+    take: filters.limit || 8,
     include: {
       organization: {
         select: {
@@ -51,10 +62,13 @@ export async function getPublicEvents(filters: {
     orderBy: { startDate: 'asc' }
   })
 
-  return events.map(event =>
-    PublicEventSchema.parse({
-      ...event,
-      registrations: event.registrations.length
-    })
-  )
+  return {
+    events: events.map(event =>
+      PublicEventSchema.parse({
+        ...event,
+        registrations: event.registrations.length
+      })
+    ),
+    totalCount
+  }
 }
