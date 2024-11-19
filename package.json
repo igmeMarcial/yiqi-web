@@ -76,7 +76,6 @@
     "lucia": "^3.2.1",
     "lucide-react": "^0.452.0",
     "mailparser": "^3.7.1",
-    "mercadopago": "^2.0.15",
     "next": "14.2.15",
     "prettier": "^3.3.3",
     "qrcode.react": "^4.1.0",
