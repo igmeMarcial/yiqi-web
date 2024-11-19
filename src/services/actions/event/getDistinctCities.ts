@@ -1,7 +1,8 @@
 import prisma from '@/lib/prisma'
 
+type locationObject = { city: string; country: string }
 type CacheProps = {
-  cities: string[]
+  cities: locationObject[]
   timeCalculated: Date | null
 }
 const cache: CacheProps = {
@@ -17,30 +18,35 @@ export async function getDistinctCities() {
     }
   }
 
-  const cities = await prisma.event
-    .findMany({
-      select: {
-        city: true,
-        country: true
+  const results = await prisma.event.findMany({
+    select: {
+      city: true,
+      country: true
+    },
+    distinct: ['city', 'country'],
+    where: {
+      city: {
+        not: null
       },
-      distinct: ['city', 'country'],
-      where: {
-        city: {
-          not: null
-        },
-        deletedAt: {
-          equals: null
-        },
-        startDate: {
-          gte: new Date()
-        }
+      deletedAt: {
+        equals: null
+      },
+      startDate: {
+        gte: new Date()
       }
-    })
-    .then(events =>
-      events.map(event => ({ city: event.city, country: event.country }))
-    )
+    }
+  })
 
-  cache.cities = cities.filter(v => typeof v === 'string')
+  cache.cities = results
+    .map(event => ({
+      city: event.city,
+      country: event.country
+    }))
+    .filter(
+      ({ city, country }) =>
+        typeof city === 'string' && typeof country === 'string'
+    ) as locationObject[]
+
   cache.timeCalculated = new Date()
 
   return cache.cities
