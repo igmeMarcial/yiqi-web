@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma'
 import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 
-export default async function GET(req: Request) {
+export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const code = searchParams.get('code')
   const user = await getUser()
