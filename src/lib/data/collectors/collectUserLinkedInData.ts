@@ -1,9 +1,9 @@
 'user server'
 
-import { fetchUserProfile } from '../linkedin/fetchUserProfile'
-import prisma from '../prisma'
-import { fetchUserPosts } from '../linkedin/fetchUserPosts'
-import { fetchLikedPosts } from '../linkedin/fetchLikedPosts'
+import { fetchUserProfile } from '../../linkedin/fetchUserProfile'
+import prisma from '../../prisma'
+import { fetchUserPosts } from '../../linkedin/fetchUserPosts'
+import { fetchLikedPosts } from '../../linkedin/fetchLikedPosts'
 
 export default async function collectUserLinkedInData(userId: string) {
   const user = await prisma.user.findUniqueOrThrow({
