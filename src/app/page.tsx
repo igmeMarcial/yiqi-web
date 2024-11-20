@@ -10,7 +10,7 @@ import { logOut } from '@/services/auth/auth'
 
 export default async function Home() {
   const user = await getUser()
-  const events = await getPublicEvents()
+  const { events } = await getPublicEvents({ limit: 8 })
 
   return (
     <>

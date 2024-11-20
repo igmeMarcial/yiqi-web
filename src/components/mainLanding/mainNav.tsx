@@ -63,7 +63,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-4">
-            <NavLink href="#events">
+            <NavLink href="/events">
               <TicketSlash size={16} />
               <span>Events</span>
             </NavLink>
