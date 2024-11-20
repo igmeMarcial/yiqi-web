@@ -1,9 +1,7 @@
+import { UGCPostsResponseSchema } from '@/schemas/linkedin'
 import { RestliClient } from 'linkedin-api-client'
 
-export async function fetchUserPosts(
-  userUrn: string,
-  accessToken: string
-): Promise<unknown[]> {
+export async function fetchUserPosts(userUrn: string, accessToken: string) {
   const restliClient = new RestliClient()
 
   try {
@@ -17,7 +15,7 @@ export async function fetchUserPosts(
       accessToken
     })
 
-    return response.data.elements
+    return UGCPostsResponseSchema.parse(response.data)
   } catch (error: unknown) {
     console.error('Error fetching user posts:', error)
     if (

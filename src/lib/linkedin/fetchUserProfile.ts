@@ -1,15 +1,20 @@
+import { LinkedInProfileSchema } from '@/schemas/linkedin'
 import { RestliClient } from 'linkedin-api-client'
 
-export async function fetchUserProfile(accessToken: string): Promise<unknown> {
+export async function fetchUserProfile(accessToken: string) {
   const restliClient = new RestliClient()
 
   try {
     const response = await restliClient.get({
       resourcePath: '/me',
+      queryParams: {
+        projection:
+          '(id,firstName,lastName,headline,vanityName,profilePicture,positions)'
+      },
       accessToken
     })
 
-    return response.data
+    return LinkedInProfileSchema.parse(response.data)
   } catch (error) {
     console.error('Error fetching user profile:', error)
     if (
