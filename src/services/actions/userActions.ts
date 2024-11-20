@@ -7,7 +7,7 @@ import { getUser } from '@/lib/auth/lucia'
 import {
   ProfileWithPrivacy,
   profileWithPrivacySchema,
-  UserDataCollected,
+  UserDataCollected
 } from '@/schemas/userSchema'
 
 import { z } from 'zod'
@@ -156,27 +156,27 @@ export async function deleteUserAccount() {
 }
 
 interface User {
-  id: string;
-  [key: string]: string | number | boolean | Record<string, boolean> | undefined;
+  id: string
+  [key: string]: string | number | boolean | Record<string, boolean> | undefined
   privacySettings: {
-    [key: string]: boolean;
-  };
+    [key: string]: boolean
+  }
 }
 
 export const filterProfileData = (user: User): Partial<User> => {
   if (!user || !user.privacySettings) {
-    throw new Error('Invalid user data or missing privacy settings');
+    throw new Error('Invalid user data or missing privacy settings')
   }
 
-  const filteredData: Partial<User> = {};
+  const filteredData: Partial<User> = {}
 
-  Object.keys(user.privacySettings).forEach((key) => {
+  Object.keys(user.privacySettings).forEach(key => {
     if (user.privacySettings[key] && key in user) {
-      filteredData[key] = user[key];
+      filteredData[key] = user[key]
     }
-  });
+  })
 
-  filteredData.id = user.id;
+  filteredData.id = user.id
 
-  return filteredData;
-};
+  return filteredData
+}

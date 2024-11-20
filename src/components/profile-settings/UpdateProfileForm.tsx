@@ -40,7 +40,10 @@ import { UploadToS3 } from '@/lib/uploadToS3'
 import ProfilePictureUpload from './UpdatePictureUpload'
 import DeleteAccountDialog from './DeleteAccountDialog'
 import { Input } from '../ui/input'
-import { profileWithPrivacySchema, ProfileWithPrivacy } from '@/schemas/userSchema'
+import {
+  profileWithPrivacySchema,
+  ProfileWithPrivacy
+} from '@/schemas/userSchema'
 
 function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -104,17 +107,22 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     }
   }
 
-  const renderPrivacySwitch = (field: keyof ProfileWithPrivacy['privacySettings'], label: string) => (
+  const renderPrivacySwitch = (
+    field: keyof ProfileWithPrivacy['privacySettings'],
+    label: string
+  ) => (
     <div className="flex items-center justify-between">
       <FormLabel>{label}</FormLabel>
       <Switch
         checked={form.watch(`privacySettings.${field}`)}
-        onCheckedChange={(checked) =>
-          form.setValue(`privacySettings.${field}`, checked, { shouldDirty: true })
+        onCheckedChange={checked =>
+          form.setValue(`privacySettings.${field}`, checked, {
+            shouldDirty: true
+          })
         }
       />
     </div>
-  );
+  )
 
   const containerVariants = {
     hidden: { opacity: 0 },

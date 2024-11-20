@@ -1,7 +1,10 @@
 import UpdateProfileForm from '@/components/profile-settings/UpdateProfileForm'
 import UserLayout from '@/components/user/UserLayout'
 import { getUser } from '@/lib/auth/lucia'
-import { profileDataSchema, profileWithPrivacySchema } from '@/schemas/userSchema'
+import {
+  profileDataSchema,
+  profileWithPrivacySchema
+} from '@/schemas/userSchema'
 import { getUserProfile } from '@/services/actions/userActions'
 import React from 'react'
 
