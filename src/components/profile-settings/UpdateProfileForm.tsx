@@ -114,7 +114,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     <div className="flex items-center justify-between">
       <FormLabel>{label}</FormLabel>
       <div className="flex items-center justify-between gap-2">
-      <FormLabel>Set to Public</FormLabel>
+        <FormLabel>Set to Public</FormLabel>
         <Switch
           checked={form.watch(`privacySettings.${field}`)}
           onCheckedChange={checked =>
