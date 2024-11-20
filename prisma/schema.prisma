@@ -25,7 +25,7 @@ model User {
   emailVerified     DateTime?
   picture           String?
   phoneNumber       String?
-  privacySettings   PrivacySetting[] @default([])
+  privacySettings   Json                @default("{}")
   accounts          Account[]
   session           Session[]
   ownerOf           Organization[]
