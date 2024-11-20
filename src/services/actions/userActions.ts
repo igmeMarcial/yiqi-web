@@ -5,9 +5,9 @@ import { revalidatePath } from 'next/cache'
 import { Roles } from '@prisma/client'
 import { getUser } from '@/lib/auth/lucia'
 import {
-  ProfileDataValues,
+  ProfileWithPrivacy,
+  profileWithPrivacySchema,
   UserDataCollected,
-  profileDataSchema
 } from '@/schemas/userSchema'
 
 import { z } from 'zod'
@@ -40,8 +40,7 @@ export async function makeRegularUser(user: { userId: string }) {
   }
 }
 
-export async function updateUserProfile(data: ProfileDataValues) {
-  const validatedData = profileDataSchema.parse(data)
+export async function updateUserProfile(data: ProfileWithPrivacy) {
   try {
     const {
       id,
@@ -50,12 +49,16 @@ export async function updateUserProfile(data: ProfileDataValues) {
       phoneNumber,
       stopCommunication,
       email,
+      privacySettings,
       ...socialData
-    } = validatedData
+    } = data
 
     const currentUser = await prisma.user.findUnique({
       where: { id: id },
-      select: { dataCollected: true }
+      select: {
+        dataCollected: true,
+        privacySettings: true
+      }
     })
 
     const updatedUser = await prisma.user.update({
@@ -66,6 +69,7 @@ export async function updateUserProfile(data: ProfileDataValues) {
         stopCommunication,
         picture,
         email,
+        privacySettings,
         dataCollected: {
           ...(currentUser?.dataCollected as Record<string, unknown>),
           ...socialData
@@ -92,7 +96,8 @@ export async function getUserProfile(currentUserId: string) {
         picture: true,
         phoneNumber: true,
         stopCommunication: true,
-        dataCollected: true
+        dataCollected: true,
+        privacySettings: true
       }
     })
     if (!user) return null
@@ -110,10 +115,15 @@ export async function getUserProfile(currentUserId: string) {
       linkedin: dataCollected?.linkedin ?? '',
       x: dataCollected?.x ?? '',
       instagram: dataCollected?.instagram ?? '',
-      website: dataCollected?.website ?? ''
+      website: dataCollected?.website ?? '',
+      privacySettings: user.privacySettings
     }
 
-    return profileDataSchema.parse(cleanUserData)
+    if (currentUserId == userCurrent.id) {
+      return profileWithPrivacySchema.parse(cleanUserData)
+    } else {
+      return filterProfileData(profileWithPrivacySchema.parse(cleanUserData))
+    }
   } catch (error) {
     console.error('Error in getUserProfile:', error)
     if (error instanceof z.ZodError) {
@@ -144,3 +154,29 @@ export async function deleteUserAccount() {
     return { success: false, error: 'Failed to delete user' }
   }
 }
+
+interface User {
+  id: string;
+  [key: string]: string | number | boolean | Record<string, boolean> | undefined;
+  privacySettings: {
+    [key: string]: boolean;
+  };
+}
+
+export const filterProfileData = (user: User): Partial<User> => {
+  if (!user || !user.privacySettings) {
+    throw new Error('Invalid user data or missing privacy settings');
+  }
+
+  const filteredData: Partial<User> = {};
+
+  Object.keys(user.privacySettings).forEach((key) => {
+    if (user.privacySettings[key] && key in user) {
+      filteredData[key] = user[key];
+    }
+  });
+
+  filteredData.id = user.id;
+
+  return filteredData;
+};

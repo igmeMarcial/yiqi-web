@@ -35,25 +35,22 @@ import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import {
-  ProfileDataValues,
-  profileFormSchema,
-  type ProfileFormValues
-} from '@/schemas/userSchema'
 import { updateUserProfile } from '@/services/actions/userActions'
 import { UploadToS3 } from '@/lib/uploadToS3'
 import ProfilePictureUpload from './UpdatePictureUpload'
 import DeleteAccountDialog from './DeleteAccountDialog'
 import { Input } from '../ui/input'
+import { profileWithPrivacySchema, ProfileWithPrivacy } from '@/schemas/userSchema'
 
-function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
+function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
 
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const form = useForm<ProfileWithPrivacy>({
+    resolver: zodResolver(profileWithPrivacySchema),
     defaultValues: {
+      ...user,
       name: user.name ?? '',
       email: user.email ?? '',
       phoneNumber: user.phoneNumber ?? '',
@@ -69,7 +66,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
     }
   })
 
-  async function onSubmit(data: ProfileFormValues) {
+  async function onSubmit(data: ProfileWithPrivacy) {
     setIsLoading(true)
     try {
       let imageUrl: string | null = null
@@ -82,7 +79,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
           return
         }
       }
-      const profileData: ProfileDataValues = {
+      const profileData: ProfileWithPrivacy = {
         ...data,
         picture: imageUrl ?? user.picture,
         id: user.id
@@ -106,6 +103,18 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
       setIsLoading(false)
     }
   }
+
+  const renderPrivacySwitch = (field: keyof ProfileWithPrivacy['privacySettings'], label: string) => (
+    <div className="flex items-center justify-between">
+      <FormLabel>{label}</FormLabel>
+      <Switch
+        checked={form.watch(`privacySettings.${field}`)}
+        onCheckedChange={(checked) =>
+          form.setValue(`privacySettings.${field}`, checked, { shouldDirty: true })
+        }
+      />
+    </div>
+  );
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -183,7 +192,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'email'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        {renderPrivacySwitch('email', 'Email')}
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -207,7 +216,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'phoneNumber'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
+                        {renderPrivacySwitch('phoneNumber', 'Phone Number')}
                         <FormControl>
                           <div className="relative">
                             <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -284,12 +293,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                 </div>
 
                 <div className="space-y-2">
-                  <label
-                    htmlFor="shortDescription"
-                    className="text-sm font-medium"
-                  >
-                    Bio
-                  </label>
+                  <FormLabel>Bio</FormLabel>
                   <div className="relative">
                     <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Textarea
@@ -316,7 +320,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'x'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>X</FormLabel>
+                        {renderPrivacySwitch('x', 'X')}
                         <FormControl>
                           <div className="relative">
                             <X className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -339,7 +343,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'linkedin'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Linkedin</FormLabel>
+                        {renderPrivacySwitch('linkedin', 'Linkedin')}
                         <FormControl>
                           <div className="relative">
                             <Linkedin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -385,7 +389,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'website'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Website</FormLabel>
+                        {renderPrivacySwitch('website', 'Website')}
                         <FormControl>
                           <div className="relative">
                             <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
