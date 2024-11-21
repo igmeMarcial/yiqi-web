@@ -1,4 +1,10 @@
 import { LinkedInProfileType, UGCPostsResponse } from '@/schemas/linkedin'
+import OpenAI from 'openai'
+import { encoding_for_model } from 'tiktoken'
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!
+})
 
 type Props = {
   profile: LinkedInProfileType
@@ -6,7 +12,11 @@ type Props = {
   likedPosts: UGCPostsResponse
 }
 
-const prompt = `
+const createPrompt = (
+  profileData: string,
+  postsData: string,
+  likedPostsData: string
+) => `
 Objective:
 Using the provided LinkedIn data (profile information, job history, posts, and liked posts), generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.
 
@@ -102,8 +112,117 @@ Use the user's own words where appropriate to preserve authenticity.
 Ensure confidentiality and handle all data in compliance with privacy regulations.
 Avoid making assumptions; base your analysis solely on the provided data.
 
+
+Here is the user linkedin profile:
+${profileData}\n\n
+
+==================
+
+Here are the user posts:
+${postsData}\n\n
+
+===================
+
+Here are the user liked posts:
+${likedPostsData}
+
+
 `
 
-export function processUserLinkedinData({ profile, posts, likedPosts }: Props) {
-  console.log(profile, posts, likedPosts, prompt)
+const MODEL = 'o1-preview'
+const EMBEDDING_MODEL = 'text-embedding-3-large'
+const SUMMARY_MODEL = 'gpt-4o-mini'
+
+export async function processUserLinkedinData({
+  profile,
+  posts,
+  likedPosts
+}: Props) {
+  const profileData = JSON.stringify(profile, null, 2)
+  const postsData = JSON.stringify(posts.elements, null, 2)
+  const likedPostsData = JSON.stringify(likedPosts.elements, null, 2)
+
+  const calculatedPrompt = createPrompt(profileData, postsData, likedPostsData)
+
+  const encoder = encoding_for_model(MODEL)
+  const numberOfTokens = encoder.encode(calculatedPrompt).length
+
+  console.log('Number of tokens:', numberOfTokens)
+
+  if (numberOfTokens > 110000) {
+    throw new Error('Number of tokens is too high')
+  }
+
+  const profileResult = await client.chat.completions.create({
+    model: MODEL,
+    messages: [
+      {
+        role: 'system',
+        content: `You are a community manager that is tasked with creating a deep understanding 
+        of your professional network in order to improve the quality of connections for your comunity.
+        You will be provided with a user's LinkedIn data and your task is to generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.`
+      },
+      {
+        role: 'user',
+        content: calculatedPrompt
+      }
+    ]
+  })
+
+  const userDetailedProfile = profileResult.choices[0].message.content
+
+  if (!userDetailedProfile) {
+    throw new Error('User detailed profile is empty')
+  }
+
+  const userEmbeddableProfileResult = await client.chat.completions.create({
+    model: SUMMARY_MODEL,
+    messages: [
+      {
+        role: 'user',
+        content: `
+        Create a short version of the user profile that can be used to embedd in a database.
+        
+        ${userDetailedProfile}`
+      }
+    ]
+  })
+
+  const userEmbeddableProfile =
+    userEmbeddableProfileResult.choices[0].message.content
+
+  if (!userEmbeddableProfile) {
+    throw new Error('User embeddable profile is empty')
+  }
+
+  const embedding = await client.embeddings.create({
+    model: EMBEDDING_MODEL,
+    input: userEmbeddableProfile
+  })
+
+  const userContentPreferencesResult = await client.chat.completions.create({
+    model: SUMMARY_MODEL,
+    messages: [
+      {
+        role: 'user',
+        content: `${userDetailedProfile}
+        \n\n
+        in 3 sentences or less, what are the user's content preferences?`
+      }
+    ]
+  })
+
+  const userContentPreferences =
+    userContentPreferencesResult.choices[0].message.content
+
+  if (!userContentPreferences) {
+    throw new Error('User content preferences is empty')
+  }
+
+  return {
+    userDetailedProfile,
+    userEmbeddableProfile: userEmbeddableProfile,
+    embedding: embedding.data[0].embedding,
+    userContentPreferences: userContentPreferences
+  }
 }
