@@ -11,10 +11,9 @@ Current features include:
 - Mass messaging via WhatsApp and email
 - Customer CSV imports
 
-
 Upcoming features:
 
-- AI-driven automations for responses and follow-ups
+- AI-driven automations for community management
 - Forms and surveys
 - Hackathon management
 - Expense tracking
