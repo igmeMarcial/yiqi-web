@@ -47,14 +47,8 @@ export default function Footer() {
 
       {/* Enlace inferior */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex justify-center space-x-6 text-sm">
-        <Link href="#" className="hover:underline">
-          {translations.es.terms}
-        </Link>
-        <Link href="#" className="hover:underline">
+        <Link href="/politics/privacy" className="hover:underline">
           {translations.es.privacy}
-        </Link>
-        <Link href="#" className="hover:underline">
-          {translations.es.security}
         </Link>
       </div>
     </footer>
