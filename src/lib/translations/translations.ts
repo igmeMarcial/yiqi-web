@@ -64,7 +64,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     welcomeScreenTitle: 'Welcome, New Admin!',
     welcomeScreenDescription: "Let's get your organization set up and running!",
     welcomeScreenProgressTitle: 'Your progress',
-    welcomeScreenCompleted: 'of',
+    welcomeOf: 'of',
     welcomeScreenTasks: 'tasks completed',
     welcomeScreenTasksImportContacts: 'Import your contacts',
     welcomeScreenTasksImportDescription:
@@ -283,7 +283,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     welcomeScreenTitle: '¡Bienvenido, Nuevo Administrador!',
     welcomeScreenDescription: '¡Vamos a poner en marcha tu organización!',
     welcomeScreenProgressTitle: 'Tu progreso',
-    welcomeScreenCompleted: 'de',
+    welcomeOf: 'de',
     welcomeScreenTasks: 'tareas completadas',
     welcomeScreenTasksImportContacts: 'Importa tus contactos',
     welcomeScreenTasksImportDescription:

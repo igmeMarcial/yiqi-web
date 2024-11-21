@@ -1,9 +1,8 @@
-'use client'
-import { translations } from '@/lib/translations/translations'
 // import Link from 'next/link'
 // import { ChevronRight, Edit2 } from 'lucide-react'
 import EventCard from '../mainLanding/EventCard'
 import { PublicEventType } from '@/schemas/eventSchema'
+import { translations } from '@/lib/translations/translations'
 
 // EventHeader Component
 const EventHeader = () => {
@@ -26,6 +25,13 @@ const EventHeader = () => {
         </Link> 
         */}
       </div>
+      {/* <Link
+        href="#"
+        className="text-blue-400 hover:text-blue-300 transition-colors group flex items-center"
+      >
+        See all events
+        <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+      </Link> */}
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
     </div>
   )

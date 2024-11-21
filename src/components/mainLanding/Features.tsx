@@ -1,5 +1,3 @@
-'use client'
-
 import { Card, CardContent } from '@/components/ui/card'
 import { features } from '@/data/events'
 import { translations } from '@/lib/translations/translations'

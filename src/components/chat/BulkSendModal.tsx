@@ -22,7 +22,9 @@ export function BulkSendModal() {
   )
 
   const handleBulkSend = async (values: { message: string }) => {
+    // Implement bulk send logic here
     console.log(translations.es.bulkSendLog, values.message, messageType)
+    // Close the modal after sending
   }
 
   return (

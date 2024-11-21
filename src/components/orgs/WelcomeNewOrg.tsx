@@ -86,7 +86,7 @@ export default function WelcomeScreen({
             </p>
             <Progress value={progress} className="w-full h-2" />
             <p className="text-right text-sm text-gray-600 mt-1">
-              {completedTasks} {translations.es.welcomeScreenCompleted}{' '}
+              {completedTasks} {translations.es.welcomeOf}{' '}
               {tasks.length} {translations.es.welcomeScreenTasks}
             </p>
           </div>

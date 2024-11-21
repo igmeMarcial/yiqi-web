@@ -18,7 +18,7 @@ export default async function ContactsPage({
   const contacts = await getOrganizationContacts(params.id)
 
   if (!organization || !user) {
-    return <div>Organization not found</div>
+    return <div>No se encontró la organización</div>
   }
 
   return (
@@ -43,18 +43,18 @@ export default async function ContactsPage({
         </div>
         <ul className="space-y-2">
           {contacts.map(user => (
-            <li key={user.id} className="border p-2 rounded">
+            <li key={user?.id} className="border p-2 rounded">
               <Link
-                href={`/admin/organizations/${organization.id}/contacts/${user.id}`}
+                href={`/admin/organizations/${params.id}/contacts/${user?.id}`}
                 className="text-blue-500 hover:underline"
               >
-                {user.name} ({user.email})
+                {user?.name} ({user?.email})
               </Link>
             </li>
           ))}
         </ul>
         <Link
-          href={`/admin/organizations/${organization.id}`}
+          href={`/admin/organizations/${params.id}`}
           className="mt-4 inline-block text-blue-500 hover:underline"
         >
           <span>{translations.es.backToDashboard}</span>
