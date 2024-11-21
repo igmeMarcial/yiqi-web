@@ -18,7 +18,7 @@ export default async function ContactsPage({
   const contacts = await getOrganizationContacts(params.id)
 
   if (!organization || !user) {
-    return <div>No se encontró la organización</div>
+    return <div>{translations.es.noOrganizationFound}</div>
   }
 
   return (

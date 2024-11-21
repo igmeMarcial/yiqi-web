@@ -216,7 +216,10 @@ export const translations: Record<string, { [key: string]: string }> = {
       "Tailor the platform to match your community's unique needs and branding requirements.",
     featureCommunityEngagement: 'Community Engagement',
     featureCommunityEngagementDescription:
-      'Build stronger connections with tools designed to increase member participation and interaction.'
+      'Build stronger connections with tools designed to increase member participation and interaction.',
+    importing: 'Importing...',
+    importContacts: 'Import Contacts',
+    noOrganizationFound: 'No organization found'
   },
   es: {
     // General
@@ -475,6 +478,9 @@ export const translations: Record<string, { [key: string]: string }> = {
     creatingEvent: 'Creando Evento...',
     updatingEvent: 'Actualizando Evento...',
     createEvent: 'Crear Evento',
-    updateEvent: 'Actualizar Evento'
+    updateEvent: 'Actualizar Evento',
+    importing: 'Importando...',
+    importContacts: 'Importar Contactos',
+    noOrganizationFound: 'No se encontró la organización'
   }
 }

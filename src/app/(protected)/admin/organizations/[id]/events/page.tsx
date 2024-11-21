@@ -57,10 +57,10 @@ export default async function EventsPage({
                 </Link>
               ))}
             </div>
-        </section>
-      </OrganizationLayout>
-    </main>
-  )
+          </section>
+        </OrganizationLayout>
+      </main>
+    )
   } else if (user.role === Roles.NEW_USER) {
     redirect('/newuser')
   } else if (user.role === Roles.USER) {
