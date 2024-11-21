@@ -13,6 +13,7 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { AccountDropdown } from '../AccountDropdown'
+import Image from 'next/image'
 
 interface User {
   name?: string
@@ -48,18 +49,13 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href={'/'} className="flex-shrink-0">
-            <div
-              className="flex items-center space-x-3 text-xl font-extrabold text-transparent bg-clip-text"
-              style={{
-                backgroundImage:
-                  'linear-gradient(90deg, #6de4e8, rgba(0, 178, 218, 0.6) 95.83%)'
-              }}
-            >
-              <span className="rounded-full bg-cyan-500 p-2 text-white">
-                🚀
-              </span>
-              <span>Yiqi</span>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              height={100}
+              width={100}
+              className="mr-2 p-2"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center space-x-4">
