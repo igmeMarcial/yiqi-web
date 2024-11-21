@@ -13,6 +13,7 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { AccountDropdown } from '../AccountDropdown'
+import { translations } from '@/lib/translations/translations'
 import Image from 'next/image'
 
 interface User {
@@ -42,7 +43,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? ' dark:bg-black/80 shadow-md backdrop-blur-lg'
+          ? 'dark:bg-black/80 shadow-md backdrop-blur-lg'
           : 'bg-transparent'
       } backdrop-blur-xl`}
     >
@@ -61,16 +62,16 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
           <nav className="hidden md:flex items-center space-x-4">
             <NavLink href="/events">
               <TicketSlash size={16} />
-              <span>Events</span>
+              <span>{translations.es.events}</span>
             </NavLink>
             <NavLink href="/communities">
               <Users size={16} />
-              <span>communities</span>
+              <span>{translations.es.communities}</span>
             </NavLink>
             {!user || Object.keys(user).length === 0 ? (
               <Link href={'/user'}>
                 <Button size="sm" variant="default" className="font-semibold">
-                  Log in
+                  {translations.es.login}
                 </Button>
               </Link>
             ) : (
@@ -86,19 +87,19 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                 className="md:hidden hover:bg-transparent"
               >
                 <Menu className="h-6 w-6 text-white " />
-                <span className="sr-only ">Open menu</span>
+                <span className="sr-only">{translations.es.openMenu}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
+                <SheetTitle>{translations.es.menu}</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col space-y-4">
-                <NavLink href="/events" mobile>
-                  communities
+                <NavLink href="/communities" mobile>
+                  {translations.es.communities}
                 </NavLink>
                 <NavLink href="/events" mobile>
-                  Events
+                  {translations.es.events}
                 </NavLink>
                 {!user ? (
                   <Link href={'/user'}>
@@ -107,7 +108,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                       variant="default"
                       className="w-full font-semibold"
                     >
-                      Log in
+                      {translations.es.login}
                     </Button>
                   </Link>
                 ) : (
@@ -121,7 +122,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                         {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
-                    <span>My Account</span>
+                    <span>{translations.es.myAccount}</span>
                   </Link>
                 )}
               </div>
