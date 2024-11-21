@@ -5,6 +5,7 @@ import { createOrganizer } from '@/services/actions/organizerActions'
 import { searchUsers } from '@/services/actions/userActions'
 import { useRouter } from 'next/navigation'
 import { User } from '@prisma/client'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function AddOrganizerButton({
   organizationId
@@ -18,6 +19,7 @@ export default function AddOrganizerButton({
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [role, setRole] = useState<'ADMIN' | 'VIEWER'>('VIEWER')
   const router = useRouter()
+  const { t } = useLanguage()
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query)
@@ -38,18 +40,17 @@ export default function AddOrganizerButton({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!selectedUser) {
-      setError('Please select a user')
-      return
+      setError(t('selectUserError'))
     }
 
     try {
-      await createOrganizer({ userId: selectedUser.id, organizationId, role })
+      await createOrganizer({ userId: selectedUser?.id, organizationId, role })
       setShowForm(false)
       setError('')
       router.refresh()
     } catch (error) {
       console.error(error)
-      setError('Failed to add organizer. Please try again.')
+      setError(t('addOrganizerError'))
     }
   }
 
@@ -59,7 +60,7 @@ export default function AddOrganizerButton({
         onClick={() => setShowForm(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded"
       >
-        Add Organizer
+        {t('addOrganizer')}
       </button>
       {showForm && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
@@ -67,13 +68,14 @@ export default function AddOrganizerButton({
             onSubmit={handleSubmit}
             className="bg-white p-4 rounded shadow-lg w-96"
           >
-            <h2 className="text-xl font-bold mb-4">Add New Organizer</h2>
+            <h2 className="text-xl font-bold mb-4">{t('addNewOrganizer')}</h2>{' '}
+            {/* Traducción de "Add New Organizer" */}
             <div className="mb-4">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => handleSearch(e.target.value)}
-                placeholder="Search users by name or email"
+                placeholder={t('searchUsers')}
                 className="w-full p-2 border rounded"
               />
               {searchResults.length > 0 && (
@@ -93,7 +95,8 @@ export default function AddOrganizerButton({
             {selectedUser && (
               <div className="mb-4">
                 <p>
-                  Selected User: {selectedUser.name} ({selectedUser.email})
+                  {t('selectedUser')}: {selectedUser.name} ({selectedUser.email}
+                  ) {/* Traducción de "Selected User" */}
                 </p>
               </div>
             )}
@@ -102,8 +105,8 @@ export default function AddOrganizerButton({
               onChange={e => setRole(e.target.value as 'ADMIN' | 'VIEWER')}
               className="w-full p-2 mb-4 border rounded"
             >
-              <option value="VIEWER">Viewer</option>
-              <option value="ADMIN">Admin</option>
+              <option value="VIEWER">{t('viewer')}</option>
+              <option value="ADMIN">{t('admin')}</option>
             </select>
             <div className="flex justify-end space-x-2">
               <button
@@ -111,13 +114,13 @@ export default function AddOrganizerButton({
                 onClick={() => setShowForm(false)}
                 className="bg-gray-300 px-4 py-2 rounded"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                Add
+                {t('add')}
               </button>
             </div>
             {error && <p className="text-red-500 mt-2">{error}</p>}

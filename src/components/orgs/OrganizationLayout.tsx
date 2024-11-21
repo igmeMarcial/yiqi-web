@@ -35,6 +35,7 @@ import {
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 import { useEffect, useMemo, useState } from 'react'
 import { OrganizationType } from '@/schemas/organizerSchema'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface UserProps {
   name: string
@@ -54,6 +55,7 @@ export default function OrganizationLayout({
   userProps,
   orgId
 }: AdminLayoutProps) {
+  const { t } = useLanguage()
   const [organizations, setOrganizations] = useState<OrganizationType[]>([])
 
   useEffect(() => {
@@ -70,27 +72,27 @@ export default function OrganizationLayout({
 
   const navItems = [
     {
-      name: 'Chat',
+      name: t('chat'),
       icon: MessageSquare,
       href: `/admin/organizations/${orgId}/chat`
     },
     {
-      name: 'Eventos',
+      name: t('events'),
       icon: Calendar,
       href: `/admin/organizations/${orgId}/events`
     },
     {
-      name: 'Personas',
+      name: t('contacts'),
       icon: BookUser,
       href: `/admin/organizations/${orgId}/contacts`
     },
     {
-      name: 'Organizadores',
+      name: t('organizers'),
       icon: Users,
       href: `/admin/organizations/${orgId}/organizers`
     },
     {
-      name: 'Billing',
+      name: t('billing'),
       icon: Banknote,
       href: `/admin/organizations/${orgId}/billing`
     }
@@ -167,7 +169,7 @@ export default function OrganizationLayout({
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>Log out</span>
+                      <span>{t('logOut')}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>

@@ -13,6 +13,7 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { AccountDropdown } from '../AccountDropdown'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface User {
   name?: string
@@ -27,6 +28,7 @@ interface HeaderProps {
 
 export default function MainLandingNav({ user, logOut }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +43,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? ' dark:bg-black/80 shadow-md backdrop-blur-lg'
+          ? 'dark:bg-black/80 shadow-md backdrop-blur-lg'
           : 'bg-transparent'
       } backdrop-blur-xl`}
     >
@@ -58,23 +60,23 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
               <span className="rounded-full bg-cyan-500 p-2 text-white">
                 🚀
               </span>
-              <span>Yiqi</span>
+              <span>{t('appName')}</span>
             </div>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-4">
             <NavLink href="/events">
               <TicketSlash size={16} />
-              <span>Events</span>
+              <span>{t('events')}</span>
             </NavLink>
             <NavLink href="/communities">
               <Users size={16} />
-              <span>communities</span>
+              <span>{t('communities')}</span>
             </NavLink>
             {!user || Object.keys(user).length === 0 ? (
               <Link href={'/user'}>
                 <Button size="sm" variant="default" className="font-semibold">
-                  Log in
+                  {t('login')}
                 </Button>
               </Link>
             ) : (
@@ -90,19 +92,19 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                 className="md:hidden hover:bg-transparent"
               >
                 <Menu className="h-6 w-6 text-white " />
-                <span className="sr-only ">Open menu</span>
+                <span className="sr-only">{t('openMenu')}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
+                <SheetTitle>{t('menu')}</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col space-y-4">
-                <NavLink href="/events" mobile>
-                  communities
+                <NavLink href="/communities" mobile>
+                  {t('communities')}
                 </NavLink>
                 <NavLink href="/events" mobile>
-                  Events
+                  {t('events')}
                 </NavLink>
                 {!user ? (
                   <Link href={'/user'}>
@@ -111,7 +113,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                       variant="default"
                       className="w-full font-semibold"
                     >
-                      Log in
+                      {t('login')}
                     </Button>
                   </Link>
                 ) : (
@@ -125,7 +127,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                         {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
-                    <span>My Account</span>
+                    <span>{t('myAccount')}</span>
                   </Link>
                 )}
               </div>

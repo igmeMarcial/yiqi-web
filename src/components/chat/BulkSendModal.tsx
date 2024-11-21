@@ -14,26 +14,26 @@ import {
   MessageThreadType,
   MessageThreadTypeEnum
 } from '@/schemas/messagesSchema'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export function BulkSendModal() {
+  const { t } = useLanguage()
   const [messageType, setMessageType] = useState<MessageThreadType>(
     MessageThreadTypeEnum.Enum.whatsapp
   )
 
   const handleBulkSend = async (values: { message: string }) => {
-    // Implement bulk send logic here
-    console.log('Bulk send:', values.message, messageType)
-    // Close the modal after sending
+    console.log(t('bulkSendLog'), values.message, messageType)
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Envío masivo</Button>
+        <Button variant="outline">{t('bulkSendButton')}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Envío masivo</DialogTitle>
+          <DialogTitle>{t('bulkSendTitle')}</DialogTitle>
         </DialogHeader>
         <MessageForm
           onSubmit={handleBulkSend}

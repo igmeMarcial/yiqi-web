@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Upload } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface ProfilePictureUploadProps {
   readonly currentValue?: string | File | null
@@ -19,6 +20,7 @@ export default function ProfilePictureUpload({
   userPicture
 }: ProfilePictureUploadProps) {
   const [preview, setPreview] = useState<string>(userPicture)
+  const { t } = useLanguage()
 
   useEffect(() => {
     if (value instanceof File) {
@@ -88,7 +90,7 @@ export default function ProfilePictureUpload({
           className="absolute inset-0 bg-primary"
         />
         <span className={isDragActive ? 'text-primary-foreground' : ''}>
-          {isDragActive ? 'Drop here' : 'Change Picture'}
+          {isDragActive ? t('dropHere') : t('changePicture')}
         </span>
       </Button>
     </motion.div>

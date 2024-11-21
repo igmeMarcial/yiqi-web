@@ -18,8 +18,10 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Rocket, AlertCircle, Loader2 } from 'lucide-react'
 import useStripeConnect from '@/hooks/useStripeConnect'
 import { createConnectAccount } from '@/services/actions/billing/createAccount'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function StripeConnect({ accountId }: { accountId: string }) {
+  const { t } = useLanguage() // Hook de traducción
   const [accountCreatePending, setAccountCreatePending] = useState(false)
   const [onboardingExited, setOnboardingExited] = useState(false)
   const [error, setError] = useState(false)
@@ -47,34 +49,33 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
             <Rocket className="w-6 h-6" />
-            Connect your billing accounts
+            {t('stripeConnectTitle')}
           </CardTitle>
           <CardDescription>
             {!connectedAccountId
-              ? 'Get ready for take off'
+              ? t('stripeConnectDescription')
               : !stripeConnectInstance
-                ? 'Add information to start accepting money'
-                : 'Complete your onboarding'}
+                ? t('stripeConnectOnboardingDescription')
+                : t('stripeConnectCompleteOnboarding')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {!connectedAccountId && (
             <p className="text-sm text-muted-foreground">
-              Our system uses Stripe to process payments for you. Please connect
-              your accounts if you want to charge for your events.
+              {t('stripeConnectInfoText')}
             </p>
           )}
 
           {!accountCreatePending && !connectedAccountId && (
             <Button onClick={handleSignUp} className="w-full">
-              Sign up
+              {t('stripeConnectSignUp')}
             </Button>
           )}
 
           {accountCreatePending && (
             <div className="flex items-center justify-center space-x-2">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <p>Creating a connected account...</p>
+              <p>{t('stripeConnectCreatingAccount')}</p>
             </div>
           )}
 
@@ -89,8 +90,10 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>Something went wrong!</AlertDescription>
+              <AlertTitle>{t('stripeConnectError')}</AlertTitle>
+              <AlertDescription>
+                {t('stripeConnectErrorDescription')}
+              </AlertDescription>
             </Alert>
           )}
         </CardContent>
@@ -98,7 +101,7 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
           <CardFooter className="flex flex-col items-start space-y-2 bg-muted/50 rounded-b-lg">
             {connectedAccountId && (
               <p className="text-sm">
-                Your connected account ID:{' '}
+                {t('stripeConnectAccountId')}{' '}
                 <code className="font-mono bg-muted p-1 rounded">
                   {connectedAccountId}
                 </code>
@@ -106,7 +109,7 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
             )}
             {onboardingExited && (
               <p className="text-sm text-muted-foreground">
-                The Account Onboarding component has exited
+                {t('stripeConnectOnboardingExited')}
               </p>
             )}
           </CardFooter>

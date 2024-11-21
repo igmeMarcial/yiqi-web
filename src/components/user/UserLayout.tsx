@@ -22,6 +22,7 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '../ui/sidebar'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface UserProps {
   name: string
@@ -36,24 +37,26 @@ interface UserLayoutProps {
 }
 
 export default function UserLayout({ children, userProps }: UserLayoutProps) {
+  const { t } = useLanguage()
+
   const navItems = [
     {
-      name: 'Profile Settings',
+      name: t('profileSettings'),
       icon: User,
       href: `/user/profile`
     },
     {
-      name: 'Payments',
+      name: t('payments'),
       icon: CreditCard,
       href: `/user/payments`
     },
     {
-      name: 'History',
+      name: t('history'),
       icon: History,
       href: `/user/history`
     },
     {
-      name: 'Tickets',
+      name: t('tickets'),
       icon: Ticket,
       href: `/user/tickets`
     }
@@ -106,7 +109,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>Log out</span>
+                      <span>{t('logOut')}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>

@@ -17,11 +17,13 @@ import { TriangleAlert } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
 import { deleteUserAccount } from '@/services/actions/userActions'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export default function DeleteAccountDialog() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+  const { t } = useLanguage()
 
   const handleDelete = useCallback(async () => {
     try {
@@ -29,50 +31,48 @@ export default function DeleteAccountDialog() {
       const result = await deleteUserAccount()
       if (result.success) {
         toast({
-          title: 'Account Deleted',
-          description:
-            'Your account has been successfully deleted. You have been logged out.'
+          title: t('accountDeleted'),
+          description: t('accountDeletedDescription')
         })
         router.push('/auth')
       } else {
         toast({
-          title: 'ERROR:',
-          description: result.error ?? 'Failed to delete account',
+          title: t('error'),
+          description: result.error ?? t('errorDeleting'),
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: 'ERROR:',
-        description: 'Something went wrong',
+        title: t('error'),
+        description: t('somethingWentWrong'),
         variant: 'destructive'
       })
     } finally {
       setIsLoading(false)
     }
-  }, [router, toast])
+  }, [router, toast, t])
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" className="flex items-center space-x-2">
           <TriangleAlert className="h-4 w-4" />
-          <span>Delete Account</span>
+          <span>{t('deleteAccount')}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t('areYouSure')}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            {t('actionCannotBeUndone')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading ? 'Deleting...' : 'Delete Account'}
+            {isLoading ? t('deleting') : t('deleteAccountConfirmation')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
