@@ -63,7 +63,7 @@ export function ImportContactButton(params: { organizationId: string }) {
       onClick={handleImportContacts}
       disabled={isLoading}
     >
-      {isLoading ? 'Importing...' : 'Import Contacts'}
+      {isLoading ? 'Importando...' : 'Importar Contactos'}
     </button>
   )
 }
