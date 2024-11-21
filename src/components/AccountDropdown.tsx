@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 import {
   LayoutDashboard,
   LogOut,
@@ -33,8 +33,6 @@ interface AccountDropdownProps {
 }
 
 export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
-  const { t } = useLanguage()
-
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
@@ -46,7 +44,7 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
                   src={
                     user?.picture ?? `https://avatar.vercel.sh/${user?.email}`
                   }
-                  alt={user?.email || t('defaultAvatarAlt')}
+                  alt={user?.email || translations.es.defaultAvatarAlt}
                 />
               </Avatar>
             </DropdownMenuTrigger>
@@ -55,34 +53,34 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
       </TooltipProvider>
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel className="flex flex-col">
-          <span className="text-sm">{t('myAccount')}</span>
+          <span className="text-sm">{translations.es.myAccount}</span>
           <span className="text-xs text-muted-foreground">
-            {user?.email || t('guestUser')}
+            {user?.email || translations.es.guestUser}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={'/admin'} className="cursor-pointer">
             <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t('organization')}</span>
+            <span>{translations.es.organization}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={'/user'} className="cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t('profile')}</span>
+            <span>{translations.es.profile}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={'/user/edit'} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t('settings')}</span>
+            <span>{translations.es.settings}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
-          {t('signOut')}
+          {translations.es.signOut}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

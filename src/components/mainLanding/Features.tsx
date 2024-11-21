@@ -2,23 +2,21 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import { features } from '@/data/events'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 export default function Features() {
-  const { t } = useLanguage()
-
   return (
     <section className="w-full py-12 bg-black/95">
       <div className="container max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
-              {t('featuresTitle')}
+              {translations.es.featuresTitle}
             </h2>
             <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl/relaxed">
-              {t('featuresDescription')}
+              {translations.es.featuresDescription}
             </p>
           </div>
         </div>
@@ -38,11 +36,11 @@ export default function Features() {
                     <feature.icon className="h-6 w-6 text-blue-400" />
                   </div>
                   <h3 className="text-lg font-semibold text-white">
-                    {t(feature.title)}
+                    {feature.title}
                   </h3>
                 </div>
                 <p className="mt-4 text-gray-400 text-sm">
-                  {t(feature.description)}
+                  {feature.description}
                 </p>
               </CardContent>
 
@@ -54,14 +52,14 @@ export default function Features() {
 
         {/* Call to Action */}
         <div className="mt-12 text-center">
-          <p className="text-gray-400 mb-4">{t('featuresCTA')}</p>
+          <p className="text-gray-400 mb-4">{translations.es.featuresCTA}</p>
           <div className="inline-flex items-center justify-center rounded-lg border border-gray-800 bg-gray-900 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors">
             <Link
               href={'https://github.com/Andino-Labs/yiqi-mobile'}
               className="flex gap-2 items-center justify-center"
             >
               <GitHubLogoIcon />
-              {t('featuresViewOnGitHub')}
+              {translations.es.featuresViewOnGitHub}
             </Link>
           </div>
         </div>

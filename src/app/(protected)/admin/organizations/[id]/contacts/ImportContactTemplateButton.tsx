@@ -1,6 +1,6 @@
 'use client'
 
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 /*
 const exampleCsv = `email,phone,name,age,city
@@ -17,10 +17,8 @@ patricia.gonzalez@example.com,678901234,Patricia Gonzalez,38,San Francisco`
 */
 
 export function ImportContactTemplateButton() {
-  const { t } = useLanguage()
-
   function handleOnClickButton() {
-    const exampleCsv = t('exampleCsvContent')
+    const exampleCsv = translations.es.exampleCsvContent
     const blob = new Blob([exampleCsv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -34,7 +32,7 @@ export function ImportContactTemplateButton() {
       className="text-blue-500 hover:text-blue-700 hover:underline text-sm"
       onClick={handleOnClickButton}
     >
-      {t('downloadCsvTemplate')}
+      {translations.es.downloadCsvTemplate}
     </button>
   )
 }

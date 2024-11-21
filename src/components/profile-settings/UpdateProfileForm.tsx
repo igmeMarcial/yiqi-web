@@ -45,13 +45,12 @@ import { UploadToS3 } from '@/lib/uploadToS3'
 import ProfilePictureUpload from './UpdatePictureUpload'
 import DeleteAccountDialog from './DeleteAccountDialog'
 import { Input } from '../ui/input'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { t } = useLanguage()
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -89,19 +88,26 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
         picture: imageUrl ?? user.picture,
         id: user.id
       }
+
       const result = await updateUserProfile(profileData)
       if (result.success) {
         router.refresh()
         toast({
-          description: t('profileUpdated'),
+          description: translations.es.profileUpdated,
           variant: 'default'
+        })
+      } else {
+        toast({
+          title: translations.es.error,
+          description: translations.es.updateFailed,
+          variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: t('error'),
-        description: t('updateFailed'),
+        title: translations.es.error,
+        description: translations.es.somethingWentWrong,
         variant: 'destructive'
       })
     } finally {
@@ -134,7 +140,9 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
     >
       <Card className="bg-transparent border-none">
         <CardHeader>
-          <CardTitle className="text-2xl">{t('profileSettings')}</CardTitle>
+          <CardTitle className="text-2xl">
+            {translations.es.profileSettings}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -162,14 +170,14 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'name'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('name')}</FormLabel>
+                        <FormLabel>{translations.es.name}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterYourName')}
+                              placeholder={translations.es.enterYourName}
                               {...field}
                             />
                           </div>
@@ -185,14 +193,14 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'email'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{translations.es.email}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterYourEmail')}
+                              placeholder={translations.es.enterYourEmail}
                               disabled
                               {...field}
                             />
@@ -209,7 +217,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'phoneNumber'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('phoneNumber')}</FormLabel>
+                        <FormLabel>{translations.es.phoneNumber}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -232,14 +240,14 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'company'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('company')}</FormLabel>
+                        <FormLabel>{translations.es.company}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Building2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterCompany')}
+                              placeholder={translations.es.enterCompany}
                               {...field}
                             />
                           </div>
@@ -260,21 +268,20 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                 animate="visible"
                 className="space-y-6"
               >
-                {/* {FORM_SECTIONS.professional.map(renderFormField)} */}
                 <div>
                   <FormField
                     control={form.control}
                     name={'position'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('position')}</FormLabel>
+                        <FormLabel>{translations.es.position}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterPosition')}
+                              placeholder={translations.es.enterPosition}
                               {...field}
                             />
                           </div>
@@ -290,14 +297,14 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     htmlFor="shortDescription"
                     className="text-sm font-medium"
                   >
-                    {t('bio')}
+                    {translations.es.bio}
                   </label>
                   <div className="relative">
                     <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Textarea
                       {...form.register('shortDescription')}
                       className="min-h-[100px] pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                      placeholder={t('tellUsAboutYourself')}
+                      placeholder={translations.es.tellUsAboutYourself}
                     />
                   </div>
                 </div>
@@ -325,7 +332,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterYourX')}
+                              placeholder={translations.es.enterYourX}
                               {...field}
                             />
                           </div>
@@ -348,7 +355,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterLinkedinURL')}
+                              placeholder={translations.es.enterLinkedinURL}
                               {...field}
                             />
                           </div>
@@ -371,7 +378,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterInstagramURL')}
+                              placeholder={translations.es.enterInstagramURL}
                               {...field}
                             />
                           </div>
@@ -387,14 +394,14 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     name={'website'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('website')}</FormLabel>
+                        <FormLabel>{translations.es.website}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterWebsiteURL')}
+                              placeholder={translations.es.enterWebsiteURL}
                               {...field}
                             />
                           </div>
@@ -420,11 +427,11 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                     <div className="text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <BellOff className="h-4 w-4" />
-                        {t('stopCommunications')}
+                        {translations.es.stopCommunications}
                       </div>
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {t('disableCommunications')}
+                      {translations.es.disableCommunications}
                     </div>
                   </div>
                   <Switch
@@ -439,7 +446,7 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
 
                 <div className="flex items-center gap-2 rounded-lg border p-4">
                   <Shield className="h-4 w-4" />
-                  <div className="flex-1">{t('role')}</div>
+                  <div className="flex-1">{translations.es.role}</div>
                   <Badge>User</Badge>
                 </div>
               </motion.div>
@@ -454,12 +461,12 @@ function UpdateProfileForm({ user }: { user: ProfileDataValues }) {
                   {isLoading ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>{t('saving')}</span>
+                      <span>{translations.es.saving}</span>
                     </>
                   ) : (
                     <>
                       <Save className="h-4 w-4" />
-                      <span>{t('saveChanges')}</span>
+                      <span>{translations.es.saveChanges}</span>
                     </>
                   )}
                 </Button>

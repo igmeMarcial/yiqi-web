@@ -4,20 +4,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { communityHighlights } from '@/data/events'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 const CommunityHighlights = () => {
-  const { t } = useLanguage()
-
   return (
     <section className="w-full bg-black py-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white">
-            {t('highlightsTitle')}
+            {translations.es.highlightsTitle}
           </h2>
-          <p className="mt-2 text-gray-400">{t('highlightsSubtitle')}</p>
+          <p className="mt-2 text-gray-400">
+            {translations.es.highlightsSubtitle}
+          </p>
         </div>
 
         {/* Grid Layout */}
@@ -44,12 +44,12 @@ const CommunityHighlights = () => {
 
                 <Link href={community.link} className="block">
                   <h3 className="text-lg font-semibold text-white mb-1 flex items-center gap-2 group-hover:text-blue-400 transition-colors">
-                    {t(community.name)}
+                    {community.name}
                     <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
 
                   <p className="text-sm text-gray-400 line-clamp-2">
-                    {t(community.description)}
+                    {community.description}
                   </p>
                 </Link>
 

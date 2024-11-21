@@ -1,20 +1,18 @@
 'use client'
+import { translations } from '@/lib/translations/translations'
 // import Link from 'next/link'
 // import { ChevronRight, Edit2 } from 'lucide-react'
-import { useLanguage } from '@/hooks/useLanguage'
 import EventCard from '../mainLanding/EventCard'
 import { PublicEventType } from '@/schemas/eventSchema'
 
 // EventHeader Component
 const EventHeader = () => {
-  const { t } = useLanguage()
-
   return (
     <div className="relative mb-12 pb-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-2">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            {t('eventsNear')}
+            {translations.es.eventsNear}
           </h2>
         </div>
         {/* Uncomment and modify this block if you want to add a "See All Events" link */}
@@ -41,8 +39,6 @@ type Props = {
 
 // Main UpcomingEvents Component
 const PublicEventsList = ({ events, showHeader = true }: Props) => {
-  const { t } = useLanguage()
-
   return (
     <section id="events" className="w-full bg-black min-h-screen relative">
       <div className="relative w-full py-12">
@@ -56,7 +52,7 @@ const PublicEventsList = ({ events, showHeader = true }: Props) => {
             </div>
           ) : (
             <p className="text-gray-400 text-center mt-6">
-              {t('noEventsFound')}
+              <span>{translations.es.noEventsFound}</span>
             </p>
           )}
         </div>

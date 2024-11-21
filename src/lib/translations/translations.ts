@@ -187,7 +187,36 @@ export const translations: Record<string, { [key: string]: string }> = {
     instagram: 'Instagram',
     enterInstagramURL: 'Enter your Instagram URL',
     website: 'Website',
-    enterWebsiteURL: 'Enter your website URL'
+    enterWebsiteURL: 'Enter your website URL',
+    communityName: 'Tech Innovators',
+    communityDescription: 'A community of tech enthusiasts driving innovation.',
+    eventTitle1: 'Tech Expo 2024',
+    eventLocation1: 'San Francisco, CA',
+    eventTitle2: 'AI Conference',
+    eventLocation2: 'New York, NY',
+    roleAdmin: 'ADMIN',
+    roleViewer: 'VIEWER',
+    queueJobDescription: 'Process event registrations',
+    customFocus: 'Innovation in AI and Robotics',
+    customPartnerships: 'Collaborating with major tech companies',
+    featureCommunityManagement: 'Community Management',
+    featureCommunityManagementDescription:
+      'Efficiently manage your community members, roles, and permissions with our intuitive tools.',
+    featureAnalyticsInsights: 'Analytics & Insights',
+    featureAnalyticsInsightsDescription:
+      "Make data-driven decisions with comprehensive analytics about your community's engagement.",
+    featureEventOrganization: 'Event Organization',
+    featureEventOrganizationDescription:
+      'Plan, schedule, and manage community events seamlessly with integrated calendar features.',
+    featureDiscussionForums: 'Discussion Forums',
+    featureDiscussionForumsDescription:
+      'Foster meaningful conversations with customizable discussion spaces and moderation tools.',
+    featureCustomization: 'Customization',
+    featureCustomizationDescription:
+      "Tailor the platform to match your community's unique needs and branding requirements.",
+    featureCommunityEngagement: 'Community Engagement',
+    featureCommunityEngagementDescription:
+      'Build stronger connections with tools designed to increase member participation and interaction.'
   },
   es: {
     // General
@@ -377,6 +406,75 @@ export const translations: Record<string, { [key: string]: string }> = {
     instagram: 'Instagram',
     enterInstagramURL: 'Ingresa tu URL de Instagram',
     website: 'Sitio web',
-    enterWebsiteURL: 'Ingresa tu URL del sitio web'
+    enterWebsiteURL: 'Ingresa tu URL del sitio web',
+    manageOrganizersFor: 'Administrar Organizadores para',
+    backToOrganizationDashboard: 'Volver al Panel de la Organización',
+    communityName: 'Tech Innovators',
+    communityDescription:
+      'Una comunidad de entusiastas de la tecnología impulsando la innovación.',
+    eventTitle1: 'Tech Expo 2024',
+    eventLocation1: 'San Francisco, CA',
+    eventTitle2: 'AI Conference',
+    eventLocation2: 'New York, NY',
+    roleAdmin: 'ADMIN',
+    roleViewer: 'VIEWER',
+    queueJobDescription: 'Procesar registros de eventos',
+    customFocus: 'Innovación en IA y Robótica',
+    customPartnerships: 'Colaborando con grandes empresas tecnológicas',
+    featureCommunityManagement: 'Gestión de la Comunidad',
+    featureCommunityManagementDescription:
+      'Gestiona de manera eficiente los miembros, roles y permisos de tu comunidad con nuestras herramientas intuitivas.',
+    featureAnalyticsInsights: 'Análisis y Perspectivas',
+    featureAnalyticsInsightsDescription:
+      'Toma decisiones basadas en datos con análisis completos sobre el compromiso de tu comunidad.',
+    featureEventOrganization: 'Organización de Eventos',
+    featureEventOrganizationDescription:
+      'Planifica, programa y gestiona eventos comunitarios de manera fluida con funciones integradas de calendario.',
+    featureDiscussionForums: 'Foros de Discusión',
+    featureDiscussionForumsDescription:
+      'Fomenta conversaciones significativas con espacios de discusión personalizables y herramientas de moderación.',
+    featureCustomization: 'Personalización',
+    featureCustomizationDescription:
+      'Ajusta la plataforma para que se adapte a las necesidades únicas y los requisitos de marca de tu comunidad.',
+    featureCommunityEngagement: 'Compromiso Comunitario',
+    featureCommunityEngagementDescription:
+      'Construye conexiones más fuertes con herramientas diseñadas para aumentar la participación e interacción de los miembros.',
+    eventNotFound: 'Evento no encontrado',
+    eventTitleInEventDetails: 'Evento: ',
+    backToEvents: 'Volver a Eventos',
+    deleteEvent: 'Eliminar Evento',
+    eventDetails: 'Detalles del Evento',
+    endDate: 'Fecha de Fin',
+    description: 'Descripción',
+    eventManagement: 'Gestión del Evento',
+    attendees: 'Asistentes',
+    communications: 'Comunicaciones',
+    eventRegistrations: 'Registros de Evento',
+    eventCommunications: 'Comunicaciones del Evento',
+    sendNewCommunication: 'Enviar Nueva Comunicación',
+    status: 'Estado',
+    action: 'Acción',
+    approve: 'Aprobar',
+    reject: 'Rechazar',
+    failedToSaveEvent: 'Error al guardar el evento',
+    selectAnImage: 'Selecciona una imagen',
+    eventName: 'Nombre del evento',
+    start: 'Inicio',
+    end: 'Fin',
+    selectTimezone: 'Selecciona la zona horaria',
+    capacity: 'Capacidad',
+    unlimited: 'Ilimitado',
+    hide: 'Ocultar',
+    edit: 'Editar',
+    free: 'Gratis',
+    stripeAccountRequired: 'Se requiere cuenta de Stripe',
+    stripeSetupInfo:
+      'Para cobrar entradas, configura tu cuenta de Stripe en los ajustes de facturación.',
+    clickHereStart: 'Haz clic aquí para comenzar',
+    close: 'Cerrar',
+    creatingEvent: 'Creando Evento...',
+    updatingEvent: 'Actualizando Evento...',
+    createEvent: 'Crear Evento',
+    updateEvent: 'Actualizar Evento'
   }
 }

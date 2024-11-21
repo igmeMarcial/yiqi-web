@@ -1,8 +1,11 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
-import { getUser } from '@/lib/auth/lucia'
+import Link from 'next/link'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
-import ContactsList from '@/components/ContactsList'
+import { getUser } from '@/lib/auth/lucia'
+import { ImportContactButton } from './ImportContactButton'
+import { ImportContactTemplateButton } from './ImportContactTemplateButton'
+import { translations } from '@/lib/translations/translations'
 
 export default async function ContactsPage({
   params
@@ -10,6 +13,7 @@ export default async function ContactsPage({
   params: { id: string }
 }) {
   const user = await getUser()
+
   const organization = await getOrganization(params.id)
   const contacts = await getOrganizationContacts(params.id)
 
@@ -27,7 +31,35 @@ export default async function ContactsPage({
         name: user.name
       }}
     >
-      <ContactsList organization={organization} contacts={contacts} />
+      <div className="container mx-auto p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">
+            <span>{translations.es.contactsFor}</span> {organization.name}
+          </h1>
+          <ImportContactButton organizationId={organization.id} />
+        </div>
+        <div className="mb-4">
+          <ImportContactTemplateButton />
+        </div>
+        <ul className="space-y-2">
+          {contacts.map(user => (
+            <li key={user.id} className="border p-2 rounded">
+              <Link
+                href={`/admin/organizations/${organization.id}/contacts/${user.id}`}
+                className="text-blue-500 hover:underline"
+              >
+                {user.name} ({user.email})
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Link
+          href={`/admin/organizations/${organization.id}`}
+          className="mt-4 inline-block text-blue-500 hover:underline"
+        >
+          <span>{translations.es.backToDashboard}</span>
+        </Link>
+      </div>
     </OrganizationLayout>
   )
 }

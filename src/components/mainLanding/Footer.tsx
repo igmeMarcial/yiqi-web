@@ -1,12 +1,10 @@
 'use client'
 
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 import { Mail } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Footer() {
-  const { t } = useLanguage()
-
   return (
     <footer className=" text-white py-4">
       {/* Contenedor principal, centrado y con márgenes responsivos */}
@@ -20,7 +18,7 @@ export default function Footer() {
         <div className="flex space-x-4 mt-4 md:mt-0">
           <button
             className="p-2 rounded-full hover:bg-white hover:text-black"
-            aria-label={t('contactUs')}
+            aria-label={translations.es.contactUs}
           >
             <Mail className="w-5 h-5" />
           </button>
@@ -30,13 +28,13 @@ export default function Footer() {
       {/* Enlace inferior */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex justify-center space-x-6 text-sm">
         <Link href="#" className="hover:underline">
-          {t('terms')}
+          {translations.es.terms}
         </Link>
         <Link href="#" className="hover:underline">
-          {t('privacy')}
+          {translations.es.privacy}
         </Link>
         <Link href="#" className="hover:underline">
-          {t('security')}
+          {translations.es.security}
         </Link>
       </div>
     </footer>

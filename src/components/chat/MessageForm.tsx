@@ -23,11 +23,11 @@ import {
   MessageThreadType,
   MessageThreadTypeEnum
 } from '@/schemas/messagesSchema'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 const formSchema = z.object({
   message: z.string().min(1, {
-    message: 'El mensaje debe tener al menos 1 carácter.'
+    message: translations.es.messageMinLength
   })
 })
 
@@ -42,8 +42,6 @@ export function MessageForm({
   messageType,
   setMessageType
 }: MessageFormProps) {
-  const { t } = useLanguage()
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +58,10 @@ export function MessageForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder={t('typeYourMessage')} {...field} />
+                <Textarea
+                  placeholder={translations.es.typeYourMessage}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,8 +72,8 @@ export function MessageForm({
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
                 {messageType === MessageThreadTypeEnum.Enum.whatsapp
-                  ? t('whatsapp')
-                  : t('email')}
+                  ? translations.es.whatsapp
+                  : translations.es.email}
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -82,20 +83,20 @@ export function MessageForm({
                   setMessageType(MessageThreadTypeEnum.Enum.whatsapp)
                 }
               >
-                {t('whatsapp')}
+                {translations.es.whatsapp}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setMessageType(MessageThreadTypeEnum.Enum.email)}
               >
-                {t('email')}
+                {translations.es.email}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button type="submit">
-            {t('send')}{' '}
+            {translations.es.send}{' '}
             {messageType === MessageThreadTypeEnum.Enum.whatsapp
-              ? t('whatsapp')
-              : t('email')}
+              ? translations.es.whatsapp
+              : translations.es.email}
           </Button>
         </div>
       </form>

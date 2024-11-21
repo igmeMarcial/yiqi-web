@@ -17,13 +17,12 @@ import { TriangleAlert } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
 import { deleteUserAccount } from '@/services/actions/userActions'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 export default function DeleteAccountDialog() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const { t } = useLanguage()
 
   const handleDelete = useCallback(async () => {
     try {
@@ -31,48 +30,50 @@ export default function DeleteAccountDialog() {
       const result = await deleteUserAccount()
       if (result.success) {
         toast({
-          title: t('accountDeleted'),
-          description: t('accountDeletedDescription')
+          title: translations.es.accountDeleted,
+          description: translations.es.accountDeletedDescription
         })
         router.push('/auth')
       } else {
         toast({
-          title: t('error'),
-          description: result.error ?? t('errorDeleting'),
+          title: translations.es.error,
+          description: result.error ?? translations.es.errorDeleting,
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: t('error'),
-        description: t('somethingWentWrong'),
+        title: translations.es.error,
+        description: translations.es.somethingWentWrong,
         variant: 'destructive'
       })
     } finally {
       setIsLoading(false)
     }
-  }, [router, toast, t])
+  }, [router, toast])
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive" className="flex items-center space-x-2">
           <TriangleAlert className="h-4 w-4" />
-          <span>{t('deleteAccount')}</span>
+          <span>{translations.es.deleteAccount}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t('areYouSure')}</AlertDialogTitle>
+          <AlertDialogTitle>{translations.es.areYouSure}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t('actionCannotBeUndone')}
+            {translations.es.actionCannotBeUndone}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+          <AlertDialogCancel>{translations.es.cancel}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading ? t('deleting') : t('deleteAccountConfirmation')}
+            {isLoading
+              ? translations.es.deleting
+              : translations.es.deleteAccountConfirmation}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

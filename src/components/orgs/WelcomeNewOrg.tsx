@@ -12,7 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Progress } from '@/components/ui/progress'
 import { Import, CreditCard, Calendar, Bell } from 'lucide-react'
 import Link from 'next/link'
-import { useLanguage } from '@/hooks/useLanguage'
+import { translations } from '@/lib/translations/translations'
 
 type Props = {
   importedContacts: boolean
@@ -29,36 +29,35 @@ export default function WelcomeScreen({
   notificationsSent,
   orgId
 }: Props) {
-  const { t } = useLanguage()
   const [tasks] = useState([
     {
       id: 1,
-      title: t('welcomeScreenTasksImportContacts'),
-      description: t('welcomeScreenTasksImportDescription'),
+      title: translations.es.welcomeScreenTasksImportContacts,
+      description: translations.es.welcomeScreenTasksImportDescription,
       icon: Import,
       completed: importedContacts,
       link: `/admin/organizations/${orgId}/contacts`
     },
     {
       id: 2,
-      title: t('welcomeScreenTasksSetupPayments'),
-      description: t('welcomeScreenTasksPaymentDescription'),
+      title: translations.es.welcomeScreenTasksSetupPayments,
+      description: translations.es.welcomeScreenTasksPaymentDescription,
       icon: CreditCard,
       completed: paymentsIsSetup,
       link: `/admin/organizations/${orgId}/billing`
     },
     {
       id: 3,
-      title: t('welcomeScreenTasksCreateEvents'),
-      description: t('welcomeScreenTasksEventDescription'),
+      title: translations.es.welcomeScreenTasksCreateEvents,
+      description: translations.es.welcomeScreenTasksEventDescription,
       icon: Calendar,
       completed: eventCreated,
       link: `/admin/organizations/${orgId}/events`
     },
     {
       id: 4,
-      title: t('welcomeScreenTasksSendNotifications'),
-      description: t('welcomeScreenTasksNotificationDescription'),
+      title: translations.es.welcomeScreenTasksSendNotifications,
+      description: translations.es.welcomeScreenTasksNotificationDescription,
       icon: Bell,
       completed: notificationsSent,
       link: `/admin/organizations/${orgId}/chat`
@@ -73,22 +72,22 @@ export default function WelcomeScreen({
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-center text-purple-800">
-            {t('welcomeScreenTitle')}
+            {translations.es.welcomeScreenTitle}
           </CardTitle>
           <CardDescription className="text-center text-lg mt-2">
-            {t('welcomeScreenDescription')}
+            {translations.es.welcomeScreenDescription}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {/* Progress bar section */}
           <div className="mb-6">
             <p className="text-sm font-medium text-gray-700 mb-2">
-              {t('welcomeScreenProgressTitle')}
+              {translations.es.welcomeScreenProgressTitle}
             </p>
             <Progress value={progress} className="w-full h-2" />
             <p className="text-right text-sm text-gray-600 mt-1">
-              {completedTasks} {t('welcomeScreenCompleted')} {tasks.length}{' '}
-              {t('welcomeScreenTasks')}
+              {completedTasks} {translations.es.welcomeScreenCompleted}{' '}
+              {tasks.length} {translations.es.welcomeScreenTasks}
             </p>
           </div>
           {/* Task Cards */}
