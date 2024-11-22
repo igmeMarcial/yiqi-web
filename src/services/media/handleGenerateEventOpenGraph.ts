@@ -1,5 +1,4 @@
 'use server'
-import prisma from '@/lib/prisma'
 import { GenerateEventOpenGraphJobData } from '@/schemas/mediaJobs'
 
 export async function handleGenerateEventOpenGraph({
