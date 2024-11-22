@@ -237,7 +237,10 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'phoneNumber'}
                     render={({ field }) => (
                       <FormItem>
-                        {renderPrivacySwitch('phoneNumber', translations.es.phoneNumber)}
+                        {renderPrivacySwitch(
+                          'phoneNumber',
+                          translations.es.phoneNumber
+                        )}
                         <FormControl>
                           <div className="relative">
                             <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -409,7 +412,10 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'website'}
                     render={({ field }) => (
                       <FormItem>
-                        {renderPrivacySwitch('website', translations.es.website)}
+                        {renderPrivacySwitch(
+                          'website',
+                          translations.es.website
+                        )}
                         <FormControl>
                           <div className="relative">
                             <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

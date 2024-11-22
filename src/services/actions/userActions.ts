@@ -106,27 +106,34 @@ export async function getUserProfile(currentUserId: string) {
     const cleanUserData = {
       id: user.id,
       name: user.name ?? '',
-      email: user.email ?? '',
       picture: user.picture ?? '',
-      phoneNumber: user.phoneNumber ?? '',
       stopCommunication: user.stopCommunication ?? false,
       company: dataCollected?.company ?? '',
       position: dataCollected?.position ?? '',
       shortDescription: dataCollected?.shortDescription ?? '',
+      isLinkedinLinked: !!user.linkedinAccessToken,
+      privacySettings: user.privacySettings,
+      phoneNumber: user.phoneNumber ?? '',
       linkedin: dataCollected?.linkedin ?? '',
+      email: user.email ?? '',
       x: dataCollected?.x ?? '',
       instagram: dataCollected?.instagram ?? '',
-      website: dataCollected?.website ?? '',
-      privacySettings: user.privacySettings,
-      isLinkedinLinked: !!user.linkedinAccessToken
+      website: dataCollected?.website ?? ''
     }
 
     if (currentUserId == userCurrent.id) {
       return profileWithPrivacySchema.parse(cleanUserData)
     } else {
-      return profileWithPrivacySchema.parse(
-        filterProfileData(cleanUserData as unknown as User)
-      )
+      return profileWithPrivacySchema.parse({
+        id: user.id,
+        name: user.name ?? '',
+        picture: user.picture ?? '',
+        stopCommunication: user.stopCommunication ?? false,
+        company: dataCollected?.company ?? '',
+        position: dataCollected?.position ?? '',
+        shortDescription: dataCollected?.shortDescription ?? '',
+        ...filterProfileData(cleanUserData as unknown as User)
+      })
     }
   } catch (error) {
     console.error('Error in getUserProfile:', error)
@@ -179,8 +186,6 @@ export const filterProfileData = (user: User): Partial<User> => {
       filteredData[key] = user[key]
     }
   })
-
-  filteredData.id = user.id
 
   return filteredData
 }

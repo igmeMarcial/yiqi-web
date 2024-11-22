@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Button } from '../ui/button'
 
 import {
@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/card'
 import { Users, Sparkles, Layout, Link2Off } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { disconnectLinkedin } from '@/services/actions/user/disconnectLinkedin'
+import { toast } from '@/hooks/use-toast'
 
 interface BenefitProps {
   icon: React.ReactNode
@@ -61,10 +63,21 @@ export default function LinkedInConnect({
 }: Props) {
   const [isConnected, setIsConnected] = useState(isLinkedinConnected)
 
-  const handleDisconnect = () => {
-    // Here you would typically revoke access
-    setIsConnected(false)
-  }
+  const handleDisconnect = useCallback(async () => {
+    const { success } = await disconnectLinkedin()
+    if (success) {
+      toast({
+        title: 'LinkedIn account disconnected',
+        description: 'You can reconnect at any time'
+      })
+      setIsConnected(false)
+    } else {
+      toast({
+        title: 'Error disconnecting LinkedIn account',
+        description: 'Please try again later'
+      })
+    }
+  }, [])
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
