@@ -17,7 +17,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "build:client-types": "tsup --config yiqi-client/tsup.config.ts",
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
-    "prepare": "husky"
+    "prepare": "husky",
+    "run-script": "ts-node -P tsconfig.script.json scripts/runScript.ts"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
@@ -113,6 +114,7 @@
     "postcss": "^8",
     "prisma": "^5.21.1",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
