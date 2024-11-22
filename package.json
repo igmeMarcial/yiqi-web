@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "engines": {
-    "node": ">=20.0.0"
+    "node": "20.17.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -18,7 +18,7 @@
     "build:client-types": "tsup --config yiqi-client/tsup.config.ts",
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
     "prepare": "husky",
-    "run-script": "ts-node -P tsconfig.script.json scripts/runScript.ts"
+    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
@@ -113,6 +113,7 @@
     "prisma": "^5.21.1",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsconfig-paths": "^4.2.0"
   }
 }

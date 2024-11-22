@@ -39,7 +39,7 @@ function LinkedInLink() {
   const handleLinkClick = () => {
     const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
     const redirectUri = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_URI}`
-    const scope = 'openid profile email'
+    const scope = 'openid profile email r_liteprofile'
     const state = 'random_string' // Use a secure random string
     const encodedRedirectUri = encodeURIComponent(redirectUri)
     const encodedScope = encodeURIComponent(scope)
