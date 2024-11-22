@@ -248,7 +248,8 @@ export const translations: Record<string, { [key: string]: string }> = {
     hide: 'Hide',
     edit: 'Edit',
     free: 'Free',
-    stripeAccount: 'Stripe Account'
+    stripeAccount: 'Stripe Account',
+    networkingSettings: 'Networking Settings'
   },
   es: {
     // General
@@ -510,6 +511,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     updateEvent: 'Actualizar Evento',
     importing: 'Importando...',
     importContacts: 'Importar Contactos',
-    noOrganizationFound: 'No se encontró la organización'
+    noOrganizationFound: 'No se encontró la organización',
+    networkingSettings: 'Networking'
   }
 }

@@ -67,7 +67,9 @@ export const profileDataSchema = baseProfileSchema.extend({
 export const profileWithPrivacySchema = baseProfileSchema.extend({
   picture: z.any().optional(),
   id: z.string(),
-  privacySettings: privacySettingsSchema
+  privacySettings: privacySettingsSchema,
+  linkedinAccessToken: z.string().optional(),
+  isLinkedinLinked: z.boolean().default(false)
 })
 
 export type UserDataCollected = z.infer<typeof userDataCollectedShema>

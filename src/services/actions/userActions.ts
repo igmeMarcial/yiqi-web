@@ -97,7 +97,8 @@ export async function getUserProfile(currentUserId: string) {
         phoneNumber: true,
         stopCommunication: true,
         dataCollected: true,
-        privacySettings: true
+        privacySettings: true,
+        linkedinAccessToken: true
       }
     })
     if (!user) return null
@@ -116,13 +117,16 @@ export async function getUserProfile(currentUserId: string) {
       x: dataCollected?.x ?? '',
       instagram: dataCollected?.instagram ?? '',
       website: dataCollected?.website ?? '',
-      privacySettings: user.privacySettings
+      privacySettings: user.privacySettings,
+      isLinkedinLinked: !!user.linkedinAccessToken
     }
 
     if (currentUserId == userCurrent.id) {
       return profileWithPrivacySchema.parse(cleanUserData)
     } else {
-      return filterProfileData(profileWithPrivacySchema.parse(cleanUserData))
+      return profileWithPrivacySchema.parse(
+        filterProfileData(cleanUserData as unknown as User)
+      )
     }
   } catch (error) {
     console.error('Error in getUserProfile:', error)

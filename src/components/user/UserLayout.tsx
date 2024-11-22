@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { LogOut, User, CreditCard, History, Ticket } from 'lucide-react'
+import { LogOut, User, CreditCard, History, Ticket, Speech } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -57,6 +57,11 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
       name: translations.es.tickets,
       icon: Ticket,
       href: `/user/tickets`
+    },
+    {
+      name: translations.es.networkingSettings,
+      icon: Speech,
+      href: `/user/networking-settings`
     }
   ]
 
