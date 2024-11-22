@@ -249,7 +249,28 @@ export const translations: Record<string, { [key: string]: string }> = {
     edit: 'Edit',
     free: 'Free',
     stripeAccount: 'Stripe Account',
-    networkingSettings: 'Networking Settings'
+    networkingSettings: 'Networking Settings',
+    // LinkedIn Connect Component
+    linkedinEnhanceTitle: 'Enhance Your Networking Experience',
+    linkedinEnhanceDescription:
+      'Connect your LinkedIn account to unlock powerful networking features',
+    linkedinBenefitMatchTitle: 'Personalized Match Making',
+    linkedinBenefitMatchDescription:
+      'Get curated lists of people you should meet at every event you attend',
+    linkedinBenefitHighlightsTitle: 'Community Highlights',
+    linkedinBenefitHighlightsDescription:
+      'Stay updated with important highlights tailored to your interests',
+    linkedinBenefitContentTitle: 'Personalized Content',
+    linkedinBenefitContentDescription:
+      'Receive content recommendations based on your interactions and preferences',
+    linkedinConnectButton: 'Link LinkedIn Account',
+    linkedinDisconnectButton: 'Disconnect LinkedIn Account',
+    linkedinConnectedMessage:
+      'Your LinkedIn account is connected. You can disconnect at any time.',
+    linkedinDisconnectedToast: 'LinkedIn account disconnected',
+    linkedinDisconnectedToastDesc: 'You can reconnect at any time',
+    linkedinErrorToast: 'Error disconnecting LinkedIn account',
+    linkedinErrorToastDesc: 'Please try again later'
   },
   es: {
     // General
@@ -512,6 +533,28 @@ export const translations: Record<string, { [key: string]: string }> = {
     importing: 'Importando...',
     importContacts: 'Importar Contactos',
     noOrganizationFound: 'No se encontró la organización',
-    networkingSettings: 'Networking'
+    networkingSettings: 'Networking',
+    // LinkedIn Connect Component
+    linkedinEnhanceTitle: 'Mejora tu Experiencia de Networking',
+    linkedinEnhanceDescription:
+      'Conecta tu cuenta de LinkedIn para desbloquear potentes funciones de networking',
+    linkedinBenefitMatchTitle: 'Conexiones Personalizadas',
+    linkedinBenefitMatchDescription:
+      'Obtén listas seleccionadas de personas que deberías conocer en cada evento al que asistas',
+    linkedinBenefitHighlightsTitle: 'Destacados de la Comunidad',
+    linkedinBenefitHighlightsDescription:
+      'Mantente actualizado con destacados importantes adaptados a tus intereses',
+    linkedinBenefitContentTitle: 'Contenido Personalizado',
+    linkedinBenefitContentDescription:
+      'Recibe recomendaciones de contenido basadas en tus interacciones y preferencias',
+    linkedinConnectButton: 'Vincular Cuenta de LinkedIn',
+    linkedinDisconnectButton: 'Desconectar Cuenta de LinkedIn',
+    linkedinConnectedMessage:
+      'Tu cuenta de LinkedIn está conectada. Puedes desconectarla en cualquier momento.',
+    linkedinDisconnectedToast: 'Cuenta de LinkedIn desconectada',
+    linkedinDisconnectedToastDesc:
+      'Puedes volver a conectarla en cualquier momento',
+    linkedinErrorToast: 'Error al desconectar la cuenta de LinkedIn',
+    linkedinErrorToastDesc: 'Por favor, inténtalo de nuevo más tarde'
   }
 }
