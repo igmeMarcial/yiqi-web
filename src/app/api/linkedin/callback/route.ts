@@ -3,7 +3,7 @@
 import { AuthClient } from 'linkedin-api-client'
 import prisma from '@/lib/prisma'
 import { getUser } from '@/lib/auth/lucia'
-import { redirect } from 'next/navigation'
+import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -42,7 +42,7 @@ export async function GET(req: Request) {
       }
     })
 
-    return redirect('/user/networking-settings')
+    return NextResponse.redirect(new URL('/user/networking-settings', req.url))
   } catch (error) {
     console.error('Error fetching LinkedIn data:', error)
     return new Response('Failed to fetch LinkedIn data', { status: 500 })
