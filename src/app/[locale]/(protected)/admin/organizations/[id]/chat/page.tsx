@@ -6,11 +6,12 @@ import { getOrganizationMessageThreads } from '@/services/actions/messagesAction
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: {locale:string, id: string } }) {
+  const { locale } = params;
   const user = await getUser()
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
 
   const chats = await getOrganizationMessageThreads(params.id)
@@ -35,10 +36,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/${locale}/newuser`)
   } else if (user.role == Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/${locale}/andino-admin`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/${locale}/user`)
   }
 }

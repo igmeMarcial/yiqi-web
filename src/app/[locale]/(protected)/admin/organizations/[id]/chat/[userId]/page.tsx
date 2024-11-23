@@ -13,12 +13,12 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 export default async function Page({
   params
 }: {
-  params: { id: string; userId: string }
+  params: { locale:string, id: string; userId: string }
 }) {
   const user = await getUser()
-
+  const {locale} = params
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
 
   const chats = await getOrganizationMessageThreads(params.id)
@@ -50,6 +50,6 @@ export default async function Page({
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/${locale}/newuser`)
   }
 }

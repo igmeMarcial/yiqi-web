@@ -9,13 +9,14 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { MessagesSquare, Users } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
-import { translations } from '@/lib/translations/translations'
+import { useLocale, useTranslations } from 'next-intl'
 
 function Chats({
   contextUserName,
   lastMessage,
   userId
 }: OrgMessageListItemSchemaType) {
+  const localActive = useLocale()
   function getFirst5Words(str: string): string {
     const words = str.split(' ')
     const first5Words = words.slice(0, 5)
@@ -23,7 +24,7 @@ function Chats({
   }
 
   return (
-    <Link prefetch={true} href={`/chat/${userId}`}>
+    <Link prefetch={true} href={`${localActive}/chat/${userId}`}>
       <div className="border-b last:border-b-0">
         <div className="flex flex-row items-start gap-3 p-3 hover:bg-accent">
           <Avatar>
@@ -48,6 +49,7 @@ export default function ChatComponent({
 }: {
   chats: OrgMessageListItemSchemaType[]
 }) {
+  const t = useTranslations("Chat")
   return (
     <Card className="h-[80vh]">
       <CardContent className="p-0 h-full">
@@ -56,7 +58,7 @@ export default function ChatComponent({
             <div className="h-full flex flex-col">
               <div className="p-4 border-b">
                 <h2 className="text-lg font-semibold">
-                  {translations.es.chats}
+                  {t("chats")}
                 </h2>
               </div>
               <ScrollArea className="flex-1">
@@ -73,7 +75,7 @@ export default function ChatComponent({
             <div className="flex flex-col h-full items-center justify-center p-6">
               <MessagesSquare className="w-10 h-10 mb-4" />
               <span className="font-semibold text-2xl">
-                {translations.es.clickToContinue}
+                {t("clickToContinue")}
               </span>
             </div>
           </ResizablePanel>

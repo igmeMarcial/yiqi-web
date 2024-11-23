@@ -13,13 +13,13 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { translations } from '@/lib/translations/translations'
 import {
   LayoutDashboard,
   LogOut,
   Settings,
   User as UserIcon
 } from 'lucide-react'
+import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 interface User {
@@ -33,10 +33,12 @@ interface AccountDropdownProps {
 }
 
 export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
+  const t = useTranslations("AccountDropdown")
+  const localActive = useLocale()
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
-        <Tooltip delayDuration={0}>
+        <Tooltip delayDuration={0}> 
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Avatar className="w-8 h-8 cursor-pointer">
@@ -44,7 +46,7 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
                   src={
                     user?.picture ?? `https://avatar.vercel.sh/${user?.email}`
                   }
-                  alt={user?.email || translations.es.defaultAvatarAlt}
+                  alt={user?.email || `${t("defaultAvatarAlt")}`}
                 />
               </Avatar>
             </DropdownMenuTrigger>
@@ -53,34 +55,34 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
       </TooltipProvider>
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel className="flex flex-col">
-          <span className="text-sm">{translations.es.myAccount}</span>
+          <span className="text-sm">{t("myAccount")}</span>
           <span className="text-xs text-muted-foreground">
-            {user?.email || translations.es.guestUser}
+            {user?.email || `${t("guestUser")}`}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={'/admin'} className="cursor-pointer">
+          <Link href={`/${localActive}/admin`} className="cursor-pointer">
             <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{translations.es.organization}</span>
+            <span>{t("organization")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={'/user'} className="cursor-pointer">
+          <Link href={`/${localActive}/user`} className="cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{translations.es.profile}</span>
+            <span>{t("profile")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={'/user/edit'} className="cursor-pointer">
+          <Link href={`/${localActive}/user/edit`} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{translations.es.settings}</span>
+            <span>{t("settings")}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
-          {translations.es.signOut}
+          {t("signOut")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

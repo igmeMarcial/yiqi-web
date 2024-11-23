@@ -35,7 +35,7 @@ import {
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 import { useEffect, useMemo, useState } from 'react'
 import { OrganizationType } from '@/schemas/organizerSchema'
-import { translations } from '@/lib/translations/translations'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -55,6 +55,8 @@ export default function OrganizationLayout({
   userProps,
   orgId
 }: AdminLayoutProps) {
+  const t = useTranslations("Sidebar")
+  const localActive = useLocale()
   const [organizations, setOrganizations] = useState<OrganizationType[]>([])
 
   useEffect(() => {
@@ -71,29 +73,29 @@ export default function OrganizationLayout({
 
   const navItems = [
     {
-      name: translations.es.chat,
+      name: `${t("chat")}`,
       icon: MessageSquare,
-      href: `/admin/organizations/${orgId}/chat`
+      href: `/${localActive}/admin/organizations/${orgId}/chat`
     },
     {
-      name: translations.es.events,
+      name: `${t("events")}`,
       icon: Calendar,
-      href: `/admin/organizations/${orgId}/events`
+      href: `/${localActive}/admin/organizations/${orgId}/events`
     },
     {
-      name: translations.es.contacts,
+      name: `${t("contacts")}`,
       icon: BookUser,
-      href: `/admin/organizations/${orgId}/contacts`
+      href: `/${localActive}/admin/organizations/${orgId}/contacts`
     },
     {
-      name: translations.es.organizers,
+      name: `${t("organizers")}`,
       icon: Users,
-      href: `/admin/organizations/${orgId}/organizers`
+      href: `/${localActive}/admin/organizations/${orgId}/organizers`
     },
     {
-      name: translations.es.billing,
+      name: `${t("billing")}`,
       icon: Banknote,
-      href: `/admin/organizations/${orgId}/billing`
+      href: `/${localActive}/admin/organizations/${orgId}/billing`
     }
   ]
 
@@ -118,7 +120,7 @@ export default function OrganizationLayout({
               <DropdownMenuContent className="w-56">
                 {organizations.map(org => (
                   <DropdownMenuItem key={org.id}>
-                    <Link href={`/admin/organizations/${org.id}`}>
+                    <Link href={`/${localActive}/admin/organizations/${org.id}`}>
                       {org.name}
                     </Link>
                   </DropdownMenuItem>
@@ -168,7 +170,7 @@ export default function OrganizationLayout({
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>{translations.es.logOut}</span>
+                      <span>{t("logOut")}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>

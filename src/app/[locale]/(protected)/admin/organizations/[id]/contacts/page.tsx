@@ -1,17 +1,19 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
-import Link from 'next/link'
+// import Link from 'next/link'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-import { ImportContactButton } from './ImportContactButton'
-import { ImportContactTemplateButton } from './ImportContactTemplateButton'
+// import { ImportContactButton } from './ImportContactButton'
+// import { ImportContactTemplateButton } from './ImportContactTemplateButton'
 import { translations } from '@/lib/translations/translations'
+import ContactText from '@/components/contacts'
 
 export default async function ContactsPage({
   params
 }: {
   params: { id: string }
 }) {
+  
   const user = await getUser()
 
   const organization = await getOrganization(params.id)
@@ -31,7 +33,8 @@ export default async function ContactsPage({
         name: user.name
       }}
     >
-      <div className="container mx-auto p-4">
+      {/* i commented this out becaue page.tsx is a server component and i18 runs on the client side */}
+      {/* <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">
             <span>{translations.es.contactsFor}</span> {organization.name}
@@ -59,7 +62,10 @@ export default async function ContactsPage({
         >
           <span>{translations.es.backToDashboard}</span>
         </Link>
-      </div>
+      </div> */}
+
+      <ContactText contacts={contacts} id={user?.id} name={organization.name} organizationId={organization.id}  />
+
     </OrganizationLayout>
   )
 }

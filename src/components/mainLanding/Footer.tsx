@@ -1,8 +1,10 @@
-import { translations } from '@/lib/translations/translations'
 import { Mail } from 'lucide-react'
+import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function Footer() {
+  const t = useTranslations("General")
+  const localActive = useLocale()
   return (
     <footer className=" text-white py-4">
       {/* Contenedor principal, centrado y con márgenes responsivos */}
@@ -32,7 +34,7 @@ export default function Footer() {
           <button className="p-2 rounded-full hover:bg-white hover:text-black"></button>
           <button
             className="p-2 rounded-full hover:bg-white hover:text-black"
-            aria-label={translations.es.contactUs}
+            aria-label={t("contactUs")}
           >
             <Mail className="w-5 h-5" />
           </button>
@@ -47,8 +49,8 @@ export default function Footer() {
 
       {/* Enlace inferior */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex justify-center space-x-6 text-sm">
-        <Link href="/politics/privacy" className="hover:underline">
-          {translations.es.privacy}
+        <Link href={`/${localActive}/politics/privacy`} className="hover:underline">
+          {t("privacy")}
         </Link>
       </div>
     </footer>
