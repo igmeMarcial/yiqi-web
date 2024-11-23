@@ -30,7 +30,7 @@ interface HeaderProps {
 
 export default function MainLandingNav({ user, logOut }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
-  const t = useTranslations("General")
+  const t = useTranslations('General')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,16 +64,16 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
           <nav className="hidden md:flex items-center space-x-4">
             <NavLink href="/events">
               <TicketSlash size={16} />
-              <span>{t("events")}</span>
+              <span>{t('events')}</span>
             </NavLink>
             <NavLink href="/communities">
               <Users size={16} />
-              <span>{t("communities")}</span>
+              <span>{t('communities')}</span>
             </NavLink>
             {!user || Object.keys(user).length === 0 ? (
               <Link href={'/user'}>
                 <Button size="sm" variant="default" className="font-semibold">
-                  {t("login")}
+                  {t('login')}
                 </Button>
               </Link>
             ) : (

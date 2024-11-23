@@ -243,7 +243,7 @@
         "hide": "Hide",
         "edit": "Edit",
         "free": "Free",
-        "stripeAccountRequired": "Se requiere cuenta de Stripe",
+        "stripeAccountRequired": "Stripe account required",
         "stripeSetupInfo": "Para cobrar entradas, configura tu cuenta de Stripe en los ajustes de facturación.",
         "clickHereStart": "Haz clic aquí para comenzar",
         "close": "Cerrar",
