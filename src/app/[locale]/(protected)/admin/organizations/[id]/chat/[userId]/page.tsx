@@ -13,10 +13,10 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 export default async function Page({
   params
 }: {
-  params: { locale:string, id: string; userId: string }
+  params: { locale: string; id: string; userId: string }
 }) {
   const user = await getUser()
-  const {locale} = params
+  const { locale } = params
   if (!user) {
     redirect(`/${locale}/auth`)
   }

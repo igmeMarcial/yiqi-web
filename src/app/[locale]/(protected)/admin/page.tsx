@@ -4,14 +4,14 @@ import { Roles } from '@prisma/client'
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 
 export default async function Page({
-  params,
+  params
 }: {
-  params:{
+  params: {
     locale: string
   }
 }) {
   const user = await getUser()
-  const {locale} = params
+  const { locale } = params
   if (!user) {
     return redirect(`/${locale}/auth`)
   }

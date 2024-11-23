@@ -33,12 +33,12 @@ interface AccountDropdownProps {
 }
 
 export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
-  const t = useTranslations("AccountDropdown")
+  const t = useTranslations('AccountDropdown')
   const localActive = useLocale()
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
-        <Tooltip delayDuration={0}> 
+        <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Avatar className="w-8 h-8 cursor-pointer">
@@ -46,7 +46,7 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
                   src={
                     user?.picture ?? `https://avatar.vercel.sh/${user?.email}`
                   }
-                  alt={user?.email || `${t("defaultAvatarAlt")}`}
+                  alt={user?.email || `${t('defaultAvatarAlt')}`}
                 />
               </Avatar>
             </DropdownMenuTrigger>
@@ -55,34 +55,34 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
       </TooltipProvider>
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel className="flex flex-col">
-          <span className="text-sm">{t("myAccount")}</span>
+          <span className="text-sm">{t('myAccount')}</span>
           <span className="text-xs text-muted-foreground">
-            {user?.email || `${t("guestUser")}`}
+            {user?.email || `${t('guestUser')}`}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={`/${localActive}/admin`} className="cursor-pointer">
             <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t("organization")}</span>
+            <span>{t('organization')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={`/${localActive}/user`} className="cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t("profile")}</span>
+            <span>{t('profile')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={`/${localActive}/user/edit`} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t("settings")}</span>
+            <span>{t('settings')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
-          {t("signOut")}
+          {t('signOut')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -21,7 +21,7 @@ import { createConnectAccount } from '@/services/actions/billing/createAccount'
 import { useTranslations } from 'next-intl'
 
 export default function StripeConnect({ accountId }: { accountId: string }) {
-  const t = useTranslations("StripeConnect")
+  const t = useTranslations('StripeConnect')
 
   const [accountCreatePending, setAccountCreatePending] = useState(false)
   const [onboardingExited, setOnboardingExited] = useState(false)
@@ -50,33 +50,33 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
             <Rocket className="w-6 h-6" />
-            {t("stripeConnectTitle")}
+            {t('stripeConnectTitle')}
           </CardTitle>
           <CardDescription>
             {!connectedAccountId
-              ? t("stripeConnectDescription")
+              ? t('stripeConnectDescription')
               : !stripeConnectInstance
-                ? `${t("stripeConnectOnboardingDescription")}`
-                : `${t("stripeConnectCompleteOnboarding")}`}
+                ? `${t('stripeConnectOnboardingDescription')}`
+                : `${t('stripeConnectCompleteOnboarding')}`}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {!connectedAccountId && (
             <p className="text-sm text-muted-foreground">
-              {t("stripeConnectInfoText")}
+              {t('stripeConnectInfoText')}
             </p>
           )}
 
           {!accountCreatePending && !connectedAccountId && (
             <Button onClick={handleSignUp} className="w-full">
-              {t("stripeConnectSignUp")}
+              {t('stripeConnectSignUp')}
             </Button>
           )}
 
           {accountCreatePending && (
             <div className="flex items-center justify-center space-x-2">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <p>{t("stripeConnectCreatingAccount")}</p>
+              <p>{t('stripeConnectCreatingAccount')}</p>
             </div>
           )}
 
@@ -91,9 +91,9 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle>{t("stripeConnectError")}</AlertTitle>
+              <AlertTitle>{t('stripeConnectError')}</AlertTitle>
               <AlertDescription>
-                {t("stripeConnectErrorDescription")}
+                {t('stripeConnectErrorDescription')}
               </AlertDescription>
             </Alert>
           )}
@@ -102,7 +102,7 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
           <CardFooter className="flex flex-col items-start space-y-2 bg-muted/50 rounded-b-lg">
             {connectedAccountId && (
               <p className="text-sm">
-                {t("stripeConnectAccountId")}{' '}
+                {t('stripeConnectAccountId')}{' '}
                 <code className="font-mono bg-muted p-1 rounded">
                   {connectedAccountId}
                 </code>
@@ -110,7 +110,7 @@ export default function StripeConnect({ accountId }: { accountId: string }) {
             )}
             {onboardingExited && (
               <p className="text-sm text-muted-foreground">
-                {t("stripeConnectOnboardingExited")}
+                {t('stripeConnectOnboardingExited')}
               </p>
             )}
           </CardFooter>

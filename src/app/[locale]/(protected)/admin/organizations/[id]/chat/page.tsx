@@ -6,8 +6,12 @@ import { getOrganizationMessageThreads } from '@/services/actions/messagesAction
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 
-export default async function Page({ params }: { params: {locale:string, id: string } }) {
-  const { locale } = params;
+export default async function Page({
+  params
+}: {
+  params: { locale: string; id: string }
+}) {
+  const { locale } = params
   const user = await getUser()
 
   if (!user) {

@@ -13,7 +13,6 @@ export default async function ContactsPage({
 }: {
   params: { id: string }
 }) {
-  
   const user = await getUser()
 
   const organization = await getOrganization(params.id)
@@ -64,8 +63,12 @@ export default async function ContactsPage({
         </Link>
       </div> */}
 
-      <ContactText contacts={contacts} id={user?.id} name={organization.name} organizationId={organization.id}  />
-
+      <ContactText
+        contacts={contacts}
+        id={user?.id}
+        name={organization.name}
+        organizationId={organization.id}
+      />
     </OrganizationLayout>
   )
 }

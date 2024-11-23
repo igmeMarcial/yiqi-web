@@ -29,7 +29,7 @@ interface HeaderProps {
 
 export default function MainLandingNav({ user, logOut }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
-  const t = useTranslations('General');
+  const t = useTranslations('General')
   const localActive = useLocale()
 
   useEffect(() => {
@@ -89,19 +89,19 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                 className="md:hidden hover:bg-transparent"
               >
                 <Menu className="h-6 w-6 text-white " />
-                <span className="sr-only">{t("openMenu")}</span>
+                <span className="sr-only">{t('openMenu')}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle>{t("menu")}</SheetTitle>
+                <SheetTitle>{t('menu')}</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col space-y-4">
                 <NavLink href={`/${localActive}/communities`} mobile>
-                  {t("communities")}
+                  {t('communities')}
                 </NavLink>
                 <NavLink href={`/${localActive}/events`} mobile>
-                  {t("events")}
+                  {t('events')}
                 </NavLink>
                 {!user ? (
                   <Link href={`/${localActive}/user`}>
@@ -110,11 +110,14 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                       variant="default"
                       className="w-full font-semibold"
                     >
-                      {t("login")}
+                      {t('login')}
                     </Button>
                   </Link>
                 ) : (
-                  <Link href={`/${localActive}/admin`} className="flex items-center space-x-2">
+                  <Link
+                    href={`/${localActive}/admin`}
+                    className="flex items-center space-x-2"
+                  >
                     <Avatar className="w-8 h-8">
                       <AvatarImage
                         alt={user.name ?? ''}
@@ -124,7 +127,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                         {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
-                    <span>{t("myAccount")}</span>
+                    <span>{t('myAccount')}</span>
                   </Link>
                 )}
               </div>

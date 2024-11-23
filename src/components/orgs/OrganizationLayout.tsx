@@ -55,7 +55,7 @@ export default function OrganizationLayout({
   userProps,
   orgId
 }: AdminLayoutProps) {
-  const t = useTranslations("Sidebar")
+  const t = useTranslations('Sidebar')
   const localActive = useLocale()
   const [organizations, setOrganizations] = useState<OrganizationType[]>([])
 
@@ -73,27 +73,27 @@ export default function OrganizationLayout({
 
   const navItems = [
     {
-      name: `${t("chat")}`,
+      name: `${t('chat')}`,
       icon: MessageSquare,
       href: `/${localActive}/admin/organizations/${orgId}/chat`
     },
     {
-      name: `${t("events")}`,
+      name: `${t('events')}`,
       icon: Calendar,
       href: `/${localActive}/admin/organizations/${orgId}/events`
     },
     {
-      name: `${t("contacts")}`,
+      name: `${t('contacts')}`,
       icon: BookUser,
       href: `/${localActive}/admin/organizations/${orgId}/contacts`
     },
     {
-      name: `${t("organizers")}`,
+      name: `${t('organizers')}`,
       icon: Users,
       href: `/${localActive}/admin/organizations/${orgId}/organizers`
     },
     {
-      name: `${t("billing")}`,
+      name: `${t('billing')}`,
       icon: Banknote,
       href: `/${localActive}/admin/organizations/${orgId}/billing`
     }
@@ -120,7 +120,9 @@ export default function OrganizationLayout({
               <DropdownMenuContent className="w-56">
                 {organizations.map(org => (
                   <DropdownMenuItem key={org.id}>
-                    <Link href={`/${localActive}/admin/organizations/${org.id}`}>
+                    <Link
+                      href={`/${localActive}/admin/organizations/${org.id}`}
+                    >
                       {org.name}
                     </Link>
                   </DropdownMenuItem>
@@ -170,7 +172,7 @@ export default function OrganizationLayout({
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>{t("logOut")}</span>
+                      <span>{t('logOut')}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>

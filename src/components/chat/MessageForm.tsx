@@ -41,7 +41,7 @@ export function MessageForm({
   messageType,
   setMessageType
 }: MessageFormProps) {
-  const t = useTranslations("BulkSend")
+  const t = useTranslations('BulkSend')
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,10 +58,7 @@ export function MessageForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea
-                  placeholder={t("typeYourMessage")}
-                  {...field}
-                />
+                <Textarea placeholder={t('typeYourMessage')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,7 +70,7 @@ export function MessageForm({
               <Button variant="outline">
                 {messageType === MessageThreadTypeEnum.Enum.whatsapp
                   ? `${t('whatsapp')}`
-                  : `${t("email")}`}
+                  : `${t('email')}`}
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -83,20 +80,20 @@ export function MessageForm({
                   setMessageType(MessageThreadTypeEnum.Enum.whatsapp)
                 }
               >
-                {t("whatsapp")}
+                {t('whatsapp')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => setMessageType(MessageThreadTypeEnum.Enum.email)}
               >
-                {t("email")}
+                {t('email')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button type="submit">
-            {t("send")}{' '}
+            {t('send')}{' '}
             {messageType === MessageThreadTypeEnum.Enum.whatsapp
-              ? `${t("whatsapp")}`
-              : `${t("email")}`}
+              ? `${t('whatsapp')}`
+              : `${t('email')}`}
           </Button>
         </div>
       </form>
