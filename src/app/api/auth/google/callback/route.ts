@@ -1,8 +1,7 @@
 import { googleOAuthClient, lucia } from '@/lib/auth/lib'
 import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 // http://localhost:3000/api/auth/google/callback
 export async function GET(req: NextRequest) {
@@ -85,5 +84,5 @@ export async function GET(req: NextRequest) {
     sessionCookie.attributes
   )
 
-  return redirect('/newuser')
+  return NextResponse.redirect(new URL('/newuser', req.url))
 }

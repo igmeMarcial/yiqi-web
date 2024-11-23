@@ -193,3 +193,23 @@ export type SocialActionsResponse = z.infer<typeof SocialActionsResponseSchema>
 export type UGCPostsResponse = z.infer<typeof UGCPostsResponseSchema>
 
 export type LinkedInProfileType = z.infer<typeof LinkedInProfileSchema>
+
+export const LinkedInContactSchema = z.object({
+  elements: z.array(
+    z.object({
+      handle: z.string(),
+      'handle~': z.object({
+        emailAddress: z.string().optional(),
+        phoneNumber: z
+          .object({
+            number: z.string()
+          })
+          .optional()
+      }),
+      primary: z.boolean(),
+      type: z.enum(['EMAIL', 'PHONE'])
+    })
+  )
+})
+
+export type LinkedInContact = z.infer<typeof LinkedInContactSchema>
