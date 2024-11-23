@@ -1,27 +1,18 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
-// import Link from 'next/link'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-// import { ImportContactButton } from './ImportContactButton'
-// import { ImportContactTemplateButton } from './ImportContactTemplateButton'
-<<<<<<< HEAD
-import { ContactText1 } from '@/components/contacts'
+import ContactText, { ContactText1 } from '@/components/contacts'
 import Link from 'next/link'
 import { ImportContactTemplateButton } from './ImportContactTemplateButton'
 import { ImportContactButton } from './ImportContactButton'
 import { getLocale, getTranslations } from 'next-intl/server'
-=======
-import { translations } from '@/lib/translations/translations'
-import ContactText from '@/components/contacts'
->>>>>>> 94ce09a (i18n frontEnd migration)
 
 export default async function ContactsPage({
   params
 }: {
   params: { id: string }
 }) {
-  
   const user = await getUser()
   const t = await getTranslations('contactFor')
   const localActive = await getLocale()
@@ -81,12 +72,13 @@ export default async function ContactsPage({
         name={organization.name}
         organizationId={organization.id}
       /> */}
-=======
-      </div> */}
 
-      <ContactText contacts={contacts} id={user?.id} name={organization.name} organizationId={organization.id}  />
-
->>>>>>> 94ce09a (i18n frontEnd migration)
+      <ContactText
+        contacts={contacts}
+        id={user?.id}
+        name={organization.name}
+        organizationId={organization.id}
+      />
     </OrganizationLayout>
   )
 }

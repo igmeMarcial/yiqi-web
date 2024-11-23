@@ -17,15 +17,9 @@ patricia.gonzalez@example.com,678901234,Patricia Gonzalez,38,San Francisco`
 */
 
 export function ImportContactTemplateButton() {
-<<<<<<< HEAD
   const t = useTranslations('ContactTemplateDownload')
   function handleOnClickButton() {
     const exampleCsv = `${t('exampleCsvContent')}`
-=======
-  const t = useTranslations("ContactTemplateDownload")
-  function handleOnClickButton() {
-    const exampleCsv = `${t("exampleCsvContent")}`
->>>>>>> 94ce09a (i18n frontEnd migration)
     const blob = new Blob([exampleCsv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -39,11 +33,7 @@ export function ImportContactTemplateButton() {
       className="text-blue-500 hover:text-blue-700 hover:underline text-sm"
       onClick={handleOnClickButton}
     >
-<<<<<<< HEAD
       {t('downloadCsvTemplate')}
-=======
-      {t("downloadCsvTemplate")}
->>>>>>> 94ce09a (i18n frontEnd migration)
     </button>
   )
 }
