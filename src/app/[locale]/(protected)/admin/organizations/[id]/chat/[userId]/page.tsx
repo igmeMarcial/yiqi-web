@@ -13,10 +13,17 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 export default async function Page({
   params
 }: {
+<<<<<<< HEAD
   params: { locale: string; id: string; userId: string }
 }) {
   const user = await getUser()
   const { locale } = params
+=======
+  params: { locale:string, id: string; userId: string }
+}) {
+  const user = await getUser()
+  const {locale} = params
+>>>>>>> 94ce09a (i18n frontEnd migration)
   if (!user) {
     redirect(`/${locale}/auth`)
   }

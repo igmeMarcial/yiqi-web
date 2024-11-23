@@ -6,12 +6,17 @@ import { getOrganizationMessageThreads } from '@/services/actions/messagesAction
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 
+<<<<<<< HEAD
 export default async function Page({
   params
 }: {
   params: { locale: string; id: string }
 }) {
   const { locale } = params
+=======
+export default async function Page({ params }: { params: {locale:string, id: string } }) {
+  const { locale } = params;
+>>>>>>> 94ce09a (i18n frontEnd migration)
   const user = await getUser()
 
   if (!user) {

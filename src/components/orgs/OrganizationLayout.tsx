@@ -78,7 +78,7 @@ export default function OrganizationLayout({
       href: `/admin/organizations/${orgId}/settings`
     },
     {
-      //add missing here
+      name: `${t('chat')}`,
       icon: MessageSquare,
       href: `/${localActive}/admin/organizations/${orgId}/chat`
     },

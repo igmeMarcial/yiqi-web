@@ -4,14 +4,24 @@ import { Roles } from '@prisma/client'
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 
 export default async function Page({
+<<<<<<< HEAD
   params
 }: {
   params: {
+=======
+  params,
+}: {
+  params:{
+>>>>>>> 94ce09a (i18n frontEnd migration)
     locale: string
   }
 }) {
   const user = await getUser()
+<<<<<<< HEAD
   const { locale } = params
+=======
+  const {locale} = params
+>>>>>>> 94ce09a (i18n frontEnd migration)
   if (!user) {
     return redirect(`/${locale}/auth`)
   }

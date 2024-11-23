@@ -5,17 +5,23 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
 // import { ImportContactButton } from './ImportContactButton'
 // import { ImportContactTemplateButton } from './ImportContactTemplateButton'
+<<<<<<< HEAD
 import { ContactText1 } from '@/components/contacts'
 import Link from 'next/link'
 import { ImportContactTemplateButton } from './ImportContactTemplateButton'
 import { ImportContactButton } from './ImportContactButton'
 import { getLocale, getTranslations } from 'next-intl/server'
+=======
+import { translations } from '@/lib/translations/translations'
+import ContactText from '@/components/contacts'
+>>>>>>> 94ce09a (i18n frontEnd migration)
 
 export default async function ContactsPage({
   params
 }: {
   params: { id: string }
 }) {
+  
   const user = await getUser()
   const t = await getTranslations('contactFor')
   const localActive = await getLocale()
@@ -37,7 +43,8 @@ export default async function ContactsPage({
         name: user.name
       }}
     >
-      <div className="container mx-auto p-4">
+      {/* i commented this out becaue page.tsx is a server component and i18 runs on the client side */}
+      {/* <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">
             <span>{t('contactsFor')}</span> {organization.name}
@@ -65,6 +72,7 @@ export default async function ContactsPage({
         >
           <span>{t('backToDashboard')}</span>
         </Link>
+<<<<<<< HEAD
       </div>
 
       {/* <ContactText
@@ -73,6 +81,12 @@ export default async function ContactsPage({
         name={organization.name}
         organizationId={organization.id}
       /> */}
+=======
+      </div> */}
+
+      <ContactText contacts={contacts} id={user?.id} name={organization.name} organizationId={organization.id}  />
+
+>>>>>>> 94ce09a (i18n frontEnd migration)
     </OrganizationLayout>
   )
 }
