@@ -135,9 +135,7 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
               <FormControl>
                 <Input placeholder="https://example.com/logo.png" {...field} />
               </FormControl>
-              <FormDescription>
-                {t("logoDescription")}
-              </FormDescription>
+              <FormDescription>{t('logoDescription')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -148,20 +146,18 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
           name="colour"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Color")}</FormLabel>
+              <FormLabel>{t('Color')}</FormLabel>
               <FormControl>
                 <ColorPicker value={field.value} onChange={field.onChange} />
               </FormControl>
-              <FormDescription>
-                {t("colorDescription")}
-              </FormDescription>
+              <FormDescription>{t('colorDescription')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button className="w-full" type="submit">
-          {t("Begin")}
+          {t('Begin')}
         </Button>
       </form>
     </Form>
@@ -169,18 +165,16 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
 }
 
 function AddOrgButton({ userId }: { userId: string }) {
-  const t = useTranslations("AddOrg")
+  const t = useTranslations('AddOrg')
   return (
     <Dialog>
       <DialogTrigger asChild className="w-fit">
-        <Button className="min-w-fit">{t("createNewOrg")}</Button>
+        <Button className="min-w-fit">{t('createNewOrg')}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("createNewOrg")}</DialogTitle>
-          <DialogDescription>
-            {t("form")}
-          </DialogDescription>
+          <DialogTitle>{t('createNewOrg')}</DialogTitle>
+          <DialogDescription>{t('form')}</DialogDescription>
         </DialogHeader>
         <AddOrgButtonForm userId={userId} />
       </DialogContent>
