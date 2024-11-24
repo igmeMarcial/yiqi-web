@@ -14,6 +14,7 @@ import { Loader2 } from 'lucide-react'
 import { checkInUserToEvent } from '@/services/actions/eventActions'
 import type { TicketSchema } from '@/schemas/eventSchema'
 import { z } from 'zod'
+import { useTranslations } from 'next-intl'
 
 type CheckinButtonProps = {
   ticket: z.infer<typeof TicketSchema>
@@ -26,6 +27,7 @@ export default function CheckinButton({
   eventId,
   selected = false
 }: CheckinButtonProps) {
+  const t = useTranslations("CheckIn")
   const [isOpen, setIsOpen] = useState(selected)
   const [isLoading, setIsLoading] = useState(false)
   const [isCheckedIn, setIsCheckedIn] = useState(!!ticket.checkedInDate)
@@ -57,34 +59,34 @@ export default function CheckinButton({
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Checking in...
+            {t("checkingIn")}
           </>
         ) : (
-          'Check in'
+          `${t("checkIn")}`
         )}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirm Check-in</DialogTitle>
+            <DialogTitle>{t("confirm")}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to check in{' '}
+              {t("sure")}{' '}
               {ticket.user?.name || 'this user'}?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button onClick={handleCheckin} disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Checking in...
+                  {t("checkingIn")}
                 </>
               ) : (
-                'Confirm Check-in'
+                `${t("confirm")}`
               )}
             </Button>
           </DialogFooter>

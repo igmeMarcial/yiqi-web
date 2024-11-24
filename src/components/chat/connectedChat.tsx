@@ -12,6 +12,7 @@ import {
   MessageThreadTypeEnum
 } from '@/schemas/messagesSchema'
 import { MessageForm } from './MessageForm'
+import { useTranslations } from 'next-intl'
 
 export default function ConnectedChat({
   defaultMessages,
@@ -22,6 +23,7 @@ export default function ConnectedChat({
   userId: string
   orgId: string
 }) {
+  const t = useTranslations("ConnectedChat")
   const [messages, setMessages] = useState(defaultMessages)
   const [messageType, setMessageType] = useState<MessageThreadType>(
     defaultMessages.at(0)?.messageThread.type ||
@@ -105,7 +107,7 @@ export default function ConnectedChat({
   return (
     <div className="flex flex-col h-full w-full">
       <ScrollArea className="flex-grow" ref={scrollAreaRef}>
-        {isLoading && <div ref={loadingRef}>Loading more messages...</div>}
+        {isLoading && <div ref={loadingRef}>{t("loading")}</div>}
         {messages
           .map(message => (
             <div key={message.id} className="mb-4">

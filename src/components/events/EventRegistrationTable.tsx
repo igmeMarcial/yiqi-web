@@ -13,13 +13,14 @@ import {
   AttendeeStatus,
   EventRegistrationsSchemaType
 } from '@/schemas/eventSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export default function EventRegistrationTable({
   registrations
 }: {
   registrations: EventRegistrationsSchemaType[]
 }) {
+  const t = useTranslations("DeleteAccount")
   async function handleApproval(
     registrationId: string,
     status: 'APPROVED' | 'REJECTED'
@@ -31,10 +32,10 @@ export default function EventRegistrationTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{translations.es.name}</TableHead>
-          <TableHead>{translations.es.email}</TableHead>
-          <TableHead>{translations.es.status}</TableHead>
-          <TableHead>{translations.es.action}</TableHead>
+          <TableHead>{t("name")}</TableHead>
+          <TableHead>{t("email")}</TableHead>
+          <TableHead>{t("status")}</TableHead>
+          <TableHead>{t("action")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -50,7 +51,7 @@ export default function EventRegistrationTable({
                   size="sm"
                   className="bg-green-500 hover:bg-green-600"
                 >
-                  <Check className="w-4 h-4 mr-1" /> {translations.es.approve}
+                  <Check className="w-4 h-4 mr-1" /> {t("approve")}
                 </Button>
               )}
 
@@ -60,7 +61,7 @@ export default function EventRegistrationTable({
                   size="sm"
                   className="bg-red-500 hover:bg-red-600"
                 >
-                  <X className="w-4 h-4 mr-1" /> {translations.es.reject}
+                  <X className="w-4 h-4 mr-1" /> {t("reject")}
                 </Button>
               )}
             </TableCell>

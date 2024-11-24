@@ -11,8 +11,10 @@ import { translations } from '@/lib/translations/translations'
 export default async function EventsPage({
   params
 }: {
-  params: { id: string }
+  params: { locale: string, id: string }
+
 }) {
+  const {locale} = params
   const organization = await getOrganization(params.id)
   const user = await getUser()
   const events = await getOrganizationEvents(params.id)
@@ -21,7 +23,7 @@ export default async function EventsPage({
   }
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
   if (user.role === Roles.ADMIN) {
     return (
@@ -62,8 +64,8 @@ export default async function EventsPage({
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/${locale}/newuser`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/${locale}/user`)
   }
 }

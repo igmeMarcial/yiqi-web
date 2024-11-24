@@ -1,5 +1,6 @@
 {
     "General":{
+        "withGoogle":"Log in with Google",
         "eventTitle": "Event Title",
         "location": "Location",
         "startDate": "Start Date",
@@ -164,6 +165,7 @@
         "tellUsAboutYourself": "Tell us about yourself"
     },
     "DeleteAccount":{
+        "tickets": "Tickets",
         "deleteAccount": "Delete Account",
         "areYouSure": "Are you absolutely sure?",
         "actionCannotBeUndone": "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
@@ -255,6 +257,36 @@
         "importContacts": "Import Contacts",
         "noOrganizationFound": "No organization found",
         "networkingSettings": "Networking Settings"        
+    },
+
+    "AdminLayout":{
+       "organization":"Organization",
+       "settings":"Settings",
+       "logOut":"Log out"
+    },
+    "ConnectedChat":{
+        "loading":"Loading more messages..."
+    },
+    "Editor":{
+       "Edit":"Edit Markdown Content",
+       "Delete":"Delete" 
+    },
+    "CheckIn":{
+        "checkingIn":"Checking in..." ,
+        "checkIn": "Check in",
+        "confirm":"Confirm Check-in",
+        "sure":"Are you sure you want to check in",
+        "cancel":"Cancel"
+    },
+    "Event":{
+        "search": "Search by name...",
+        "Name":"Name",
+        "id" :"Ticket ID",
+        "checkin": "Checked In",
+        "No":"No",
+        "Subject":"Subject",
+        "date":"Sent Date",
+        "sentTo": "Sent to"
     }
 
 }
