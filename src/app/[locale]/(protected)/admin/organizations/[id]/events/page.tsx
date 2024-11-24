@@ -17,6 +17,7 @@ export default async function EventsPage({
 }) {
   const t = await getTranslations('contactFor')
   const { locale } = params
+
   const organization = await getOrganization(params.id)
   const user = await getUser()
   const events = await getOrganizationEvents(params.id)
