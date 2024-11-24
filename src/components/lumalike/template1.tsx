@@ -15,6 +15,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { useTranslations } from 'next-intl'
 
 export interface Host {
   name: string
@@ -109,6 +110,7 @@ function EventDetails({
   city,
   featuredIn
 }: EventDetailsProps) {
+  const t = useTranslations('Luma')
   return (
     <motion.div
       className="space-y-4"
@@ -121,7 +123,7 @@ function EventDetails({
           variant="secondary"
           className="text-xs flex-row flex items-center gap-2 px-2 py-1 max-w-fit"
         >
-          Featured in
+          {'Featured in'}
           <Link href={featuredIn.url} className="font-medium hover:underline">
             {featuredIn.name}
           </Link>
@@ -148,6 +150,8 @@ function EventDetails({
 }
 
 function Registration() {
+  const t = useTranslations('Luma')
+
   return (
     <motion.div
       className="space-y-4"
@@ -155,7 +159,7 @@ function Registration() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <h2 className="text-2xl font-semibold text-white">Registro</h2>
+      <h2 className="text-2xl font-semibold text-white">{t('Register')}</h2>
       <Card className="bg-secondary/10 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-start gap-4 mb-6">
@@ -164,15 +168,15 @@ function Registration() {
             </div>
             <div>
               <div className="font-semibold text-lg mb-1 text-white">
-                Approval Required
+                {t('approval')}
               </div>
               <p className="text-sm text-muted-foreground text-white">
-                Your registration is subject to approval by the host.
+                {t('approvalBody')}
               </p>
             </div>
           </div>
           <Button size="lg" className="w-full">
-            Request to Join
+            {t('request')}
           </Button>
         </CardContent>
       </Card>
@@ -185,6 +189,7 @@ interface HostsProps {
 }
 
 function Hosts({ hosts }: HostsProps) {
+  const t = useTranslations('Luma')
   return (
     <motion.div
       className="space-y-4"
@@ -192,7 +197,7 @@ function Hosts({ hosts }: HostsProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.6 }}
     >
-      <h2 className="text-2xl font-semibold">Hosted By</h2>
+      <h2 className="text-2xl font-semibold">{t('HostedBy')}</h2>
       <div className="grid gap-6 sm:grid-cols-2 ">
         {hosts.map((host, index) => (
           <motion.div
@@ -232,6 +237,7 @@ interface EventDescriptionProps {
 }
 
 function EventDescription({ description }: EventDescriptionProps) {
+  const t = useTranslations('Luma')
   return (
     <motion.div
       className="space-y-4 text-white"
@@ -239,7 +245,7 @@ function EventDescription({ description }: EventDescriptionProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.8 }}
     >
-      <h2 className="text-2xl font-semibold">About Event</h2>
+      <h2 className="text-2xl font-semibold">{t('aboutEvent')}</h2>
       <Card className="bg-secondary/10 backdrop-blur-sm text-white">
         <CardContent className="p-6 text-white">
           <div className="prose prose-sm dark:prose-invert text-white max-w-none">

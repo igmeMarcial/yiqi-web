@@ -27,7 +27,7 @@ export default function CheckinButton({
   eventId,
   selected = false
 }: CheckinButtonProps) {
-  const t = useTranslations("CheckIn")
+  const t = useTranslations('CheckIn')
   const [isOpen, setIsOpen] = useState(selected)
   const [isLoading, setIsLoading] = useState(false)
   const [isCheckedIn, setIsCheckedIn] = useState(!!ticket.checkedInDate)
@@ -59,34 +59,33 @@ export default function CheckinButton({
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            {t("checkingIn")}
+            {t('checkingIn')}
           </>
         ) : (
-          `${t("checkIn")}`
+          `${t('checkIn')}`
         )}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("confirm")}</DialogTitle>
+            <DialogTitle>{t('confirm')}</DialogTitle>
             <DialogDescription>
-              {t("sure")}{' '}
-              {ticket.user?.name || 'this user'}?
+              {t('sure')} {ticket.user?.name || 'this user'}?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsOpen(false)}>
-              {t("cancel")}
+              {t('cancel')}
             </Button>
             <Button onClick={handleCheckin} disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t("checkingIn")}
+                  {t('checkingIn')}
                 </>
               ) : (
-                `${t("confirm")}`
+                `${t('confirm')}`
               )}
             </Button>
           </DialogFooter>

@@ -20,7 +20,7 @@ export default function EventRegistrationTable({
 }: {
   registrations: EventRegistrationsSchemaType[]
 }) {
-  const t = useTranslations("DeleteAccount")
+  const t = useTranslations('DeleteAccount')
   async function handleApproval(
     registrationId: string,
     status: 'APPROVED' | 'REJECTED'
@@ -32,10 +32,10 @@ export default function EventRegistrationTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{t("name")}</TableHead>
-          <TableHead>{t("email")}</TableHead>
-          <TableHead>{t("status")}</TableHead>
-          <TableHead>{t("action")}</TableHead>
+          <TableHead>{t('name')}</TableHead>
+          <TableHead>{t('email')}</TableHead>
+          <TableHead>{t('status')}</TableHead>
+          <TableHead>{t('action')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -51,7 +51,7 @@ export default function EventRegistrationTable({
                   size="sm"
                   className="bg-green-500 hover:bg-green-600"
                 >
-                  <Check className="w-4 h-4 mr-1" /> {t("approve")}
+                  <Check className="w-4 h-4 mr-1" /> {t('approve')}
                 </Button>
               )}
 
@@ -61,7 +61,7 @@ export default function EventRegistrationTable({
                   size="sm"
                   className="bg-red-500 hover:bg-red-600"
                 >
-                  <X className="w-4 h-4 mr-1" /> {t("reject")}
+                  <X className="w-4 h-4 mr-1" /> {t('reject')}
                 </Button>
               )}
             </TableCell>

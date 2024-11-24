@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function EventCommunicationsTable({ eventId }: Props) {
-  const t = useTranslations("Event")
+  const t = useTranslations('Event')
   const [communications, setCommunications] = useState<
     NotificationSchemaType[]
   >([])
@@ -33,9 +33,9 @@ export default function EventCommunicationsTable({ eventId }: Props) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>{t("Subject")}</TableHead>
-          <TableHead>{t("date")}</TableHead>
-          <TableHead>{t("sentTo")}</TableHead>
+          <TableHead>{t('Subject')}</TableHead>
+          <TableHead>{t('date')}</TableHead>
+          <TableHead>{t('sentTo')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

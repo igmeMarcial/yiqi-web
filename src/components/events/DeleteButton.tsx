@@ -10,11 +10,13 @@ export function DeleteButton(params: {
 }) {
   const router = useRouter()
   const localActive = useLocale()
-  const t = useTranslations("Editor")
+  const t = useTranslations('Editor')
 
   async function handleOnDelete() {
     await deleteEvent(params.eventId)
-    router.push(`/${localActive}/admin/organizations/${params.organizationId}/events`)
+    router.push(
+      `/${localActive}/admin/organizations/${params.organizationId}/events`
+    )
   }
 
   return (
@@ -22,7 +24,7 @@ export function DeleteButton(params: {
       onClick={handleOnDelete}
       className="text-destructive h-10 px-4 py-2 rounded-md cursor-pointer"
     >
-      {t("Delete")}
+      {t('Delete')}
     </Button>
   )
 }

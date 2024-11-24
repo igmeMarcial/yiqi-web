@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 
 export default function GoogleOAuthButton() {
   const { toast } = useToast()
-  const t = useTranslations("General")
+  const t = useTranslations('General')
   return (
     <Button
       className="flex flex-row gap-2 w-full"
@@ -25,7 +25,7 @@ export default function GoogleOAuthButton() {
         }
       }}
     >
-      `${t("withGoogle")}` <GoogleIcon />
+      `${t('withGoogle')}` <GoogleIcon />
     </Button>
   )
 }

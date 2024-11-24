@@ -10,7 +10,7 @@ export function ImportContactButton(params: { organizationId: string }) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const t = useTranslations("DeleteAccount")
+  const t = useTranslations('DeleteAccount')
 
   const handleImportContacts = async () => {
     setIsLoading(true)
@@ -65,7 +65,7 @@ export function ImportContactButton(params: { organizationId: string }) {
       onClick={handleImportContacts}
       disabled={isLoading}
     >
-      {isLoading ? `${t("importing")}` : `${t("importContacts")}`}
+      {isLoading ? `${t('importing')}` : `${t('importContacts')}`}
     </button>
   )
 }

@@ -2,19 +2,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { communityHighlights } from '@/data/events'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 const CommunityHighlights = () => {
+  const t = useTranslations("CommunityHighlights")
   return (
     <section className="w-full bg-black py-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white">
-            {translations.es.highlightsTitle}
+            {t("highlightsTitle")}
           </h2>
           <p className="mt-2 text-gray-400">
-            {translations.es.highlightsSubtitle}
+            {t("highlightsSubtitle")}
           </p>
         </div>
 

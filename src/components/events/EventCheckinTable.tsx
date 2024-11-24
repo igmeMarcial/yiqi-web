@@ -17,7 +17,7 @@ export default function EventCheckinTable({
   registrations: EventRegistrationSchemaType[]
   ticketId?: string
 }) {
-  const t = useTranslations("Event")
+  const t = useTranslations('Event')
 
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 1500) // 1.5 seconds
@@ -42,7 +42,7 @@ export default function EventCheckinTable({
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder={t("search")}
+          placeholder={t('search')}
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           className="pl-8"
@@ -52,9 +52,9 @@ export default function EventCheckinTable({
       <table className="min-w-full table-auto">
         <thead>
           <tr className="bg-gray-100">
-            <th className="px-4 py-2 text-left">{t("Name")}</th>
-            <th className="px-4 py-2 text-left">{t("id")}</th>
-            <th className="px-4 py-2 text-left">{("checkin")}</th>
+            <th className="px-4 py-2 text-left">{t('Name')}</th>
+            <th className="px-4 py-2 text-left">{t('id')}</th>
+            <th className="px-4 py-2 text-left">{'checkin'}</th>
             <th className="px-4 py-2"></th>
           </tr>
         </thead>
@@ -67,7 +67,7 @@ export default function EventCheckinTable({
                 <td className="px-4 py-2">
                   {ticket.checkedInDate
                     ? ticket.checkedInDate.toLocaleString()
-                    : `${t("No")}`}
+                    : `${t('No')}`}
                 </td>
                 <td className="px-4 py-2">
                   <CheckinButton

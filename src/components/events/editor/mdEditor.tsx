@@ -59,7 +59,7 @@ export function MarkdownEditor(props: {
   name: string
   onChange: (value: string) => void
 }) {
-  const t = useTranslations("Editor")
+  const t = useTranslations('Editor')
   const name = props.name
   const [markdown, setMarkdown] = useState<string>(
     props.initialValue || defaultValue
@@ -124,7 +124,7 @@ export function MarkdownEditor(props: {
             closeIcon={<Check className="h-8 w-8" />}
           >
             <DialogHeader>
-              <DialogTitle>{t("Edit")}</DialogTitle>
+              <DialogTitle>{t('Edit')}</DialogTitle>
             </DialogHeader>
             <div className="mt-4">
               <textarea

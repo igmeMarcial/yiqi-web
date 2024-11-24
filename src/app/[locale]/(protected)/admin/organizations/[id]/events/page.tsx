@@ -11,10 +11,9 @@ import { translations } from '@/lib/translations/translations'
 export default async function EventsPage({
   params
 }: {
-  params: { locale: string, id: string }
-
+  params: { locale: string; id: string }
 }) {
-  const {locale} = params
+  const { locale } = params
   const organization = await getOrganization(params.id)
   const user = await getUser()
   const events = await getOrganizationEvents(params.id)

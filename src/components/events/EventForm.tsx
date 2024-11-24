@@ -87,7 +87,7 @@ const defaultMinEndTimeStr = defaultEndDate
 export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const localActive = useLocale()
-  const t = useTranslations("DeleteAccount") 
+  const t = useTranslations('DeleteAccount')
   const [tickets, setTickets] = useState<
     EventTicketInputType[] | SavedTicketType[]
   >(
@@ -256,11 +256,13 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
           await createEvent(organizationId, eventData, tickets)
         }
 
-        router.push(`/${localActive}/admin/organizations/${organizationId}/events`)
+        router.push(
+          `/${localActive}/admin/organizations/${organizationId}/events`
+        )
         setLoading(false)
       } catch (error) {
         setLoading(false)
-        console.error(`${t("failedToSaveEvent")}`, error)
+        console.error(`${t('failedToSaveEvent')}`, error)
       }
     }
   }
@@ -290,7 +292,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                   ) : (
                     <div className="h-full w-full flex items-center justify-center">
                       <span className="text-sm text-gray-500">
-                        {t("selectAnImage")}
+                        {t('selectAnImage')}
                       </span>
                     </div>
                   )}
@@ -318,7 +320,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                     <div className="relative">
                       <Input
                         id="event-name"
-                        placeholder={t("eventName")}
+                        placeholder={t('eventName')}
                         className="text-xl border-0 px-0 focus-visible:ring-0"
                         {...field}
                       />
@@ -341,7 +343,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
               <div className="flex-1 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="mb-2">{t("start")}</div>
+                    <div className="mb-2">{t('start')}</div>
                     <div className="grid grid-cols-2 gap-2">
                       <FormField
                         control={form.control}
@@ -378,7 +380,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                     </div>
                   </div>
                   <div>
-                    <div className="mb-2">{t("end")}</div>
+                    <div className="mb-2">{t('end')}</div>
                     <div className="grid grid-cols-2 gap-2">
                       <FormField
                         control={form.control}
@@ -417,7 +419,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                 </div>
                 <Select defaultValue="GMT-05:00">
                   <SelectTrigger>
-                    <SelectValue placeholder={t("selectTimezone")} />
+                    <SelectValue placeholder={t('selectTimezone')} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="GMT-05:00">GMT-05:00 Lima</SelectItem>
@@ -475,7 +477,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                <span>{t("capacity")}</span>
+                <span>{t('capacity')}</span>
               </div>
               <FormField
                 control={form.control}
@@ -485,7 +487,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder={t("unlimited")}
+                        placeholder={t('unlimited')}
                         min={1}
                         className="w-32 text-right"
                         value={field.value?.toString()}
@@ -514,12 +516,8 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                 }
               }}
             >
-              <span>{t("tickets")}</span>
-              <span>
-                {showTicketManager
-                  ? `${t("hide")}`
-                  : `${t("edit")}`}
-              </span>
+              <span>{t('tickets')}</span>
+              <span>{showTicketManager ? `${t('hide')}` : `${t('edit')}`}</span>
             </div>
 
             {tickets.length > 0 && !showTicketManager && (
@@ -534,14 +532,12 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                     </div>
                     <div className="text-center">
                       <span className="text-sm text-gray-500">
-                        {ticket.price > 0
-                          ? `$${ticket.price}`
-                          : `${t("free")}`}
+                        {ticket.price > 0 ? `$${ticket.price}` : `${t('free')}`}
                       </span>
                     </div>
                     <div className="text-right">
                       <span className="text-sm text-gray-500">
-                        {ticket.limit} {t("tickets")}
+                        {ticket.limit} {t('tickets')}
                       </span>
                     </div>
                   </div>
@@ -563,21 +559,19 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
             <Dialog open={showStripeDialog} onOpenChange={setShowStripeDialog}>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>
-                    {t("stripeAccountRequired")}
-                  </DialogTitle>
+                  <DialogTitle>{t('stripeAccountRequired')}</DialogTitle>
                   <DialogDescription>
-                    {t("stripeSetupInfo")}
+                    {t('stripeSetupInfo')}
                     <Link
                       href={`/${localActive}/admin/organizations/${organizationId}/billing`}
                     >
-                      {t("clickHereStart")}
+                      {t('clickHereStart')}
                     </Link>
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                   <Button onClick={() => setShowStripeDialog(false)}>
-                    {t("close")}
+                    {t('close')}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -588,11 +582,11 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
               <Button type="submit" className="w-full">
                 {loading
                   ? event
-                    ? `${t("updatingEvent")}`
-                    : `${t("creatingEvent")}`
+                    ? `${t('updatingEvent')}`
+                    : `${t('creatingEvent')}`
                   : event
-                    ? `${t("updateEvent")}`
-                    : `${t("createEvent")}`}
+                    ? `${t('updateEvent')}`
+                    : `${t('createEvent')}`}
               </Button>
             </div>
           </div>

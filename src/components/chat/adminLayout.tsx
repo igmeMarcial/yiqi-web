@@ -28,10 +28,18 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children, userProps }: AdminLayoutProps) {
   const localActive = useLocale()
-  const t = useTranslations("AdminLayout")
+  const t = useTranslations('AdminLayout')
   const navItems = [
-    { name: `${t("organization")}`, icon: Users, href: `/${localActive}/admin/organizations` },
-    { name: `${t("settings")}`, icon: Settings, href: `/${localActive}/admin/settings` }
+    {
+      name: `${t('organization')}`,
+      icon: Users,
+      href: `/${localActive}/admin/organizations`
+    },
+    {
+      name: `${t('settings')}`,
+      icon: Settings,
+      href: `/${localActive}/admin/settings`
+    }
   ]
 
   return (
@@ -112,7 +120,7 @@ export default function AdminLayout({ children, userProps }: AdminLayoutProps) {
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex flex-row items-center justify-center gap-4">
-                      <span>{t("logout")}</span>
+                      <span>{t('logout')}</span>
                       <LogOut className="mr-2 h-4 w-4" />
                     </div>
                   </SignOutButton>
