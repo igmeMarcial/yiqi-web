@@ -331,5 +331,19 @@
     "manage":"I want to manage my community!",
     "createCommunityManager":"Create your community manager",
     "form":"Fill in the free fields to continue, you can modify them later!"
+  },
+  "AddOrg":{
+    "success":"Organization created successfully!",
+    "Organization":"Organization",
+    "organizationBody":"Enter the name of your main organization",
+    "Description":"Description",
+    "descriptionBody":"Provide a brief description of your organization",
+    "LogoURL":"Logo URL",
+    "logoDescription":"Enter the URL of your organization's logo",
+    "Color":"Color",
+    "colorDescription":"Select a color for your organization",
+    "Begin":"Begin",
+    "createNewOrg":"Create new organization",
+    "form":"Fill in the free fields to continue, you can modify them later!"
   }
 }

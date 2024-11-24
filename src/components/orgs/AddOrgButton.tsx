@@ -28,6 +28,7 @@ import { useToast } from '@/hooks/use-toast'
 import { Textarea } from '@/components/ui/textarea'
 
 import { createOrganization } from '@/services/actions/organizationActions'
+import { useTranslations } from 'next-intl'
 
 function ColorPicker({
   value,
@@ -69,12 +70,13 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
   })
 
   const { toast } = useToast()
+  const t = useTranslations('AddOrg')
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await createOrganization(values, userId)
       toast({
-        description: 'Organización creada exitosamente!',
+        description: `${t('success')}`,
         variant: 'default'
       })
     } catch (error) {
@@ -95,13 +97,11 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Organización</FormLabel>
+              <FormLabel>{t('Organization')}</FormLabel>
               <FormControl>
                 <Input placeholder="Andino" {...field} />
               </FormControl>
-              <FormDescription>
-                Ingresa el nombre de tu organización principal
-              </FormDescription>
+              <FormDescription>{t('organizationBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -112,7 +112,7 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descripción</FormLabel>
+              <FormLabel>{t('Description')}</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Describe tu organización"
@@ -120,9 +120,7 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
                   className="resize-none"
                 />
               </FormControl>
-              <FormDescription>
-                Proporciona una breve descripción de tu organización
-              </FormDescription>
+              <FormDescription>{t('descriptionBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -133,12 +131,12 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
           name="logo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Logo URL</FormLabel>
+              <FormLabel>{t('LogoURL')}</FormLabel>
               <FormControl>
                 <Input placeholder="https://example.com/logo.png" {...field} />
               </FormControl>
               <FormDescription>
-                Ingresa la URL del logo de tu organización
+                {t("logoDescription")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -150,12 +148,12 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
           name="colour"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Color</FormLabel>
+              <FormLabel>{t("Color")}</FormLabel>
               <FormControl>
                 <ColorPicker value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormDescription>
-                Selecciona un color para tu organización
+                {t("colorDescription")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -163,7 +161,7 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
         />
 
         <Button className="w-full" type="submit">
-          Empezar
+          {t("Begin")}
         </Button>
       </form>
     </Form>
@@ -171,16 +169,17 @@ function AddOrgButtonForm({ userId }: { userId: string }) {
 }
 
 function AddOrgButton({ userId }: { userId: string }) {
+  const t = useTranslations("AddOrg")
   return (
     <Dialog>
       <DialogTrigger asChild className="w-fit">
-        <Button className="min-w-fit">Crear nueva organización</Button>
+        <Button className="min-w-fit">{t("createNewOrg")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Crea una nueva organización</DialogTitle>
+          <DialogTitle>{t("createNewOrg")}</DialogTitle>
           <DialogDescription>
-            Llena los campos libres para continuar, luego podrás modificarlos!
+            {t("form")}
           </DialogDescription>
         </DialogHeader>
         <AddOrgButtonForm userId={userId} />

@@ -40,12 +40,12 @@ function BeRegularUserButton({ userId }: { userId: { value: string } }) {
       onClick={async () => {
         await makeRegularUser({ userId: userId.value })
         toast({
-          description: `${t("welcome")}`,
+          description: `${t('welcome')}`,
           variant: 'default'
         })
       }}
     >
-      {t("attended")}
+      {t('attended')}
     </Button>
   )
 }
@@ -96,13 +96,13 @@ export default function BeEventAdminForm({
   })
 
   const { toast } = useToast()
-  const t = useTranslations("newUser")
+  const t = useTranslations('newUser')
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await createOrganization(values, userId.value)
       toast({
-        description: `${t("success")}`,
+        description: `${t('success')}`,
         variant: 'default'
       })
     } catch (error) {
@@ -123,13 +123,11 @@ export default function BeEventAdminForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Organization")}</FormLabel>
+              <FormLabel>{t('Organization')}</FormLabel>
               <FormControl>
                 <Input placeholder="Andino" {...field} />
               </FormControl>
-              <FormDescription>
-                {t("organizationBody")}
-              </FormDescription>
+              <FormDescription>{t('organizationBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -140,7 +138,7 @@ export default function BeEventAdminForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Description")}</FormLabel>
+              <FormLabel>{t('Description')}</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Describe tu organización"
@@ -148,20 +146,18 @@ export default function BeEventAdminForm({
                   className="resize-none"
                 />
               </FormControl>
-              <FormDescription>
-                {t("descriptionBody")}
-              </FormDescription>
+              <FormDescription>{t('descriptionBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormLabel>{t("Logo")}</FormLabel>
+        <FormLabel>{t('Logo')}</FormLabel>
         <FormControl>
           <SingleFileUpload
             onUploadComplete={url => form.setValue('logo', url)}
           />
         </FormControl>
-        <FormDescription>{t("logoDescription")}</FormDescription>
+        <FormDescription>{t('logoDescription')}</FormDescription>
 
         <FormField
           control={form.control}
@@ -172,34 +168,30 @@ export default function BeEventAdminForm({
               <FormControl>
                 <ColorPicker value={field.value} onChange={field.onChange} />
               </FormControl>
-              <FormDescription>
-                {t("color")}
-              </FormDescription>
+              <FormDescription>{t('color')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button className="w-full" type="submit">
-          {t("Begin")}
+          {t('Begin')}
         </Button>
       </form>
     </Form>
   )
 }
 function BeEventAdmin(userId: { value: string }) {
-  const t = useTranslations("newUser")
+  const t = useTranslations('newUser')
   return (
     <Dialog>
       <DialogTrigger asChild className="w-full">
-        <Button className="min-w-full">{t("manage")}</Button>
+        <Button className="min-w-full">{t('manage')}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("createCommunityManager")}</DialogTitle>
-          <DialogDescription>
-            {t("form")}
-          </DialogDescription>
+          <DialogTitle>{t('createCommunityManager')}</DialogTitle>
+          <DialogDescription>{t('form')}</DialogDescription>
         </DialogHeader>
         <BeEventAdminForm userId={userId} />
       </DialogContent>
