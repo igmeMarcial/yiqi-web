@@ -5,17 +5,17 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function Features() {
-  const t = useTranslations("FeaturesSection")
+  const t = useTranslations('FeaturesSection')
   return (
     <section className="w-full py-12 bg-black/95">
       <div className="container max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
-              {t("featuresTitle")}
+              {t('featuresTitle')}
             </h2>
             <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl/relaxed">
-              {t("featuresDescription")}
+              {t('featuresDescription')}
             </p>
           </div>
         </div>
@@ -51,14 +51,14 @@ export default function Features() {
 
         {/* Call to Action */}
         <div className="mt-12 text-center">
-          <p className="text-gray-400 mb-4">{t("featuresCTA")}</p>
+          <p className="text-gray-400 mb-4">{t('featuresCTA')}</p>
           <div className="inline-flex items-center justify-center rounded-lg border border-gray-800 bg-gray-900 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors">
             <Link
               href={'https://github.com/Andino-Labs/yiqi-mobile'}
               className="flex gap-2 items-center justify-center"
             >
               <GitHubLogoIcon />
-              {t("featuresViewOnGitHub")}
+              {t('featuresViewOnGitHub')}
             </Link>
           </div>
         </div>

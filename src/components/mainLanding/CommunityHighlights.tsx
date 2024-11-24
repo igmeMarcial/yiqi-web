@@ -5,18 +5,16 @@ import { communityHighlights } from '@/data/events'
 import { useTranslations } from 'next-intl'
 
 const CommunityHighlights = () => {
-  const t = useTranslations("CommunityHighlights")
+  const t = useTranslations('CommunityHighlights')
   return (
     <section className="w-full bg-black py-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white">
-            {t("highlightsTitle")}
+            {t('highlightsTitle')}
           </h2>
-          <p className="mt-2 text-gray-400">
-            {t("highlightsSubtitle")}
-          </p>
+          <p className="mt-2 text-gray-400">{t('highlightsSubtitle')}</p>
         </div>
 
         {/* Grid Layout */}

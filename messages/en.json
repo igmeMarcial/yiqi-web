@@ -315,5 +315,21 @@
     "request": "Request to Join",
     "HostedBy": "Hosted By",
     "aboutEvent": "About Event"
+  },
+  "newUser":{
+    "welcome":"Welcome new user!",
+    "attended":"I attend the events!",
+    "success":"Organization created successfully!",
+    "Organization":"Organization",
+    "organizationBody":"Enter the name of your main organization",
+    "Description":"Description",
+    "descriptionBody":"Provide a brief description of your organization",
+    "Logo":"Logo",
+    "logoDescription":"Upload your organization's logo",
+    "color":"Select a color for your organization",
+    "Begin":"Begin",
+    "manage":"I want to manage my community!",
+    "createCommunityManager":"Create your community manager",
+    "form":"Fill in the free fields to continue, you can modify them later!"
   }
 }
