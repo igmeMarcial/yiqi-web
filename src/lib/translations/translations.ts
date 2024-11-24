@@ -555,6 +555,32 @@ export const translations: Record<string, { [key: string]: string }> = {
     linkedinDisconnectedToastDesc:
       'Puedes volver a conectarla en cualquier momento',
     linkedinErrorToast: 'Error al desconectar la cuenta de LinkedIn',
-    linkedinErrorToastDesc: 'Por favor, inténtalo de nuevo más tarde'
+    linkedinErrorToastDesc: 'Por favor, inténtalo de nuevo más tarde',
+    // Community Page
+    noLogoAvailable: 'No hay logo disponible',
+    noCommunitiesFound: 'No se encontraron comunidades en este momento.',
+    // Community Details
+    //members
+    members: 'Miembros',
+    membersOrganizedBy: 'Organizado por',
+    membersAnd: 'y',
+    membersOther: 'otro',
+    membersOrganizationLogo: 'Logo de la Organización',
+    memberOrganizers: 'Organizadores',
+    //banner
+    bannerMembers: 'Miembros',
+    bannerOrganizedBy: 'Organizado por',
+    bannerAnd: 'y',
+    bannerOther: 'otro',
+    bannerOrganizationLogo: 'Logo de la Organización',
+    //navigation
+    navigationAbout: 'Acerca de',
+    navigationMembers: 'Miembros',
+    //about
+    aboutShowLess: 'Mostrar menos',
+    aboutLoadMore: 'Cargar más',
+    //events
+    eventsUpcomingEvents: 'Próximos Eventos',
+    eventsPastEvents: 'Eventos Pasados'
   }
 }
