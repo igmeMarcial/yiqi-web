@@ -270,7 +270,34 @@ export const translations: Record<string, { [key: string]: string }> = {
     linkedinDisconnectedToast: 'LinkedIn account disconnected',
     linkedinDisconnectedToastDesc: 'You can reconnect at any time',
     linkedinErrorToast: 'Error disconnecting LinkedIn account',
-    linkedinErrorToastDesc: 'Please try again later'
+    linkedinErrorToastDesc: 'Please try again later',
+    // Community Page
+    noLogoAvailable: 'No logo available',
+    noCommunitiesFound: 'No communities found at this time.',
+    // Community Details
+    //members
+    members: 'Members',
+    membersOrganizedBy: 'Organized by',
+    membersAnd: 'and',
+    membersOther: 'other',
+    membersOrganizationLogo: 'Organization Logo',
+    memberOrganizers: 'Organizers',
+    //banner
+    bannerMembers: 'Members',
+    bannerOrganizedBy: 'Organized by',
+    bannerAnd: 'and',
+    bannerOther: 'other',
+    bannerOrganizationLogo: 'Organization Logo',
+    //navigation
+    navigationAbout: 'About',
+    navigationMembers: 'Members',
+    //about
+    aboutShowLess: 'Show less',
+    aboutLoadMore: 'Load more',
+    //events
+    eventsUpcomingEvents: 'Upcoming Events',
+    eventsPastEvents: 'Past Events'
+
   },
   es: {
     // General
@@ -555,6 +582,32 @@ export const translations: Record<string, { [key: string]: string }> = {
     linkedinDisconnectedToastDesc:
       'Puedes volver a conectarla en cualquier momento',
     linkedinErrorToast: 'Error al desconectar la cuenta de LinkedIn',
-    linkedinErrorToastDesc: 'Por favor, inténtalo de nuevo más tarde'
+    linkedinErrorToastDesc: 'Por favor, inténtalo de nuevo más tarde',
+    // Community Page
+    noLogoAvailable: 'No hay logo disponible',
+    noCommunitiesFound: 'No se encontraron comunidades en este momento.',
+    // Community Details
+    //members
+    members: 'Miembros',
+    membersOrganizedBy: 'Organizado por',
+    membersAnd: 'y',
+    membersOther: 'otro',
+    membersOrganizationLogo: 'Logo de la Organización',
+    memberOrganizers: 'Organizadores',
+    //banner
+    bannerMembers: 'Miembros',
+    bannerOrganizedBy: 'Organizado por',
+    bannerAnd: 'y',
+    bannerOther: 'otro',
+    bannerOrganizationLogo: 'Logo de la Organización',
+    //navigation
+    navigationAbout: 'Acerca de',
+    navigationMembers: 'Miembros',
+    //about
+    aboutShowLess: 'Mostrar menos',
+    aboutLoadMore: 'Cargar más',
+    //events
+    eventsUpcomingEvents: 'Próximos Eventos',
+    eventsPastEvents: 'Eventos Pasados'
   }
 }

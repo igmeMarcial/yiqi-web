@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { PublicEventSchema } from '@/schemas/eventSchema'
+import { EventCommunityType, PublicEventSchema } from '@/schemas/eventSchema'
 import { EventTypes, Prisma } from '@prisma/client'
 
 export async function getPublicEvents(filters?: {
@@ -83,4 +83,14 @@ export async function getPublicEvents(filters?: {
     ),
     totalCount
   }
+}
+
+export async function getValidEvents(events: EventCommunityType[]) {
+  const now = new Date()
+  return events.filter(event => new Date(event.startDate) >= now)
+}
+
+export async function getPastEvents(events: EventCommunityType[]) {
+  const now = new Date()
+  return events.filter(event => new Date(event.startDate) < now)
 }
