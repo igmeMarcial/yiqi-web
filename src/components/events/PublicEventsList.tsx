@@ -1,8 +1,7 @@
-// import Link from 'next/link'
-// import { ChevronRight, Edit2 } from 'lucide-react'
 import EventCard from '../mainLanding/EventCard'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 
 // EventHeader Component
 const EventHeader = () => {
@@ -55,7 +54,9 @@ const PublicEventsList = ({ events, showHeader = true }: Props) => {
           {events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {events.map(event => (
-                <EventCard key={event.id} event={event} />
+                <Link key={event.id} href={`/${event.id}`}>
+                  <EventCard key={event.id} event={event} />
+                </Link>
               ))}
             </div>
           ) : (

@@ -16,7 +16,12 @@ const nextConfig = {
       {
         hostname: 'images.unsplash.com'
       },
-      { hostname: 'randomuser.me' }
+      {
+        hostname: 'randomuser.me'
+      },
+      {
+        hostname: 'andinoweb.s3.us-east-1.amazonaws.com'
+      }
     ]
   },
   experimental: {
