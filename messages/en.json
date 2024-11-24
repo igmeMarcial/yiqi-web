@@ -1,5 +1,8 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 85fba98 (features client component internationalization)
   "General": {
     "withGoogle": "Log in with Google",
     "eventTitle": "Event Title",
@@ -104,9 +107,13 @@
     "clickToContinue": "Click one chat to continue"
   },
   "EventsPage": {
+<<<<<<< HEAD
     "createNewEvent": "Create New Event",
     "events": "Events",
     "cancel": "Cancel"
+=======
+    "createNewEvent": "Create New Event"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "contactFor": {
     "contactsFor": "Contacts for",
@@ -129,11 +136,15 @@
     "messageValidation": "Message must be at least 1 character."
   },
   "EventsList": {
+<<<<<<< HEAD
     "createNewEvents": "Create New Events",
     "notFound": "Event not found",
     "Unauthorized": "Unauthorized",
     "orgNotFound": "Organization or Event not found",
     "registrations": "Event registrations:"
+=======
+    "createNewEvents": "Create New Events"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "AddOrganizer": {
     "addOrganizer": "Add Organizer",
@@ -149,9 +160,13 @@
     "profileSettings": "Profile Settings",
     "payments": "Payments",
     "history": "History",
+<<<<<<< HEAD
     "tickets": "Tickets",
 
     "logOut": "Log out"
+=======
+    "tickets": "Tickets"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "ProfileSettings": {
     "name": "Name",
@@ -169,6 +184,7 @@
     "enterYourPhone": "Enter your Phone Number",
     "enterYourCompany": "Enter your Company",
     "enterYourPosition": "Enter your Position",
+<<<<<<< HEAD
     "tellUsAboutYourself": "Tell us about yourself",
 
     "setToPublic": "Set to Public",
@@ -176,6 +192,11 @@
   },
   "DeleteAccount": {
     "apply": "I want to Apply!",
+=======
+    "tellUsAboutYourself": "Tell us about yourself"
+  },
+  "DeleteAccount": {
+>>>>>>> 85fba98 (features client component internationalization)
     "tickets": "Tickets",
     "deleteAccount": "Delete Account",
     "areYouSure": "Are you absolutely sure?",
@@ -269,6 +290,7 @@
     "noOrganizationFound": "No organization found",
     "networkingSettings": "Networking Settings"
   },
+<<<<<<< HEAD
 
   "AdminLayout": {
     "organization": "Organization",
@@ -750,3 +772,66 @@
 
 }
 >>>>>>> bda1e4f (next-intl integration)
+=======
+
+  "AdminLayout": {
+    "organization": "Organization",
+    "settings": "Settings",
+    "logOut": "Log out"
+  },
+  "ConnectedChat": {
+    "loading": "Loading more messages..."
+  },
+  "Editor": {
+    "Edit": "Edit Markdown Content",
+    "Delete": "Delete"
+  },
+  "CheckIn": {
+    "checkingIn": "Checking in...",
+    "checkIn": "Check in",
+    "confirm": "Confirm Check-in",
+    "sure": "Are you sure you want to check in",
+    "cancel": "Cancel"
+  },
+  "Event": {
+    "search": "Search by name...",
+    "Name": "Name",
+    "id": "Ticket ID",
+    "checkin": "Checked In",
+    "No": "No",
+    "Subject": "Subject",
+    "date": "Sent Date",
+    "sentTo": "Sent to",
+    "UserEventList": "User Event List",
+    "Address": "Address"
+  },
+  "TicketType": {
+    "ticketName": "Ticket Name",
+    "Category": "Category",
+    "selectCategory": "Select a category",
+    "General": "General",
+    "VIP": "VIP",
+    "Backstage": "Backstage",
+    "Price": "Price",
+    "limit": "Ticket Limit",
+    "ticketsPerPurchase": "Tickets Per Purchase",
+    "howMany": "How many tickets can be bought at once",
+    "Description": "Description",
+    "addTicketType": "Add Ticket Type",
+    "saveTicketTYpe": "Save Ticket Types",
+    "ticketHolder": "Ticket Holder",
+    "date": "Event Date",
+    "purchaseDate": "Purchase Date",
+    "ticketId": "Ticket ID:"
+  },
+  "Luma": {
+    "featuredIn": "Featured in",
+    "Register": "Register",
+    "approval": "Approval Required",
+    "approvalBody": "Your registration is subject to approval by the host.",
+    "request": "Request to Join",
+    "HostedBy": "Hosted By",
+    "aboutEvent": "About Event"
+  }
+}
+>>>>>>> 85fba98 (features client component internationalization)

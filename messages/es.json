@@ -1,5 +1,8 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 85fba98 (features client component internationalization)
   "General": {
     "withGoogle": "Ingresa con Google",
     "eventTitle": "Nombre del Evento",
@@ -104,9 +107,13 @@
     "clickToContinue": "Haz clic en un chat para continuar"
   },
   "EventsPage": {
+<<<<<<< HEAD
     "createNewEvent": "Crear Nuevo Evento",
     "events": "Eventos",
     "cancel": "Cancelar"
+=======
+    "createNewEvent": "Crear Nuevo Evento"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "contactFor": {
     "contactsFor": "Contactos de",
@@ -129,11 +136,15 @@
     "messageValidation": "El mensaje debe tener al menos 1 caracter."
   },
   "EventsList": {
+<<<<<<< HEAD
     "createNewEvents": "Crear Nuevos Eventos",
     "notFound": "Evento no encontrado",
     "Unauthorized": "No autorizado",
     "orgNotFound": "Organización o Evento no encontrado",
     "registrations": "Registros del evento:"
+=======
+    "createNewEvents": "Crear nuevos eventos"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "AddOrganizer": {
     "addOrganizer": "Agregar Organizador",
@@ -149,8 +160,12 @@
     "profileSettings": "Configuración del perfil",
     "payments": "Pagos",
     "history": "Historial",
+<<<<<<< HEAD
     "tickets": "Tickets",
     "logOut": "Finalizar la sesión"
+=======
+    "tickets": "Tickets"
+>>>>>>> 85fba98 (features client component internationalization)
   },
   "ProfileSettings": {
     "name": "Nombre",
@@ -168,12 +183,18 @@
     "enterYourPhone": "Introduce tu número de teléfono",
     "enterYourCompany": "Introduce tu empresa",
     "enterYourPosition": "Introduce tu cargo",
+<<<<<<< HEAD
     "tellUsAboutYourself": "Cuéntanos sobre ti",
     "setToPublic": "Establecer como público",
     "User": "Usuario"
   },
   "DeleteAccount": {
     "apply": "Quiero Postular!",
+=======
+    "tellUsAboutYourself": "Cuéntanos sobre ti"
+  },
+  "DeleteAccount": {
+>>>>>>> 85fba98 (features client component internationalization)
     "tickets": "Tickets",
     "deleteAccount": "Eliminar Cuenta",
     "areYouSure": "¿Estás absolutamente seguro?",
@@ -267,6 +288,7 @@
     "noOrganizationFound": "No se encontró la organización",
     "networkingSettings": "Networking"
   },
+<<<<<<< HEAD
 
   "AdminLayout": {
     "organization": "Organizaciones",
@@ -724,3 +746,12 @@
 
 }
 >>>>>>> bda1e4f (next-intl integration)
+=======
+
+  "AdminLayout": {
+    "organization": "Organizaciones",
+    "settings": "Configuración",
+    "logOut": "Cerrar sesión"
+  }
+}
+>>>>>>> 85fba98 (features client component internationalization)
