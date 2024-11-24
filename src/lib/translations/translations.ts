@@ -270,7 +270,34 @@ export const translations: Record<string, { [key: string]: string }> = {
     linkedinDisconnectedToast: 'LinkedIn account disconnected',
     linkedinDisconnectedToastDesc: 'You can reconnect at any time',
     linkedinErrorToast: 'Error disconnecting LinkedIn account',
-    linkedinErrorToastDesc: 'Please try again later'
+    linkedinErrorToastDesc: 'Please try again later',
+    // Community Page
+    noLogoAvailable: 'No logo available',
+    noCommunitiesFound: 'No communities found at this time.',
+    // Community Details
+    //members
+    members: 'Members',
+    membersOrganizedBy: 'Organized by',
+    membersAnd: 'and',
+    membersOther: 'other',
+    membersOrganizationLogo: 'Organization Logo',
+    memberOrganizers: 'Organizers',
+    //banner
+    bannerMembers: 'Members',
+    bannerOrganizedBy: 'Organized by',
+    bannerAnd: 'and',
+    bannerOther: 'other',
+    bannerOrganizationLogo: 'Organization Logo',
+    //navigation
+    navigationAbout: 'About',
+    navigationMembers: 'Members',
+    //about
+    aboutShowLess: 'Show less',
+    aboutLoadMore: 'Load more',
+    //events
+    eventsUpcomingEvents: 'Upcoming Events',
+    eventsPastEvents: 'Past Events'
+
   },
   es: {
     // General
