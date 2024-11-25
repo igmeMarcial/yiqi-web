@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useToast } from '@/hooks/use-toast'
+import { useLocale, useTranslations } from 'next-intl'
 
 const formSchema = z.object({
   code: z
@@ -60,6 +61,8 @@ export function ContactForm() {
   })
 
   const { toast } = useToast()
+  const t = useTranslations("Grill")
+  const localActive = useLocale()
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -78,10 +81,10 @@ export function ContactForm() {
         amount: values.amount,
         code: values.code,
       }); */
-      window.location.href = '/error'
+      window.location.href = `/${localActive}/error`
       toast({
         title:
-          'Gracias por reservar tu entrada al Tech Grill Halloween Edition',
+          `${t("reserved")}`,
         description: `${values}`
       })
     } catch (error) {
@@ -125,10 +128,10 @@ export function ContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-orange-300">Teléfono</FormLabel>
+                <FormLabel className="text-orange-300">{t("Number")}</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Tu número de teléfono"
+                    placeholder={t("yourNumber")}
                     {...field}
                     className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                   />
@@ -145,10 +148,10 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-orange-300">Email</FormLabel>
+              <FormLabel className="text-orange-300">{t("Email")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Tu email"
+                  placeholder={t("yourEmail")}
                   {...field}
                   className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                 />
@@ -167,7 +170,7 @@ export function ContactForm() {
               <FormLabel className="text-orange-300">LinkedIn</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Tu perfil de LinkedIn"
+                  placeholder={t("yourLinkedInProfile")}
                   {...field}
                   className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                 />
@@ -184,7 +187,7 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-orange-300">
-                Cantidad de entradas
+                {t("numberOfEntries")}
               </FormLabel>
               <Select
                 onValueChange={value => field.onChange(parseInt(value, 10))}
@@ -216,7 +219,7 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-orange-300">
-                Tu codigo de descuento
+                {t("dicountCode")}
               </FormLabel>
               <FormControl>
                 <Input
@@ -245,11 +248,10 @@ export function ContactForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="text-orange-300">
-                  Autorización de uso de datos
+                  {t("authorization")}
                 </FormLabel>
                 <FormDescription className="text-orange-200/70">
-                  Autorizo el uso de mis datos y fotos para videos y material
-                  publicitario de andino
+                  {t("authorizationBody")}
                 </FormDescription>
               </div>
               <FormMessage className="text-red-400" />
@@ -261,7 +263,7 @@ export function ContactForm() {
           type="submit"
           className="min-w-full sm:w-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 text-lg py-6"
         >
-          Chapa tu entrada
+          {t("closeEntry")}
         </Button>
       </form>
     </Form>

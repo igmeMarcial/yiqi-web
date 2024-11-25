@@ -7,7 +7,7 @@ import { Send } from 'lucide-react'
 import EventRegistrationTable from './events/EventRegistrationTable'
 import EventCommunicationsTable from './events/EventCommunicationsTable'
 import { EventRegistrationsSchemaType } from '@/schemas/eventSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   registrations: EventRegistrationsSchemaType[]
@@ -15,24 +15,25 @@ type Props = {
 }
 
 export function EventAdminView({ registrations, eventId }: Props) {
+  const t = useTranslations("DeleteAccount")
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">
-        {translations.es.eventManagement}
+        {t("eventManagement")}
       </h1>
       <Tabs defaultValue="attendees">
         <TabsList className="mb-4">
           <TabsTrigger value="attendees">
-            {translations.es.attendees}
+            {t("attendees")}
           </TabsTrigger>
-          <TabsTrigger value="settings">{translations.es.settings}</TabsTrigger>
+          <TabsTrigger value="settings">{t("settings")}</TabsTrigger>
           <TabsTrigger value="communications">
-            {translations.es.communications}
+            {t("communications")}
           </TabsTrigger>
         </TabsList>
         <TabsContent value="attendees">
           <h2 className="text-xl font-semibold mb-2">
-            {translations.es.eventRegistrations}
+            {t("eventRegistrations")}
           </h2>
 
           <EventRegistrationTable registrations={registrations} />
@@ -40,12 +41,12 @@ export function EventAdminView({ registrations, eventId }: Props) {
 
         <TabsContent value="communications">
           <h2 className="text-xl font-semibold mb-2">
-            {translations.es.eventCommunications}
+            {t("eventCommunications")}
           </h2>
 
           <Button className="mt-4">
             <Send className="w-4 h-4 mr-2" />{' '}
-            {translations.es.sendNewCommunication}
+            {t("sendNewCommunication")}
             <EventCommunicationsTable eventId={eventId} />
           </Button>
         </TabsContent>

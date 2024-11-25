@@ -142,7 +142,8 @@
     "profileSettings": "Configuración del perfil",
     "payments": "Pagos",
     "history": "Historial",
-    "tickets": "Tickets"
+    "tickets": "Tickets",
+    "logOut":"Finalizar la sesión"
   },
   "ProfileSettings": {
     "name": "Nombre",
@@ -160,9 +161,12 @@
     "enterYourPhone": "Introduce tu número de teléfono",
     "enterYourCompany": "Introduce tu empresa",
     "enterYourPosition": "Introduce tu cargo",
-    "tellUsAboutYourself": "Cuéntanos sobre ti"
+    "tellUsAboutYourself": "Cuéntanos sobre ti",
+    "setToPublic": "Establecer como público",
+    "User": "Usuario"
   },
   "DeleteAccount": {
+    "apply":"Quiero Postular!",
     "tickets": "Tickets",
     "deleteAccount": "Eliminar Cuenta",
     "areYouSure": "¿Estás absolutamente seguro?",
@@ -261,5 +265,143 @@
     "organization": "Organizaciones",
     "settings": "Configuración",
     "logOut": "Cerrar sesión"
+  },
+  "ConnectedChat": {
+    "loading": "Cargando más mensajes..."
+  },
+  "Editor": {
+    "Edit": "Editar contenido Markdown",
+    "Delete": "Eliminar"
+  },
+  "CheckIn": {
+    "checkingIn": "Registrando entrada...",
+    "checkIn": "Registrar entrada",
+    "confirm": "Confirmar registro",
+    "sure": "¿Estás seguro de que deseas registrarte?",
+    "cancel": "Cancelar"
+  },
+  "Event": {
+    "search": "Buscar por nombre...",
+    "Name": "Nombre",
+    "id": "ID del Ticket",
+    "checkin": "Registrado",
+    "No": "No",
+    "Subject": "Asunto",
+    "date": "Fecha de envío",
+    "sentTo": "Enviado a",
+    "UserEventList": "Lista de eventos del usuario",
+    "Address": "Dirección"
+  },
+  "TicketType": {
+    "ticketName": "Nombre del ticket",
+    "Category": "Categoría",
+    "selectCategory": "Seleccionar una categoría",
+    "General": "General",
+    "VIP": "VIP",
+    "Backstage": "Camerino",
+    "Price": "Precio",
+    "limit": "Límite de tickets",
+    "ticketsPerPurchase": "Tickets por compra",
+    "howMany": "¿Cuántos tickets se pueden comprar a la vez?",
+    "Description": "Descripción",
+    "addTicketType": "Agregar tipo de ticket",
+    "saveTicketTYpe": "Guardar tipos de ticket",
+    "ticketHolder": "Titular del ticket",
+    "date": "Fecha del evento",
+    "purchaseDate": "Fecha de compra",
+    "ticketId": "ID del Ticket:"
+  },
+  "Luma": {
+    "featuredIn": "Destacado en",
+    "Register": "Registrarse",
+    "approval": "Aprobación requerida",
+    "approvalBody": "Tu registro está sujeto a la aprobación del anfitrión.",
+    "request": "Solicitar unirse",
+    "HostedBy": "Organizado por",
+    "aboutEvent": "Sobre el evento"
+  },
+  "newUser": {
+    "welcome": "¡Bienvenido, nuevo usuario!",
+    "attended": "¡Asisto a los eventos!",
+    "success": "¡Organización creada con éxito!",
+    "Organization": "Organización",
+    "organizationBody": "Introduce el nombre de tu organización principal",
+    "Description": "Descripción",
+    "descriptionBody": "Proporciona una breve descripción de tu organización",
+    "Logo": "Logo",
+    "logoDescription": "Sube el logo de tu organización",
+    "color": "Selecciona un color para tu organización",
+    "Begin": "Comenzar",
+    "manage": "¡Quiero gestionar mi comunidad!",
+    "createCommunityManager": "Crea tu gestor de comunidad",
+    "form": "¡Rellena los campos libres para continuar, podrás modificarlos más tarde!"
+  },
+  "AddOrg": {
+    "success": "¡Organización creada con éxito!",
+    "Organization": "Organización",
+    "organizationBody": "Introduce el nombre de tu organización principal",
+    "Description": "Descripción",
+    "descriptionBody": "Proporciona una breve descripción de tu organización",
+    "LogoURL": "URL del logo",
+    "logoDescription": "Introduce la URL del logo de tu organización",
+    "Color": "Color",
+    "colorDescription": "Selecciona un color para tu organización",
+    "Begin": "Comenzar",
+    "createNewOrg": "Crear nueva organización",
+    "form": "¡Rellena los campos libres para continuar, podrás modificarlos más tarde!"
+  },
+  "LinkedIn": {
+    "linkAccount": "Vincular cuenta de LinkedIn",
+    "linkedInDisconnected": "Cuenta de LinkedIn desconectada",
+    "reconnect": "Puedes reconectarla en cualquier momento",
+    "errorDiconnecting": "Error al desconectar la cuenta de LinkedIn",
+    "tryAgain": "Por favor, inténtalo de nuevo más tarde",
+    "enhanceNetwork": "Mejora tu experiencia de networking",
+    "connectAccount": "Conecta tu cuenta de LinkedIn para desbloquear funciones de networking avanzadas",
+    "personalizedMatch": "Emparejamiento personalizado",
+    "personalizedDescription": "Obtén listas personalizadas de personas que deberías conocer en cada evento al que asistas",
+    "communityHighlights": "Aspectos destacados de la comunidad",
+    "stayUpdated": "Mantente actualizado con los aspectos destacados más importantes según tus intereses",
+    "personalizedContent": "Contenido personalizado",
+    "contentBody": "Recibe recomendaciones de contenido basadas en tus interacciones y preferencias",
+    "diconnectLinkedIn": "Desconectar cuenta de LinkedIn",
+    "diconnectBody": "Tu cuenta de LinkedIn está conectada. Puedes desconectarla en cualquier momento."
+  },
+  "Bootcamp": {
+    "eventsAndTestimonials": "Nuestros eventos y testimonios",
+    "thanksForApplying": "Gracias por aplicar al bootcamp",
+    "Name": "Nombre",
+    "enterFullName": "Por favor, introduce tu nombre completo.",
+    "Phone": "Teléfono",
+    "yourNumber": "Tu número de teléfono",
+    "enterNumber": "Introduce tu número de teléfono.",
+    "Email": "Correo electrónico",
+    "yourEmail": "Tu correo electrónico",
+    "contact": "Usaremos este correo para contactarte.",
+    "linkedInUrl": "Proporciona la URL de tu perfil de LinkedIn.",
+    "apply": "Aplica al bootcamp"
+  },
+  "Grill": {
+    "notSupported": "Tu navegador no admite la etiqueta de vídeo.",
+    "reserved": "Gracias por reservar tu entrada para la edición de Halloween de Tech Grill",
+    "Number": "Número",
+    "yourNumber": "Tu número de teléfono",
+    "Email": "Correo electrónico",
+    "yourEmail": "Tu correo electrónico",
+    "yourLinkedInProfile": "Tu perfil de LinkedIn",
+    "numberOfEntries": "Número de entradas",
+    "dicountCode": "Tu código de descuento",
+    "authorization": "Autorización para el uso de datos",
+    "authorizationBody": "Autorizo el uso de mis datos y fotos para vídeos y material publicitario de Andino",
+    "closeEntry": "Cierra tu entrada"
+  },
+  "Upload": {
+    "DropFile": "Suelta los archivos aquí...",
+    "Drag": "Arrastra y suelta algunos archivos aquí, o haz clic para seleccionarlos",
+    "UploadedFiles": "Archivos subidos:",
+    "uploading": "Subiendo...",
+    "chooseFile": "Elegir archivo",
+    "UploadedFile": "Archivo subido:"
   }
+
 }

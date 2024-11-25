@@ -22,7 +22,7 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '../ui/sidebar'
-import { translations } from '@/lib/translations/translations'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -37,31 +37,33 @@ interface UserLayoutProps {
 }
 
 export default function UserLayout({ children, userProps }: UserLayoutProps) {
+  const localActive = useLocale()
+  const t = useTranslations("AddOrganizer")
   const navItems = [
     {
-      name: translations.es.profileSettings,
+      name: `${t("profileSettings")}`,
       icon: User,
-      href: `/user/profile`
+      href: `/${localActive}/user/profile`
     },
     {
-      name: translations.es.payments,
+      name: `${t("payments")}`,
       icon: CreditCard,
-      href: `/user/payments`
+      href: `/${localActive}/user/payments`
     },
     {
-      name: translations.es.history,
+      name: `${t("history")}`,
       icon: History,
-      href: `/user/history`
+      href: `/${localActive}/user/history`
     },
     {
-      name: translations.es.tickets,
+      name: `${t("tickets")}`,
       icon: Ticket,
-      href: `/user/tickets`
+      href: `/${localActive}/user/tickets`
     },
     {
-      name: translations.es.networkingSettings,
+      name: `${t("networkingSettings")}`,
       icon: Speech,
-      href: `/user/networking-settings`
+      href: `/${localActive}/user/networking-settings`
     }
   ]
 
@@ -112,7 +114,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>{translations.es.logOut}</span>
+                      <span>{t("logOut")}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>

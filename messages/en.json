@@ -142,7 +142,9 @@
     "profileSettings": "Profile Settings",
     "payments": "Payments",
     "history": "History",
-    "tickets": "Tickets"
+    "tickets": "Tickets",
+
+    "logOut":"Log out"
   },
   "ProfileSettings": {
     "name": "Name",
@@ -160,9 +162,13 @@
     "enterYourPhone": "Enter your Phone Number",
     "enterYourCompany": "Enter your Company",
     "enterYourPosition": "Enter your Position",
-    "tellUsAboutYourself": "Tell us about yourself"
+    "tellUsAboutYourself": "Tell us about yourself",
+
+    "setToPublic":"Set to Public",
+    "User":"User"
   },
   "DeleteAccount": {
+    "apply":"I want to Apply!",
     "tickets": "Tickets",
     "deleteAccount": "Delete Account",
     "areYouSure": "Are you absolutely sure?",
@@ -345,5 +351,58 @@
     "Begin":"Begin",
     "createNewOrg":"Create new organization",
     "form":"Fill in the free fields to continue, you can modify them later!"
+  },
+  "LinkedIn":{
+    "linkAccount":"Link LinkedIn Account",
+    "linkedInDisconnected":"LinkedIn account disconnected",
+    "reconnect":"You can reconnect at any time",
+    "errorDiconnecting":"Error disconnecting LinkedIn account",
+    "tryAgain":"Please try again later",
+    "enhanceNetwork":"Enhance Your Networking Experience",
+    "connectAccount":"Connect your LinkedIn account to unlock powerful networking features",
+    "personalizedMatch":"Personalized Match Making",
+    "personalizedDescription":"Get curated lists of people you should meet at every event you attend",
+    "communityHighlights":"Community Highlights",
+    "stayUpdated":"Stay updated with important highlights tailored to your interests",
+    "personalizedContent":"Personalized Content",
+    "contentBody":"Receive content recommendations based on your interactions and preferences",
+    "diconnectLinkedIn":"Disconnect LinkedIn Account",
+    "diconnectBody":"Your LinkedIn account is connected. You can disconnect at any time."
+  },
+  "Bootcamp":{
+    "eventsAndTestimonials":"Our Events and Testimonials",
+    "thanksForApplying":"Thank you for applying to the bootcamp",
+    "Name":"Name",
+    "enterFullName":"Please enter your full name.",
+    "Phone":"Phone",
+    "yourNumber":"Your phone number",
+    "enterNumber":"Enter your phone number.",
+    "Email":"Email",
+    "yourEmail":"Your Email",
+    "contact":"We will use this email to contact you.",
+    "linkedInUrl":"Provide your LinkedIn profile URL.",
+    "apply":"Apply to the bootcamp"
+  },
+  "Grill":{
+    "notSupported":"Your browser does not support the video tag.",
+    "reserved":"Thank you for reserving your ticket to the Tech Grill Halloween Edition",
+    "Number":"Number",
+    "yourNumber":"Your phone number",
+    "Email":"Email",
+    "yourEmail":"Your Email",
+    "yourLinkedInProfile":"Your LinkedIn profile",
+    "numberOfEntries":"Number of entries",
+    "dicountCode":"Your discount code",
+    "authorization":"Authorization for use of data",
+    "authorizationBody":"I authorize the use of my data and photos for videos and advertising material of Andino",
+    "closeEntry":"Close your entry"
+  },
+  "Upload":{
+    "DropFile":"Drop the files here ...",
+    "Drag":"Drag 'n' drop some files here, or click to select files",
+    "UploadedFiles":"Uploaded Files:",
+    "uploading":"Uploading...",
+    "chooseFile":"Choose File",
+    "UploadedFile":"Uploaded File:"
   }
 }

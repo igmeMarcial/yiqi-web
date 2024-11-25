@@ -8,6 +8,7 @@ import { useState } from 'react'
 // Import slick styles
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { useTranslations } from 'next-intl'
 
 // Define the props for our component
 interface YouTubeCarouselProps {
@@ -15,6 +16,7 @@ interface YouTubeCarouselProps {
 }
 
 export default function YouTubeCarousel({ videos }: YouTubeCarouselProps) {
+  const t = useTranslations("Bootcamp")
   const [sliderRef, setSliderRef] = useState<Slider | null>(null)
 
   const settings = {
@@ -42,7 +44,7 @@ export default function YouTubeCarousel({ videos }: YouTubeCarouselProps) {
     >
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-24 lg:py-32">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-          Nuestros Eventos y Testimonios
+          {t("eventsAndTestimonials")}
         </h2>
         <div className="relative max-w-4xl mx-auto flex flex-col items-center justify-center">
           <Slider

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Upload } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface ProfilePictureUploadProps {
   readonly currentValue?: string | File | null
@@ -19,6 +19,7 @@ export default function ProfilePictureUpload({
   name,
   userPicture
 }: ProfilePictureUploadProps) {
+  const t = useTranslations("DeleteAccount")
   const [preview, setPreview] = useState<string>(userPicture)
 
   useEffect(() => {
@@ -90,8 +91,8 @@ export default function ProfilePictureUpload({
         />
         <span className={isDragActive ? 'text-primary-foreground' : ''}>
           {isDragActive
-            ? translations.es.dropHere
-            : translations.es.changePicture}
+            ? `${t("dropHere")}`
+            : `${t("changePicture")}`}
         </span>
       </Button>
     </motion.div>

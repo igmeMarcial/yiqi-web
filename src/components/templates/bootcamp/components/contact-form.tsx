@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/hooks/use-toast'
+import { useTranslations } from 'next-intl'
 
 // Define the Zod schema
 const formSchema = z.object({
@@ -37,12 +38,13 @@ export function ContactForm() {
   })
 
   const { toast } = useToast()
+  const t = useTranslations("Bootcamp")
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // get to add the server action to create the lead based on org id
       toast({
-        title: 'Gracias por postular al bootcamp',
+        title: `${t("thanksForApplying")}`,
         description: `${values}`
       })
     } catch (error) {
@@ -67,12 +69,12 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre</FormLabel>
+              <FormLabel>{t("Name")}</FormLabel>
               <FormControl>
                 <Input placeholder="Tu nombre" {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                Introduce tu nombre completo.
+                {t("enterFullName")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -85,12 +87,12 @@ export function ContactForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Teléfono</FormLabel>
+              <FormLabel>{t("Phone")}</FormLabel>
               <FormControl>
-                <Input placeholder="Tu número de teléfono" {...field} />
+                <Input placeholder={t("yourNumber")} {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                Introduce tu número de teléfono.
+                {t("enterNumber")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -103,12 +105,12 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("Email")}</FormLabel>
               <FormControl>
-                <Input placeholder="Tu email" {...field} />
+                <Input placeholder={t("yourEmail")} {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                Utilizaremos este email para contactarte.
+                {t("contact")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -126,7 +128,7 @@ export function ContactForm() {
                 <Input placeholder="Tu perfil de LinkedIn" {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                Proporciona la URL de tu perfil de LinkedIn.
+                {t("linkedInUrl")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -134,7 +136,7 @@ export function ContactForm() {
         />
 
         <Button variant={'secondary'} className="w-full mt-2" type="submit">
-          Postular al bootcamp
+          {t("apply")}
         </Button>
       </form>
     </Form>

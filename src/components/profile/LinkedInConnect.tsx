@@ -15,6 +15,7 @@ import { Users, Sparkles, Layout, Link2Off } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { disconnectLinkedin } from '@/services/actions/user/disconnectLinkedin'
 import { toast } from '@/hooks/use-toast'
+import { useTranslations } from 'next-intl'
 
 interface BenefitProps {
   icon: React.ReactNode
@@ -35,6 +36,7 @@ function Benefit({ icon, title, description }: BenefitProps) {
 }
 
 function LinkedInLink() {
+  const t = useTranslations("LinkedIn")
   const handleLinkClick = () => {
     const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
     const redirectUri = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_URI}`
@@ -51,7 +53,7 @@ function LinkedInLink() {
 
   return (
     <Button onClick={() => handleLinkClick()} className="btn-linkedin">
-      Link LinkedIn Account
+      {t("linkAccount")}
     </Button>
   )
 }
@@ -61,50 +63,53 @@ type Props = {
 export default function LinkedInConnect({
   isConnected: isLinkedinConnected
 }: Props) {
+  const t = useTranslations("LinkedIn")
+
   const [isConnected, setIsConnected] = useState(isLinkedinConnected)
 
   const handleDisconnect = useCallback(async () => {
     const { success } = await disconnectLinkedin()
     if (success) {
       toast({
-        title: 'LinkedIn account disconnected',
-        description: 'You can reconnect at any time'
+        title: `${t("linkedInDisconnected")}`,
+        description: `${t("reconnect")}`
       })
       setIsConnected(false)
     } else {
       toast({
-        title: 'Error disconnecting LinkedIn account',
-        description: 'Please try again later'
+        title: `${t("errorDiconnecting")}`,
+        description: `${t("tryAgain")}`
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl sm:text-3xl">
-          Enhance Your Networking Experience
+          {t("enhanceNetwork")}
         </CardTitle>
         <CardDescription className="text-base">
-          Connect your LinkedIn account to unlock powerful networking features
+          {t("connectAccount")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 sm:grid-cols-1">
           <Benefit
             icon={<Users className="w-5 h-5 text-primary" />}
-            title="Personalized Match Making"
-            description="Get curated lists of people you should meet at every event you attend"
+            title={t("personalizedMatch")}
+            description={t("personalizedDescription")}
           />
           <Benefit
             icon={<Sparkles className="w-5 h-5 text-primary" />}
-            title="Community Highlights"
-            description="Stay updated with important highlights tailored to your interests"
+            title={t("communityHighlights")}
+            description={t("stayUpdated")}
           />
           <Benefit
             icon={<Layout className="w-5 h-5 text-primary" />}
-            title="Personalized Content"
-            description="Receive content recommendations based on your interactions and preferences"
+            title={t("personalizedContent")}
+            description={t("contentBody")}
           />
         </div>
       </CardContent>
@@ -120,11 +125,10 @@ export default function LinkedInConnect({
               onClick={handleDisconnect}
             >
               <Link2Off className="w-5 h-5 mr-2" />
-              Disconnect LinkedIn Account
+              {t("diconnectLinkedIn")}
             </Button>
             <p className="text-sm text-muted-foreground">
-              Your LinkedIn account is connected. You can disconnect at any
-              time.
+              {t("diconnectBody")}
             </p>
           </>
         )}
