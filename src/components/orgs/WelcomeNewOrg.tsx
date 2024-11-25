@@ -29,37 +29,37 @@ export default function WelcomeScreen({
   notificationsSent,
   orgId
 }: Props) {
-  const t = useTranslations("WelcomeNewOrg")
+  const t = useTranslations('WelcomeNewOrg')
   const localActive = useLocale()
   const [tasks] = useState([
     {
       id: 1,
-      title: `${t("welcomeScreenTasksImportContacts")}`,
-      description: `${t("welcomeScreenTasksImportDescription")}`,
+      title: `${t('welcomeScreenTasksImportContacts')}`,
+      description: `${t('welcomeScreenTasksImportDescription')}`,
       icon: Import,
       completed: importedContacts,
       link: `/${localActive}/admin/organizations/${orgId}/contacts`
     },
     {
       id: 2,
-      title: `${t("welcomeScreenTasksSetupPayments")}`,
-      description: `${t("welcomeScreenTasksPaymentDescription")}`,
+      title: `${t('welcomeScreenTasksSetupPayments')}`,
+      description: `${t('welcomeScreenTasksPaymentDescription')}`,
       icon: CreditCard,
       completed: paymentsIsSetup,
       link: `/${localActive}/admin/organizations/${orgId}/billing`
     },
     {
       id: 3,
-      title: `${t("welcomeScreenTasksCreateEvents")}`,
-      description: `${t("welcomeScreenTasksEventDescription")}`,
+      title: `${t('welcomeScreenTasksCreateEvents')}`,
+      description: `${t('welcomeScreenTasksEventDescription')}`,
       icon: Calendar,
       completed: eventCreated,
       link: `/${localActive}/admin/organizations/${orgId}/events`
     },
     {
       id: 4,
-      title: `${t("welcomeScreenTasksSendNotifications")}`,
-      description: `${t("welcomeScreenTasksNotificationDescription")}`,
+      title: `${t('welcomeScreenTasksSendNotifications')}`,
+      description: `${t('welcomeScreenTasksNotificationDescription')}`,
       icon: Bell,
       completed: notificationsSent,
       link: `/${localActive}/admin/organizations/${orgId}/chat`
@@ -74,22 +74,22 @@ export default function WelcomeScreen({
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-center text-purple-800">
-            {t("welcomeScreenTitle")}
+            {t('welcomeScreenTitle')}
           </CardTitle>
           <CardDescription className="text-center text-lg mt-2">
-            {t("welcomeScreenDescription")}
+            {t('welcomeScreenDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {/* Progress bar section */}
           <div className="mb-6">
             <p className="text-sm font-medium text-gray-700 mb-2">
-              {t("welcomeScreenProgressTitle")}
+              {t('welcomeScreenProgressTitle')}
             </p>
             <Progress value={progress} className="w-full h-2" />
             <p className="text-right text-sm text-gray-600 mt-1">
-              {completedTasks} {t("welcomeOf")} {tasks.length}{' '}
-              {t("welcomeScreenTasks")}
+              {completedTasks} {t('welcomeOf')} {tasks.length}{' '}
+              {t('welcomeScreenTasks')}
             </p>
           </div>
           {/* Task Cards */}

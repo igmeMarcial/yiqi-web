@@ -19,7 +19,7 @@ export default function ProfilePictureUpload({
   name,
   userPicture
 }: ProfilePictureUploadProps) {
-  const t = useTranslations("DeleteAccount")
+  const t = useTranslations('DeleteAccount')
   const [preview, setPreview] = useState<string>(userPicture)
 
   useEffect(() => {
@@ -90,9 +90,7 @@ export default function ProfilePictureUpload({
           className="absolute inset-0 bg-primary"
         />
         <span className={isDragActive ? 'text-primary-foreground' : ''}>
-          {isDragActive
-            ? `${t("dropHere")}`
-            : `${t("changePicture")}`}
+          {isDragActive ? `${t('dropHere')}` : `${t('changePicture')}`}
         </span>
       </Button>
     </motion.div>

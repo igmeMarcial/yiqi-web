@@ -51,7 +51,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
-  const t = useTranslations("ProfileSettings")
+  const t = useTranslations('ProfileSettings')
 
   const form = useForm<ProfileWithPrivacy>({
     resolver: zodResolver(profileWithPrivacySchema),
@@ -95,21 +95,21 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
       if (result.success) {
         router.refresh()
         toast({
-          description: `${t("profileUpdated")}`,
+          description: `${t('profileUpdated')}`,
           variant: 'default'
         })
       } else {
         toast({
-          title: `${t("error")}`,
-          description: `${t("updateFailed")}`,
+          title: `${t('error')}`,
+          description: `${t('updateFailed')}`,
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: `${t("error")}`,
-        description: `${t("somethingWentWrong")}`,
+        title: `${t('error')}`,
+        description: `${t('somethingWentWrong')}`,
         variant: 'destructive'
       })
     } finally {
@@ -124,7 +124,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     <div className="flex items-center justify-between">
       <FormLabel>{label}</FormLabel>
       <div className="flex items-center justify-between gap-2">
-        <FormLabel>{t("setToPublic")}</FormLabel>
+        <FormLabel>{t('setToPublic')}</FormLabel>
         <Switch
           checked={form.watch(`privacySettings.${field}`)}
           onCheckedChange={checked =>
@@ -162,9 +162,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     >
       <Card className="bg-transparent border-none">
         <CardHeader>
-          <CardTitle className="text-2xl">
-            {t("profileSettings")}
-          </CardTitle>
+          <CardTitle className="text-2xl">{t('profileSettings')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -192,14 +190,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'name'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("name")}</FormLabel>
+                        <FormLabel>{t('name')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterYourName")}
+                              placeholder={t('enterYourName')}
                               {...field}
                             />
                           </div>
@@ -222,7 +220,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterYourEmail")}
+                              placeholder={t('enterYourEmail')}
                               disabled
                               {...field}
                             />
@@ -241,7 +239,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                       <FormItem>
                         {renderPrivacySwitch(
                           'phoneNumber',
-                          `${t("phoneNumber")}`
+                          `${t('phoneNumber')}`
                         )}
                         <FormControl>
                           <div className="relative">
@@ -265,14 +263,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'company'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("company")}</FormLabel>
+                        <FormLabel>{t('company')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Building2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterCompany")}
+                              placeholder={t('enterCompany')}
                               {...field}
                             />
                           </div>
@@ -299,14 +297,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'position'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("position")}</FormLabel>
+                        <FormLabel>{t('position')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterPosition")}
+                              placeholder={t('enterPosition')}
                               {...field}
                             />
                           </div>
@@ -318,13 +316,13 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                 </div>
 
                 <div className="space-y-2">
-                  <FormLabel>{t("bio")}</FormLabel>
+                  <FormLabel>{t('bio')}</FormLabel>
                   <div className="relative">
                     <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Textarea
                       {...form.register('shortDescription')}
                       className="min-h-[100px] pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                      placeholder={t("tellUsAboutYourself")}
+                      placeholder={t('tellUsAboutYourself')}
                     />
                   </div>
                 </div>
@@ -352,7 +350,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterYourX")}
+                              placeholder={t('enterYourX')}
                               {...field}
                             />
                           </div>
@@ -375,7 +373,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterLinkedinURL")}
+                              placeholder={t('enterLinkedinURL')}
                               {...field}
                             />
                           </div>
@@ -398,7 +396,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterInstagramURL")}
+                              placeholder={t('enterInstagramURL')}
                               {...field}
                             />
                           </div>
@@ -414,17 +412,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'website'}
                     render={({ field }) => (
                       <FormItem>
-                        {renderPrivacySwitch(
-                          'website',
-                          `${t("website")}`
-                        )}
+                        {renderPrivacySwitch('website', `${t('website')}`)}
                         <FormControl>
                           <div className="relative">
                             <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t("enterWebsiteURL")}
+                              placeholder={t('enterWebsiteURL')}
                               {...field}
                             />
                           </div>
@@ -450,11 +445,11 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     <div className="text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <BellOff className="h-4 w-4" />
-                        {t("stopCommunications")}
+                        {t('stopCommunications')}
                       </div>
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {t("disableCommunications")}
+                      {t('disableCommunications')}
                     </div>
                   </div>
                   <Switch
@@ -469,8 +464,8 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
 
                 <div className="flex items-center gap-2 rounded-lg border p-4">
                   <Shield className="h-4 w-4" />
-                  <div className="flex-1">{t("role")}</div>
-                  <Badge>{t("User")}</Badge>
+                  <div className="flex-1">{t('role')}</div>
+                  <Badge>{t('User')}</Badge>
                 </div>
               </motion.div>
 
@@ -484,12 +479,12 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                   {isLoading ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>{t("saving")}</span>
+                      <span>{t('saving')}</span>
                     </>
                   ) : (
                     <>
                       <Save className="h-4 w-4" />
-                      <span>{t("saveChanges")}</span>
+                      <span>{t('saveChanges')}</span>
                     </>
                   )}
                 </Button>

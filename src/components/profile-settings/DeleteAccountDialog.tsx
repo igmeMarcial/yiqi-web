@@ -24,7 +24,7 @@ export default function DeleteAccountDialog() {
   const { toast } = useToast()
   const router = useRouter()
 
-  const t = useTranslations("DeleteAccount")
+  const t = useTranslations('DeleteAccount')
   const localActive = useLocale()
 
   const handleDelete = useCallback(async () => {
@@ -33,28 +33,28 @@ export default function DeleteAccountDialog() {
       const result = await deleteUserAccount()
       if (result.success) {
         toast({
-          title: `${t("accountDeleted")}`,
-          description: `${t("accountDeletedDescription")}`
+          title: `${t('accountDeleted')}`,
+          description: `${t('accountDeletedDescription')}`
         })
         router.push(`/${localActive}/auth`)
       } else {
         toast({
-          title: `${t("error")}`,
-          description: result.error ?? `${t("errorDeleting")}`,
+          title: `${t('error')}`,
+          description: result.error ?? `${t('errorDeleting')}`,
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: `${t("error")}`,
-        description: `${t("somethingWentWrong")}`,
+        title: `${t('error')}`,
+        description: `${t('somethingWentWrong')}`,
         variant: 'destructive'
       })
     } finally {
       setIsLoading(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, toast])
 
   return (
@@ -62,22 +62,22 @@ export default function DeleteAccountDialog() {
       <AlertDialogTrigger asChild>
         <Button variant="destructive" className="flex items-center space-x-2">
           <TriangleAlert className="h-4 w-4" />
-          <span>{t("deleteAccount")}</span>
+          <span>{t('deleteAccount')}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("areYouSure")}</AlertDialogTitle>
+          <AlertDialogTitle>{t('areYouSure')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("actionCannotBeUndone")}
+            {t('actionCannotBeUndone')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
             {isLoading
-              ? `${t("deleting")}`
-              : `${t("deleteAccountConfirmation")}`}
+              ? `${t('deleting')}`
+              : `${t('deleteAccountConfirmation')}`}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

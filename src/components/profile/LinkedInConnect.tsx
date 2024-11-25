@@ -36,7 +36,7 @@ function Benefit({ icon, title, description }: BenefitProps) {
 }
 
 function LinkedInLink() {
-  const t = useTranslations("LinkedIn")
+  const t = useTranslations('LinkedIn')
   const handleLinkClick = () => {
     const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
     const redirectUri = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_URI}`
@@ -53,7 +53,7 @@ function LinkedInLink() {
 
   return (
     <Button onClick={() => handleLinkClick()} className="btn-linkedin">
-      {t("linkAccount")}
+      {t('linkAccount')}
     </Button>
   )
 }
@@ -63,7 +63,7 @@ type Props = {
 export default function LinkedInConnect({
   isConnected: isLinkedinConnected
 }: Props) {
-  const t = useTranslations("LinkedIn")
+  const t = useTranslations('LinkedIn')
 
   const [isConnected, setIsConnected] = useState(isLinkedinConnected)
 
@@ -71,45 +71,45 @@ export default function LinkedInConnect({
     const { success } = await disconnectLinkedin()
     if (success) {
       toast({
-        title: `${t("linkedInDisconnected")}`,
-        description: `${t("reconnect")}`
+        title: `${t('linkedInDisconnected')}`,
+        description: `${t('reconnect')}`
       })
       setIsConnected(false)
     } else {
       toast({
-        title: `${t("errorDiconnecting")}`,
-        description: `${t("tryAgain")}`
+        title: `${t('errorDiconnecting')}`,
+        description: `${t('tryAgain')}`
       })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl sm:text-3xl">
-          {t("enhanceNetwork")}
+          {t('enhanceNetwork')}
         </CardTitle>
         <CardDescription className="text-base">
-          {t("connectAccount")}
+          {t('connectAccount')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 sm:grid-cols-1">
           <Benefit
             icon={<Users className="w-5 h-5 text-primary" />}
-            title={t("personalizedMatch")}
-            description={t("personalizedDescription")}
+            title={t('personalizedMatch')}
+            description={t('personalizedDescription')}
           />
           <Benefit
             icon={<Sparkles className="w-5 h-5 text-primary" />}
-            title={t("communityHighlights")}
-            description={t("stayUpdated")}
+            title={t('communityHighlights')}
+            description={t('stayUpdated')}
           />
           <Benefit
             icon={<Layout className="w-5 h-5 text-primary" />}
-            title={t("personalizedContent")}
-            description={t("contentBody")}
+            title={t('personalizedContent')}
+            description={t('contentBody')}
           />
         </div>
       </CardContent>
@@ -125,10 +125,10 @@ export default function LinkedInConnect({
               onClick={handleDisconnect}
             >
               <Link2Off className="w-5 h-5 mr-2" />
-              {t("diconnectLinkedIn")}
+              {t('diconnectLinkedIn')}
             </Button>
             <p className="text-sm text-muted-foreground">
-              {t("diconnectBody")}
+              {t('diconnectBody')}
             </p>
           </>
         )}

@@ -38,13 +38,13 @@ export function ContactForm() {
   })
 
   const { toast } = useToast()
-  const t = useTranslations("Bootcamp")
+  const t = useTranslations('Bootcamp')
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // get to add the server action to create the lead based on org id
       toast({
-        title: `${t("thanksForApplying")}`,
+        title: `${t('thanksForApplying')}`,
         description: `${values}`
       })
     } catch (error) {
@@ -69,12 +69,12 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Name")}</FormLabel>
+              <FormLabel>{t('Name')}</FormLabel>
               <FormControl>
                 <Input placeholder="Tu nombre" {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                {t("enterFullName")}
+                {t('enterFullName')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -87,12 +87,12 @@ export function ContactForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Phone")}</FormLabel>
+              <FormLabel>{t('Phone')}</FormLabel>
               <FormControl>
-                <Input placeholder={t("yourNumber")} {...field} />
+                <Input placeholder={t('yourNumber')} {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                {t("enterNumber")}
+                {t('enterNumber')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -105,12 +105,12 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Email")}</FormLabel>
+              <FormLabel>{t('Email')}</FormLabel>
               <FormControl>
-                <Input placeholder={t("yourEmail")} {...field} />
+                <Input placeholder={t('yourEmail')} {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                {t("contact")}
+                {t('contact')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -128,7 +128,7 @@ export function ContactForm() {
                 <Input placeholder="Tu perfil de LinkedIn" {...field} />
               </FormControl>
               <FormDescription className="text-white">
-                {t("linkedInUrl")}
+                {t('linkedInUrl')}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -136,7 +136,7 @@ export function ContactForm() {
         />
 
         <Button variant={'secondary'} className="w-full mt-2" type="submit">
-          {t("apply")}
+          {t('apply')}
         </Button>
       </form>
     </Form>

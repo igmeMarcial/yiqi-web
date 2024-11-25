@@ -53,7 +53,7 @@ function PriceCard(props: {
   subtitle?: string
   features: string[]
 }) {
-  const t = useTranslations("DeleteAccount")
+  const t = useTranslations('DeleteAccount')
   return (
     <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg mb-5 sm:mb-0">
       <div className="text-center mb-6">
@@ -88,9 +88,7 @@ function PriceCard(props: {
         ))}
       </ul>
       <Link href="#contacto">
-        <Button className="w-full font-semibold py-4 mt-4">
-          {t("apply")}
-        </Button>
+        <Button className="w-full font-semibold py-4 mt-4">{t('apply')}</Button>
       </Link>
     </div>
   )

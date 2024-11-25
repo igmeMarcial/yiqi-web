@@ -18,7 +18,7 @@ interface DragDropZoneProps {
 }
 
 function DragDropZone({ onUploadComplete }: DragDropZoneProps) {
-  const t = useTranslations("Upload")
+  const t = useTranslations('Upload')
   const { uploadMany, isUploading, error } = useUpload()
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
 
@@ -63,17 +63,15 @@ function DragDropZone({ onUploadComplete }: DragDropZoneProps) {
         {isUploading ? (
           <Loader2 className="w-10 h-10 mx-auto animate-spin text-primary" />
         ) : isDragActive ? (
-          <p className="text-primary">{t("DropFile")}</p>
+          <p className="text-primary">{t('DropFile')}</p>
         ) : (
-          <p>
-            {t("Drag")}
-          </p>
+          <p>{t('Drag')}</p>
         )}
       </div>
       {error && <p className="text-destructive mt-2">{error.message}</p>}
       {uploadedFiles.length > 0 && (
         <div className="mt-4">
-          <h3 className="font-semibold mb-2">{t("UploadedFiles")}</h3>
+          <h3 className="font-semibold mb-2">{t('UploadedFiles')}</h3>
           <ul className="space-y-2">
             {uploadedFiles.map((file, index) => (
               <li
@@ -114,7 +112,7 @@ interface SingleFileUploadProps {
 }
 
 function SingleFileUpload({ onUploadComplete }: SingleFileUploadProps) {
-  const t = useTranslations("Upload")
+  const t = useTranslations('Upload')
   const { uploadSingle, isUploading, error } = useUpload()
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null)
 
@@ -154,7 +152,7 @@ function SingleFileUpload({ onUploadComplete }: SingleFileUploadProps) {
             ) : (
               <Upload className="w-4 h-4 mr-2" />
             )}
-            {isUploading ? `${t("uploading")}` : `${t("chooseFile")}`}
+            {isUploading ? `${t('uploading')}` : `${t('chooseFile')}`}
           </Button>
           <input
             id="single-file-upload"
@@ -168,7 +166,7 @@ function SingleFileUpload({ onUploadComplete }: SingleFileUploadProps) {
       {error && <p className="text-destructive mt-2">{error.message}</p>}
       {uploadedFile && (
         <div className="mt-4">
-          <h3 className="font-semibold mb-2">{t("UploadedFile")}</h3>
+          <h3 className="font-semibold mb-2">{t('UploadedFile')}</h3>
           <div className="flex items-center justify-between bg-muted p-2 rounded-md">
             <div className="flex items-center space-x-2">
               <FileIcon className="w-4 h-4" />

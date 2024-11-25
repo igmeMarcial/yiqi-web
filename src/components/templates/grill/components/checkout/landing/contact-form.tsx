@@ -61,7 +61,7 @@ export function ContactForm() {
   })
 
   const { toast } = useToast()
-  const t = useTranslations("Grill")
+  const t = useTranslations('Grill')
   const localActive = useLocale()
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -83,8 +83,7 @@ export function ContactForm() {
       }); */
       window.location.href = `/${localActive}/error`
       toast({
-        title:
-          `${t("reserved")}`,
+        title: `${t('reserved')}`,
         description: `${values}`
       })
     } catch (error) {
@@ -128,10 +127,10 @@ export function ContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-orange-300">{t("Number")}</FormLabel>
+                <FormLabel className="text-orange-300">{t('Number')}</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder={t("yourNumber")}
+                    placeholder={t('yourNumber')}
                     {...field}
                     className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                   />
@@ -148,10 +147,10 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-orange-300">{t("Email")}</FormLabel>
+              <FormLabel className="text-orange-300">{t('Email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("yourEmail")}
+                  placeholder={t('yourEmail')}
                   {...field}
                   className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                 />
@@ -170,7 +169,7 @@ export function ContactForm() {
               <FormLabel className="text-orange-300">LinkedIn</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("yourLinkedInProfile")}
+                  placeholder={t('yourLinkedInProfile')}
                   {...field}
                   className="bg-black bg-opacity-50 border-orange-500/50 text-white"
                 />
@@ -187,7 +186,7 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-orange-300">
-                {t("numberOfEntries")}
+                {t('numberOfEntries')}
               </FormLabel>
               <Select
                 onValueChange={value => field.onChange(parseInt(value, 10))}
@@ -219,7 +218,7 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-orange-300">
-                {t("dicountCode")}
+                {t('dicountCode')}
               </FormLabel>
               <FormControl>
                 <Input
@@ -248,10 +247,10 @@ export function ContactForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="text-orange-300">
-                  {t("authorization")}
+                  {t('authorization')}
                 </FormLabel>
                 <FormDescription className="text-orange-200/70">
-                  {t("authorizationBody")}
+                  {t('authorizationBody')}
                 </FormDescription>
               </div>
               <FormMessage className="text-red-400" />
@@ -263,7 +262,7 @@ export function ContactForm() {
           type="submit"
           className="min-w-full sm:w-1/2 bg-gradient-to-r from-orange-500 to-red-600 text-white hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 text-lg py-6"
         >
-          {t("closeEntry")}
+          {t('closeEntry')}
         </Button>
       </form>
     </Form>

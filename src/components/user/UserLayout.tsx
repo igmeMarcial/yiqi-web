@@ -38,30 +38,30 @@ interface UserLayoutProps {
 
 export default function UserLayout({ children, userProps }: UserLayoutProps) {
   const localActive = useLocale()
-  const t = useTranslations("AddOrganizer")
+  const t = useTranslations('AddOrganizer')
   const navItems = [
     {
-      name: `${t("profileSettings")}`,
+      name: `${t('profileSettings')}`,
       icon: User,
       href: `/${localActive}/user/profile`
     },
     {
-      name: `${t("payments")}`,
+      name: `${t('payments')}`,
       icon: CreditCard,
       href: `/${localActive}/user/payments`
     },
     {
-      name: `${t("history")}`,
+      name: `${t('history')}`,
       icon: History,
       href: `/${localActive}/user/history`
     },
     {
-      name: `${t("tickets")}`,
+      name: `${t('tickets')}`,
       icon: Ticket,
       href: `/${localActive}/user/tickets`
     },
     {
-      name: `${t("networkingSettings")}`,
+      name: `${t('networkingSettings')}`,
       icon: Speech,
       href: `/${localActive}/user/networking-settings`
     }
@@ -114,7 +114,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>{t("logOut")}</span>
+                      <span>{t('logOut')}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>
