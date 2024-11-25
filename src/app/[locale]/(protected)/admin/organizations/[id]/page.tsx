@@ -7,9 +7,13 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import WelcomeScreen from '@/components/orgs/WelcomeNewOrg'
 import { getNewOrgWelcomeProps } from '@/services/actions/org/getNewOrgWelcomeProps'
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params
+}: {
+  params: { locale: string; id: string }
+}) {
   const organization = await getOrganization(params.id)
-
+  const { locale } = params
   if (!organization) {
     return <div>Organization not found</div>
   }
@@ -24,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser()
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
 
   if (user.role === Roles.ADMIN) {
@@ -55,10 +59,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/${locale}/newuser`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/${locale}/user`)
   } else if (user.role === Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/${locale}/andino-admin`)
   }
 }

@@ -3,16 +3,17 @@ import { getUser } from '@/lib/auth/lucia'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
-import Link from 'next/link'
 import { EventAdminView } from '@/components/EventAdminView'
 import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 import { translations } from '@/lib/translations/translations'
+import Link from 'next/link'
 
 export default async function EventDetailsPage({
   params
 }: {
-  params: { id: string; eventId: string }
+  params: { locale: string; id: string; eventId: string }
 }) {
+  const { locale } = params
   const event = await getEvent(params.eventId)
   const user = await getUser()
   const attendees = await getEventRegistrations(params.eventId)
@@ -22,7 +23,7 @@ export default async function EventDetailsPage({
   }
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
 
   if (user.role === Roles.ADMIN) {
@@ -77,13 +78,14 @@ export default async function EventDetailsPage({
               <p>{event.description}</p>
             </div>
           </section>
+
           <EventAdminView registrations={attendees} eventId={params.eventId} />
         </OrganizationLayout>
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/${locale}/newuser`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/${locale}/user`)
   }
 }

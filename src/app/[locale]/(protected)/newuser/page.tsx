@@ -14,10 +14,17 @@ import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 
-export default async function Page() {
+export default async function Page({
+  params
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  const { locale } = params
   const user = await getUser()
   if (!user) {
-    redirect('/auth')
+    redirect(`/${locale}/auth`)
   }
 
   if (user.role === Roles.NEW_USER) {
@@ -41,10 +48,10 @@ export default async function Page() {
       </main>
     )
   } else if (user.role === Roles.ADMIN) {
-    redirect('/admin')
+    redirect(`/${locale}/admin`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/${locale}/user`)
   } else if (user.role === Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/${locale}/andino-admin`)
   }
 }

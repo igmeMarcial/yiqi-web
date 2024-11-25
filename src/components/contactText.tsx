@@ -81,3 +81,16 @@ export function ContactText3(props: {
     </div>
   )
 }
+
+export function Link1(props: { id: string }) {
+  const t = useTranslations('contactText')
+  const localActive = useLocale()
+  return (
+    <Link
+      href={`/${localActive}/admin/organizations/${props.id}/contacts`}
+      className="mt-4 inline-block text-blue-500 hover:underline"
+    >
+      {t('back')}
+    </Link>
+  )
+}

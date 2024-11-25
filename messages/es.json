@@ -103,7 +103,9 @@
     "clickToContinue": "Haz clic en un chat para continuar"
   },
   "EventsPage": {
-    "createNewEvent": "Crear Nuevo Evento"
+    "createNewEvent": "Crear Nuevo Evento",
+    "events": "Eventos",
+    "cancel": "Cancelar"
   },
   "contactFor": {
     "contactsFor": "Contactos de",

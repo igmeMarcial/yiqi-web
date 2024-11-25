@@ -1,13 +1,13 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getContactDetails } from '@/services/actions/contactActions'
 import { getUserMessageList } from '@/services/actions/messagesActions'
-import Link from 'next/link'
 import * as Tabs from '@radix-ui/react-tabs'
 import ConnectedChat from '@/components/chat/connectedChat'
 import {
   ContactText1,
   ContactText2,
   ContactText3,
+  Link1,
   TabList
 } from '@/components/contactText'
 
@@ -16,7 +16,6 @@ export default async function ContactDetailsPage({
 }: {
   params: { locale: string; id: string; userId: string }
 }) {
-  const { locale } = params
   const organization = await getOrganization(params.id)
   const contact = await getContactDetails(params.userId, params.id)
   const messages = await getUserMessageList(params.userId, params.id)
@@ -81,12 +80,7 @@ export default async function ContactDetailsPage({
           </Tabs.Content>
         </div>
       </Tabs.Root>
-      <Link
-        href={`/${locale}/admin/organizations/${params.id}/contacts`}
-        className="mt-4 inline-block text-blue-500 hover:underline"
-      >
-        Back to Contacts
-      </Link>
+      <Link1 id={params.id} />
     </div>
   )
 }

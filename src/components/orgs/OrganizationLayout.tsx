@@ -186,3 +186,35 @@ export default function OrganizationLayout({
     </SidebarProvider>
   )
 }
+
+export function EventText(props: { id: string }) {
+  const localActive = useLocale()
+  const t = useTranslations('EventsList')
+  return (
+    <div className="flex justify-between items-center mb-6">
+      <h1 className="text-2xl font-bold">{t('events')}</h1>
+      <Link
+        href={`/${localActive}/admin/organizations/${props.id}/events/new`}
+        className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        {t('createNewEvents')}
+      </Link>
+    </div>
+  )
+}
+
+export function EventText2(props: { id: string }) {
+  const localActive = useLocale()
+  const t = useTranslations('EventsPage')
+  return (
+    <div className="flex justify-between items-center mb-6">
+      <h1 className="text-2xl font-bold">{t('createNewEvent')}</h1>
+      <Link
+        href={`/${localActive}/admin/organizations/${props.id}/events`}
+        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700 transition-colors"
+      >
+        {t('cancel')}
+      </Link>
+    </div>
+  )
+}
