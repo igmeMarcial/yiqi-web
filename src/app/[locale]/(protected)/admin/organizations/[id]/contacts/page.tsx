@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { ImportContactTemplateButton } from './ImportContactTemplateButton'
 import { ImportContactButton } from './ImportContactButton'
 import { getLocale, getTranslations } from 'next-intl/server'
-
 export default async function ContactsPage({
   params
 }: {

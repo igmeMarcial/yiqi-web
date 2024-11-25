@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import LinkedInOAuthButton from '@/components/auth/LinkedinButton'
+import { AuthText } from '@/components/auth/auth'
 
 export default async function Page() {
   return (
@@ -52,6 +53,7 @@ export default async function Page() {
           </p>
         </CardFooter>
       </Card>
+      <AuthText />
     </main>
   )
 }

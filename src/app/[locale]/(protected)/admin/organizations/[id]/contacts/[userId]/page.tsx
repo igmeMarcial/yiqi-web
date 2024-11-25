@@ -5,12 +5,13 @@ import * as Tabs from '@radix-ui/react-tabs'
 import ConnectedChat from '@/components/chat/connectedChat'
 import Link from 'next/link'
 import { getLocale, getTranslations } from 'next-intl/server'
-
+import { ContactText2, ContactText3 } from '@/components/contactText'
 export default async function ContactDetailsPage({
   params
 }: {
   params: { locale: string; id: string; userId: string }
 }) {
+  const { locale } = params
   const organization = await getOrganization(params.id)
   const contact = await getContactDetails(params.userId, params.id)
   const messages = await getUserMessageList(params.userId, params.id)
@@ -33,7 +34,6 @@ export default async function ContactDetailsPage({
           <Tabs.Trigger value="events">{t('attendEvents')}</Tabs.Trigger>
           <Tabs.Trigger value="details">{t('userDetails')}</Tabs.Trigger>
         </Tabs.List>
-
         <div className="pt-3">
           <Tabs.Content value="messages">
             <div className="h-[600px]">
@@ -49,11 +49,17 @@ export default async function ContactDetailsPage({
             <h2 className="text-xl font-bold mt-4 mb-2">
               {t('AttendedEvents')}
             </h2>
+            {/* <h2 className="text-xl font-bold mt-4 mb-2">Attended Events</h2>
+>>>>>>> 3167593 (next-intl in server components)
             <ul className="space-y-2">
               {contact.registeredEvents?.map(attendee => (
                 <li key={attendee.id} className="border p-2 rounded">
                   <Link
+<<<<<<< HEAD
                     href={`/${localActive}/admin/organizations/${params.id}/events/${attendee.event.id}`}
+=======
+                    href={`/${locale}/admin/organizations/${params.id}/events/${attendee.event.id}`}
+>>>>>>> 3167593 (next-intl in server components)
                     className="text-blue-500 hover:underline"
                   >
                     {attendee.event.title}
@@ -63,7 +69,9 @@ export default async function ContactDetailsPage({
                   </p>
                 </li>
               ))}
-            </ul>
+            </ul> */}
+
+            <ContactText3 contact={contact} id={params.id} />
           </Tabs.Content>
 
           <Tabs.Content value="details">
@@ -80,6 +88,11 @@ export default async function ContactDetailsPage({
               <h3 className="text-lg font-semibold mt-4 mb-2">
                 {t('additionalData')}
               </h3>
+              <ContactText2
+                email={contact.email}
+                name={contact.name}
+                phoneNumber={contact.phoneNumber}
+              />
               {contact.dataCollected && (
                 <div className="border p-2 rounded">
                   {Object.entries(contact.dataCollected).map(([key, value]) => (
