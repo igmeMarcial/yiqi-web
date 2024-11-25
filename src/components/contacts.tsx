@@ -54,3 +54,8 @@ export default function ContactText(props: {
     </div>
   )
 }
+
+export function ContactText1() {
+  const t = useTranslations('DeleteAccount')
+  return <div>{t('noOrganizationFound')}</div>
+}

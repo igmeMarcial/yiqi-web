@@ -7,11 +7,12 @@ import { redirect } from 'next/navigation'
 export default async function OrganizationBillingPage({
   params
 }: {
-  params: { id: string }
+  params: { locale: string; id: string }
 }) {
   const user = await getUser()
+  const { locale } = params
   if (!user) {
-    redirect('/login')
+    redirect(`/${locale}/login`)
   }
 
   return (

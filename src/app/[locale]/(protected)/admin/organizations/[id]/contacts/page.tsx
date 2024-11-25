@@ -5,8 +5,7 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
 // import { ImportContactButton } from './ImportContactButton'
 // import { ImportContactTemplateButton } from './ImportContactTemplateButton'
-import { translations } from '@/lib/translations/translations'
-import ContactText from '@/components/contacts'
+import ContactText, { ContactText1 } from '@/components/contacts'
 
 export default async function ContactsPage({
   params
@@ -19,7 +18,7 @@ export default async function ContactsPage({
   const contacts = await getOrganizationContacts(params.id)
 
   if (!organization || !user) {
-    return <div>{translations.es.noOrganizationFound}</div>
+    return <ContactText1 />
   }
 
   return (

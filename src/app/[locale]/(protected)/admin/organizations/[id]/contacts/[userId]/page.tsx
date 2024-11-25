@@ -4,12 +4,19 @@ import { getUserMessageList } from '@/services/actions/messagesActions'
 import Link from 'next/link'
 import * as Tabs from '@radix-ui/react-tabs'
 import ConnectedChat from '@/components/chat/connectedChat'
+import {
+  ContactText1,
+  ContactText2,
+  ContactText3,
+  TabList
+} from '@/components/contactText'
 
 export default async function ContactDetailsPage({
   params
 }: {
-  params: { id: string; userId: string }
+  params: { locale: string; id: string; userId: string }
 }) {
+  const { locale } = params
   const organization = await getOrganization(params.id)
   const contact = await getContactDetails(params.userId, params.id)
   const messages = await getUserMessageList(params.userId, params.id)
@@ -20,15 +27,9 @@ export default async function ContactDetailsPage({
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">
-        Contact Details: {contact.name}
-      </h1>
+      <ContactText1 name={contact.name} />
       <Tabs.Root defaultValue="messages" className="w-full">
-        <Tabs.List>
-          <Tabs.Trigger value="messages">Messages</Tabs.Trigger>
-          <Tabs.Trigger value="events">Attended Events</Tabs.Trigger>
-          <Tabs.Trigger value="details">User Details</Tabs.Trigger>
-        </Tabs.List>
+        <TabList />
 
         <div className="pt-3">
           <Tabs.Content value="messages">
@@ -42,12 +43,12 @@ export default async function ContactDetailsPage({
           </Tabs.Content>
 
           <Tabs.Content value="events">
-            <h2 className="text-xl font-bold mt-4 mb-2">Attended Events:</h2>
+            {/* <h2 className="text-xl font-bold mt-4 mb-2">Attended Events</h2>
             <ul className="space-y-2">
               {contact.registeredEvents?.map(attendee => (
                 <li key={attendee.id} className="border p-2 rounded">
                   <Link
-                    href={`/admin/organizations/${params.id}/events/${attendee.event.id}`}
+                    href={`/${locale}/admin/organizations/${params.id}/events/${attendee.event.id}`}
                     className="text-blue-500 hover:underline"
                   >
                     {attendee.event.title}
@@ -55,23 +56,18 @@ export default async function ContactDetailsPage({
                   <p>Status: {attendee.status}</p>
                 </li>
               ))}
-            </ul>
+            </ul> */}
+
+            <ContactText3 contact={contact} id={params.id} />
           </Tabs.Content>
 
           <Tabs.Content value="details">
             <div className="space-y-2">
-              <p>
-                <strong>Name:</strong> {contact.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {contact.email}
-              </p>
-              <p>
-                <strong>Phone Number:</strong> {contact.phoneNumber || 'N/A'}
-              </p>
-              <h3 className="text-lg font-semibold mt-4 mb-2">
-                Additional Data:
-              </h3>
+              <ContactText2
+                email={contact.email}
+                name={contact.name}
+                phoneNumber={contact.phoneNumber}
+              />
               {contact.dataCollected && (
                 <div className="border p-2 rounded">
                   {Object.entries(contact.dataCollected).map(([key, value]) => (
@@ -86,7 +82,7 @@ export default async function ContactDetailsPage({
         </div>
       </Tabs.Root>
       <Link
-        href={`/admin/organizations/${params.id}/contacts`}
+        href={`/${locale}/admin/organizations/${params.id}/contacts`}
         className="mt-4 inline-block text-blue-500 hover:underline"
       >
         Back to Contacts

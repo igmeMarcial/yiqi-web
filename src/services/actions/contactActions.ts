@@ -52,6 +52,8 @@ export async function getContactDetails(
   return contact
 }
 
+export type ContactDetailsType = Awaited<ReturnType<typeof getContactDetails>>
+
 export async function isUserOrganizationAdmin(
   userId: string,
   organizationId: string

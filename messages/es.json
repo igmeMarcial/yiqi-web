@@ -143,7 +143,7 @@
     "payments": "Pagos",
     "history": "Historial",
     "tickets": "Tickets",
-    "logOut":"Finalizar la sesión"
+    "logOut": "Finalizar la sesión"
   },
   "ProfileSettings": {
     "name": "Nombre",
@@ -166,7 +166,7 @@
     "User": "Usuario"
   },
   "DeleteAccount": {
-    "apply":"Quiero Postular!",
+    "apply": "Quiero Postular!",
     "tickets": "Tickets",
     "deleteAccount": "Eliminar Cuenta",
     "areYouSure": "¿Estás absolutamente seguro?",
@@ -403,5 +403,4 @@
     "chooseFile": "Elegir archivo",
     "UploadedFile": "Archivo subido:"
   }
-
 }

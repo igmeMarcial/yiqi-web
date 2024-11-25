@@ -144,7 +144,7 @@
     "history": "History",
     "tickets": "Tickets",
 
-    "logOut":"Log out"
+    "logOut": "Log out"
   },
   "ProfileSettings": {
     "name": "Name",
@@ -164,11 +164,11 @@
     "enterYourPosition": "Enter your Position",
     "tellUsAboutYourself": "Tell us about yourself",
 
-    "setToPublic":"Set to Public",
-    "User":"User"
+    "setToPublic": "Set to Public",
+    "User": "User"
   },
   "DeleteAccount": {
-    "apply":"I want to Apply!",
+    "apply": "I want to Apply!",
     "tickets": "Tickets",
     "deleteAccount": "Delete Account",
     "areYouSure": "Are you absolutely sure?",
@@ -322,87 +322,122 @@
     "HostedBy": "Hosted By",
     "aboutEvent": "About Event"
   },
-  "newUser":{
-    "welcome":"Welcome new user!",
-    "attended":"I attend the events!",
-    "success":"Organization created successfully!",
-    "Organization":"Organization",
-    "organizationBody":"Enter the name of your main organization",
-    "Description":"Description",
-    "descriptionBody":"Provide a brief description of your organization",
-    "Logo":"Logo",
-    "logoDescription":"Upload your organization's logo",
-    "color":"Select a color for your organization",
-    "Begin":"Begin",
-    "manage":"I want to manage my community!",
-    "createCommunityManager":"Create your community manager",
-    "form":"Fill in the free fields to continue, you can modify them later!"
+  "newUser": {
+    "welcome": "Welcome new user!",
+    "attended": "I attend the events!",
+    "success": "Organization created successfully!",
+    "Organization": "Organization",
+    "organizationBody": "Enter the name of your main organization",
+    "Description": "Description",
+    "descriptionBody": "Provide a brief description of your organization",
+    "Logo": "Logo",
+    "logoDescription": "Upload your organization's logo",
+    "color": "Select a color for your organization",
+    "Begin": "Begin",
+    "manage": "I want to manage my community!",
+    "createCommunityManager": "Create your community manager",
+    "form": "Fill in the free fields to continue, you can modify them later!"
   },
-  "AddOrg":{
-    "success":"Organization created successfully!",
-    "Organization":"Organization",
-    "organizationBody":"Enter the name of your main organization",
-    "Description":"Description",
-    "descriptionBody":"Provide a brief description of your organization",
-    "LogoURL":"Logo URL",
-    "logoDescription":"Enter the URL of your organization's logo",
-    "Color":"Color",
-    "colorDescription":"Select a color for your organization",
-    "Begin":"Begin",
-    "createNewOrg":"Create new organization",
-    "form":"Fill in the free fields to continue, you can modify them later!"
+  "AddOrg": {
+    "success": "Organization created successfully!",
+    "Organization": "Organization",
+    "organizationBody": "Enter the name of your main organization",
+    "Description": "Description",
+    "descriptionBody": "Provide a brief description of your organization",
+    "LogoURL": "Logo URL",
+    "logoDescription": "Enter the URL of your organization's logo",
+    "Color": "Color",
+    "colorDescription": "Select a color for your organization",
+    "Begin": "Begin",
+    "createNewOrg": "Create new organization",
+    "form": "Fill in the free fields to continue, you can modify them later!"
   },
-  "LinkedIn":{
-    "linkAccount":"Link LinkedIn Account",
-    "linkedInDisconnected":"LinkedIn account disconnected",
-    "reconnect":"You can reconnect at any time",
-    "errorDiconnecting":"Error disconnecting LinkedIn account",
-    "tryAgain":"Please try again later",
-    "enhanceNetwork":"Enhance Your Networking Experience",
-    "connectAccount":"Connect your LinkedIn account to unlock powerful networking features",
-    "personalizedMatch":"Personalized Match Making",
-    "personalizedDescription":"Get curated lists of people you should meet at every event you attend",
-    "communityHighlights":"Community Highlights",
-    "stayUpdated":"Stay updated with important highlights tailored to your interests",
-    "personalizedContent":"Personalized Content",
-    "contentBody":"Receive content recommendations based on your interactions and preferences",
-    "diconnectLinkedIn":"Disconnect LinkedIn Account",
-    "diconnectBody":"Your LinkedIn account is connected. You can disconnect at any time."
+  "LinkedIn": {
+    "linkAccount": "Link LinkedIn Account",
+    "linkedInDisconnected": "LinkedIn account disconnected",
+    "reconnect": "You can reconnect at any time",
+    "errorDiconnecting": "Error disconnecting LinkedIn account",
+    "tryAgain": "Please try again later",
+    "enhanceNetwork": "Enhance Your Networking Experience",
+    "connectAccount": "Connect your LinkedIn account to unlock powerful networking features",
+    "personalizedMatch": "Personalized Match Making",
+    "personalizedDescription": "Get curated lists of people you should meet at every event you attend",
+    "communityHighlights": "Community Highlights",
+    "stayUpdated": "Stay updated with important highlights tailored to your interests",
+    "personalizedContent": "Personalized Content",
+    "contentBody": "Receive content recommendations based on your interactions and preferences",
+    "diconnectLinkedIn": "Disconnect LinkedIn Account",
+    "diconnectBody": "Your LinkedIn account is connected. You can disconnect at any time."
   },
-  "Bootcamp":{
-    "eventsAndTestimonials":"Our Events and Testimonials",
-    "thanksForApplying":"Thank you for applying to the bootcamp",
-    "Name":"Name",
-    "enterFullName":"Please enter your full name.",
-    "Phone":"Phone",
-    "yourNumber":"Your phone number",
-    "enterNumber":"Enter your phone number.",
-    "Email":"Email",
-    "yourEmail":"Your Email",
-    "contact":"We will use this email to contact you.",
-    "linkedInUrl":"Provide your LinkedIn profile URL.",
-    "apply":"Apply to the bootcamp"
+  "Bootcamp": {
+    "eventsAndTestimonials": "Our Events and Testimonials",
+    "thanksForApplying": "Thank you for applying to the bootcamp",
+    "Name": "Name",
+    "enterFullName": "Please enter your full name.",
+    "Phone": "Phone",
+    "yourNumber": "Your phone number",
+    "enterNumber": "Enter your phone number.",
+    "Email": "Email",
+    "yourEmail": "Your Email",
+    "contact": "We will use this email to contact you.",
+    "linkedInUrl": "Provide your LinkedIn profile URL.",
+    "apply": "Apply to the bootcamp"
   },
-  "Grill":{
-    "notSupported":"Your browser does not support the video tag.",
-    "reserved":"Thank you for reserving your ticket to the Tech Grill Halloween Edition",
-    "Number":"Number",
-    "yourNumber":"Your phone number",
-    "Email":"Email",
-    "yourEmail":"Your Email",
-    "yourLinkedInProfile":"Your LinkedIn profile",
-    "numberOfEntries":"Number of entries",
-    "dicountCode":"Your discount code",
-    "authorization":"Authorization for use of data",
-    "authorizationBody":"I authorize the use of my data and photos for videos and advertising material of Andino",
-    "closeEntry":"Close your entry"
+  "Grill": {
+    "notSupported": "Your browser does not support the video tag.",
+    "reserved": "Thank you for reserving your ticket to the Tech Grill Halloween Edition",
+    "Number": "Number",
+    "yourNumber": "Your phone number",
+    "Email": "Email",
+    "yourEmail": "Your Email",
+    "yourLinkedInProfile": "Your LinkedIn profile",
+    "numberOfEntries": "Number of entries",
+    "dicountCode": "Your discount code",
+    "authorization": "Authorization for use of data",
+    "authorizationBody": "I authorize the use of my data and photos for videos and advertising material of Andino",
+    "closeEntry": "Close your entry"
   },
-  "Upload":{
-    "DropFile":"Drop the files here ...",
-    "Drag":"Drag 'n' drop some files here, or click to select files",
-    "UploadedFiles":"Uploaded Files:",
-    "uploading":"Uploading...",
-    "chooseFile":"Choose File",
-    "UploadedFile":"Uploaded File:"
+  "Upload": {
+    "DropFile": "Drop the files here ...",
+    "Drag": "Drag 'n' drop some files here, or click to select files",
+    "UploadedFiles": "Uploaded Files:",
+    "uploading": "Uploading...",
+    "chooseFile": "Choose File",
+    "UploadedFile": "Uploaded File:"
+  },
+  "Privacy": {
+    "policy": "Privacy Policy",
+    "policy1": "Nuestra política de privacidad tiene como objetivo que nuestros clientes conozcan cómo tratamos y protegemos sus datos personales ya que para nosotros es sumamente importante hacerlo. Tenemos un compromiso con el cumplimiento de la normativa vigente establecida en la Ley N° 29733, Ley de Protección de Datos Personales y su Reglamento, como también con los términos de esta política. Por lo tanto, es esencial que conozca y acepte todos los detalles de esta Política de Privacidad (en adelante, la 'Política').",
+    "about": "about us",
+    "services": "ANDINO LABS uses the Platform to provide the Services.",
+    "policy2": "ANDINO LABS SAC (hereinafter 'ANDINO LABS') with RUC No. 20609991080 with fiscal address in Lima, Peru, is a company dedicated, among others, to the construction industry, creating the YIQI Ecosystem, as said term is described in the Terms and Conditions, for the acquisition and operation of the Tokens (the 'Services').",
+    "concent": "CONSENT",
+    "policy3": "The contracting, registration and access to the Platform and use of the Services implies that the User gives his/her unequivocal, express, free and informed consent for the inclusion, use and processing of his/her personal data by ANDINO LABS.",
+    "acceptance": "Likewise, consent may be required by clicking 'acceptance' of this Policy.",
+    "collection": "COLLECTION AND USE",
+    "policy4": "Data is collected automatically whenever you access the Service through any device ('Usage Data'). This data may include information such as your computer's or mobile device's Internet Protocol address (e.g. IP address), browser type, browser version, mobile operating system and version, the pages of our Services that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.",
+    "information": "ADDITIONAL INFORMATION",
+    "policy5": "ANDINO LABS has the right to modify, update or complete this Policy at any time. The effective date is indicated at the beginning of this Policy. Therefore, it is the User's responsibility to periodically review this Policy to be informed of its most updated version.",
+    "policy6": "If the User does not agree with the implemented changes, he/she must immediately cancel his/her Registration and refrain from using the Platform. If the User does not carry out this cancellation or continues using the Platform, he/she will be deemed to have agreed to the new Policy."
+  },
+  "auth": {
+    "welcome": "Welcome to Yiqi",
+    "signUp": "Please sign in or sign up below",
+    "issues": "In case of problems logging in, please contact",
+    "support": "technical support"
+  },
+  "contactText": {
+    "contactDetails": "Contact Details:",
+    "Messages": "Messages",
+    "attendEvents": "Attended Events",
+    "userDetails": "User Details",
+    "attendedEvents": "Attended Events:",
+    "Name": "Name:",
+    "Email": "Email:",
+    "number": "Phone Number:",
+    "additionalData": "Additional Data:",
+    "AttendedEvents": "Attended Events:",
+    "Status": "Status:",
+    "back": "Back to Contacts"
   }
 }
