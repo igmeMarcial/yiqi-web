@@ -39,7 +39,10 @@ export const userDataCollectedShema = z.object({
   communicationStyle: z.string().optional().nullish(),
   professionalValues: z.string().optional().nullish(),
   careerAspirations: z.string().optional().nullish(),
-  significantChallenge: z.string().optional().nullish()
+  significantChallenge: z.string().optional().nullish(),
+  resumeUrl: z.string().optional().nullish(),
+  resumeText: z.string().optional().nullish(),
+  resumeLastUpdated: z.string().optional().nullish()
 })
 
 export const privacySettingsSchema = z

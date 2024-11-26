@@ -334,7 +334,21 @@ export const translations: Record<string, { [key: string]: string }> = {
 
     saveNetworkingProfile: 'Save Networking Profile',
     networkingProfileSaved: 'Networking profile updated successfully',
-    networkingProfileError: 'Failed to update networking profile'
+    networkingProfileError: 'Failed to update networking profile',
+    // Resume Upload
+    resumeUploadLabel: 'Upload Your Resume',
+    selectResume: 'Select Resume (PDF)',
+    currentResume: 'Current Resume:',
+    viewResume: 'View',
+    invalidFileType: 'Invalid File Type',
+    onlyPDFAllowed: 'Only PDF files are allowed',
+    fileTooLarge: 'File Too Large',
+    maxFileSize: 'Maximum file size is 5MB',
+    uploadingResume: 'Uploading resume...',
+    resumeUploadError: 'Failed to upload resume',
+    resumeProcessing: 'Processing resume...',
+    onlyPDFAndTXTAllowed: 'Only PDF and TXT files are allowed',
+    selectResumeTypes: 'Select Resume (PDF or TXT)'
   },
   es: {
     // General
@@ -684,6 +698,20 @@ export const translations: Record<string, { [key: string]: string }> = {
 
     saveNetworkingProfile: 'Guardar Perfil de Networking',
     networkingProfileSaved: 'Perfil de networking actualizado exitosamente',
-    networkingProfileError: 'Error al actualizar el perfil de networking'
+    networkingProfileError: 'Error al actualizar el perfil de networking',
+    // Resume Upload
+    resumeUploadLabel: 'Subir Su Hoja de Vida (CV)',
+    selectResume: 'Seleccionar Hoja de Vida (PDF, TXT)',
+    currentResume: 'Hoja de Vida Actual:',
+    viewResume: 'Ver',
+    invalidFileType: 'Tipo de Archivo Inválido',
+    onlyPDFAllowed: 'Solo se permiten archivos PDF',
+    fileTooLarge: 'Archivo Too Grande',
+    maxFileSize: 'El tamaño máximo del archivo es de 5MB',
+    uploadingResume: 'Subiendo hoja de vida...',
+    resumeUploadError: 'Error al subir la hoja de vida',
+    resumeProcessing: 'Procesando hoja de vida...',
+    onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF y TXT',
+    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF o TXT)'
   }
 }
