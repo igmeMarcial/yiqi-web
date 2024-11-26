@@ -15,7 +15,10 @@ export async function getPublicEvents(filters?: {
   const now = new Date()
 
   const whereClause: Prisma.EventWhereInput = {
-    startDate: { gte: now }
+    startDate: { gte: now },
+    deletedAt: {
+      equals: null
+    }
   }
 
   if (filters?.title) {

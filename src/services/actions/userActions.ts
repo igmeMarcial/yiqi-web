@@ -118,7 +118,12 @@ export async function getUserProfile(currentUserId: string) {
       email: user.email ?? '',
       x: dataCollected?.x ?? '',
       instagram: dataCollected?.instagram ?? '',
-      website: dataCollected?.website ?? ''
+      website: dataCollected?.website ?? '',
+      professionalMotivations: dataCollected?.professionalMotivations ?? '',
+      communicationStyle: dataCollected?.communicationStyle ?? '',
+      professionalValues: dataCollected?.professionalValues ?? '',
+      careerAspirations: dataCollected?.careerAspirations ?? '',
+      significantChallenge: dataCollected?.significantChallenge ?? ''
     }
 
     if (currentUserId == userCurrent.id) {

@@ -272,6 +272,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterCompany}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>
@@ -306,6 +307,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterPosition}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>
@@ -323,6 +325,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                       {...form.register('shortDescription')}
                       className="min-h-[100px] pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                       placeholder={translations.es.tellUsAboutYourself}
+                      value={form.watch('shortDescription') ?? ''}
                     />
                   </div>
                 </div>
@@ -352,6 +355,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterYourX}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>
@@ -375,6 +379,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterLinkedinURL}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>
@@ -398,6 +403,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterInstagramURL}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>
@@ -424,6 +430,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                               placeholder={translations.es.enterWebsiteURL}
                               {...field}
+                              value={field.value ?? ''}
                             />
                           </div>
                         </FormControl>

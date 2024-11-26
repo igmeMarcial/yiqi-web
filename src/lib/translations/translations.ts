@@ -296,7 +296,45 @@ export const translations: Record<string, { [key: string]: string }> = {
     aboutLoadMore: 'Load more',
     //events
     eventsUpcomingEvents: 'Upcoming Events',
-    eventsPastEvents: 'Past Events'
+    eventsPastEvents: 'Past Events',
+    // Networking Profile
+    networkingProfileTitle: 'Enhanced Networking Profile',
+    networkingProfileDescription:
+      'Help us create meaningful connections for you by sharing more about your professional journey. This information will be used to match you with relevant opportunities, events, and other professionals who share your interests and goals.',
+    networkingBenefits:
+      'Benefits include personalized event recommendations, curated networking opportunities, and tailored content based on your professional profile.',
+
+    // Form Labels
+    professionalMotivations: 'Professional Motivations',
+    professionalMotivationsLabel: 'What drives you to succeed?',
+    professionalMotivationsPlaceholder:
+      'Share what fuels your passion—innovation, leadership, helping others, personal growth...',
+
+    communicationStyle: 'Communication Style',
+    communicationStyleLabel:
+      'How would you describe your communication and interaction style?',
+    communicationStylePlaceholder:
+      'Are you more of a listener or speaker? Do you prefer collaboration or independent work?',
+
+    professionalValues: 'Professional Values',
+    professionalValuesLabel: 'What values guide your professional life?',
+    professionalValuesPlaceholder:
+      'Integrity, creativity, teamwork, social responsibility...',
+
+    careerAspirations: 'Career Aspirations',
+    careerAspirationsLabel: 'What are your long-term professional goals?',
+    careerAspirationsPlaceholder:
+      'Leadership roles, specialization, entrepreneurship...',
+
+    significantChallenge: 'Professional Challenge',
+    significantChallengeLabel:
+      "Share a significant professional challenge you've overcome",
+    significantChallengePlaceholder:
+      'What was the challenge and what did you learn from it?',
+
+    saveNetworkingProfile: 'Save Networking Profile',
+    networkingProfileSaved: 'Networking profile updated successfully',
+    networkingProfileError: 'Failed to update networking profile'
   },
   es: {
     // General
@@ -619,6 +657,45 @@ export const translations: Record<string, { [key: string]: string }> = {
     settingsOrganizationAltLogo: 'Logo de la organización',
     settingsOrganizationFormColor: 'Color',
     settingsOrganizationFormUrl: 'Url de',
-    settingsOrganizationFormSaved: 'Guardar Cambios'
+    settingsOrganizationFormSaved: 'Guardar Cambios',
+    // Networking Profile
+    networkingProfileTitle: 'Perfil de Networking Mejorado',
+    networkingProfileDescription:
+      'Ayúdanos a crear conexiones significativas para ti compartiendo más sobre tu viaje profesional. Esta información se utilizará para emparejarte con oportunidades relevantes, eventos y otros profesionales que comparten tus intereses y objetivos.',
+    networkingBenefits:
+      'Los beneficios incluyen recomendaciones de eventos personalizados, oportunidades de networking seleccionadas y contenido personalizado basado en tu perfil profesional.',
+
+    // Form Labels
+    professionalMotivations: 'Motivaciones Profesionales',
+    professionalMotivationsLabel: '¿Qué te motiva para tener éxito?',
+    professionalMotivationsPlaceholder:
+      'Comparte lo que te apasiona—innovación, liderazgo, ayudar a otros, crecimiento personal...',
+
+    communicationStyle: 'Estilo de Comunicación',
+    communicationStyleLabel:
+      '¿Cómo describirías tu estilo de comunicación y interacción?',
+    communicationStylePlaceholder:
+      '¿Eres más de un oyente o orador? ¿Prefieres colaborar o trabajar de manera independiente?',
+
+    professionalValues: 'Valores Profesionales',
+    professionalValuesLabel: '¿Qué valores guían tu vida profesional?',
+    professionalValuesPlaceholder:
+      'Integridad, creatividad, trabajo en equipo, responsabilidad social...',
+
+    careerAspirations: 'Metas Profesionales',
+    careerAspirationsLabel:
+      '¿Cuáles son tus objetivos profesionales a largo plazo?',
+    careerAspirationsPlaceholder:
+      'Roles de liderazgo, especialización, emprendimiento...',
+
+    significantChallenge: 'Desafío Profesional',
+    significantChallengeLabel:
+      'Comparte un desafío profesional significativo que has superado',
+    significantChallengePlaceholder:
+      '¿Cuál fue el desafío y qué aprendiste de él?',
+
+    saveNetworkingProfile: 'Guardar Perfil de Networking',
+    networkingProfileSaved: 'Perfil de networking actualizado exitosamente',
+    networkingProfileError: 'Error al actualizar el perfil de networking'
   }
 }
