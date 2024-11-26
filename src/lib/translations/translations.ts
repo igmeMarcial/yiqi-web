@@ -297,7 +297,6 @@ export const translations: Record<string, { [key: string]: string }> = {
     //events
     eventsUpcomingEvents: 'Upcoming Events',
     eventsPastEvents: 'Past Events'
-
   },
   es: {
     // General
@@ -620,6 +619,6 @@ export const translations: Record<string, { [key: string]: string }> = {
     settingsOrganizationAltLogo: 'Logo de la organización',
     settingsOrganizationFormColor: 'Color',
     settingsOrganizationFormUrl: 'Url de',
-    settingsOrganizationFormSaved: 'Guardar Cambios',
+    settingsOrganizationFormSaved: 'Guardar Cambios'
   }
 }

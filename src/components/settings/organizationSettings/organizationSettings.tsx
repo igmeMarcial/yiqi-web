@@ -53,7 +53,13 @@ const formSchema = OrganizationSchema.extend({
   logo: z.string().url().optional()
 })
 
-export default function OrganizationSettings({ userId, organization }: { userId: string, organization: PublicCommunityType }) {
+export default function OrganizationSettings({
+  userId,
+  organization
+}: {
+  userId: string
+  organization: PublicCommunityType
+}) {
   const [logo, setLogo] = useState<string>(organization.logo || '')
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -121,7 +127,9 @@ export default function OrganizationSettings({ userId, organization }: { userId:
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{translations.es.settingsOrganizationFormName}</FormLabel>
+                  <FormLabel>
+                    {translations.es.settingsOrganizationFormName}
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Andino" {...field} />
                   </FormControl>
@@ -138,7 +146,9 @@ export default function OrganizationSettings({ userId, organization }: { userId:
                   <FormLabel>{translations.es.description}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={translations.es.settingsPlaceholderDescription}
+                      placeholder={
+                        translations.es.settingsPlaceholderDescription
+                      }
                       {...field}
                       className="resize-none"
                     />
@@ -149,7 +159,9 @@ export default function OrganizationSettings({ userId, organization }: { userId:
             />
 
             <FormItem>
-              <FormLabel>{translations.es.settingsOrganizationFormLogo}</FormLabel>
+              <FormLabel>
+                {translations.es.settingsOrganizationFormLogo}
+              </FormLabel>
               <FormControl>
                 <div className="flex flex-col items-center space-y-2">
                   {logo && (
@@ -175,16 +187,36 @@ export default function OrganizationSettings({ userId, organization }: { userId:
               name="colour"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{translations.es.settingsOrganizationFormColor}</FormLabel>
+                  <FormLabel>
+                    {translations.es.settingsOrganizationFormColor}
+                  </FormLabel>
                   <FormControl>
-                    <ColorPicker value={field.value} onChange={field.onChange} />
+                    <ColorPicker
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {(['facebook', 'instagram', 'tiktok', 'linkedin', 'website'] as const).map(
-              (fieldName: 'facebook' | 'instagram' | 'tiktok' | 'linkedin' | 'website') => (
+            {(
+              [
+                'facebook',
+                'instagram',
+                'tiktok',
+                'linkedin',
+                'website'
+              ] as const
+            ).map(
+              (
+                fieldName:
+                  | 'facebook'
+                  | 'instagram'
+                  | 'tiktok'
+                  | 'linkedin'
+                  | 'website'
+              ) => (
                 <FormField
                   key={fieldName}
                   control={form.control}
@@ -195,7 +227,10 @@ export default function OrganizationSettings({ userId, organization }: { userId:
                         1
                       )}`}</FormLabel>
                       <FormControl>
-                        <Input placeholder={`https://${fieldName}.com/`} {...field} />
+                        <Input
+                          placeholder={`https://${fieldName}.com/`}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
