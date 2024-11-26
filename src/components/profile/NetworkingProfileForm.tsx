@@ -23,10 +23,12 @@ import { Textarea } from '../ui/textarea'
 import { useToast } from '@/hooks/use-toast'
 import { saveNetworkingProfile } from '@/services/actions/user/saveNetworkingProfile'
 import { translations } from '@/lib/translations/translations'
-import { Loader2, Save } from 'lucide-react'
+import { FileText, Loader2, Save, Upload } from 'lucide-react'
 import { userDataCollectedShema } from '@/schemas/userSchema'
 import type { UserDataCollected } from '@/schemas/userSchema'
 import { useRouter } from 'next/navigation'
+import { Input } from '../ui/input'
+import { useUpload } from '@/hooks/useUpload'
 
 type NetworkingData = Pick<
   UserDataCollected,
@@ -35,6 +37,9 @@ type NetworkingData = Pick<
   | 'professionalValues'
   | 'careerAspirations'
   | 'significantChallenge'
+  | 'resumeUrl'
+  | 'resumeText'
+  | 'resumeLastUpdated'
 >
 
 type Props = {
@@ -45,6 +50,8 @@ export default function NetworkingProfileForm({ initialData }: Props) {
   const { toast } = useToast()
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const { uploadSingle } = useUpload()
 
   const form = useForm<NetworkingData>({
     resolver: zodResolver(
@@ -53,7 +60,10 @@ export default function NetworkingProfileForm({ initialData }: Props) {
         communicationStyle: true,
         professionalValues: true,
         careerAspirations: true,
-        significantChallenge: true
+        significantChallenge: true,
+        resumeUrl: true,
+        resumeText: true,
+        resumeLastUpdated: true
       })
     ),
     defaultValues: {
@@ -61,19 +71,65 @@ export default function NetworkingProfileForm({ initialData }: Props) {
       communicationStyle: initialData.communicationStyle ?? '',
       professionalValues: initialData.professionalValues ?? '',
       careerAspirations: initialData.careerAspirations ?? '',
-      significantChallenge: initialData.significantChallenge ?? ''
+      significantChallenge: initialData.significantChallenge ?? '',
+      resumeUrl: initialData.resumeUrl ?? '',
+      resumeText: initialData.resumeText ?? '',
+      resumeLastUpdated: initialData.resumeLastUpdated ?? ''
     }
   })
 
-  async function onSubmit(data: NetworkingData) {
+  console.log(form.formState.errors)
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      if (file.type !== 'application/pdf' && file.type !== 'text/plain') {
+        toast({
+          title: translations.es.invalidFileType,
+          description: translations.es.onlyPDFAndTXTAllowed,
+          variant: 'destructive'
+        })
+        return
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: translations.es.fileTooLarge,
+          description: translations.es.maxFileSize,
+          variant: 'destructive'
+        })
+        return
+      }
+
+      try {
+        setSelectedFile(file)
+        const url = await uploadSingle(file)
+        form.setValue('resumeUrl', url)
+        form.setValue('resumeLastUpdated', new Date().toISOString())
+      } catch (error) {
+        console.error('Error uploading file:', error)
+        toast({
+          title: translations.es.resumeUploadError,
+          variant: 'destructive'
+        })
+      }
+    }
+  }
+
+  const onSubmit = async (values: NetworkingData) => {
     setIsSubmitting(true)
     try {
       const formData = new FormData()
-      Object.entries(data).forEach(([key, value]) => {
-        if (value) formData.append(key, value)
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value)
+        }
       })
 
       const result = await saveNetworkingProfile(formData)
+
       if (result.success) {
         toast({
           title: translations.es.networkingProfileSaved
@@ -86,7 +142,7 @@ export default function NetworkingProfileForm({ initialData }: Props) {
         })
       }
     } catch (error) {
-      console.error(error)
+      console.error('Error in onSubmit:', error)
       toast({
         title: translations.es.networkingProfileError,
         variant: 'destructive'
@@ -108,6 +164,49 @@ export default function NetworkingProfileForm({ initialData }: Props) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Resume Upload Section */}
+            <div className="space-y-4">
+              <FormLabel>{translations.es.resumeUploadLabel}</FormLabel>
+              <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                  <Input
+                    type="file"
+                    accept=".pdf,.txt"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="resume-upload"
+                  />
+                  <label
+                    htmlFor="resume-upload"
+                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    {translations.es.selectResumeTypes}
+                  </label>
+                </div>
+                {selectedFile && (
+                  <div className="flex items-center space-x-2">
+                    <FileText className="h-4 w-4" />
+                    <span className="text-sm">{selectedFile.name}</span>
+                  </div>
+                )}
+              </div>
+              {initialData.resumeUrl && !selectedFile && (
+                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <FileText className="h-4 w-4" />
+                  <span>{translations.es.currentResume}</span>
+                  <a
+                    href={initialData.resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    {translations.es.viewResume}
+                  </a>
+                </div>
+              )}
+            </div>
+
             <FormField
               control={form.control}
               name="professionalMotivations"
