@@ -1,3 +1,4 @@
+'use client'
 import { useState, useCallback } from 'react'
 
 const ALLOWED_FILE_TYPES = [
