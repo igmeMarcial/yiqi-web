@@ -713,6 +713,18 @@ export const translations: Record<string, { [key: string]: string }> = {
     resumeUploadError: 'Error al subir la hoja de vida',
     resumeProcessing: 'Procesando hoja de vida...',
     onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF, TXT y DOCX',
-    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)'
+    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)',
+    //settings
+    settingOrganizationTitle: 'Configuración de la Organización',
+    settingsOrganizationUpdated: 'Organización actualizada exitosamente!',
+    settingsOrganizationFormName: 'Organización',
+    settingsPlaceholderOrganization: 'Andino...',
+    settingsDescription: 'Descripción',
+    settingsPlaceholderDescription: 'Descripción...',
+    settingsOrganizationFormLogo: 'Logo',
+    settingsOrganizationAltLogo: 'Logo de la organización',
+    settingsOrganizationFormColor: 'Color',
+    settingsOrganizationFormUrl: 'Url de',
+    settingsOrganizationFormSaved: 'Guardar Cambios'
   }
 }
