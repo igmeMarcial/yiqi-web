@@ -13,25 +13,33 @@ export const userSchema = z.object({
 })
 
 export const userDataCollectedShema = z.object({
-  company: z.string().optional(),
-  position: z.string().optional(),
-  shortDescription: z.string().optional(),
+  company: z.string().optional().nullish(),
+  position: z.string().optional().nullish(),
+  shortDescription: z.string().optional().nullish(),
   linkedin: z
     .string()
     .url('Invalid URL for LinkedIn')
     .optional()
+    .nullish()
     .or(z.literal('')),
-  x: z.string().url('Invalid URL for X').optional().or(z.literal('')),
+  x: z.string().url('Invalid URL for X').optional().nullish().or(z.literal('')),
   instagram: z
     .string()
     .url('Invalid URL for Instagram')
     .optional()
+    .nullish()
     .or(z.literal('')),
   website: z
     .string()
     .url('Invalid URL for Website')
     .optional()
-    .or(z.literal(''))
+    .nullish()
+    .or(z.literal('')),
+  professionalMotivations: z.string().optional().nullish(),
+  communicationStyle: z.string().optional().nullish(),
+  professionalValues: z.string().optional().nullish(),
+  careerAspirations: z.string().optional().nullish(),
+  significantChallenge: z.string().optional().nullish()
 })
 
 export const privacySettingsSchema = z
