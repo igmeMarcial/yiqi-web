@@ -26,17 +26,36 @@ import { translations } from '@/lib/translations/translations'
 import { Loader2, Save } from 'lucide-react'
 import { userDataCollectedShema } from '@/schemas/userSchema'
 import type { UserDataCollected } from '@/schemas/userSchema'
+import { useRouter } from 'next/navigation'
+
+type NetworkingData = Pick<
+  UserDataCollected,
+  | 'professionalMotivations'
+  | 'communicationStyle'
+  | 'professionalValues'
+  | 'careerAspirations'
+  | 'significantChallenge'
+>
 
 type Props = {
-  initialData?: Partial<UserDataCollected>
+  initialData: NetworkingData
 }
 
-export default function NetworkingProfileForm({ initialData = {} }: Props) {
+export default function NetworkingProfileForm({ initialData }: Props) {
   const { toast } = useToast()
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<UserDataCollected>({
-    resolver: zodResolver(userDataCollectedShema),
+  const form = useForm<NetworkingData>({
+    resolver: zodResolver(
+      userDataCollectedShema.pick({
+        professionalMotivations: true,
+        communicationStyle: true,
+        professionalValues: true,
+        careerAspirations: true,
+        significantChallenge: true
+      })
+    ),
     defaultValues: {
       professionalMotivations: initialData.professionalMotivations ?? '',
       communicationStyle: initialData.communicationStyle ?? '',
@@ -46,7 +65,7 @@ export default function NetworkingProfileForm({ initialData = {} }: Props) {
     }
   })
 
-  async function onSubmit(data: UserDataCollected) {
+  async function onSubmit(data: NetworkingData) {
     setIsSubmitting(true)
     try {
       const formData = new FormData()
@@ -59,6 +78,7 @@ export default function NetworkingProfileForm({ initialData = {} }: Props) {
         toast({
           title: translations.es.networkingProfileSaved
         })
+        router.refresh()
       } else {
         toast({
           title: translations.es.networkingProfileError,
