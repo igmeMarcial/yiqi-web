@@ -36,13 +36,3 @@ export async function extractTextFromPDF(file: File): Promise<string> {
     throw new Error('Failed to extract text from PDF')
   }
 }
-
-export async function extractTextFromFile(file: File): Promise<string> {
-  if (file.type === 'text/plain') {
-    return await file.text()
-  } else if (file.type === 'application/pdf') {
-    return await extractTextFromPDF(file)
-  } else {
-    throw new Error('Unsupported file type')
-  }
-}

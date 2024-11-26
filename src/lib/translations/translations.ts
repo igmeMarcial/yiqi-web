@@ -348,7 +348,8 @@ export const translations: Record<string, { [key: string]: string }> = {
     resumeUploadError: 'Failed to upload resume',
     resumeProcessing: 'Processing resume...',
     onlyPDFAndTXTAllowed: 'Only PDF and TXT files are allowed',
-    selectResumeTypes: 'Select Resume (PDF or TXT)'
+    onlyPDFAndTXTAndDOCXAllowed: 'Only PDF, TXT and DOCX files are allowed',
+    selectResumeTypes: 'Select Resume (PDF, TXT or DOCX)'
   },
   es: {
     // General
@@ -711,7 +712,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     uploadingResume: 'Subiendo hoja de vida...',
     resumeUploadError: 'Error al subir la hoja de vida',
     resumeProcessing: 'Procesando hoja de vida...',
-    onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF y TXT',
-    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF o TXT)'
+    onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF, TXT y DOCX',
+    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)'
   }
 }
