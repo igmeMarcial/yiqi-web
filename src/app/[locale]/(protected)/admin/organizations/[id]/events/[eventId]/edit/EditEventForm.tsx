@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { CustomFieldInputType, EditEventInputType } from '@/schemas/eventSchema'
+import { useLocale } from 'next-intl'
 
 interface EditEventFormProps {
   event: EditEventInputType
@@ -18,6 +19,8 @@ export default function EditEventForm({
   const [customFields, setCustomFields] = useState<CustomFieldInputType[]>(
     event.customFields
   )
+
+  const localActive = useLocale()
 
   const addCustomField = () => {
     setCustomFields([
@@ -158,7 +161,7 @@ export default function EditEventForm({
           Update Event
         </button>
         <Link
-          href={`/admin/organizations/${organizationId}/events`}
+          href={`/${localActive}/admin/organizations/${organizationId}/events`}
           className="ml-4 text-blue-500 hover:underline"
         >
           Cancel

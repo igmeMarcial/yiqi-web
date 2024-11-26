@@ -15,6 +15,7 @@ import {
 import { AccountDropdown } from '../AccountDropdown'
 import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
+import LangSelector from '../languageSelector'
 
 interface User {
   name?: string
@@ -61,25 +62,28 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-4">
-            <NavLink href={`/${localActive}/events`}>
-              <TicketSlash size={16} />
-              <span>{t('events')}</span>
-            </NavLink>
-            <NavLink href="/communities">
-              <Users size={16} />
-              <span>{t('communities')}</span>
-            </NavLink>
-            {!user || Object.keys(user).length === 0 ? (
-              <Link href={`/${localActive}/user`}>
-                <Button size="sm" variant="default" className="font-semibold">
-                  {t('login')}
-                </Button>
-              </Link>
-            ) : (
-              <AccountDropdown user={user} signOut={logOut} />
-            )}
-          </nav>
+          <div className="hidden md:flex space-x-3 items-center">
+            <LangSelector />
+            <nav className="hidden md:flex items-center space-x-4">
+              <NavLink href={`/${localActive}/events`}>
+                <TicketSlash size={16} />
+                <span>{t('events')}</span>
+              </NavLink>
+              <NavLink href={`/${localActive}/communities`}>
+                <Users size={16} />
+                <span>{t('communities')}</span>
+              </NavLink>
+              {!user || Object.keys(user).length === 0 ? (
+                <Link href={`/${localActive}/user`}>
+                  <Button size="sm" variant="default" className="font-semibold">
+                    {t('login')}
+                  </Button>
+                </Link>
+              ) : (
+                <AccountDropdown user={user} signOut={logOut} />
+              )}
+            </nav>
+          </div>
 
           <Sheet>
             <SheetTrigger asChild>
@@ -130,6 +134,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                     <span>{t('myAccount')}</span>
                   </Link>
                 )}
+                <LangSelector />
               </div>
             </SheetContent>
           </Sheet>

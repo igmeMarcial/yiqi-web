@@ -404,5 +404,40 @@
     "uploading": "Subiendo...",
     "chooseFile": "Elegir archivo",
     "UploadedFile": "Archivo subido:"
+  },
+  "Privacy": {
+    "policy": "Política de Privacidad",
+    "policy1": "Nuestra política de privacidad tiene como objetivo que nuestros clientes conozcan cómo tratamos y protegemos sus datos personales ya que para nosotros es sumamente importante hacerlo. Tenemos un compromiso con el cumplimiento de la normativa vigente establecida en la Ley N° 29733, Ley de Protección de Datos Personales y su Reglamento, como también con los términos de esta política. Por lo tanto, es esencial que conozca y acepte todos los detalles de esta Política de Privacidad (en adelante, la 'Política').",
+    "about": "Sobre nosotros",
+    "services": "ANDINO LABS utiliza la Plataforma para proporcionar los Servicios.",
+    "policy2": "ANDINO LABS SAC (en adelante, 'ANDINO LABS') con RUC N° 20609991080 y domicilio fiscal en Lima, Perú, es una empresa dedicada, entre otras cosas, a la industria de la construcción, creando el Ecosistema YIQI, como se describe dicho término en los Términos y Condiciones, para la adquisición y operación de los Tokens (los 'Servicios').",
+    "concent": "CONSENTIMIENTO",
+    "policy3": "La contratación, registro y acceso a la Plataforma y el uso de los Servicios implica que el Usuario otorga su consentimiento inequívoco, expreso, libre e informado para la inclusión, uso y tratamiento de sus datos personales por parte de ANDINO LABS.",
+    "acceptance": "Asimismo, el consentimiento puede ser requerido haciendo clic en 'aceptar' esta Política.",
+    "collection": "RECOLECCIÓN Y USO",
+    "policy4": "Los datos se recogen automáticamente cada vez que accede al Servicio a través de cualquier dispositivo ('Datos de Uso'). Estos datos pueden incluir información como la dirección de Protocolo de Internet (por ejemplo, dirección IP) de su computadora o dispositivo móvil, el tipo de navegador, la versión del navegador, el sistema operativo móvil y su versión, las páginas de nuestros Servicios que visita, la fecha y hora de su visita, el tiempo dedicado a esas páginas, identificadores únicos de dispositivos y otros datos de diagnóstico.",
+    "information": "INFORMACIÓN ADICIONAL",
+    "policy5": "ANDINO LABS tiene el derecho de modificar, actualizar o completar esta Política en cualquier momento. La fecha de vigencia se indica al inicio de esta Política. Por lo tanto, es responsabilidad del Usuario revisar periódicamente esta Política para estar informado de su versión más actualizada.",
+    "policy6": "Si el Usuario no está de acuerdo con los cambios implementados, deberá cancelar inmediatamente su Registro y abstenerse de utilizar la Plataforma. Si el Usuario no realiza esta cancelación o continúa utilizando la Plataforma, se considerará que ha aceptado la nueva Política."
+  },
+  "auth": {
+    "welcome": "Bienvenido a Yiqi",
+    "signUp": "Por favor, inicie sesión o regístrese a continuación",
+    "issues": "En caso de problemas al iniciar sesión, póngase en contacto con",
+    "support": "soporte técnico"
+  },
+  "contactText": {
+    "contactDetails": "Detalles de Contacto:",
+    "Messages": "Mensajes",
+    "attendEvents": "Eventos Asistidos",
+    "userDetails": "Detalles del Usuario",
+    "attendedEvents": "Eventos Asistidos:",
+    "Name": "Nombre:",
+    "Email": "Correo Electrónico:",
+    "number": "Número de Teléfono:",
+    "additionalData": "Datos Adicionales:",
+    "AttendedEvents": "Eventos Asistidos:",
+    "Status": "Estado:",
+    "back": "Volver a Contactos"
   }
 }
