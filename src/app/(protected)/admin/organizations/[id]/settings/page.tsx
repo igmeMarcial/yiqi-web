@@ -10,7 +10,6 @@ export default async function Settings({ params }: { params: { id: string } }) {
   const user = await getUser()
   const organization = await getOrganization(params.id)
 
-
   if (!user) {
     redirect('/auth')
   }
@@ -27,7 +26,12 @@ export default async function Settings({ params }: { params: { id: string } }) {
             id: user.id
           }}
         >
-          {organization && <OrganizationSettings userId={user.id} organization={organization}/>}
+          {organization && (
+            <OrganizationSettings
+              userId={user.id}
+              organization={organization}
+            />
+          )}
         </OrganizationLayout>
       </main>
     )
@@ -38,5 +42,4 @@ export default async function Settings({ params }: { params: { id: string } }) {
   } else if (user.role === Roles.USER) {
     redirect('/user')
   }
-  
 }
