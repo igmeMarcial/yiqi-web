@@ -51,7 +51,8 @@ export default function NetworkingProfileForm({ initialData }: Props) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const { uploadSingle } = useUpload()
+  const { uploadSingle, isUploading } = useUpload()
+  const [isProcessingFile, setIsProcessingFile] = useState(false)
 
   const form = useForm<NetworkingData>({
     resolver: zodResolver(
@@ -85,10 +86,15 @@ export default function NetworkingProfileForm({ initialData }: Props) {
   ) => {
     const file = event.target.files?.[0]
     if (file) {
-      if (file.type !== 'application/pdf' && file.type !== 'text/plain') {
+      if (
+        file.type !== 'application/pdf' &&
+        file.type !== 'text/plain' &&
+        file.type !==
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ) {
         toast({
           title: translations.es.invalidFileType,
-          description: translations.es.onlyPDFAndTXTAllowed,
+          description: translations.es.onlyPDFAndTXTAndDOCXAllowed,
           variant: 'destructive'
         })
         return
@@ -103,6 +109,7 @@ export default function NetworkingProfileForm({ initialData }: Props) {
       }
 
       try {
+        setIsProcessingFile(true)
         setSelectedFile(file)
         const url = await uploadSingle(file)
         form.setValue('resumeUrl', url)
@@ -113,6 +120,8 @@ export default function NetworkingProfileForm({ initialData }: Props) {
           title: translations.es.resumeUploadError,
           variant: 'destructive'
         })
+      } finally {
+        setIsProcessingFile(false)
       }
     }
   }
@@ -171,27 +180,41 @@ export default function NetworkingProfileForm({ initialData }: Props) {
                 <div className="flex-1">
                   <Input
                     type="file"
-                    accept=".pdf,.txt"
+                    accept=".pdf,.txt,.docx"
                     onChange={handleFileChange}
                     className="hidden"
                     id="resume-upload"
+                    disabled={isProcessingFile}
                   />
                   <label
                     htmlFor="resume-upload"
-                    className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
+                    className={`flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium ${
+                      isProcessingFile
+                        ? 'bg-gray-100 cursor-not-allowed'
+                        : 'bg-white hover:bg-gray-50 cursor-pointer'
+                    }`}
                   >
-                    <Upload className="h-4 w-4 mr-2" />
-                    {translations.es.selectResumeTypes}
+                    {isProcessingFile ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        {translations.es.uploadingResume}
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="h-4 w-4 mr-2" />
+                        {translations.es.selectResumeTypes}
+                      </>
+                    )}
                   </label>
                 </div>
-                {selectedFile && (
+                {selectedFile && !isProcessingFile && (
                   <div className="flex items-center space-x-2">
                     <FileText className="h-4 w-4" />
                     <span className="text-sm">{selectedFile.name}</span>
                   </div>
                 )}
               </div>
-              {initialData.resumeUrl && !selectedFile && (
+              {initialData.resumeUrl && !selectedFile && !isProcessingFile && (
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <FileText className="h-4 w-4" />
                   <span>{translations.es.currentResume}</span>
@@ -320,7 +343,11 @@ export default function NetworkingProfileForm({ initialData }: Props) {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isSubmitting || isUploading}
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />

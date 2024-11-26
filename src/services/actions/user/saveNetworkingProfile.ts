@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma'
 import { userDataCollectedShema } from '@/schemas/userSchema'
 import { getUser } from '@/lib/auth/lucia'
-import { extractTextFromFile } from '@/lib/aws/textract'
+import { extractTextFromFile } from '@/lib/data/parser/extractTextFromFile'
 
 export async function saveNetworkingProfile(formData: FormData) {
   const user = await getUser()
@@ -38,6 +38,7 @@ export async function saveNetworkingProfile(formData: FormData) {
         const fileBlob = await response.blob()
         const file = new File([fileBlob], 'resume', { type: fileBlob.type })
         resumeText = await extractTextFromFile(file)
+        console.log(resumeText)
       } catch (error) {
         console.error('Error extracting text:', error)
         // Continue with existing text if extraction fails
