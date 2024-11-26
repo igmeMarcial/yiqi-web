@@ -71,6 +71,11 @@ export default function OrganizationLayout({
 
   const navItems = [
     {
+      name: translations.es.settings,
+      icon: Building2,
+      href: `/admin/organizations/${orgId}/settings`
+    },
+    {
       name: translations.es.chat,
       icon: MessageSquare,
       href: `/admin/organizations/${orgId}/chat`

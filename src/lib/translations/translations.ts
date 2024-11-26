@@ -608,6 +608,18 @@ export const translations: Record<string, { [key: string]: string }> = {
     aboutLoadMore: 'Cargar más',
     //events
     eventsUpcomingEvents: 'Próximos Eventos',
-    eventsPastEvents: 'Eventos Pasados'
+    eventsPastEvents: 'Eventos Pasados',
+    //settings
+    settingOrganizationTitle: 'Configuración de la Organización',
+    settingsOrganizationUpdated: 'Organización actualizada exitosamente!',
+    settingsOrganizationFormName: 'Organización',
+    settingsPlaceholderOrganization: 'Andino...',
+    settingsDescription: 'Descripción',
+    settingsPlaceholderDescription: 'Descripción...',
+    settingsOrganizationFormLogo: 'Logo',
+    settingsOrganizationAltLogo: 'Logo de la organización',
+    settingsOrganizationFormColor: 'Color',
+    settingsOrganizationFormUrl: 'Url de',
+    settingsOrganizationFormSaved: 'Guardar Cambios',
   }
 }
