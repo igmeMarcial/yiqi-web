@@ -175,8 +175,6 @@ model Event {
   description      String?
   startDate        DateTime
   endDate          DateTime
-  startTime        String?
-  endTime          String?
   location         String?
   city             String?
   state            String?
