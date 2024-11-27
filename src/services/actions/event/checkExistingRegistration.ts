@@ -27,7 +27,7 @@ export async function checkExistingRegistration(
     })
 
     console.log(registration)
-    return EventRegistrationSchema.parse(registration)
+    return registration ? EventRegistrationSchema.parse(registration) : null
   } catch (error) {
     console.error('Error checking registration:', error)
     return null

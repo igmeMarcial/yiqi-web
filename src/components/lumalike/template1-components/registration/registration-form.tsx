@@ -1,4 +1,5 @@
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -22,55 +23,57 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({
-  form,
+  form: formProps,
   onSubmit,
   user,
   isFreeEvent
 }: RegistrationFormProps) {
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{translations.es.eventFormName}</FormLabel>
-            <FormControl>
-              <Input
-                placeholder={translations.es.eventFormNamePlaceholder}
-                {...field}
-                disabled={!!user}
-                className={user ? 'bg-muted' : ''}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="email"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{translations.es.eventFormEmail}</FormLabel>
-            <FormControl>
-              <Input
-                type="email"
-                placeholder={translations.es.eventFormEmailPlaceholder}
-                {...field}
-                disabled={!!user}
-                className={user ? 'bg-muted' : ''}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <Button type="submit" className="w-full">
-        {isFreeEvent
-          ? translations.es.eventConfirmRegistration
-          : translations.es.eventConfirmPurchase}
-      </Button>
-    </form>
+    <Form {...formProps}>
+      <form onSubmit={formProps.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={formProps.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{translations.es.eventFormName}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={translations.es.eventFormNamePlaceholder}
+                  {...field}
+                  disabled={!!user}
+                  className={user ? 'bg-muted' : ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={formProps.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{translations.es.eventFormEmail}</FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder={translations.es.eventFormEmailPlaceholder}
+                  {...field}
+                  disabled={!!user}
+                  className={user ? 'bg-muted' : ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full">
+          {isFreeEvent
+            ? translations.es.eventConfirmRegistration
+            : translations.es.eventConfirmPurchase}
+        </Button>
+      </form>
+    </Form>
   )
 }
