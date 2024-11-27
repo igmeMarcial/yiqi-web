@@ -397,7 +397,9 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventTotal: 'Total',
     eventConfirmRegistration: 'Confirm Registration',
     eventConfirmPurchase: 'Confirm Purchase',
-    eventNoTicketsSelected: 'Please select at least one ticket'
+    eventNoTicketsSelected: 'Please select at least one ticket',
+    eventRegistrationDescriptionLoggedIn:
+      'Review your registration details below.'
   },
   es: {
     // General
@@ -820,6 +822,8 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventTotal: 'Total',
     eventConfirmRegistration: 'Confirmar Registro',
     eventConfirmPurchase: 'Confirmar Compra',
-    eventNoTicketsSelected: 'Por favor selecciona al menos una entrada'
+    eventNoTicketsSelected: 'Por favor selecciona al menos una entrada',
+    eventRegistrationDescriptionLoggedIn:
+      'Revisa los detalles de tu registro a continuación.'
   }
 }
