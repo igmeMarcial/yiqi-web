@@ -27,7 +27,11 @@ export async function checkExistingRegistration(
     })
 
     console.log(registration)
+<<<<<<< HEAD
     return EventRegistrationSchema.parse(registration)
+=======
+    return registration ? EventRegistrationSchema.parse(registration) : null
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   } catch (error) {
     console.error('Error checking registration:', error)
     return null

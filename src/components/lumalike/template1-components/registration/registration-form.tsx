@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+  Form,
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   FormControl,
   FormField,
   FormItem,
@@ -22,12 +26,17 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({
+<<<<<<< HEAD
   form,
+=======
+  form: formProps,
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   onSubmit,
   user,
   isFreeEvent
 }: RegistrationFormProps) {
   return (
+<<<<<<< HEAD
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <FormField
         control={form.control}
@@ -72,5 +81,53 @@ export function RegistrationForm({
           : translations.es.eventConfirmPurchase}
       </Button>
     </form>
+=======
+    <Form {...formProps}>
+      <form onSubmit={formProps.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={formProps.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{translations.es.eventFormName}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={translations.es.eventFormNamePlaceholder}
+                  {...field}
+                  disabled={!!user}
+                  className={user ? 'bg-muted' : ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={formProps.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{translations.es.eventFormEmail}</FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder={translations.es.eventFormEmailPlaceholder}
+                  {...field}
+                  disabled={!!user}
+                  className={user ? 'bg-muted' : ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full">
+          {isFreeEvent
+            ? translations.es.eventConfirmRegistration
+            : translations.es.eventConfirmPurchase}
+        </Button>
+      </form>
+    </Form>
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   )
 }

@@ -1,6 +1,10 @@
 import EventCard from '../mainLanding/EventCard'
 import { PublicEventType } from '@/schemas/eventSchema'
+<<<<<<< HEAD
 import { useTranslations } from 'next-intl'
+=======
+import { translations } from '@/lib/translations/translations'
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
 import Link from 'next/link'
 
 // EventHeader Component

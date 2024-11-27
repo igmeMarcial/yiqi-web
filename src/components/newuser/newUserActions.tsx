@@ -198,6 +198,26 @@ export default function BeEventAdminForm({
 
         <FormField
           control={form.control}
+<<<<<<< HEAD
+=======
+          name="facebook"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Url de Facebook</FormLabel>
+              <FormControl>
+                <Input placeholder="https://www.facebook.com/" {...field} />
+              </FormControl>
+              <FormDescription>
+                Ingresa la url de tu organización en facebook
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
           name="instagram"
           render={({ field }) => (
             <FormItem>

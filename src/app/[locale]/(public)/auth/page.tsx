@@ -4,7 +4,10 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import LinkedInOAuthButton from '@/components/auth/LinkedinButton'
+<<<<<<< HEAD:src/app/[locale]/(public)/auth/page.tsx
 import { AuthText } from '@/components/auth/auth'
+=======
+>>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea:src/app/(public)/auth/page.tsx
 
 export default async function Page() {
   return (
