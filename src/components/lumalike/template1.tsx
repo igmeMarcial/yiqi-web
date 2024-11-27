@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { PublicEvent, Host } from './template1-components/types'
 import { HeroImage } from './template1-components/hero-image'
 import { EventDetails } from './template1-components/event-details'
 import { Registration } from './template1-components/registration'
 import { Hosts } from './template1-components/hosts'
 import { EventDescription } from './template1-components/event-description'
+import { PublicEventType } from '@/schemas/eventSchema'
 
-export function EventPage({ event }: { event: PublicEvent }) {
+export function EventPage({ event }: { event: PublicEventType }) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function EventPage({ event }: { event: PublicEvent }) {
   return (
     <>
       <div
-        style={{ backgroundColor: event.backgroundColor }}
+        style={{ backgroundColor: event.backgroundColor || '' }}
         className="fixed inset-0 h-screen w-screen -z-10"
       />
       <main className="container mx-auto px-4 py-12 text-primary-foreground pt-16">
@@ -35,18 +35,11 @@ export function EventPage({ event }: { event: PublicEvent }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <HeroImage src={event.heroImage} alt={event.title} />
-            <EventDetails
-              title={event.title}
-              subtitle={event.subtitle}
-              date={event.date}
-              startTime={event.startTime}
-              endTime={event.endTime}
-              location={event.location}
-              city={event.city}
-              featuredIn={event.featuredIn}
-            />
-            <EventDescription description={event.description} />
+            {event.heroImage && (
+              <HeroImage src={event.heroImage} alt={event.title} />
+            )}
+            <EventDetails event={event} />
+            <EventDescription description={event.description || ''} />
           </motion.div>
           <motion.div
             className={`space-y-12 ${
@@ -57,12 +50,10 @@ export function EventPage({ event }: { event: PublicEvent }) {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Registration />
-            <Hosts hosts={event.hosts} />
+            {event.hosts && <Hosts hosts={event.hosts} />}
           </motion.div>
         </div>
       </main>
     </>
   )
 }
-
-export type { PublicEvent, Host }

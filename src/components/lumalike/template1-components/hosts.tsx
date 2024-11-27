@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { Instagram } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { motion } from 'framer-motion'
-import { Host } from './types'
+import { ProfileWithPrivacy } from '@/schemas/userSchema'
 
 interface HostsProps {
-  hosts: Host[] | null
+  hosts: ProfileWithPrivacy[] | null
 }
 
 export function Hosts({ hosts }: HostsProps) {
@@ -32,16 +32,16 @@ export function Hosts({ hosts }: HostsProps) {
             transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
           >
             <Avatar className="h-16 w-16">
-              <AvatarImage src={host.image} alt={host.name} />
+              <AvatarImage src={host.picture} alt={host.name} />
               <AvatarFallback>{host.name[0]}</AvatarFallback>
             </Avatar>
             <div>
               <div className="font-semibold text-lg text-primary-foreground">
                 {host.name}
               </div>
-              {host.instagramUrl && (
+              {host.instagram && (
                 <Link
-                  href={host.instagramUrl}
+                  href={host.instagram}
                   className="text-sm text-primary-foreground/80 hover:text-primary transition-colors flex items-center gap-1 mt-1"
                 >
                   <Instagram className="h-4 w-4" />

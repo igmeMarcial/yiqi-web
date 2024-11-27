@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { userSchema } from './userSchema'
+import { profileWithPrivacySchema, userSchema } from './userSchema'
 
 export enum AttendeeStatus {
   PENDING = 'PENDING',
@@ -171,7 +171,20 @@ export const PublicEventSchema = SavedEventSchema.extend({
   organization: z.object({
     logo: z.string().nullable(),
     name: z.string()
-  })
+  }),
+  heroImage: z.string().nullable(),
+  backgroundColor: z.string().nullable(),
+  featuredIn: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string().url()
+      })
+    )
+    .optional()
+    .nullable(),
+  subtitle: z.string().optional().nullable(),
+  hosts: z.array(profileWithPrivacySchema).optional().nullable()
 })
 
 export type PublicEventType = z.infer<typeof PublicEventSchema>
