@@ -1,4 +1,3 @@
-import { AuthText } from '@/components/auth/auth'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import GoogleOAuthButton from '@/components/auth/googleButton'
 import Link from 'next/link'

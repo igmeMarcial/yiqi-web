@@ -5,14 +5,13 @@ import * as Tabs from '@radix-ui/react-tabs'
 import ConnectedChat from '@/components/chat/connectedChat'
 import Link from 'next/link'
 import { getLocale, getTranslations } from 'next-intl/server'
-import { ContactText2, ContactText3 } from '@/components/contactText'
+import { ContactText2 } from '@/components/contactText'
 
 export default async function ContactDetailsPage({
   params
 }: {
   params: { locale: string; id: string; userId: string }
 }) {
-  const { locale } = params
   const organization = await getOrganization(params.id)
   const contact = await getContactDetails(params.userId, params.id)
   const messages = await getUserMessageList(params.userId, params.id)
