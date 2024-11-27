@@ -8,18 +8,20 @@ import { Roles } from '@prisma/client'
 
 import Link from 'next/link'
 import { getOrganizationEvents } from '@/services/actions/event/getOrganizationEvents'
+import { getTranslations } from 'next-intl/server'
 
 export default async function EventsPage({
   params
 }: {
   params: { locale: string; id: string }
 }) {
+  const t = await getTranslations('contactFor')
   const { locale } = params
   const organization = await getOrganization(params.id)
   const user = await getUser()
   const events = await getOrganizationEvents(params.id)
   if (!organization) {
-    return <div>Organization not found</div>
+    return <div>{t('organizationNotFound')}</div>
   }
 
   if (!user) {

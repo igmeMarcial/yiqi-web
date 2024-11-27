@@ -5,7 +5,11 @@ import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
 // import { ImportContactButton } from './ImportContactButton'
 // import { ImportContactTemplateButton } from './ImportContactTemplateButton'
-import ContactText, { ContactText1 } from '@/components/contacts'
+import { ContactText1 } from '@/components/contacts'
+import Link from 'next/link'
+import { ImportContactTemplateButton } from './ImportContactTemplateButton'
+import { ImportContactButton } from './ImportContactButton'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 export default async function ContactsPage({
   params
@@ -13,6 +17,8 @@ export default async function ContactsPage({
   params: { id: string }
 }) {
   const user = await getUser()
+  const t = await getTranslations('contactFor')
+  const localActive = await getLocale()
 
   const organization = await getOrganization(params.id)
   const contacts = await getOrganizationContacts(params.id)
@@ -31,11 +37,10 @@ export default async function ContactsPage({
         name: user.name
       }}
     >
-      {/* i commented this out becaue page.tsx is a server component and i18 runs on the client side */}
-      {/* <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">
-            <span>{translations.es.contactsFor}</span> {organization.name}
+            <span>{t('contactsFor')}</span> {organization.name}
           </h1>
           <ImportContactButton organizationId={organization.id} />
         </div>
@@ -46,7 +51,7 @@ export default async function ContactsPage({
           {contacts.map(user => (
             <li key={user?.id} className="border p-2 rounded">
               <Link
-                href={`/admin/organizations/${params.id}/contacts/${user?.id}`}
+                href={`/${localActive}/admin/organizations/${params.id}/contacts/${user?.id}`}
                 className="text-blue-500 hover:underline"
               >
                 {user?.name} ({user?.email})
@@ -55,19 +60,19 @@ export default async function ContactsPage({
           ))}
         </ul>
         <Link
-          href={`/admin/organizations/${params.id}`}
+          href={`/${localActive}/admin/organizations/${params.id}`}
           className="mt-4 inline-block text-blue-500 hover:underline"
         >
-          <span>{translations.es.backToDashboard}</span>
+          <span>{t('backToDashboard')}</span>
         </Link>
-      </div> */}
+      </div>
 
-      <ContactText
+      {/* <ContactText
         contacts={contacts}
         id={user?.id}
         name={organization.name}
         organizationId={organization.id}
-      />
+      /> */}
     </OrganizationLayout>
   )
 }

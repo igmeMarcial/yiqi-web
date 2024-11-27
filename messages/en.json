@@ -128,7 +128,11 @@
     "messageValidation": "Message must be at least 1 character."
   },
   "EventsList": {
-    "createNewEvents": "Create New Events"
+    "createNewEvents": "Create New Events",
+    "notFound": "Event not found",
+    "Unauthorized": "Unauthorized",
+    "orgNotFound": "Organization or Event not found",
+    "registrations": "Event registrations:"
   },
   "AddOrganizer": {
     "addOrganizer": "Add Organizer",
@@ -441,5 +445,14 @@
     "AttendedEvents": "Attended Events:",
     "Status": "Status:",
     "back": "Back to Contacts"
+  },
+  "user": {
+    "useCase": "What is your use case?",
+    "choose": "Choose your use case to continue",
+    "notFound": "User not found",
+    "hello": "Hello,",
+    "history": "Here you will see your event history and rewards received",
+    "activity": "Your activity history will appear here",
+    "logout": "Log out"
   }
 }

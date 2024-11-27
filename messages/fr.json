@@ -128,7 +128,11 @@
     "messageValidation": "Le message doit contenir au moins 1 caractère."
   },
   "EventsList": {
-    "createNewEvents": "Créer de nouveaux événements"
+    "createNewEvents": "Créer de Nouveaux Événements",
+    "notFound": "Événement non trouvé",
+    "Unauthorized": "Non autorisé",
+    "orgNotFound": "Organisation ou Événement non trouvé",
+    "registrations": "Inscriptions à l'événement :"
   },
   "AddOrganizer": {
     "addOrganizer": "Ajouter un organisateur",
@@ -438,5 +442,14 @@
     "AttendedEvents": "Événements assistés :",
     "Status": "Statut :",
     "back": "Retour aux contacts"
+  },
+  "user": {
+    "useCase": "Quel est votre cas d'utilisation ?",
+    "choose": "Choisissez votre cas d'utilisation pour continuer",
+    "notFound": "Utilisateur non trouvé",
+    "hello": "Bonjour",
+    "history": "Vous verrez ici l'historique de vos événements et les récompenses reçues",
+    "activity": "Votre historique d'activité apparaîtra ici",
+    "logout": "Déconnexion"
   }
 }

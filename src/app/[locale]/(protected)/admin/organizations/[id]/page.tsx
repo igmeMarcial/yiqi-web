@@ -6,16 +6,18 @@ import { getOrganization } from '@/services/actions/organizationActions'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import WelcomeScreen from '@/components/orgs/WelcomeNewOrg'
 import { getNewOrgWelcomeProps } from '@/services/actions/org/getNewOrgWelcomeProps'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page({
   params
 }: {
   params: { locale: string; id: string }
 }) {
+  const t = await getTranslations('contactFor')
   const organization = await getOrganization(params.id)
   const { locale } = params
   if (!organization) {
-    return <div>Organization not found</div>
+    return <div>{t('organizationNotFound')}</div>
   }
   const {
     hasContacts,

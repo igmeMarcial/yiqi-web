@@ -10,6 +10,7 @@ import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 import SignOutButton from '@/components/auth/sign-out'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page({
   params
@@ -19,6 +20,7 @@ export default async function Page({
   }
 }) {
   const { locale } = params
+  const t = await getTranslations('user')
   const user = await getUser()
   if (!user) {
     redirect(`/${locale}/auth`)
@@ -43,10 +45,10 @@ export default async function Page({
               </div>
               <div className="space-y-2 text-center">
                 <CardTitle className="text-2xl font-semibold tracking-tight">
-                  ¡Hola, {user.name}!
+                  {t('hello')} {user.name}!
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
-                  Aquí verás tu historial de eventos y recompensas recibidas
+                  {t('history')}
                 </CardDescription>
               </div>
             </CardHeader>
@@ -54,14 +56,14 @@ export default async function Page({
             <CardContent className="pb-8">
               <div className="rounded-lg border border-border/50 bg-muted/50 p-6">
                 <p className="text-center text-sm text-muted-foreground">
-                  Tu historial de actividades aparecerá aquí
+                  {t('activity')}
                 </p>
               </div>
             </CardContent>
           </Card>
 
           <div className="flex justify-center">
-            <SignOutButton>Cerrar sesión</SignOutButton>
+            <SignOutButton>{t('logout')}</SignOutButton>
           </div>
         </div>
       </main>
