@@ -20,7 +20,8 @@ const nextConfig = {
         hostname: 'randomuser.me'
       },
       {
-        hostname: 'andinoweb.s3.us-east-1.amazonaws.com'
+        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
+        hostname: '*.s3.us-east-1.amazonaws.com'
       },
       {
         hostname: 'www.yiqi.lat'
