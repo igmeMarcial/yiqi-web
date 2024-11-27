@@ -221,3 +221,11 @@ export const organizationEventSchema = EventInputSchema.extend({
 export type OrganizationEventSchemaType = z.infer<
   typeof organizationEventSchema
 >
+
+export const registrationInputSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  tickets: z.record(z.string(), z.number().min(0).max(5))
+})
+
+export type RegistrationInput = z.infer<typeof registrationInputSchema>

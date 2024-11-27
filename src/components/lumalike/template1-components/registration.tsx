@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Calendar, Minus, Plus } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,6 +29,8 @@ import { translations } from '@/lib/translations/translations'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { toast } from '@/hooks/use-toast'
 import { Separator } from '@/components/ui/separator'
+import { createRegistration } from '@/services/actions/event/createRegistration'
+import { useRouter } from 'next/navigation'
 
 interface TicketSelection {
   [key: string]: number
@@ -48,6 +50,7 @@ type Props = { event: PublicEventType }
 export function Registration({ event }: Props) {
   const [ticketSelections, setTicketSelections] = useState<TicketSelection>({})
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof RegistrationSchema>>({
     resolver: zodResolver(RegistrationSchema),
@@ -75,11 +78,12 @@ export function Registration({ event }: Props) {
     }, 0)
   }
 
-  const hasSelectedTickets = Object.values(ticketSelections).some(
-    qty => qty > 0
+  const hasSelectedTickets = useMemo(
+    () => Object.values(ticketSelections).some(qty => qty > 0),
+    [ticketSelections]
   )
 
-  function onSubmit(values: z.infer<typeof RegistrationSchema>) {
+  async function onSubmit(values: z.infer<typeof RegistrationSchema>) {
     if (!hasSelectedTickets) {
       toast({
         title: translations.es.eventNoTicketsSelected,
@@ -87,9 +91,36 @@ export function Registration({ event }: Props) {
       })
       return
     }
-    // Handle form submission
-    console.log({ ...values, tickets: ticketSelections })
+
+    try {
+      const result = await createRegistration(event.id, {
+        ...values,
+        tickets: ticketSelections
+      })
+
+      if (result.success) {
+        toast({
+          title: result.message,
+          variant: 'default'
+        })
+        setIsDialogOpen(false)
+        router.refresh()
+      } else {
+        toast({
+          title: result.error,
+          variant: 'destructive'
+        })
+      }
+    } catch (error) {
+      console.error('Error submitting registration:', error)
+      toast({
+        title: translations.es.eventRegistrationError,
+        variant: 'destructive'
+      })
+    }
   }
+
+  console.log(form.formState.errors)
 
   const renderSummary = () => (
     <div className="space-y-4">
