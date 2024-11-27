@@ -13,6 +13,8 @@ export async function createRegistration(
   eventId: string,
   registrationData: RegistrationInput
 ) {
+  const signedInUser = await getUser()
+
   try {
     // Validate input data
     const validatedData = registrationInputSchema.parse(registrationData)
@@ -76,7 +78,6 @@ export async function createRegistration(
     }
 
     // Get or create user
-    const signedInUser = await getUser()
     let user = signedInUser
       ? signedInUser
       : await prisma.user.findUnique({

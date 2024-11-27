@@ -45,9 +45,15 @@ const RegistrationSchema = z.object({
   })
 })
 
-type Props = { event: PublicEventType }
+export type RegistrationProps = {
+  event: PublicEventType
+  user: {
+    email: string | undefined
+    name: string | undefined
+  }
+}
 
-export function Registration({ event }: Props) {
+export function Registration({ event, user }: RegistrationProps) {
   const [ticketSelections, setTicketSelections] = useState<TicketSelection>({})
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const router = useRouter()
@@ -55,8 +61,8 @@ export function Registration({ event }: Props) {
   const form = useForm<z.infer<typeof RegistrationSchema>>({
     resolver: zodResolver(RegistrationSchema),
     defaultValues: {
-      name: '',
-      email: ''
+      name: user?.name || '',
+      email: user?.email || ''
     }
   })
 
@@ -250,7 +256,9 @@ export function Registration({ event }: Props) {
                   {translations.es.eventRegistrationSummary}
                 </DialogTitle>
                 <DialogDescription>
-                  {translations.es.eventRegistrationDescription}
+                  {user
+                    ? translations.es.eventRegistrationDescriptionLoggedIn
+                    : translations.es.eventRegistrationDescription}
                 </DialogDescription>
               </DialogHeader>
 
@@ -278,6 +286,8 @@ export function Registration({ event }: Props) {
                                 translations.es.eventFormNamePlaceholder
                               }
                               {...field}
+                              disabled={!!user}
+                              className={user ? 'bg-muted' : ''}
                             />
                           </FormControl>
                           <FormMessage />
@@ -299,6 +309,8 @@ export function Registration({ event }: Props) {
                                 translations.es.eventFormEmailPlaceholder
                               }
                               {...field}
+                              disabled={!!user}
+                              className={user ? 'bg-muted' : ''}
                             />
                           </FormControl>
                           <FormMessage />

@@ -7,9 +7,9 @@ import { EventDetails } from './template1-components/event-details'
 import { Registration } from './template1-components/registration'
 import { Hosts } from './template1-components/hosts'
 import { EventDescription } from './template1-components/event-description'
-import { PublicEventType } from '@/schemas/eventSchema'
+import { RegistrationProps } from './template1-components/registration'
 
-export function EventPage({ event }: { event: PublicEventType }) {
+export function EventPage({ event, user }: RegistrationProps) {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export function EventPage({ event }: { event: PublicEventType }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Registration event={event} />
+            <Registration event={event} user={user} />
             {event.hosts && <Hosts hosts={event.hosts} />}
           </motion.div>
         </div>
