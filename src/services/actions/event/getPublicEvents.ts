@@ -81,7 +81,8 @@ export async function getPublicEvents(filters?: {
     events: events.map(event =>
       PublicEventSchema.parse({
         ...event,
-        registrations: event.registrations.length
+        registrations: event.registrations.length,
+        tickets: []
       })
     ),
     totalCount
