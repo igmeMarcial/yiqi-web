@@ -6,14 +6,25 @@ import { PublicEventSchema } from '@/schemas/eventSchema'
 export async function getEventById(eventId: string) {
   try {
     const event = await prisma.event.findUnique({
-      where: { id: eventId }
+      where: { id: eventId },
+      include: {
+        organization: true,
+        registrations: {
+          select: {
+            id: true
+          }
+        }
+      }
     })
 
     if (!event) {
-      throw new Error(`Failed to fetch event: ${eventId}`)
+      return null
     }
 
-    return PublicEventSchema.parse(event)
+    return PublicEventSchema.parse({
+      ...event,
+      registrations: event.registrations.length
+    })
   } catch (error) {
     console.error('Error fetching event:', error)
     throw new Error(`Failed to fetch event: ${error}`)

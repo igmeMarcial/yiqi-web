@@ -12,6 +12,7 @@ export function Hosts({ hosts }: HostsProps) {
   if (!hosts || !hosts[0]?.name) {
     return <div></div>
   }
+
   return (
     <motion.div
       className="space-y-4"
