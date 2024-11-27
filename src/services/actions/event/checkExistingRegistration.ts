@@ -16,10 +16,17 @@ export async function checkExistingRegistration(
         }
       },
       include: {
-        tickets: true
+        tickets: {
+          include: {
+            user: true
+          }
+        },
+        user: true,
+        event: true
       }
     })
 
+    console.log(registration)
     return EventRegistrationSchema.parse(registration)
   } catch (error) {
     console.error('Error checking registration:', error)

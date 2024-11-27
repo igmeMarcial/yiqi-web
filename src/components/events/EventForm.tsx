@@ -18,7 +18,7 @@ import {
   EventTicketInputType,
   EventTypeEnum,
   SavedEventType,
-  SavedTicketType
+  SavedTicketOfferingType
 } from '@/schemas/eventSchema'
 import { useRouter } from 'next/navigation'
 import { MapPin, Clock, Users, Pencil } from 'lucide-react'
@@ -86,7 +86,7 @@ const defaultMinEndTimeStr = defaultEndDate
 export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const [tickets, setTickets] = useState<
-    EventTicketInputType[] | SavedTicketType[]
+    EventTicketInputType[] | SavedTicketOfferingType[]
   >(
     event?.tickets ?? [
       {

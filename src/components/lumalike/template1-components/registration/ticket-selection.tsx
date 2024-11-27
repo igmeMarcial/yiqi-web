@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { translations } from '@/lib/translations/translations'
-import { SavedTicketType } from '@/schemas/eventSchema'
+import { SavedTicketOfferingType } from '@/schemas/eventSchema'
 import { Minus, Plus } from 'lucide-react'
 
 interface TicketSelectionProps {
-  tickets: SavedTicketType[]
+  tickets: SavedTicketOfferingType[]
   ticketSelections: Record<string, number>
   onQuantityChange: (ticketId: string, change: number) => void
   hasSelectedTickets: boolean

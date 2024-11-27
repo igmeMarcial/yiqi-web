@@ -3,11 +3,11 @@
 import { getUser, isOrganizerAdmin } from '@/lib/auth/lucia'
 import prisma from '@/lib/prisma'
 import {
-  EventTicketInputSchema,
+  EventTicketOfferingInputSchema,
   EventTicketInputType,
   SavedEventSchema,
-  SavedTicketSchema,
-  SavedTicketType
+  SavedTicketOfferingSchema,
+  SavedTicketOfferingType
 } from '@/schemas/eventSchema'
 import { getEvent } from './getEvent'
 
@@ -32,15 +32,15 @@ export async function updateEvent(
     ...(eventData as object)
   })
 
-  // Parse tickets with either SavedTicketSchema or EventTicketInputSchema
-  const parsedTickets: (SavedTicketType | EventTicketInputType)[] =
+  // Parse tickets with either SavedTicketSchema or EventTicketOfferingInputSchema
+  const parsedTickets: (SavedTicketOfferingType | EventTicketInputType)[] =
     rawTickets.map(ticket => {
       // If ticket has an id, it's an existing ticket so use SavedTicketSchema
       if (typeof ticket === 'object' && ticket !== null && 'id' in ticket) {
-        return SavedTicketSchema.parse(ticket)
+        return SavedTicketOfferingSchema.parse(ticket)
       }
-      // Otherwise it's a new ticket so use EventTicketInputSchema
-      return EventTicketInputSchema.parse(ticket)
+      // Otherwise it's a new ticket so use EventTicketOfferingInputSchema
+      return EventTicketOfferingInputSchema.parse(ticket)
     })
 
   // Fetch existing tickets
