@@ -59,13 +59,13 @@ export function RightSidebar({ field, updateField }: SidebarProps) {
                       </Label>
                       <Input
                         id="placeholder"
-                        value={field.placeholder}
+                        value={field.placeholder ?? ''}
                         onChange={e =>
                           updateField(field.id, {
                             placeholder: e.target.value
                           })
                         }
-                        placeholder="Enter placeholder text"
+                        placeholder={translations.es.placeholder}
                       />
                     </div>
                   )}
@@ -76,11 +76,11 @@ export function RightSidebar({ field, updateField }: SidebarProps) {
                   </Label>
                   <Textarea
                     id="hint"
-                    value={field.hint}
+                    value={field.hint ?? ''}
                     onChange={e =>
                       updateField(field.id, { hint: e.target.value })
                     }
-                    placeholder="Add help text for this field"
+                    placeholder={translations.es.helpText}
                     className="resize-none"
                   />
                 </div>
@@ -98,7 +98,7 @@ export function RightSidebar({ field, updateField }: SidebarProps) {
                     </Label>
                     <Input
                       id="summary"
-                      value={field.summary || ''}
+                      value={field.summary ?? ''}
                       onChange={e =>
                         updateField(field.id, {
                           summary: e.target.value
@@ -176,7 +176,7 @@ export function RightSidebar({ field, updateField }: SidebarProps) {
                       <Input
                         id="minValue"
                         type="number"
-                        value={field.minValue || ''}
+                        value={field.minValue ?? ''}
                         onChange={e =>
                           updateField(field.id, {
                             minValue: e.target.value
@@ -191,7 +191,7 @@ export function RightSidebar({ field, updateField }: SidebarProps) {
                       <Input
                         id="maxValue"
                         type="number"
-                        value={field.maxValue || ''}
+                        value={field.maxValue ?? ''}
                         onChange={e =>
                           updateField(field.id, {
                             maxValue: e.target.value

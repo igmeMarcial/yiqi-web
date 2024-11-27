@@ -3,14 +3,13 @@ import {
   Mail,
   Phone,
   Video,
-  Check,
   Calendar,
   Hash,
   Star,
   Upload,
   ListTree,
   Globe,
-  MapPin
+  ImageIcon
 } from 'lucide-react'
 import { FormElement, FormElementType } from '../types/yiqiFormTypes'
 
@@ -84,12 +83,6 @@ export const contactInformationElements: FormElement[] = [
     icon: Globe,
     label: 'Website',
     description: 'For website URLs'
-  },
-  {
-    elementType: 'address',
-    icon: MapPin,
-    label: 'Address',
-    description: 'For physical addresses'
   }
 ]
 
@@ -106,13 +99,13 @@ export const mediaElements: FormElement[] = [
     icon: Upload,
     label: 'File Upload',
     description: 'Allow file uploads'
+  },
+  {
+    elementType: 'pictureChoice',
+    icon: ImageIcon,
+    label: 'Picture Choice',
+    description: 'Choose from images'
   }
-  // {
-  //   elementType: 'pictureChoice',
-  //   icon: ImageIcon,
-  //   label: 'Picture Choice',
-  //   description: 'Choose from images'
-  // },
 ]
 
 export const choiceElements: FormElement[] = [
@@ -121,12 +114,6 @@ export const choiceElements: FormElement[] = [
     icon: ListTree,
     label: 'Multiple Choice',
     description: 'Multiple options, one choice'
-  },
-  {
-    elementType: 'yesNo',
-    icon: Check,
-    label: 'Yes/No',
-    description: 'Simple yes or no question'
   },
   {
     elementType: 'dropdown',
@@ -160,7 +147,5 @@ export const numbersAndDatesElements: FormElement[] = [
 export const formElements: FormElement[] = [
   ...textInputsElements,
   ...contactInformationElements,
-  ...mediaElements,
-  ...choiceElements,
-  ...numbersAndDatesElements
+  ...choiceElements
 ]

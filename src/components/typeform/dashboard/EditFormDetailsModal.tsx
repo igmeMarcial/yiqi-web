@@ -57,7 +57,7 @@ export function EditFormDetailsModal({
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] overflow-hidden border border-secondary/20 shadow-2xl">
+      <DialogContent className=" sm:max-w-[325px] md:max-w-[425px] overflow-hidden border border-secondary/20 shadow-2xl">
         <div className="absolute inset-0 bg-gradient-to-br from-secondary/50 to-background  opacity-95 backdrop-blur-sm -z-10" />
         <DialogHeader>
           <DialogTitle className="text-slate-100 text-xl font-semibold">

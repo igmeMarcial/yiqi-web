@@ -16,8 +16,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   choiceElements,
   contactInformationElements,
-  mediaElements,
-  numbersAndDatesElements,
   textInputsElements
 } from '../data/fields'
 import { FormElement, FormElementType } from '../types/yiqiFormTypes'
@@ -61,7 +59,7 @@ export function AddElementsModal({
 }: AddElementsModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[700px] bg-gradient-to-br from-secondary/50 to-background border-secondary/20">
+      <DialogContent className="md:max-w-[700px] bg-gradient-to-br from-secondary/50 to-background border-secondary/20">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold tracking-tight">
             {translations.es.addElementsTitle}
@@ -92,34 +90,7 @@ export function AddElementsModal({
                       />
                     ))}
                   </CommandGroup>
-                  <CommandGroup
-                    heading={translations.es.contactInfoGroup}
-                    className="space-y-2"
-                  >
-                    {contactInformationElements.map(element => (
-                      <FormElementItem
-                        key={element.elementType}
-                        element={element}
-                        onSelect={() => onElementSelect(element.elementType)}
-                      />
-                    ))}
-                  </CommandGroup>
 
-                  <CommandGroup
-                    heading={translations.es.textAndVideoGroup}
-                    className="space-y-2"
-                  >
-                    {numbersAndDatesElements.map(element => (
-                      <FormElementItem
-                        key={element.elementType}
-                        element={element}
-                        onSelect={() => onElementSelect(element.elementType)}
-                      />
-                    ))}
-                  </CommandGroup>
-                </div>
-
-                <div className="space-y-6">
                   <CommandGroup
                     heading={translations.es.choiceGroup}
                     className="space-y-2"
@@ -132,12 +103,14 @@ export function AddElementsModal({
                       />
                     ))}
                   </CommandGroup>
-
+                </div>
+                <div className="space-y-6">
+                  {' '}
                   <CommandGroup
-                    heading={translations.es.ratingAndRankingGroup}
+                    heading={translations.es.contactInfoGroup}
                     className="space-y-2"
                   >
-                    {mediaElements.map(element => (
+                    {contactInformationElements.map(element => (
                       <FormElementItem
                         key={element.elementType}
                         element={element}
