@@ -8,7 +8,7 @@ export default async function Page({
   params: { eventId: string }
 }) {
   const event = await getEventById(params.eventId)
-  
+
   if (!event) {
     redirect('/')
   }
