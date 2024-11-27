@@ -399,7 +399,17 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventConfirmPurchase: 'Confirm Purchase',
     eventNoTicketsSelected: 'Please select at least one ticket',
     eventRegistrationDescriptionLoggedIn:
-      'Review your registration details below.'
+      'Review your registration details below.',
+    registrationPending: 'Registration Pending',
+    registrationConfirmed: 'Registration Confirmed',
+    registrationPendingDescription:
+      "Your registration is being reviewed by the organizers. We'll notify you once it's approved.",
+    registrationConfirmedDescription:
+      'Your registration has been confirmed. You can view your tickets below.',
+    viewMyTickets: 'View My Tickets',
+    alreadyRegistered: "You're Already Registered",
+    alreadyRegisteredDescription:
+      "You've already registered for this event. You can view your tickets below."
   },
   es: {
     // General
@@ -825,6 +835,16 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventConfirmPurchase: 'Confirmar Compra',
     eventNoTicketsSelected: 'Por favor selecciona al menos una entrada',
     eventRegistrationDescriptionLoggedIn:
-      'Revisa los detalles de tu registro a continuación.'
+      'Revisa los detalles de tu registro a continuación.',
+    registrationPending: 'Registro Pendiente',
+    registrationConfirmed: 'Registro Confirmado',
+    registrationPendingDescription:
+      'Tu registro está siendo revisado por los organizadores. Te notificaremos cuando sea aprobado.',
+    registrationConfirmedDescription:
+      'Tu registro ha sido confirmado. Puedes ver tus entradas abajo.',
+    viewMyTickets: 'Ver Mis Entradas',
+    alreadyRegistered: 'Ya Estás Registrado',
+    alreadyRegisteredDescription:
+      'Ya te has registrado para este evento. Puedes ver tus entradas abajo.'
   }
 }
