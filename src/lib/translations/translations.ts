@@ -378,7 +378,26 @@ export const translations: Record<string, { [key: string]: string }> = {
       "We'll use this email to contact you about your registration.",
     eventFormSubmit: 'Submit Registration',
     eventFormNameError: 'Name must be at least 2 characters.',
-    eventFormEmailError: 'Please enter a valid email address.'
+    eventFormEmailError: 'Please enter a valid email address.',
+    // Registration Component - Additional
+    eventFreeRegistration: 'Free Registration',
+    eventFreeRegistrationDescription:
+      'This is a free event. Simply register to attend.',
+    eventRegister: 'Register',
+    eventPurchase: 'Purchase',
+    eventSelectTickets: 'Select Tickets',
+    eventTicketQuantity: 'Quantity',
+    eventMaxTickets: 'Maximum 5 tickets per type',
+    eventTicketType: 'Ticket Type',
+    eventTicketDescription: 'Description',
+    eventTicketPrice: 'Price',
+    eventFree: 'Free',
+    eventRegistrationSummary: 'Registration Summary',
+    eventSelectedTickets: 'Selected Tickets',
+    eventTotal: 'Total',
+    eventConfirmRegistration: 'Confirm Registration',
+    eventConfirmPurchase: 'Confirm Purchase',
+    eventNoTicketsSelected: 'Please select at least one ticket'
   },
   es: {
     // General
@@ -783,6 +802,25 @@ export const translations: Record<string, { [key: string]: string }> = {
       'Usaremos este correo para contactarte sobre tu registro.',
     eventFormSubmit: 'Enviar Registro',
     eventFormNameError: 'El nombre debe tener al menos 2 caracteres.',
-    eventFormEmailError: 'Por favor ingresa un correo válido.'
+    eventFormEmailError: 'Por favor ingresa un correo válido.',
+    // Registration Component - Additional
+    eventFreeRegistration: 'Registro Gratuito',
+    eventFreeRegistrationDescription:
+      'Este es un evento gratuito. Simplemente regístrate para asistir.',
+    eventRegister: 'Registrarse',
+    eventPurchase: 'Comprar',
+    eventSelectTickets: 'Seleccionar Entradas',
+    eventTicketQuantity: 'Cantidad',
+    eventMaxTickets: 'Máximo 5 entradas por tipo',
+    eventTicketType: 'Tipo de Entrada',
+    eventTicketDescription: 'Descripción',
+    eventTicketPrice: 'Precio',
+    eventFree: 'Gratis',
+    eventRegistrationSummary: 'Resumen del Registro',
+    eventSelectedTickets: 'Entradas Seleccionadas',
+    eventTotal: 'Total',
+    eventConfirmRegistration: 'Confirmar Registro',
+    eventConfirmPurchase: 'Confirmar Compra',
+    eventNoTicketsSelected: 'Por favor selecciona al menos una entrada'
   }
 }

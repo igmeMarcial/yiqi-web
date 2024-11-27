@@ -184,7 +184,8 @@ export const PublicEventSchema = SavedEventSchema.extend({
     .optional()
     .nullable(),
   subtitle: z.string().optional().nullable(),
-  hosts: z.array(profileWithPrivacySchema).optional().nullable()
+  hosts: z.array(profileWithPrivacySchema).optional().nullable(),
+  tickets: z.array(SavedTicketSchema)
 })
 
 export type PublicEventType = z.infer<typeof PublicEventSchema>
