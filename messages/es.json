@@ -461,6 +461,7 @@
     "history": "Aquí verás tu historial de eventos y las recompensas recibidas",
     "activity": "Aquí aparecerá tu historial de actividades",
     "logout": "Cerrar sesión"
+<<<<<<< HEAD
   },
   "General": {
     "withGoogle": "Ingresa con Google",
@@ -867,5 +868,7 @@
     "uploading": "Subiendo...",
     "chooseFile": "Elegir archivo",
     "UploadedFile": "Archivo subido:"
+=======
+>>>>>>> 1780ff3 ('fixes')
   }
 }

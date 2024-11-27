@@ -6,6 +6,7 @@ import ConnectedChat from '@/components/chat/connectedChat'
 import Link from 'next/link'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { ContactText2, ContactText3 } from '@/components/contactText'
+
 export default async function ContactDetailsPage({
   params
 }: {
@@ -34,6 +35,7 @@ export default async function ContactDetailsPage({
           <Tabs.Trigger value="events">{t('attendEvents')}</Tabs.Trigger>
           <Tabs.Trigger value="details">{t('userDetails')}</Tabs.Trigger>
         </Tabs.List>
+
         <div className="pt-3">
           <Tabs.Content value="messages">
             <div className="h-[600px]">
@@ -49,17 +51,11 @@ export default async function ContactDetailsPage({
             <h2 className="text-xl font-bold mt-4 mb-2">
               {t('AttendedEvents')}
             </h2>
-            {/* <h2 className="text-xl font-bold mt-4 mb-2">Attended Events</h2>
->>>>>>> 3167593 (next-intl in server components)
             <ul className="space-y-2">
               {contact.registeredEvents?.map(attendee => (
                 <li key={attendee.id} className="border p-2 rounded">
                   <Link
-<<<<<<< HEAD
                     href={`/${localActive}/admin/organizations/${params.id}/events/${attendee.event.id}`}
-=======
-                    href={`/${locale}/admin/organizations/${params.id}/events/${attendee.event.id}`}
->>>>>>> 3167593 (next-intl in server components)
                     className="text-blue-500 hover:underline"
                   >
                     {attendee.event.title}
@@ -69,9 +65,7 @@ export default async function ContactDetailsPage({
                   </p>
                 </li>
               ))}
-            </ul> */}
-
-            <ContactText3 contact={contact} id={params.id} />
+            </ul>
           </Tabs.Content>
 
           <Tabs.Content value="details">
