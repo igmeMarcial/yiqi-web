@@ -349,7 +349,36 @@ export const translations: Record<string, { [key: string]: string }> = {
     resumeProcessing: 'Processing resume...',
     onlyPDFAndTXTAllowed: 'Only PDF and TXT files are allowed',
     onlyPDFAndTXTAndDOCXAllowed: 'Only PDF, TXT and DOCX files are allowed',
-    selectResumeTypes: 'Select Resume (PDF, TXT or DOCX)'
+    selectResumeTypes: 'Select Resume (PDF, TXT or DOCX)',
+
+    // Event Description Component
+    eventAbout: 'About Event',
+
+    // Event Details Component
+    eventFeaturedIn: 'Featured in',
+
+    // Hosts Component
+    eventHostedBy: 'Hosted By',
+    eventHostInstagram: 'Instagram',
+
+    // Registration Component
+    eventApprovalRequired: 'Approval Required',
+    eventApprovalDescription:
+      'Your registration is subject to approval by the host.',
+    eventRequestToJoin: 'Request to Join',
+    eventRegistration: 'Registration',
+    eventRegistrationDescription:
+      'Fill out the form below to request to join the event.',
+    eventFormName: 'Name',
+    eventFormNamePlaceholder: 'John Doe',
+    eventFormNameDescription: 'This is your full name.',
+    eventFormEmail: 'Email',
+    eventFormEmailPlaceholder: 'john@example.com',
+    eventFormEmailDescription:
+      "We'll use this email to contact you about your registration.",
+    eventFormSubmit: 'Submit Registration',
+    eventFormNameError: 'Name must be at least 2 characters.',
+    eventFormEmailError: 'Please enter a valid email address.'
   },
   es: {
     // General
@@ -725,6 +754,35 @@ export const translations: Record<string, { [key: string]: string }> = {
     resumeUploadError: 'Error al subir la hoja de vida',
     resumeProcessing: 'Procesando hoja de vida...',
     onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF, TXT y DOCX',
-    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)'
+    selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)',
+
+    // Event Description Component
+    eventAbout: 'Sobre el Evento',
+
+    // Event Details Component
+    eventFeaturedIn: 'Destacado en',
+
+    // Hosts Component
+    eventHostedBy: 'Organizado Por',
+    eventHostInstagram: 'Instagram',
+
+    // Registration Component
+    eventApprovalRequired: 'Requiere Aprobación',
+    eventApprovalDescription:
+      'Tu registro está sujeto a la aprobación del organizador.',
+    eventRequestToJoin: 'Solicitar Unirse',
+    eventRegistration: 'Registro',
+    eventRegistrationDescription:
+      'Completa el formulario para solicitar unirte al evento.',
+    eventFormName: 'Nombre',
+    eventFormNamePlaceholder: 'Juan Pérez',
+    eventFormNameDescription: 'Este es tu nombre completo.',
+    eventFormEmail: 'Correo',
+    eventFormEmailPlaceholder: 'juan@ejemplo.com',
+    eventFormEmailDescription:
+      'Usaremos este correo para contactarte sobre tu registro.',
+    eventFormSubmit: 'Enviar Registro',
+    eventFormNameError: 'El nombre debe tener al menos 2 caracteres.',
+    eventFormEmailError: 'Por favor ingresa un correo válido.'
   }
 }

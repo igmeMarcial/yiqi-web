@@ -28,17 +28,22 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { translations } from '@/lib/translations/translations'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.'
+    message: translations.es.eventFormNameError
   }),
   email: z.string().email({
-    message: 'Please enter a valid email address.'
+    message: translations.es.eventFormEmailError
   })
 })
 
-export function Registration() {
+type Props = {
+  eventId: string
+}
+
+export function Registration({ eventId }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,32 +62,32 @@ export function Registration() {
       <Card className="bg-primary-foreground/10 backdrop-blur-sm">
         <CardContent className="p-6">
           <div className="flex items-start gap-4 mb-6">
-            <div className="rounded-full bg-primary/10 p-2 ">
+            <div className="rounded-full bg-primary/10 p-2">
               <Calendar className="h-6 w-6 text-primary text-white" />
             </div>
             <div>
               <div className="font-semibold text-lg mb-1 text-white">
-                Approval Required
+                {translations.es.eventApprovalRequired}
               </div>
               <p className="text-sm text-muted-foreground text-white">
-                Your registration is subject to approval by the host.
+                {translations.es.eventApprovalDescription}
               </p>
             </div>
           </div>
           <DialogTrigger asChild>
             <Button size="lg" className="w-full text-white">
-              Request to Join
+              {translations.es.eventRequestToJoin}
             </Button>
           </DialogTrigger>
         </CardContent>
       </Card>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold ">
-            Registration
+          <DialogTitle className="text-2xl font-semibold">
+            {translations.es.eventRegistration}
           </DialogTitle>
           <DialogDescription>
-            Fill out the form below to request to join the event.
+            {translations.es.eventRegistrationDescription}
           </DialogDescription>
         </DialogHeader>
         <motion.div
@@ -98,11 +103,16 @@ export function Registration() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{translations.es.eventFormName}</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input
+                        placeholder={translations.es.eventFormNamePlaceholder}
+                        {...field}
+                      />
                     </FormControl>
-                    <FormDescription>This is your full name.</FormDescription>
+                    <FormDescription>
+                      {translations.es.eventFormNameDescription}
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -112,23 +122,22 @@ export function Registration() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{translations.es.eventFormEmail}</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="john@example.com"
+                        placeholder={translations.es.eventFormEmailPlaceholder}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      We&apos;ll use this email to contact you about your
-                      registration.
+                      {translations.es.eventFormEmailDescription}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit Registration</Button>
+              <Button type="submit">{translations.es.eventFormSubmit}</Button>
             </form>
           </Form>
         </motion.div>

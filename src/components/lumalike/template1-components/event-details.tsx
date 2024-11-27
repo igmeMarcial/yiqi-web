@@ -3,6 +3,7 @@ import { Calendar, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
 import { PublicEventType } from '@/schemas/eventSchema'
+import { translations } from '@/lib/translations/translations'
 
 export function EventDetails({ event }: { event: PublicEventType }) {
   const { featuredIn, title, subtitle, location, city, startDate, endDate } =
@@ -21,7 +22,7 @@ export function EventDetails({ event }: { event: PublicEventType }) {
             variant="secondary"
             className="text-xs px-2 py-1"
           >
-            Featured in{' '}
+            {translations.es.eventFeaturedIn}{' '}
             <Link
               href={featured.url}
               className="font-medium hover:underline ml-1"
