@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { translations } from '@/lib/translations/translations'
 
 interface EventDescriptionProps {
   description: string
@@ -22,7 +23,7 @@ export function EventDescription({ description }: EventDescriptionProps) {
       transition={{ duration: 0.5, delay: 0.8 }}
     >
       <h2 className="text-2xl font-semibold text-primary-foreground">
-        About Event
+        {translations.es.eventAbout}
       </h2>
       <Card className="bg-secondary/10 backdrop-blur-sm text-white max-w-full sm:max-w-[400px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px]">
         <CardContent className="p-6">
