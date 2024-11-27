@@ -21,6 +21,9 @@ const nextConfig = {
       },
       {
         hostname: 'andinoweb.s3.us-east-1.amazonaws.com'
+      },
+      {
+        hostname: 'www.yiqi.lat'
       }
     ]
   },
