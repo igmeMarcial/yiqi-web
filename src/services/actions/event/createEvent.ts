@@ -4,7 +4,7 @@ import { getUser, isOrganizerAdmin } from '@/lib/auth/lucia'
 import prisma from '@/lib/prisma'
 import {
   EventInputSchema,
-  EventTicketInputSchema,
+  EventTicketOfferingInputSchema,
   SavedEventSchema
 } from '@/schemas/eventSchema'
 
@@ -20,7 +20,7 @@ export async function createEvent(
   }
 
   const validatedData = EventInputSchema.parse(eventData)
-  const tickets = rawTickets.map(v => EventTicketInputSchema.parse(v))
+  const tickets = rawTickets.map(v => EventTicketOfferingInputSchema.parse(v))
 
   const event = await prisma.event.create({
     data: {

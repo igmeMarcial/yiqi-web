@@ -19,13 +19,13 @@ import {
 } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Trash2 } from 'lucide-react'
-import { EventTicketInputSchema } from '@/schemas/eventSchema'
+import { EventTicketOfferingInputSchema } from '@/schemas/eventSchema'
 import { z } from 'zod'
 import { useTranslations } from 'next-intl'
 
 const MAX_TICKETS = 5
 
-type TicketType = z.infer<typeof EventTicketInputSchema>
+type TicketType = z.infer<typeof EventTicketOfferingInputSchema>
 
 const defaultTicket: TicketType = {
   category: 'GENERAL',
@@ -73,7 +73,7 @@ export function TicketTypesManager({
 
   const handleSubmit = () => {
     // Validation (optional): Validate against schema before submitting
-    const result = z.array(EventTicketInputSchema).safeParse(ticketList)
+    const result = z.array(EventTicketOfferingInputSchema).safeParse(ticketList)
     if (result.success) {
       onUpdate(ticketList)
     } else {

@@ -1,8 +1,8 @@
 import { translations } from '@/lib/translations/translations'
-import { SavedTicketType } from '@/schemas/eventSchema'
+import { SavedTicketOfferingType } from '@/schemas/eventSchema'
 
 interface RegistrationSummaryProps {
-  tickets: SavedTicketType[]
+  tickets: SavedTicketOfferingType[]
   ticketSelections: Record<string, number>
   calculateTotal: () => number
 }

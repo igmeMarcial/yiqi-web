@@ -18,7 +18,7 @@ import {
   EventTicketInputType,
   EventTypeEnum,
   SavedEventType,
-  SavedTicketType
+  SavedTicketOfferingType
 } from '@/schemas/eventSchema'
 import { useRouter } from 'next/navigation'
 import { MapPin, Clock, Users, Pencil } from 'lucide-react'
@@ -88,7 +88,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const localActive = useLocale()
   const t = useTranslations('DeleteAccount')
   const [tickets, setTickets] = useState<
-    EventTicketInputType[] | SavedTicketType[]
+    EventTicketInputType[] | SavedTicketOfferingType[]
   >(
     event?.tickets ?? [
       {
