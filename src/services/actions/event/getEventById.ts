@@ -13,7 +13,8 @@ export async function getEventById(eventId: string) {
           select: {
             id: true
           }
-        }
+        },
+        tickets: true
       }
     })
 

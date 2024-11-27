@@ -52,7 +52,7 @@ export function EventPage({ event }: { event: PublicEventType }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Registration eventId={event.id} />
+            <Registration event={event} />
             {event.hosts && <Hosts hosts={event.hosts} />}
           </motion.div>
         </div>
