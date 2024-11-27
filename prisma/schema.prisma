@@ -19,18 +19,18 @@ enum PrivacySetting {
 }
 
 model User {
-  id                String              @id @default(cuid())
+  id                String          @id @default(cuid())
   name              String
-  email             String              @unique
+  email             String          @unique
   emailVerified     DateTime?
   picture           String?
   phoneNumber       String?
-  privacySettings   Json                @default("{}")
+  privacySettings   Json            @default("{}")
   accounts          Account[]
   session           Session[]
   ownerOf           Organization[]
-  role              Roles               @default(NEW_USER)
-  stopCommunication Boolean             @default(false) // Add this line
+  role              Roles           @default(NEW_USER)
+  stopCommunication Boolean         @default(false) // Add this line
   messageThread     MessageThread[]
 
   receivedMessages Message[] @relation("destinationUser")
@@ -41,7 +41,6 @@ model User {
   receivedNotifications Notification[] @relation("notificationUser")
 
   FormSubmission FormSubmission[]
- 
 
   Organizer Organizer[]
 
@@ -61,9 +60,6 @@ model User {
   deletedAt DateTime?
 
   linkedinAccessToken String?
-  
-
-  
 }
 
 enum Roles {
@@ -109,32 +105,32 @@ model VerificationToken {
 }
 
 model Organization {
-  id          String      @id @default(cuid())
-  name        String
-  colour      String?
-  description String?
-  logo        String?
-  events      Event[]
-  organizers  Organizer[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  queueJobs   QueueJob[]
+  id              String      @id @default(cuid())
+  name            String
+  colour          String?
+  description     String?
+  logo            String?
+  events          Event[]
+  organizers      Organizer[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  queueJobs       QueueJob[]
   stripeAccountId String? // This is where you store the Stripe account ID
-  facebook    String?
-  instagram   String?
-  tiktok      String?
-  linkedin    String?
-  website     String?
-  
+  facebook        String?
+  instagram       String?
+  tiktok          String?
+  linkedin        String?
+  website         String?
+
   integration Integration[]
 
   MessageThread MessageThread[]
 
   Notification Notification[]
-  deletedAt DateTime?
-  Form   Form[]
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  deletedAt    DateTime?
+  Form         Form[]
+  User         User?          @relation(fields: [userId], references: [id])
+  userId       String?
 
   OrganizationContact OrganizationContact[]
 }
@@ -173,34 +169,41 @@ enum EventTypes {
 }
 
 model Event {
-  id           String   @id @default(cuid())
-  title        String
-  description  String?
-  startDate    DateTime
-  endDate      DateTime
-  location     String?
-  city         String?
-  state        String?
-  country      String?
-  virtualLink  String?
-  maxAttendees Int?
+  id               String              @id @default(cuid())
+  title            String
+  subtitle         String?
+  description      String?
+  startDate        DateTime
+  endDate          DateTime
+  startTime        String?
+  endTime          String?
+  location         String?
+  city             String?
+  state            String?
+  country          String?
+  virtualLink      String?
+  maxAttendees     Int?
   organization     Organization        @relation(fields: [organizationId], references: [id])
   organizationId   String
-  customFields     Json? // Added to store custom fields for the event
+  customFields     Json?
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
   requiresApproval Boolean             @default(false)
   registrations    EventRegistration[]
-  EventBot EventBot[]
-  Notification Notification[]
-  Form Form[]
-  FormSubmission FormSubmission[]
-  openGraphImage String?
-  GeneratedMedia GeneratedMedia[]
-  queueJobs QueueJob[]
-  tickets TicketOfferings[]
-  type EventTypes @default(IN_PERSON)
-  deletedAt DateTime?
+  EventBot         EventBot[]
+  Notification     Notification[]
+  Form             Form[]
+  FormSubmission   FormSubmission[]
+  openGraphImage   String?
+  GeneratedMedia   GeneratedMedia[]
+  queueJobs        QueueJob[]
+  tickets          TicketOfferings[]
+  type             EventTypes          @default(IN_PERSON)
+  deletedAt        DateTime?
+  backgroundColor  String?
+  hosts            Json?
+  featuredIn       Json?
+  heroImage        String?
 }
 
 enum TicketCategory {
@@ -210,16 +213,16 @@ enum TicketCategory {
 }
 
 model TicketOfferings {
-  id String @id @default(cuid())
-  name String
-  category TicketCategory
-  description String?
-  price Decimal
-  limit Int
+  id                 String         @id @default(cuid())
+  name               String
+  category           TicketCategory
+  description        String?
+  price              Decimal
+  limit              Int
   // some tickets are 2 for 1, some are 3 for 1, etc.
-  ticketsPerPurchase Int @default(1)
-  event Event @relation(fields: [eventId], references: [id])
-  eventId String
+  ticketsPerPurchase Int            @default(1)
+  event              Event          @relation(fields: [eventId], references: [id])
+  eventId            String
 
   Ticket Ticket[]
 }
@@ -233,13 +236,13 @@ enum MediaType {
 }
 
 model GeneratedMedia {
-  id String @id @default(cuid())
-  event Event? @relation(fields: [eventId], references: [id])
-  eventId String?
-  imageUrl String
-  type MediaType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  event     Event?    @relation(fields: [eventId], references: [id])
+  eventId   String?
+  imageUrl  String
+  type      MediaType
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model EventRegistration {
@@ -255,23 +258,24 @@ model EventRegistration {
   updatedAt DateTime @updatedAt
   paid      Boolean  @default(false)
   paymentId String?
+  tickets   Ticket[]
+
   @@unique([eventId, userId]) // Add this line
-  tickets Ticket[]
 }
 
 model Ticket {
-  id String @id @default(cuid())
-  description String?
-  registration EventRegistration @relation(fields: [registrationId], references: [id])
-  registrationId String
-  user         User           @relation("ticketOwner", fields: [userId], references: [id])
-  userId       String
-  category TicketCategory
-  checkedInDate DateTime?
-  checkedInBy User? @relation("checkedInByUser", fields: [checkedInByUserId], references: [id])
+  id                String            @id @default(cuid())
+  description       String?
+  registration      EventRegistration @relation(fields: [registrationId], references: [id])
+  registrationId    String
+  user              User              @relation("ticketOwner", fields: [userId], references: [id])
+  userId            String
+  category          TicketCategory
+  checkedInDate     DateTime?
+  checkedInBy       User?             @relation("checkedInByUser", fields: [checkedInByUserId], references: [id])
   checkedInByUserId String?
-  ticketType TicketOfferings @relation(fields: [ticketTypeId], references: [id])
-  ticketTypeId String
+  ticketType        TicketOfferings   @relation(fields: [ticketTypeId], references: [id])
+  ticketTypeId      String
 }
 
 enum AttendeeStatus {
@@ -320,8 +324,8 @@ model MessageThread {
   contextUser    User              @relation(fields: [contextUserId], references: [id])
   contextUserId  String
   messages       Message[]
-  createdAt         DateTime       @default(now())
-  updatedAt      DateTime         @default(now())
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now())
 }
 
 model Message {
@@ -350,24 +354,24 @@ model WhatsappIntegration {
 }
 
 model Notification {
-  id             String       @id @default(cuid())
+  id             String           @id @default(cuid())
   userId         String?
-  user           User?         @relation("notificationUser", fields: [userId], references: [id])
+  user           User?            @relation("notificationUser", fields: [userId], references: [id])
   eventId        String?
-  event          Event?       @relation(fields: [eventId], references: [id])
-  senderUser     User?        @relation("notificationSender", fields: [senderUserId], references: [id])
+  event          Event?           @relation(fields: [eventId], references: [id])
+  senderUser     User?            @relation("notificationSender", fields: [senderUserId], references: [id])
   senderUserId   String?
-  organization   Organization @relation(fields: [organizationId], references: [id])
+  organization   Organization     @relation(fields: [organizationId], references: [id])
   organizationId String
   type           NotificationType
   sentAt         DateTime?
   scheduledFor   DateTime // When the reminder should be sent
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   formId         String? // Add this line
-  form           Form?        @relation(fields: [formId], references: [id]) // Add this line
+  form           Form?            @relation(fields: [formId], references: [id]) // Add this line
   extraData      Json?
-  tries          Int          @default(0)
+  tries          Int              @default(0)
 }
 
 enum NotificationType {
@@ -391,8 +395,8 @@ model Form {
   submissions    FormSubmission[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  deletedAt DateTime?
-  Notification Notification[]
+  deletedAt      DateTime?
+  Notification   Notification[]
 }
 
 model FormSubmission {
@@ -407,8 +411,6 @@ model FormSubmission {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-
 
 // enum SchedulingType {
 //   ROUND_ROBIN @map("roundRobin")
