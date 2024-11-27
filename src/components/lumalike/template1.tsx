@@ -24,10 +24,14 @@ export function EventPage({ event }: { event: PublicEventType }) {
   return (
     <>
       <div
-        style={{ backgroundColor: event.backgroundColor || '' }}
-        className="fixed inset-0 h-screen w-screen -z-10"
+        style={
+          event.backgroundColor
+            ? { backgroundColor: event.backgroundColor }
+            : {}
+        }
+        className="fixed inset-0 h-screen w-screen -z-10 bg-black"
       />
-      <main className="container mx-auto px-4 py-12 text-primary-foreground pt-16">
+      <main className="container mx-auto px-4 py-12 text-primary-foreground pt-16 bg-black">
         <div className="grid gap-12 lg:grid-cols-[1fr,400px]">
           <motion.div
             className="space-y-12"
@@ -35,8 +39,8 @@ export function EventPage({ event }: { event: PublicEventType }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {event.heroImage && (
-              <HeroImage src={event.heroImage} alt={event.title} />
+            {event.openGraphImage && (
+              <HeroImage src={event.openGraphImage} alt={event.title} />
             )}
             <EventDetails event={event} />
             <EventDescription description={event.description || ''} />
