@@ -1,17 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { LogOut, User, CreditCard, History, Ticket, Speech } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import SignOutButton from '../auth/sign-out'
+import { User, CreditCard, History, Ticket, Speech } from 'lucide-react'
+
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +14,7 @@ import {
   SidebarTrigger
 } from '../ui/sidebar'
 import { translations } from '@/lib/translations/translations'
+import { AccountDropdown } from '../AccountDropdown'
 
 interface UserProps {
   name: string
@@ -90,35 +82,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
           <header className="flex items-center justify-between bg-white p-4 shadow-md">
             <SidebarTrigger />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={userProps.picture} alt="User" />
-                  <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {userProps.name}
-                    </p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {userProps.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <SignOutButton>
-                    <div className="flex items-center gap-4">
-                      <span>{translations.es.logOut}</span>
-                      <LogOut className="h-4 w-4" />
-                    </div>
-                  </SignOutButton>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <AccountDropdown user={userProps} />
           </header>
           <div className="p-4">{children}</div>
         </div>
