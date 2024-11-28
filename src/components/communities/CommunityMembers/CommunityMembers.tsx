@@ -43,7 +43,7 @@ export default function CommunityMembers({
 
   const currentMembers = useMemo(() => {
     return selectedSection === `${t('members')}` ? members : allOrganizers
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSection, members, allOrganizers])
 
   const filteredMembers = useMemo(() => {

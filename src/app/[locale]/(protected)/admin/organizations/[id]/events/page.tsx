@@ -1,7 +1,6 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getUser } from '@/lib/auth/lucia'
-import OrganizationLayout, {
-} from '@/components/orgs/OrganizationLayout'
+import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 
