@@ -20,6 +20,10 @@ const nextConfig = {
         hostname: '*.s3.us-east-1.amazonaws.com'
       },
       {
+        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
+        hostname: '*.s3.us-east-2.amazonaws.com'
+      },
+      {
         hostname: 'www.yiqi.lat'
       }
     ]
