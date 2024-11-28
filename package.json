@@ -19,7 +19,7 @@
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
     "prepare": "husky",
     "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts",
-    "deploy": "serverless deploy"
+    "deploy-lambda": "serverless deploy"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
