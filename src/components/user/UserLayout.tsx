@@ -67,7 +67,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen overflow-hidden w-full">
+      <div className="flex  w-full">
         <Sidebar collapsible="icon">
           <SidebarContent>
             <SidebarGroup>
