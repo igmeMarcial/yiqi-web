@@ -1,8 +1,4 @@
 'use client'
-<<<<<<< HEAD
-=======
-
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { HeroImage } from './template1-components/hero-image'

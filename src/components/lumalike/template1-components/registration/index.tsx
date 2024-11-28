@@ -31,6 +31,7 @@ import { checkExistingRegistration } from '@/services/actions/event/checkExistin
 import { createRegistration } from '@/services/actions/event/createRegistration'
 import { toast } from '@/hooks/use-toast'
 import { RegistrationForm } from './registration-form'
+import { useTranslations } from 'next-intl'
 
 export type RegistrationProps = {
   event: PublicEventType
@@ -44,6 +45,7 @@ export function Registration({ event, user }: RegistrationProps) {
   const [ticketSelections, setTicketSelections] = useState<
     Record<string, number>
   >({})
+  const t = useTranslations('RegistrationComponent')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [existingRegistration, setExistingRegistration] =
     useState<EventRegistrationSchemaType | null>(null)
@@ -123,7 +125,7 @@ export function Registration({ event, user }: RegistrationProps) {
     } catch (error) {
       console.error('Error submitting registration:', error)
       toast({
-        title: translations.es.eventRegistrationError,
+        title: `${t('eventRegistrationError')}`,
         variant: 'destructive'
       })
     }
@@ -147,13 +149,13 @@ export function Registration({ event, user }: RegistrationProps) {
           <div>
             <div className="font-semibold text-lg mb-1 text-white">
               {isFreeEvent
-                ? translations.es.eventFreeRegistration
-                : translations.es.eventRegistration}
+                ? `${t('eventFreeRegistration')}`
+                : `${t('eventRegistration')}`}
             </div>
             <p className="text-sm text-muted-foreground text-white">
               {isFreeEvent
-                ? translations.es.eventFreeRegistrationDescription
-                : translations.es.eventRegistrationDescription}
+                ? `${t('eventFreeRegistrationDescription')}`
+                : `${t('eventRegistrationDescription')}`}
             </p>
           </div>
         </div>
@@ -175,21 +177,19 @@ export function Registration({ event, user }: RegistrationProps) {
               className="w-full text-white"
               disabled={!hasSelectedTickets}
             >
-              {isFreeEvent
-                ? translations.es.eventRegister
-                : translations.es.eventPurchase}
+              {isFreeEvent ? `${t('eventRegister')}` : `${t('eventPurchase')}`}
             </Button>
           </DialogTrigger>
 
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle className="text-2xl font-semibold">
-                {translations.es.eventRegistrationSummary}
+                {t('eventRegistrationSummary')}
               </DialogTitle>
               <DialogDescription>
                 {user
-                  ? translations.es.eventRegistrationDescriptionLoggedIn
-                  : translations.es.eventRegistrationDescription}
+                  ? `${t('eventRegistrationDescriptionLoggedIn')}`
+                  : `${t('eventRegistrationDescription')}`}
               </DialogDescription>
             </DialogHeader>
 

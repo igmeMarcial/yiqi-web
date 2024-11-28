@@ -15,11 +15,7 @@ import { Users, Sparkles, Layout, Link2Off } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { disconnectLinkedin } from '@/services/actions/user/disconnectLinkedin'
 import { toast } from '@/hooks/use-toast'
-<<<<<<< HEAD
 import { useTranslations } from 'next-intl'
-=======
-import { translations } from '@/lib/translations/translations'
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
 
 interface BenefitProps {
   icon: React.ReactNode
@@ -57,11 +53,7 @@ function LinkedInLink() {
 
   return (
     <Button onClick={() => handleLinkClick()} className="btn-linkedin">
-<<<<<<< HEAD
       {t('linkAccount')}
-=======
-      {translations.es.linkedinConnectButton}
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
     </Button>
   )
 }
@@ -79,24 +71,14 @@ export default function LinkedInConnect({
     const { success } = await disconnectLinkedin()
     if (success) {
       toast({
-<<<<<<< HEAD
         title: `${t('linkedInDisconnected')}`,
         description: `${t('reconnect')}`
-=======
-        title: translations.es.linkedinDisconnectedToast,
-        description: translations.es.linkedinDisconnectedToastDesc
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
       })
       setIsConnected(false)
     } else {
       toast({
-<<<<<<< HEAD
         title: `${t('errorDiconnecting')}`,
         description: `${t('tryAgain')}`
-=======
-        title: translations.es.linkedinErrorToast,
-        description: translations.es.linkedinErrorToastDesc
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,24 +88,16 @@ export default function LinkedInConnect({
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl sm:text-3xl">
-<<<<<<< HEAD
           {t('enhanceNetwork')}
         </CardTitle>
         <CardDescription className="text-base">
           {t('connectAccount')}
-=======
-          {translations.es.linkedinEnhanceTitle}
-        </CardTitle>
-        <CardDescription className="text-base">
-          {translations.es.linkedinEnhanceDescription}
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 sm:grid-cols-1">
           <Benefit
             icon={<Users className="w-5 h-5 text-primary" />}
-<<<<<<< HEAD
             title={t('personalizedMatch')}
             description={t('personalizedDescription')}
           />
@@ -136,20 +110,6 @@ export default function LinkedInConnect({
             icon={<Layout className="w-5 h-5 text-primary" />}
             title={t('personalizedContent')}
             description={t('contentBody')}
-=======
-            title={translations.es.linkedinBenefitMatchTitle}
-            description={translations.es.linkedinBenefitMatchDescription}
-          />
-          <Benefit
-            icon={<Sparkles className="w-5 h-5 text-primary" />}
-            title={translations.es.linkedinBenefitHighlightsTitle}
-            description={translations.es.linkedinBenefitHighlightsDescription}
-          />
-          <Benefit
-            icon={<Layout className="w-5 h-5 text-primary" />}
-            title={translations.es.linkedinBenefitContentTitle}
-            description={translations.es.linkedinBenefitContentDescription}
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
           />
         </div>
       </CardContent>
@@ -165,17 +125,10 @@ export default function LinkedInConnect({
               onClick={handleDisconnect}
             >
               <Link2Off className="w-5 h-5 mr-2" />
-<<<<<<< HEAD
               {t('diconnectLinkedIn')}
             </Button>
             <p className="text-sm text-muted-foreground">
               {t('diconnectBody')}
-=======
-              {translations.es.linkedinDisconnectButton}
-            </Button>
-            <p className="text-sm text-muted-foreground">
-              {translations.es.linkedinConnectedMessage}
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
             </p>
           </>
         )}

@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/app/[locale]/(protected)/user/edit/page.tsx
 import UpdateProfileForm from '@/components/profile-settings/UpdateProfileForm'
-=======
-import NetworkingProfileForm from '@/components/profile/NetworkingProfileForm'
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea:src/app/(protected)/user/networking-settings/page.tsx
 import UserLayout from '@/components/user/UserLayout'
 import { getUser } from '@/lib/auth/lucia'
 import {
@@ -28,22 +24,18 @@ export default async function page() {
   }
 
   // Extract networking specific data
-  const networkingData = {
-    professionalMotivations: user.professionalMotivations,
-    communicationStyle: user.communicationStyle,
-    professionalValues: user.professionalValues,
-    careerAspirations: user.careerAspirations,
-    significantChallenge: user.significantChallenge
-  }
+  // const networkingData = {
+  //   professionalMotivations: user.professionalMotivations,
+  //   communicationStyle: user.communicationStyle,
+  //   professionalValues: user.professionalValues,
+  //   careerAspirations: user.careerAspirations,
+  //   significantChallenge: user.significantChallenge
+  // }
 
   return (
     <main className="flex flex-col items-center justify-center">
       <UserLayout userProps={profileDataSchema.parse(user)}>
-<<<<<<< HEAD:src/app/[locale]/(protected)/user/edit/page.tsx
         <UpdateProfileForm user={profileWithPrivacySchema.parse(user)} />
-=======
-        <NetworkingProfileForm initialData={networkingData} />
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea:src/app/(protected)/user/networking-settings/page.tsx
       </UserLayout>
     </main>
   )

@@ -4,17 +4,16 @@ import GoogleOAuthButton from '@/components/auth/googleButton'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 export function AuthText() {
   const t = useTranslations('auth')
-  const localActive = useLocale()
   return (
     <Card className="w-full max-w-[400px] border-neutral-800/30 bg-neutral-900/90 backdrop-blur-sm">
       <CardHeader className="space-y-6 px-6 pt-6">
         <div className="mx-auto transition-all duration-200 hover:opacity-90">
           <Image
-            src={`/${localActive}/AndinoLabs.svg`}
+            src={`/AndinoLabs.svg`}
             alt="Andino Labs Logo"
             height={100}
             width={100}

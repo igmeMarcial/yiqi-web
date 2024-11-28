@@ -11,6 +11,7 @@ import {
   getPastEvents,
   getValidEvents
 } from '@/services/actions/event/getPublicEvents'
+import { useTranslations } from 'next-intl'
 
 interface CommunityTabsProps {
   navItems: string[]
@@ -27,9 +28,8 @@ export default function CommunityTab({
   members,
   organizers
 }: CommunityTabsProps) {
-  const [activeTab, setActiveTab] = useState<string>(
-    translations.es.navigationAbout
-  )
+  const t = useTranslations('Community')
+  const [activeTab, setActiveTab] = useState<string>(`${t('navigationAbout')}`)
   const [showAllContent, setShowAllContent] = useState<boolean>(false)
   const [validEvents, setValidEvents] = useState<EventCommunityType[]>([])
   const [pastEvents, setPastEvents] = useState<EventCommunityType[]>([])
@@ -76,10 +76,10 @@ export default function CommunityTab({
         className={`bg-[#111827] rounded-lg shadow-sm ${activeTab === translations.es.navigationMembers ? 'w-full' : 'w-full sm:w-1/2'}`}
       >
         <div className="p-4 sm:p-6">
-          {activeTab === translations.es.navigationAbout && (
+          {activeTab === `${t('navigationAbout')}` && (
             <>
               <h2 className="text-xl sm:text-2xl font-bold mb-4 text-white">
-                {translations.es.navigationAbout}
+                {t('navigationAbout')}
               </h2>
               <div className="whitespace-pre-wrap">
                 {visibleContent.map((line, index) => (
@@ -94,8 +94,8 @@ export default function CommunityTab({
                   className="mt-4 text-[#00C9A7] hover:text-[#00b396] font-medium"
                 >
                   {showAllContent
-                    ? translations.es.aboutShowLess
-                    : translations.es.aboutLoadMore}
+                    ? `${t('aboutShowLess')}`
+                    : `${t('aboutLoadMore')}`}
                 </button>
               )}
 
@@ -103,8 +103,7 @@ export default function CommunityTab({
                 <div className="mt-8">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      {translations.es.eventsUpcomingEvents} (
-                      {validEvents.length})
+                      {t('eventsUpcomingEvents')} ({validEvents.length})
                     </h3>
                   </div>
                   <EventCardCommunity events={validEvents} />
@@ -115,7 +114,7 @@ export default function CommunityTab({
                 <div className="mt-8">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
-                      {translations.es.eventsPastEvents} ({pastEvents.length})
+                      {t('eventsPastEvents')} ({pastEvents.length})
                     </h3>
                   </div>
                   <EventCardCommunity events={pastEvents} />
@@ -124,7 +123,7 @@ export default function CommunityTab({
             </>
           )}
 
-          {activeTab === translations.es.navigationMembers && (
+          {activeTab === `${t('navigationMembers')}` && (
             <CommunityMembers members={members} organizers={organizers} />
           )}
         </div>

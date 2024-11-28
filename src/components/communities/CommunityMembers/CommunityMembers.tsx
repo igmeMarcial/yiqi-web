@@ -7,7 +7,7 @@ import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import { UserType } from '@/schemas/userSchema'
 import { OrganizationUserType } from '@/schemas/organizerSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface CommunityMembersProps {
   members: UserType[]
@@ -18,10 +18,9 @@ export default function CommunityMembers({
   members,
   organizers
 }: CommunityMembersProps) {
+  const t = useTranslations('Community')
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedSection, setSelectedSection] = useState(
-    translations.es.members
-  )
+  const [selectedSection, setSelectedSection] = useState(`${t('members')}`)
   const allOrganizers = useMemo(
     () => organizers.map(organizer => organizer.user),
     [organizers]
@@ -30,19 +29,21 @@ export default function CommunityMembers({
   const sections = useMemo(
     () => [
       {
-        name: translations.es.members,
+        name: `${t('members')}`,
         count: members.length
       },
       {
-        name: translations.es.memberOrganizers,
+        name: `${t('memberOrganizers')}`,
         count: organizers.length
       }
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [members.length, organizers.length]
   )
 
   const currentMembers = useMemo(() => {
-    return selectedSection === translations.es.members ? members : allOrganizers
+    return selectedSection === `${t('members')}` ? members : allOrganizers
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSection, members, allOrganizers])
 
   const filteredMembers = useMemo(() => {

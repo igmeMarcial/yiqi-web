@@ -721,8 +721,6 @@ export const translations: Record<string, { [key: string]: string }> = {
     //events
     eventsUpcomingEvents: 'Próximos Eventos',
     eventsPastEvents: 'Eventos Pasados',
-<<<<<<< HEAD
-=======
     //settings
     settingOrganizationTitle: 'Configuración de la Organización',
     settingsOrganizationUpdated: 'Organización actualizada exitosamente!',
@@ -735,7 +733,6 @@ export const translations: Record<string, { [key: string]: string }> = {
     settingsOrganizationFormColor: 'Color',
     settingsOrganizationFormUrl: 'Url de',
     settingsOrganizationFormSaved: 'Guardar Cambios',
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
     // Networking Profile
     networkingProfileTitle: 'Perfil de Networking Mejorado',
     networkingProfileDescription:
@@ -789,20 +786,6 @@ export const translations: Record<string, { [key: string]: string }> = {
     resumeProcessing: 'Procesando hoja de vida...',
     onlyPDFAndTXTAllowed: 'Solo se permiten archivos PDF, TXT y DOCX',
     selectResumeTypes: 'Seleccionar Hoja de Vida (PDF, TXT o DOCX)',
-<<<<<<< HEAD
-    settingOrganizationTitle: 'Configuración de la Organización',
-    settingsOrganizationUpdated: 'Organización actualizada exitosamente!',
-    settingsOrganizationFormName: 'Organización',
-    settingsPlaceholderOrganization: 'Andino...',
-    settingsDescription: 'Descripción',
-    settingsPlaceholderDescription: 'Descripción...',
-    settingsOrganizationFormLogo: 'Logo',
-    settingsOrganizationAltLogo: 'Logo de la organización',
-    settingsOrganizationFormColor: 'Color',
-    settingsOrganizationFormUrl: 'Url de',
-    settingsOrganizationFormSaved: 'Guardar Cambios',
-=======
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
 
     // Event Description Component
     eventAbout: 'Sobre el Evento',

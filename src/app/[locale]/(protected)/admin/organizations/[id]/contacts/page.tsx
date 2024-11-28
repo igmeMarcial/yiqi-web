@@ -72,13 +72,6 @@ export default async function ContactsPage({
         name={organization.name}
         organizationId={organization.id}
       /> */}
-
-      {/* <ContactText
-        contacts={contacts}
-        id={user?.id}
-        name={organization.name}
-        organizationId={organization.id}
-      /> */}
     </OrganizationLayout>
   )
 }

@@ -1,8 +1,4 @@
 import {
-<<<<<<< HEAD
-=======
-  Form,
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   FormControl,
   FormField,
   FormItem,
@@ -11,9 +7,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { translations } from '@/lib/translations/translations'
 import { UseFormReturn } from 'react-hook-form'
 import { RegistrationInput } from '@/schemas/eventSchema'
+import { useTranslations } from 'next-intl'
 
 interface RegistrationFormProps {
   form: UseFormReturn<RegistrationInput>
@@ -26,27 +22,23 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({
-<<<<<<< HEAD
   form,
-=======
-  form: formProps,
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   onSubmit,
   user,
   isFreeEvent
 }: RegistrationFormProps) {
+  const t = useTranslations('RegistrationComponent')
   return (
-<<<<<<< HEAD
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <FormField
         control={form.control}
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{translations.es.eventFormName}</FormLabel>
+            <FormLabel>{t('eventFormName')}</FormLabel>
             <FormControl>
               <Input
-                placeholder={translations.es.eventFormNamePlaceholder}
+                placeholder={t('eventFormNamePlaceholder')}
                 {...field}
                 disabled={!!user}
                 className={user ? 'bg-muted' : ''}
@@ -61,11 +53,11 @@ export function RegistrationForm({
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{translations.es.eventFormEmail}</FormLabel>
+            <FormLabel>{t('eventFormEmail')}</FormLabel>
             <FormControl>
               <Input
                 type="email"
-                placeholder={translations.es.eventFormEmailPlaceholder}
+                placeholder={t('eventFormEmailPlaceholder')}
                 {...field}
                 disabled={!!user}
                 className={user ? 'bg-muted' : ''}
@@ -77,57 +69,9 @@ export function RegistrationForm({
       />
       <Button type="submit" className="w-full">
         {isFreeEvent
-          ? translations.es.eventConfirmRegistration
-          : translations.es.eventConfirmPurchase}
+          ? `${t('eventConfirmRegistration')}`
+          : `${t('eventConfirmPurchase')}`}
       </Button>
     </form>
-=======
-    <Form {...formProps}>
-      <form onSubmit={formProps.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={formProps.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{translations.es.eventFormName}</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={translations.es.eventFormNamePlaceholder}
-                  {...field}
-                  disabled={!!user}
-                  className={user ? 'bg-muted' : ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={formProps.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{translations.es.eventFormEmail}</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder={translations.es.eventFormEmailPlaceholder}
-                  {...field}
-                  disabled={!!user}
-                  className={user ? 'bg-muted' : ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="w-full">
-          {isFreeEvent
-            ? translations.es.eventConfirmRegistration
-            : translations.es.eventConfirmPurchase}
-        </Button>
-      </form>
-    </Form>
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
   )
 }

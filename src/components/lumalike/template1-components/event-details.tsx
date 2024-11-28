@@ -3,11 +3,12 @@ import { Calendar, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
 import { PublicEventType } from '@/schemas/eventSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export function EventDetails({ event }: { event: PublicEventType }) {
   const { featuredIn, title, subtitle, location, city, startDate, endDate } =
     event
+  const t = useTranslations('EventDescription')
   return (
     <motion.div
       className="space-y-4"
@@ -22,7 +23,7 @@ export function EventDetails({ event }: { event: PublicEventType }) {
             variant="secondary"
             className="text-xs px-2 py-1"
           >
-            {translations.es.eventFeaturedIn}{' '}
+            {t('eventFeaturedIn')}{' '}
             <Link
               href={featured.url}
               className="font-medium hover:underline ml-1"

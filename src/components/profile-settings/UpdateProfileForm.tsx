@@ -324,11 +324,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     <Textarea
                       {...form.register('shortDescription')}
                       className="min-h-[100px] pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-<<<<<<< HEAD
                       placeholder={t('tellUsAboutYourself')}
-=======
-                      placeholder={translations.es.tellUsAboutYourself}
->>>>>>> fd5523954c7d0d5d22b9df3c22441a08a8683bea
                       value={form.watch('shortDescription') ?? ''}
                     />
                   </div>

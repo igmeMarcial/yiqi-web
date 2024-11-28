@@ -1,5 +1,5 @@
-import { translations } from '@/lib/translations/translations'
 import { SavedTicketOfferingType } from '@/schemas/eventSchema'
+import { useTranslations } from 'next-intl'
 
 interface RegistrationSummaryProps {
   tickets: SavedTicketOfferingType[]
@@ -12,11 +12,10 @@ export function RegistrationSummary({
   ticketSelections,
   calculateTotal
 }: RegistrationSummaryProps) {
+  const t = useTranslations('RegistrationComponent')
   return (
     <div className="space-y-4">
-      <h3 className="font-medium">
-        {translations.es.eventRegistrationSummary}
-      </h3>
+      <h3 className="font-medium">{t('eventRegistrationSummary')}</h3>
       <div className="space-y-2">
         {tickets.map(ticket => {
           const quantity = ticketSelections[ticket.id] || 0
@@ -26,14 +25,14 @@ export function RegistrationSummary({
               <span>{`${quantity}x ${ticket.name}`}</span>
               <span>
                 {ticket.price === 0
-                  ? translations.es.eventFree
+                  ? `${t('eventFree')}`
                   : `$${(ticket.price * quantity).toFixed(2)}`}
               </span>
             </div>
           )
         })}
         <div className="border-t pt-2 font-medium flex justify-between">
-          <span>{translations.es.eventTotal}</span>
+          <span>{t('eventTotal')}</span>
           <span>${calculateTotal().toFixed(2)}</span>
         </div>
       </div>

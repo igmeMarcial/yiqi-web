@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { translations } from '@/lib/translations/translations'
 import { EventRegistrationSchemaType } from '@/schemas/eventSchema'
 import { Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 interface RegistrationConfirmationProps {
@@ -18,6 +18,7 @@ interface RegistrationConfirmationProps {
 export function RegistrationConfirmation({
   registration
 }: RegistrationConfirmationProps) {
+  const t = useTranslations('RegistrationComponent')
   return (
     <Card>
       <CardHeader>
@@ -28,19 +29,19 @@ export function RegistrationConfirmation({
         </div>
         <CardTitle className="text-center">
           {registration.status === 'PENDING'
-            ? translations.es.registrationPending
-            : translations.es.registrationConfirmed}
+            ? `${t('registrationPending')}`
+            : `${t('registrationConfirmed')}`}
         </CardTitle>
         <CardDescription className="text-center">
           {registration.status === 'PENDING'
-            ? translations.es.registrationPendingDescription
-            : translations.es.registrationConfirmedDescription}
+            ? `${t('registrationPendingDescription')}`
+            : `${t('registrationConfirmedDescription')}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="text-center">
           <Link href="/user/tickets">
-            <Button>{translations.es.viewMyTickets}</Button>
+            <Button>{t('viewMyTickets')}</Button>
           </Link>
         </div>
       </CardContent>
