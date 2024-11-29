@@ -120,7 +120,7 @@ export function EventPage({ event, user }: RegistrationProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {(isMobile) && (
+                {isMobile && (
                   <>
                     <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                     <Registration

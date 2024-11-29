@@ -5,6 +5,11 @@ import { motion } from 'framer-motion'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { translations } from '@/lib/translations/translations'
 
+function createGoogleMapsUrl(location: string) {
+  const searchQuery = encodeURIComponent(location)
+  return `https://www.google.com/maps/search/?api=1&query=${searchQuery}`
+}
+
 export function EventDetails({ event }: { event: PublicEventType }) {
   const { featuredIn, title, subtitle, location, city, startDate, endDate } =
     event
@@ -45,10 +50,21 @@ export function EventDetails({ event }: { event: PublicEventType }) {
           </time>
         </div>
         <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-primary-foreground/60" />
-          <address className="not-italic">
-            {location}, {city}
-          </address>
+          {location && city && (
+            <>
+              <MapPin className="h-5 w-5 text-primary-foreground/60" />
+              <address className="not-italic">
+                <a
+                  href={createGoogleMapsUrl(location)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline hover:text-primary-foreground/90 transition-colors"
+                >
+                  {location}, {city}
+                </a>
+              </address>
+            </>
+          )}
         </div>
       </div>
     </motion.div>
