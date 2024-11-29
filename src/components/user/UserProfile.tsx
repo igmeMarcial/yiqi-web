@@ -98,7 +98,9 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
         </div>
 
         <div className="mt-8 bg-[#0A0A0A] rounded-lg shadow-lg p-6 border border-[#1A1A1A]">
-          <h2 className="text-2xl font-semibold mb-4 text-white">{translations.es.links}</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">
+            {translations.es.links}
+          </h2>
           {!hasLinks ? (
             <p className="text-gray-400">{translations.es.availableLinks}</p>
           ) : (
