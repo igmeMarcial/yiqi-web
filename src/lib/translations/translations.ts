@@ -413,7 +413,11 @@ export const translations: Record<string, { [key: string]: string }> = {
     registrationPaymentPending: 'Pago Pendiente',
     registrationPaymentPendingDescription:
       'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
-    registrationContinuePayment: 'Continuar con el Pago'
+    registrationContinuePayment: 'Continuar con el Pago',
+    stripeAccountActive: 'Stripe Account Active',
+    stripeAccountActiveDescription:
+      'Your Stripe account is fully set up and ready to accept payments.',
+    stripeViewDashboard: 'View Stripe Dashboard'
   },
   es: {
     // General
@@ -853,6 +857,10 @@ export const translations: Record<string, { [key: string]: string }> = {
     registrationPaymentPending: 'Pago Pendiente',
     registrationPaymentPendingDescription:
       'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
-    registrationContinuePayment: 'Continuar con el Pago'
+    registrationContinuePayment: 'Continuar con el Pago',
+    stripeAccountActive: 'Cuenta de Stripe Activa',
+    stripeAccountActiveDescription:
+      'Tu cuenta de Stripe está completamente configurada y lista para aceptar pagos.',
+    stripeViewDashboard: 'Ver Panel de Stripe'
   }
 }
