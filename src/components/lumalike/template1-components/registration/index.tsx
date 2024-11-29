@@ -160,7 +160,13 @@ export function Registration({ event, user }: RegistrationProps) {
   }
 
   if (existingRegistration) {
-    return <RegistrationConfirmation registration={existingRegistration} />
+    const requiresPayment = !event.tickets.every(ticket => ticket.price === 0)
+    return (
+      <RegistrationConfirmation
+        registration={existingRegistration}
+        requiresPayment={requiresPayment}
+      />
+    )
   }
 
   return (
