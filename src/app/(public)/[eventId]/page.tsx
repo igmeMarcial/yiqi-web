@@ -3,7 +3,7 @@ import { getUser } from '@/lib/auth/lucia'
 import { getEventById } from '@/services/actions/event/getEventById'
 import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
-
+import { JSDOM } from 'jsdom'
 type Props = {
   params: { eventId: string }
 }
@@ -17,13 +17,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const ogImage =
-    event.openGraphImage || event.heroImage || '/default-event-image.jpg'
+  // Create a JSDOM instance
+  const dom = new JSDOM(event.description || '')
+  const text = dom.window.document.body.textContent || ''
+  const ogImage = event.openGraphImage || event.heroImage || '/og.png'
+
   const description =
-    event.description ||
+    text ||
     event.subtitle ||
     `Join us at ${event.title} on ${event.startDate.toLocaleDateString()}`
-
+  console.log('------------------------------------------------------')
+  console.log(text)
+  console.log('------------------------------------------------------')
   return {
     title: event.title,
     description: description,
