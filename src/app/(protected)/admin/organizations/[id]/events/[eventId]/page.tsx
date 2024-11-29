@@ -8,6 +8,7 @@ import { EventAdminView } from '@/components/EventAdminView'
 import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 import { translations } from '@/lib/translations/translations'
 import { Link2, Pencil } from 'lucide-react'
+import { MdPreview } from '@/components/events/editor/MdPreview'
 
 export default async function EventDetailsPage({
   params
@@ -84,7 +85,10 @@ export default async function EventDetailsPage({
               <span className="font-semibold">
                 {translations.es.description}
               </span>
-              <p>{event.description}</p>
+
+              <div className="prose prose-sm max-w-none mb-4  dark:prose-invert">
+                <MdPreview content={event.description!} />
+              </div>
             </div>
           </section>
           <EventAdminView registrations={attendees} eventId={params.eventId} />
