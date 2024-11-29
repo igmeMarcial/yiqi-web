@@ -8,13 +8,12 @@ import {
   Briefcase,
   Building,
   Twitter,
-  Linkedin,
-  Instagram,
   Globe,
   User
 } from 'lucide-react'
 import { ProfileWithPrivacy } from '@/schemas/userSchema'
 import { translations } from '@/lib/translations/translations'
+import { BiInstagramIcon, BiLinkedinIcon } from '@/assets/icons'
 
 interface UserProfilePageProps {
   user: ProfileWithPrivacy
@@ -123,7 +122,7 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
                   rel="noopener noreferrer"
                   className="flex items-center text-[#00E5BE] hover:underline"
                 >
-                  <Linkedin className="w-5 h-5 mr-2" />
+                  <BiLinkedinIcon className="w-5 h-5 mr-2" />
                   {translations.es.linkedin}
                 </a>
               ) : null}
@@ -145,7 +144,7 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
                   rel="noopener noreferrer"
                   className="flex items-center text-[#00E5BE] hover:underline"
                 >
-                  <Instagram className="w-5 h-5 mr-2" />
+                  <BiInstagramIcon className="w-5 h-5 mr-2" />
                   {translations.es.instagram}
                 </a>
               ) : null}
