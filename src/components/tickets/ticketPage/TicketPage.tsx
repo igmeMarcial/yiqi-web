@@ -188,10 +188,10 @@ export default function TicketsPage({
                             ticket.status
                           )}
                         >
-                            <Ticket className="w-4 h-4" />
-                            {translations.es.ticketLabelView}
-                          </Button>
-                        </div>
+                          <Ticket className="w-4 h-4" />
+                          {translations.es.ticketLabelView}
+                        </Button>
+                      </div>
                     ))}
                   </div>
                 </div>

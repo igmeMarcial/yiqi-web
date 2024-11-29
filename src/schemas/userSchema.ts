@@ -85,27 +85,27 @@ export const profileWithPrivacySchema = baseProfileSchema.extend({
 
 export const userDataSchema = z.object({
   id: z.string(),
-  name: z.string(),
+  name: z.string().min(1, 'El nombre no puede estar vacío.'),
   email: z.string().email(),
   emailVerified: z.date().nullable().optional(),
-  picture: z.string().url().nullable(),
-  phoneNumber: z.string().optional(),
-  company: z.string(),
-  position: z.string(),
-  shortDescription: z.string(),
-  linkedin: z.string().url().optional(),
-  x: z.string().url().optional(),
-  instagram: z.string().url().optional(),
-  website: z.string().url().optional(),
-  professionalMotivations: z.string().optional(),
-  communicationStyle: z.string().optional(),
-  professionalValues: z.string().optional(),
-  careerAspirations: z.string().optional(),
-  significantChallenge: z.string().optional(),
+  picture: z.string().url().nullable().optional(),
+  phoneNumber: z.string().nullable().optional(),
+  company: z.string().default(''), // Si no quieres requerirlo, establece un valor por defecto
+  position: z.string().default(''),
+  shortDescription: z.string().default(''),
+  linkedin: z.string().url().nullable().optional(),
+  x: z.string().url().nullable().optional(),
+  instagram: z.string().url().nullable().optional(),
+  website: z.string().url().nullable().optional(),
+  professionalMotivations: z.string().nullable().optional(),
+  communicationStyle: z.string().nullable().optional(),
+  professionalValues: z.string().nullable().optional(),
+  careerAspirations: z.string().nullable().optional(),
+  significantChallenge: z.string().nullable().optional(),
   stopCommunication: z.boolean(),
   privacySettings: privacySettingsSchema,
-  isLinkedinLinked: z.boolean(),
-});
+  isLinkedinLinked: z.boolean()
+})
 
 export type UserDataType = z.infer<typeof userDataSchema>
 export type UserDataCollected = z.infer<typeof userDataCollectedShema>

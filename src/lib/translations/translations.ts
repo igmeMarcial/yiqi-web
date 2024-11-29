@@ -1,5 +1,9 @@
 export const translations: Record<string, { [key: string]: string }> = {
   en: {
+    aboutMe: 'About Me',
+    links: 'Links',
+    availableLinks: 'Available Links',
+    notDescriptionAvailable: 'No description available.',
     editProfile: 'Edit Profile',
     userNotFound: 'User Not Found',
     eventTitle: 'Event Title',
@@ -455,6 +459,10 @@ export const translations: Record<string, { [key: string]: string }> = {
   },
   es: {
     // General
+    aboutMe: 'Sobre mí',
+    links: 'Enlaces',
+    availableLinks: 'Enlaces Disponibles',
+    notDescriptionAvailable: 'Sin descripción disponible.',
     editProfile: 'Editar Perfil',
     userNotFound: 'Usuario no encontrado',
     eventTitle: 'Nombre del Evento',

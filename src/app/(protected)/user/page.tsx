@@ -15,13 +15,11 @@ export default async function Page() {
   const userInformation = await getUserProfile(user.id)
 
   if (!userInformation) {
-    return <div>{translations.es.userNotFound}</div>;
+    return <div>{translations.es.userNotFound}</div>
   }
 
   if (user.role === Roles.USER) {
-    return (
-      <UserProfilePage user={userInformation} />
-    )
+    return <UserProfilePage user={userInformation} />
   } else if (user.role === Roles.ADMIN) {
     redirect('/admin')
   } else if (user.role === Roles.NEW_USER) {
