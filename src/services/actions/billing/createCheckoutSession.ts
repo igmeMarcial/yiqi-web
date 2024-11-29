@@ -68,7 +68,7 @@ export const createCheckoutSession = async (registrationId: string) => {
     }
   )
 
-  const commission = 0.05
+  const commission = 0.03
 
   const application_fee_amount =
     lineItems.reduce((acc, item) => {
@@ -83,8 +83,7 @@ export const createCheckoutSession = async (registrationId: string) => {
       },
       redirect_on_completion: 'never',
       mode: 'payment',
-      ui_mode: 'embedded',
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/checkout/return?session_id={CHECKOUT_SESSION_ID}`
+      ui_mode: 'embedded'
     },
     {
       stripeAccount: stripeAccountId
