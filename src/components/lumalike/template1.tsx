@@ -76,7 +76,7 @@ export function EventPage({ event, user }: RegistrationProps) {
                   <HeroImage src={event.openGraphImage} alt={event.title} />
                 </div>
               )}
-              {event.hosts && (
+              {event.hosts && !isMobile && (
                 <>
                   <h2 className="text-2xl font-semibold text-primary-foreground">
                     {translations.es.membersOrganizedBy}
@@ -85,10 +85,10 @@ export function EventPage({ event, user }: RegistrationProps) {
                   <Hosts hosts={event.hosts} />
                 </>
               )}
-              {!isMobile && isSticky && (
+              {!isMobile && (
                 <motion.div
                   className={`space-y-12 ${
-                    isMobile ? '' : 'lg:sticky lg:top-24 lg:self-start'
+                    isMobile ? '' : 'mt-6 lg:sticky lg:top-24 lg:self-start'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -104,24 +104,35 @@ export function EventPage({ event, user }: RegistrationProps) {
             </div>
             <div className="flex flex-col gap-8 w-full">
               <EventDetails event={event} />
-              <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+              {event.hosts && isMobile && (
+                <>
+                  <h2 className="text-2xl font-semibold text-primary-foreground">
+                    {translations.es.membersOrganizedBy}
+                  </h2>
+                  <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+                  <Hosts hosts={event.hosts} />
+                </>
+              )}
               <motion.div
-                ref={registrationRef} // Referencia al contenedor de Registration
+                ref={registrationRef}
                 className={`space-y-12 ${isMobile ? 'flex-col' : 'lg:top-24 lg:self-start'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {(isMobile || !isSticky) && (
-                  <Registration
-                    event={event}
-                    user={user}
-                    dialogTriggerRef={dialogTriggerRef}
-                  />
+                {(isMobile) && (
+                  <>
+                    <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+                    <Registration
+                      event={event}
+                      user={user}
+                      dialogTriggerRef={dialogTriggerRef}
+                    />
+                  </>
                 )}
               </motion.div>
               <EventDescription description={event.description || ''} />
-              {location && <EventLocation location={event.location} />}
+              {event.location && <EventLocation location={event.location} />}
             </div>
           </motion.div>
         </div>
