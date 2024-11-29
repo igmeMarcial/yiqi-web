@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { EventAdminView } from '@/components/EventAdminView'
 import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 import { translations } from '@/lib/translations/translations'
+import { Link2, Pencil } from 'lucide-react'
+import { MdPreview } from '@/components/events/editor/MdPreview'
 
 export default async function EventDetailsPage({
   params
@@ -43,14 +45,23 @@ export default async function EventDetailsPage({
             </h1>
             <div className="flex space-x-2">
               <Link
+                href={`/admin/organizations/${params.id}/events/${params.eventId}/edit`}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
+              >
+                <Pencil />
+              </Link>
+              <Link
+                href={`/${params.eventId}`}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
+              >
+                <Link2 />
+              </Link>
+              <Link
                 href={`/admin/organizations/${params.id}/events`}
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
               >
                 {translations.es.backToEvents}
               </Link>
-              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white hover:bg-red-700 h-10 px-4 py-2">
-                {translations.es.deleteEvent}
-              </button>
             </div>
           </div>
 
@@ -74,7 +85,10 @@ export default async function EventDetailsPage({
               <span className="font-semibold">
                 {translations.es.description}
               </span>
-              <p>{event.description}</p>
+
+              <div className="prose prose-sm max-w-none mb-4  dark:prose-invert">
+                <MdPreview content={event.description!} />
+              </div>
             </div>
           </section>
           <EventAdminView registrations={attendees} eventId={params.eventId} />

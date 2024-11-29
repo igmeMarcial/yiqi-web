@@ -14,10 +14,24 @@ const geistMono = localFont({
   weight: '100 900'
 })
 
+const title = 'Yiqi, Bringing people together'
+const description =
+  'Yiqi is a platform for bringing people together through professional communities. Find your tribe, learn, grow, and connect.'
+
 export const metadata: Metadata = {
-  title: 'Yiqi, Bringing people together',
-  description:
-    'Yiqi is a platform for bringing people together through professional communities. Find your tribe, learn, grow, and connect.'
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    images: ['/og.png']
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: ['/og.png']
+  }
 }
 
 export default function RootLayout({

@@ -458,12 +458,11 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
             <FormField
               control={form.control}
               name="description"
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <FormControl>
                     <MarkdownEditor
                       initialValue={description}
-                      name={field.name}
                       onChange={val => {
                         setDescription(val)
                       }}
