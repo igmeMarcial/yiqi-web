@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   Form,
   FormControl,
@@ -11,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { translations } from '@/lib/translations/translations'
 import { UseFormReturn } from 'react-hook-form'
 import { RegistrationInput } from '@/schemas/eventSchema'
+import StripeCheckout from '@/components/billing/StripeCheckout'
 
 interface RegistrationFormProps {
   form: UseFormReturn<RegistrationInput>
@@ -20,17 +22,48 @@ interface RegistrationFormProps {
     name: string | undefined
   }
   isFreeEvent: boolean
+  registrationId?: string
+  onPaymentComplete?: () => void
 }
 
 export function RegistrationForm({
   form: formProps,
   onSubmit,
   user,
-  isFreeEvent
+  isFreeEvent,
+  registrationId,
+  onPaymentComplete
 }: RegistrationFormProps) {
+  const [showStripeCheckout, setShowStripeCheckout] = useState(false)
+
+  const handleSubmit = async (values: RegistrationInput) => {
+    await onSubmit(values)
+  }
+
+  useEffect(() => {
+    if (registrationId && !isFreeEvent) {
+      setShowStripeCheckout(true)
+    }
+  }, [registrationId, isFreeEvent])
+
+  if (showStripeCheckout && registrationId) {
+    return (
+      <StripeCheckout
+        registrationId={registrationId}
+        onComplete={() => {
+          setShowStripeCheckout(false)
+          onPaymentComplete?.()
+        }}
+      />
+    )
+  }
+
   return (
     <Form {...formProps}>
-      <form onSubmit={formProps.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={formProps.handleSubmit(handleSubmit)}
+        className="space-y-6"
+      >
         <FormField
           control={formProps.control}
           name="name"

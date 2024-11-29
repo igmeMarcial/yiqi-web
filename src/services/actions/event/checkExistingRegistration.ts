@@ -18,7 +18,8 @@ export async function checkExistingRegistration(
       include: {
         tickets: {
           include: {
-            user: true
+            user: true,
+            ticketType: true
           }
         },
         user: true,

@@ -96,7 +96,8 @@ export const TicketSchema = z.object({
   id: z.string(),
   user: userSchema.nullable(),
   checkedInDate: z.date().nullable(),
-  category: TicketCategorySchema
+  category: TicketCategorySchema,
+  ticketType: SavedTicketOfferingSchema.nullable().optional()
 })
 
 export const EventRegistrationSchema = z.object({
