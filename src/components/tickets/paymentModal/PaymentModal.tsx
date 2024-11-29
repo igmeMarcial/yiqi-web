@@ -19,7 +19,6 @@ export const PaymentModal = ({
   onOpenChange,
   eventId
 }: PaymentModalProps) => {
-  console.log(eventId, 'eventId')
   const router = useRouter()
 
   const paymentUrl = `${process.env.NEXT_PUBLIC_URL}/${eventId}`
