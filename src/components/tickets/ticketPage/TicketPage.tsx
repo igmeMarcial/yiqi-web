@@ -112,7 +112,8 @@ export default function TicketsPage({
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-3 text-sm text-zinc-400">
                         <time className="text-sm">
-                          {new Date(data.event.startDate).toLocaleDateString()} - {new Date(data.event.endDate).toLocaleDateString()}
+                          {new Date(data.event.startDate).toLocaleDateString()}{' '}
+                          - {new Date(data.event.endDate).toLocaleDateString()}
                         </time>
                       </div>
                       <h2 className="text-white text-2xl font-semibold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent group-hover:from-white group-hover:to-zinc-300">
