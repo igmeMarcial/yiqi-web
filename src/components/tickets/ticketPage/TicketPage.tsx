@@ -1,55 +1,74 @@
-'use client';
+'use client'
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Ticket } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { QRModal } from "../qrModal/QrModal";
-import { ticketEventSchemaType } from "@/schemas/ticketSchema";
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Ticket } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
+import { QRModal } from '../qrModal/QrModal'
+import { ticketEventSchemaType } from '@/schemas/ticketSchema'
 
 interface TicketModalState {
-  isOpen: boolean;
-  eventTitle: string;
-  attendeeName: string;
-  attendeeEmail: string;
-  ticketNumber: string;
-  eventId: string;
-  organizationId: string;
-  ticketId: string;
-  checkedInDate: string;
+  isOpen: boolean
+  eventTitle: string
+  attendeeName: string
+  attendeeEmail: string
+  ticketNumber: string
+  eventId: string
+  organizationId: string
+  ticketId: string
+  checkedInDate: string
 }
 
 const TicketStatusBadge = ({ status }: { status: string }) => {
-  const badgeClass = status === 'APPROVED'
-    ? 'bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
-    : status === 'PENDING'
-    ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
-    : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20';
+  const badgeClass =
+    status === 'APPROVED'
+      ? 'bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
+      : status === 'PENDING'
+        ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
+        : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
 
-  const badgeText = status === 'APPROVED' ? 'Aprobado' : status === 'PENDING' ? 'Pendiente' : 'Rechazado';
+  const badgeText =
+    status === 'APPROVED'
+      ? 'Aprobado'
+      : status === 'PENDING'
+        ? 'Pendiente'
+        : 'Rechazado'
 
   return (
-    <Badge variant={status === 'APPROVED' ? "default" : status === 'PENDING' ? "secondary" : "destructive"} className={badgeClass}>
+    <Badge
+      variant={
+        status === 'APPROVED'
+          ? 'default'
+          : status === 'PENDING'
+            ? 'secondary'
+            : 'destructive'
+      }
+      className={badgeClass}
+    >
       {badgeText}
     </Badge>
-  );
-};
+  )
+}
 
-export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaType }) {
+export default function TicketsPage({
+  tickets
+}: {
+  tickets: ticketEventSchemaType
+}) {
   const [modalState, setModalState] = useState<TicketModalState>({
     isOpen: false,
-    eventTitle: "",
-    attendeeName: "",
-    attendeeEmail: "",
-    ticketNumber: "",
-    eventId: "",
-    organizationId: "",
-    ticketId: "",
-    checkedInDate: "",
-  });
+    eventTitle: '',
+    attendeeName: '',
+    attendeeEmail: '',
+    ticketNumber: '',
+    eventId: '',
+    organizationId: '',
+    ticketId: '',
+    checkedInDate: ''
+  })
 
   const openModal = (
     eventTitle: string,
@@ -70,9 +89,9 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
       eventId,
       organizationId,
       ticketId,
-      checkedInDate,
-    });
-  };
+      checkedInDate
+    })
+  }
 
   return (
     <>
@@ -80,7 +99,7 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
           <h1 className="text-3xl font-bold mb-6 text-center">Tus Tickets</h1>
           <div className="space-y-8">
-            {tickets.map((data) => (
+            {tickets.map(data => (
               <Card
                 key={data.event.id}
                 className="group bg-zinc-900/60 border-zinc-800/50 shadow-lg transition hover:bg-zinc-900/80 hover:shadow-xl"
@@ -98,7 +117,9 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
                         <Avatar className="w-8 h-8 border border-zinc-800">
                           <AvatarImage src={data.event.organization.logo} />
                         </Avatar>
-                        <span className="text-zinc-400">{data.event.organization.name}</span>
+                        <span className="text-zinc-400">
+                          {data.event.organization.name}
+                        </span>
                       </div>
                     </div>
 
@@ -137,10 +158,14 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
                               data.event.id,
                               data.event.organizationId,
                               ticket.id,
-                              ticket.checkedInDate ? ticket.checkedInDate.toString() : ''
+                              ticket.checkedInDate
+                                ? ticket.checkedInDate.toString()
+                                : ''
                             )
                           }
-                          disabled={['PENDING', 'REJECTED'].includes(ticket.status)}
+                          disabled={['PENDING', 'REJECTED'].includes(
+                            ticket.status
+                          )}
                         >
                           <Ticket className="w-4 h-4" />
                           Ver Ticket
@@ -157,7 +182,7 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
 
       <QRModal
         isOpen={modalState.isOpen}
-        onClose={() => setModalState((prev) => ({ ...prev, isOpen: false }))}
+        onClose={() => setModalState(prev => ({ ...prev, isOpen: false }))}
         eventTitle={modalState.eventTitle}
         attendeeName={modalState.attendeeName}
         attendeeEmail={modalState.attendeeEmail}
@@ -168,5 +193,5 @@ export default function TicketsPage({ tickets }: { tickets: ticketEventSchemaTyp
         checkedInDate={modalState.checkedInDate}
       />
     </>
-  );
+  )
 }

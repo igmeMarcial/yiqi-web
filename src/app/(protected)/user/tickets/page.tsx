@@ -13,8 +13,8 @@ export default async function Tickets() {
     return <div>User not found</div>
   }
 
-  const user = await getUserProfile(userCurrent.id);
-  const tickets = await getTicketsWithEvents(userCurrent.id);
+  const user = await getUserProfile(userCurrent.id)
+  const tickets = await getTicketsWithEvents(userCurrent.id)
 
   if (!user) {
     return <div>User not found</div>

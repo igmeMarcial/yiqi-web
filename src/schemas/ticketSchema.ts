@@ -1,19 +1,19 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const organizationSchema = z.object({
   logo: z.string().url(),
-  name: z.string(),
-});
+  name: z.string()
+})
 
 export const customFieldsSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   tickets: z.record(z.string(), z.number())
-});
+})
 
 const registrationSchema = z.object({
   customFields: customFieldsSchema
-});
+})
 
 const ticketSchema = z.object({
   id: z.string(),
@@ -25,9 +25,8 @@ const ticketSchema = z.object({
   category: z.enum(['GENERAL', 'VIP', 'STUDENT']),
   ticketTypeId: z.string(),
   registration: registrationSchema,
-  status: z.enum(['APPROVED', 'PENDING', 'CANCELLED']),
-});
-
+  status: z.enum(['APPROVED', 'PENDING', 'CANCELLED'])
+})
 
 export const eventSchema = z.object({
   title: z.string(),
@@ -37,12 +36,14 @@ export const eventSchema = z.object({
   type: z.enum(['IN_PERSON', 'VIRTUAL']),
   id: z.string(),
   organizationId: z.string(),
-  organization: organizationSchema,
-});
+  organization: organizationSchema
+})
 
-export const ticketEventSchema = z.array(z.object({
-  event: eventSchema,
-  tickets: z.array(ticketSchema),
-}));
+export const ticketEventSchema = z.array(
+  z.object({
+    event: eventSchema,
+    tickets: z.array(ticketSchema)
+  })
+)
 
 export type ticketEventSchemaType = z.infer<typeof ticketEventSchema>

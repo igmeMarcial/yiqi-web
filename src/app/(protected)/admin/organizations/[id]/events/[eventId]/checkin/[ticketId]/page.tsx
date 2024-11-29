@@ -1,7 +1,7 @@
 import { getEventRegistrations } from '@/services/actions/eventActions'
 import EventCheckinTable from '@/components/events/EventCheckinTable'
 import { getEventData } from '@/lib/event/getEventData'
-import BackButton from '@/components/tickets/backButton/BackButton';
+import BackButton from '@/components/tickets/backButton/BackButton'
 
 export default async function CheckinPage({
   params
@@ -17,7 +17,9 @@ export default async function CheckinPage({
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-red-600">Evento no encontrado</h1>
+          <h1 className="text-3xl font-bold text-red-600">
+            Evento no encontrado
+          </h1>
           <p className="mt-2 text-gray-600">
             Lo sentimos, el evento que estás buscando no existe.
           </p>
@@ -67,7 +69,7 @@ export default async function CheckinPage({
       <h1 className="text-2xl font-bold text-gray-800 text-center">
         Event Registrations: {event.title}
       </h1>
-  
+
       <div className="overflow-x-auto bg-gray-50 rounded-lg shadow-md p-4">
         <EventCheckinTable
           eventId={event.id}
@@ -75,6 +77,6 @@ export default async function CheckinPage({
           ticketId={params.ticketId}
         />
       </div>
-  </div>
+    </div>
   )
 }

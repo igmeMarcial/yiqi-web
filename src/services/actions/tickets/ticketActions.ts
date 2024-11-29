@@ -2,19 +2,17 @@
 
 import prisma from '@/lib/prisma'
 import { ticketEventSchema } from '@/schemas/ticketSchema'
-import { getPublicEvents } from '../event/getPublicEvents';
-
+import { getPublicEvents } from '../event/getPublicEvents'
 
 export async function getTicketsWithEvents(userId: string) {
   const tickets = await prisma.ticket.findMany({
     where: { userId },
     include: { registration: true }
-  });
+  })
 
-  
-  const events = await getPublicEvents();
-  
-  const eventsList = events.events || [];
+  const events = await getPublicEvents()
+
+  const eventsList = events.events || []
 
   const ticketsWithEvents = eventsList.map(event => {
     const eventTickets = tickets
@@ -22,11 +20,10 @@ export async function getTicketsWithEvents(userId: string) {
       .map(ticket => ({
         ...ticket,
         status: ticket.registration?.status
-      }));
+      }))
 
-    return { event, tickets: eventTickets };
-  });
+    return { event, tickets: eventTickets }
+  })
 
-  return ticketEventSchema.parse(ticketsWithEvents);
-
+  return ticketEventSchema.parse(ticketsWithEvents)
 }
