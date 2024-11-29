@@ -4,6 +4,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
+import { translations } from '@/lib/translations/translations'
 import { QRCodeSVG } from 'qrcode.react'
 
 interface QRModalProps {
@@ -39,10 +40,10 @@ export function QRModal({
   const qrData = `${process.env.NEXT_PUBLIC_URL}/admin/orgnanizations/${organizationId}/events/${eventId}/checkin/${ticketId}`
 
   const ticketInfo: TicketInfo[] = [
-    { label: 'Ticket #', value: ticketNumber },
-    { label: 'Nombre', value: attendeeName },
-    { label: 'Correo', value: attendeeEmail },
-    { label: 'Estado', value: checkedInDate ? 'Checkeado' : 'No checkeado' }
+    { label: translations.es.qrModalTicketLabel, value: ticketNumber },
+    { label: translations.es.qrModalTicketName, value: attendeeName },
+    { label: translations.es.qrModalTicketEmail, value: attendeeEmail },
+    { label: translations.es.qrModalTicketStatus, value: checkedInDate ? translations.es.qrModalTicketChecked : translations.es.qrModalTicketNotChecked }
   ]
 
   return (

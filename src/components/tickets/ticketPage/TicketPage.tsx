@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { QRModal } from '../qrModal/QrModal'
 import { ticketEventSchemaType } from '@/schemas/ticketSchema'
+import { translations } from '@/lib/translations/translations'
 
 interface TicketModalState {
   isOpen: boolean
@@ -32,10 +33,10 @@ const TicketStatusBadge = ({ status }: { status: string }) => {
 
   const badgeText =
     status === 'APPROVED'
-      ? 'Aprobado'
+      ? translations.es.ticketStatusApproved
       : status === 'PENDING'
-        ? 'Pendiente'
-        : 'Rechazado'
+        ? translations.es.ticketStatusPending
+        : translations.es.ticketStatusRejected
 
   return (
     <Badge
@@ -97,7 +98,7 @@ export default function TicketsPage({
     <>
       <div className="min-h-screen bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white">
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-          <h1 className="text-3xl font-bold mb-6 text-center">Tus Tickets</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">{translations.es.ticketTitlePage}</h1>
           <div className="space-y-8">
             {tickets.map(data => (
               <Card
@@ -126,7 +127,7 @@ export default function TicketsPage({
                     <div>
                       <Image
                         src={data.event.openGraphImage}
-                        alt="Event banner"
+                        alt={translations.es.ticketEventImageAlt}
                         width={600}
                         height={100}
                         className="relative rounded-xl border border-zinc-800/50 w-full h-60 object-cover"
@@ -142,7 +143,7 @@ export default function TicketsPage({
                       >
                         <div className="flex gap-5">
                           <Badge className="bg-zinc-800/50 border border-zinc-700">
-                            Ticket #{index + 1}
+                            {translations.es.ticketNumber}{index + 1}
                           </Badge>
                           <TicketStatusBadge status={ticket.status} />
                         </div>
@@ -168,7 +169,7 @@ export default function TicketsPage({
                           )}
                         >
                           <Ticket className="w-4 h-4" />
-                          Ver Ticket
+                          {translations.es.ticketLabelView}
                         </Button>
                       </div>
                     ))}

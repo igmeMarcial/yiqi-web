@@ -6,6 +6,7 @@ import { useState, useMemo } from 'react'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/useDebounce'
+import { translations } from '@/lib/translations/translations'
 
 export default function EventCheckinTable({
   eventId,
@@ -37,7 +38,7 @@ export default function EventCheckinTable({
       <div className="p-4">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search by name..."
+          placeholder={translations.es.eventCheckInSearchByName}
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           className="pl-8"
@@ -49,13 +50,13 @@ export default function EventCheckinTable({
           <thead className="bg-gray-100 sticky top-0 z-10">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                Name
+                {translations.es.eventCheckInTableName}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                Ticket ID
+                {translations.es.eventCheckInTableTicketId}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                Checked In
+                {translations.es.eventCheckInTableCheckIn}
               </th>
               <th className="px-6 py-3 border-b border-gray-200"></th>
             </tr>
