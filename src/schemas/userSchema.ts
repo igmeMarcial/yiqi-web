@@ -83,6 +83,31 @@ export const profileWithPrivacySchema = baseProfileSchema.extend({
   isLinkedinLinked: z.boolean().default(false)
 })
 
+export const userDataSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  emailVerified: z.date().nullable().optional(),
+  picture: z.string().url().nullable(),
+  phoneNumber: z.string().optional(),
+  company: z.string(),
+  position: z.string(),
+  shortDescription: z.string(),
+  linkedin: z.string().url().optional(),
+  x: z.string().url().optional(),
+  instagram: z.string().url().optional(),
+  website: z.string().url().optional(),
+  professionalMotivations: z.string().optional(),
+  communicationStyle: z.string().optional(),
+  professionalValues: z.string().optional(),
+  careerAspirations: z.string().optional(),
+  significantChallenge: z.string().optional(),
+  stopCommunication: z.boolean(),
+  privacySettings: privacySettingsSchema,
+  isLinkedinLinked: z.boolean(),
+});
+
+export type UserDataType = z.infer<typeof userDataSchema>
 export type UserDataCollected = z.infer<typeof userDataCollectedShema>
 export type ProfileDataValues = z.infer<typeof profileDataSchema>
 export type ProfileFormValues = z.infer<typeof profileFormSchema>

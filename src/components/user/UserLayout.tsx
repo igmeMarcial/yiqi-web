@@ -33,7 +33,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
     {
       name: translations.es.profileSettings,
       icon: User,
-      href: `/user/profile`
+      href: `/user/edit`
     },
     {
       name: translations.es.payments,

@@ -5,8 +5,8 @@ import { Roles } from '@prisma/client'
 import { getUser } from '@/lib/auth/lucia'
 import {
   ProfileWithPrivacy,
-  profileWithPrivacySchema,
-  UserDataCollected
+  UserDataCollected,
+  userDataSchema
 } from '@/schemas/userSchema'
 
 import { z } from 'zod'
@@ -124,9 +124,9 @@ export async function getUserProfile(currentUserId: string) {
     }
 
     if (currentUserId == userCurrent.id) {
-      return profileWithPrivacySchema.parse(cleanUserData)
+      return userDataSchema.parse(cleanUserData)
     } else {
-      return profileWithPrivacySchema.parse({
+      return userDataSchema.parse({
         id: user.id,
         name: user.name ?? '',
         picture: user.picture ?? '',

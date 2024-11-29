@@ -53,7 +53,9 @@ export function QRModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-zinc-900 border-zinc-800 w-96 p-4 rounded-md pt-10">
+      <DialogContent
+        className="bg-zinc-900 border-zinc-800 p-4 rounded-md pt-10 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto"
+      >
         <DialogHeader>
           <DialogTitle className="text-center text-white text-lg">
             {eventTitle}
@@ -64,10 +66,19 @@ export function QRModal({
             <QRCodeSVG value={qrData} size={160} />
           </div>
           <div className="w-full space-y-2">
-            {ticketInfo.map(info => (
+            {ticketInfo.map((info) => (
               <div className="flex justify-between text-sm" key={info.label}>
                 <span className="text-zinc-400">{info.label}</span>
-                <span className="text-white">{info.value}</span>
+                <span
+                  className={`text-white ${
+                    info.label === translations.es.qrModalTicketEmail
+                      ? 'truncate max-w-[150px]'
+                      : ''
+                  }`}
+                  title={info.value}
+                >
+                  {info.value}
+                </span>
               </div>
             ))}
           </div>

@@ -1,5 +1,6 @@
 export const translations: Record<string, { [key: string]: string }> = {
   en: {
+    editProfile: 'Edit Profile',
     userNotFound: 'User Not Found',
     eventTitle: 'Event Title',
     location: 'Location',
@@ -454,6 +455,7 @@ export const translations: Record<string, { [key: string]: string }> = {
   },
   es: {
     // General
+    editProfile: 'Editar Perfil',
     userNotFound: 'Usuario no encontrado',
     eventTitle: 'Nombre del Evento',
     location: 'Lugar',
