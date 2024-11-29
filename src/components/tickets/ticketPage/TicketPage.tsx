@@ -98,7 +98,9 @@ export default function TicketsPage({
     <>
       <div className="min-h-screen bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white">
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-          <h1 className="text-3xl font-bold mb-6 text-center">{translations.es.ticketTitlePage}</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">
+            {translations.es.ticketTitlePage}
+          </h1>
           <div className="space-y-8">
             {tickets.map(data => (
               <Card
@@ -143,7 +145,8 @@ export default function TicketsPage({
                       >
                         <div className="flex gap-5">
                           <Badge className="bg-zinc-800/50 border border-zinc-700">
-                            {translations.es.ticketNumber}{index + 1}
+                            {translations.es.ticketNumber}
+                            {index + 1}
                           </Badge>
                           <TicketStatusBadge status={ticket.status} />
                         </div>

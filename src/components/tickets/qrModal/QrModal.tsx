@@ -43,7 +43,12 @@ export function QRModal({
     { label: translations.es.qrModalTicketLabel, value: ticketNumber },
     { label: translations.es.qrModalTicketName, value: attendeeName },
     { label: translations.es.qrModalTicketEmail, value: attendeeEmail },
-    { label: translations.es.qrModalTicketStatus, value: checkedInDate ? translations.es.qrModalTicketChecked : translations.es.qrModalTicketNotChecked }
+    {
+      label: translations.es.qrModalTicketStatus,
+      value: checkedInDate
+        ? translations.es.qrModalTicketChecked
+        : translations.es.qrModalTicketNotChecked
+    }
   ]
 
   return (

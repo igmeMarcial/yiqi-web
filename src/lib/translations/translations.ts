@@ -437,15 +437,17 @@ export const translations: Record<string, { [key: string]: string }> = {
     checkInQrEventNotFound: 'Scan QR Code',
     checkInQrEventDontExist: 'The event does not exist',
     checkInQrDontAccess: 'You do not have access',
-    checkInQrContactAdministrator: 'To proceed, contact your organization’s administrator to validate your ticket.',
+    checkInQrContactAdministrator:
+      'To proceed, contact your organization’s administrator to validate your ticket.',
     checkInQrOrganizationEventDontFound: 'Organization or Event not found',
-    checkInQrInformation: 'Ensure the information is correct or contact support.',
+    checkInQrInformation:
+      'Ensure the information is correct or contact support.',
     // Event Check-In Table
     eventCheckInTableTitle: 'Event Records:',
     eventCheckInSearchByName: 'Search by name...',
     eventCheckInTableName: 'Name',
     eventCheckInTableTicketId: 'Ticket ID',
-    eventCheckInTableCheckIn: 'Checked In',
+    eventCheckInTableCheckIn: 'Checked In'
   },
   es: {
     // General
@@ -910,14 +912,16 @@ export const translations: Record<string, { [key: string]: string }> = {
     checkInQrEventNotFound: 'Escanear Código QR',
     checkInQrEventDontExist: 'El evento no existe',
     checkInQrDontAccess: 'No tienes acceso',
-    checkInQrContactAdministrator: 'Para continuar, contacta al administrador de tu organización para validar tu ticket.',
+    checkInQrContactAdministrator:
+      'Para continuar, contacta al administrador de tu organización para validar tu ticket.',
     checkInQrOrganizationEventDontFound: 'Organización o Evento no encontrados',
-    checkInQrInformation: 'Asegúrate de que la información sea correcta o contacta al soporte.',
+    checkInQrInformation:
+      'Asegúrate de que la información sea correcta o contacta al soporte.',
     // Event CheckIn Table
     eventCheckInTableTitle: 'Registros del Evento:',
     eventCheckInSearchByName: 'Buscar por nombre...',
     eventCheckInTableName: 'Nombre',
     eventCheckInTableTicketId: 'Ticket ID',
-    eventCheckInTableCheckIn: 'Checked In',
+    eventCheckInTableCheckIn: 'Checked In'
   }
 }
