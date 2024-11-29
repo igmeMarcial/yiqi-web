@@ -20,15 +20,20 @@ import useStripeConnect from '@/hooks/useStripeConnect'
 import { createConnectAccount } from '@/services/actions/billing/createAccount'
 import { useTranslations } from 'next-intl'
 
-export default function StripeConnect({ accountId }: { accountId: string }) {
-  const t = useTranslations('StripeConnect')
-
+export default function StripeConnect({
+  accountId,
+  stripeId
+}: {
+  accountId: string
+  stripeId: string
+}) {
   const [accountCreatePending, setAccountCreatePending] = useState(false)
   const [onboardingExited, setOnboardingExited] = useState(false)
   const [error, setError] = useState(false)
-  const [connectedAccountId, setConnectedAccountId] = useState<string>('')
+  const [connectedAccountId, setConnectedAccountId] = useState<string>(stripeId)
   const stripeConnectInstance = useStripeConnect(connectedAccountId)
 
+  const t = useTranslations('StripeConnect')
   const handleSignUp = async () => {
     setAccountCreatePending(true)
     setError(false)

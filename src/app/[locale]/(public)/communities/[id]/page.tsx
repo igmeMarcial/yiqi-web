@@ -5,7 +5,6 @@ import { getOrganizationEvents } from '@/services/actions/event/getOrganizationE
 import { getOrganizationContacts } from '@/services/actions/contactActions'
 import { getOrganizersByOrganization } from '@/services/actions/organizerActions'
 import { translations } from '@/lib/translations/translations'
-import { logOut } from '@/services/auth/auth'
 import MainLandingNav from '@/components/mainLanding/mainNav'
 import { getUser } from '@/lib/auth/lucia'
 
@@ -33,7 +32,6 @@ export default async function CommunityDetail({
     <div className="flex flex-col min-h-screen bg-black pt-10">
       <MainLandingNav
         user={{ name: user?.name, picture: user?.picture as string }}
-        logOut={logOut}
       />
       <div className="max-w-5xl mx-auto w-full px-4 py-8 bg-[#111827] m-10 rounded-lg">
         <CommunityBanner

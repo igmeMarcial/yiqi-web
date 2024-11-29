@@ -18,7 +18,8 @@
     "build:client-types": "tsup --config yiqi-client/tsup.config.ts",
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
     "prepare": "husky",
-    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts"
+    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts",
+    "deploy-lambda": "serverless deploy"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
@@ -111,6 +112,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -122,6 +124,8 @@
     "husky": "^9.1.6",
     "postcss": "^8",
     "prisma": "^5.21.1",
+    "serverless": "^3.39.0",
+    "serverless-plugin-typescript": "^2.1.5",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

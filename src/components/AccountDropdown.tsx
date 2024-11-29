@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
+import SignOutButton from './auth/sign-out'
 
 interface User {
   name?: string
@@ -29,10 +30,9 @@ interface User {
 }
 interface AccountDropdownProps {
   readonly user: User | null
-  readonly signOut: () => void
 }
 
-export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
+export function AccountDropdown({ user }: AccountDropdownProps) {
   const t = useTranslations('AccountDropdown')
   const localActive = useLocale()
   return (
@@ -80,9 +80,11 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
-          <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
-          {t('signOut')}
+        <DropdownMenuItem>
+          <SignOutButton>
+            <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
+            {t('signOut')}
+          </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
