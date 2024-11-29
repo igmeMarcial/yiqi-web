@@ -1,4 +1,5 @@
 import { EventForm } from '@/components/events/EventForm'
+import { MantineProvider } from '@/components/providers/mantine-provider'
 import { getEvent } from '@/services/actions/event/getEvent'
 import { getOrganization } from '@/services/actions/organizationActions'
 import { notFound } from 'next/navigation'
@@ -16,12 +17,14 @@ export default async function Page({
   }
 
   return (
-    <div>
-      <EventForm
-        organizationId={organization.id}
-        hasStripeAccount={organization?.stripeAccountId !== null}
-        event={event}
-      />
-    </div>
+    <MantineProvider>
+      <div>
+        <EventForm
+          organizationId={organization.id}
+          hasStripeAccount={organization?.stripeAccountId !== null}
+          event={event}
+        />
+      </div>
+    </MantineProvider>
   )
 }

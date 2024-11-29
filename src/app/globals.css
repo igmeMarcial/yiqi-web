@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@mantine/core/styles.css';
+@import '@mantine/tiptap/styles.css';
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
