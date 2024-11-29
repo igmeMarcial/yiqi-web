@@ -1,3 +1,5 @@
+import { withSentryConfig } from '@sentry/nextjs'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: true,
@@ -26,26 +28,32 @@ const nextConfig = {
     ]
   }
 }
-import { withSentryConfig } from '@sentry/nextjs'
 
-// Only apply Sentry configuration if not explicitly disabled
+// Check if we're in CI environment or if Sentry should be disabled
+const isCi = process.env.CI === 'true'
 const shouldSkipSentry =
+  isCi ||
   process.env.SENTRY_DISABLED === 'true' ||
   process.env.SKIP_SENTRY === 'true' ||
   !process.env.SENTRY_AUTH_TOKEN
 
-export default withSentryConfig(nextConfig, {
-  org: 'andino-labs-sac',
-  project: 'javascript-nextjs',
-  silent: !process.env.CI,
-  telemetry: !shouldSkipSentry,
-  widenClientFileUpload: true,
-  reactComponentAnnotation: {
-    enabled: true
-  },
-  tunnelRoute: '/monitoring',
-  hideSourceMaps: false,
-  disableLogger: true,
-  automaticVercelMonitors: true,
-  sourcemaps: true
-})
+// Create the final config based on whether Sentry should be skipped
+const finalConfig = shouldSkipSentry
+  ? nextConfig
+  : withSentryConfig(nextConfig, {
+      org: 'andino-labs-sac',
+      project: 'javascript-nextjs',
+      silent: true, // Always silent to avoid warnings
+      telemetry: false, // Disable telemetry
+      widenClientFileUpload: true,
+      reactComponentAnnotation: {
+        enabled: true
+      },
+      tunnelRoute: '/monitoring',
+      hideSourceMaps: false,
+      disableLogger: true,
+      automaticVercelMonitors: true,
+      sourcemaps: true
+    })
+
+export default finalConfig
