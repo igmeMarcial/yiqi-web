@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma'
 import {
   EventInputSchema,
   EventTicketOfferingInputSchema,
+  EventTypeEnum,
   SavedEventSchema
 } from '@/schemas/eventSchema'
 
@@ -21,6 +22,20 @@ export async function createEvent(
 
   const validatedData = EventInputSchema.parse(eventData)
   const tickets = rawTickets.map(v => EventTicketOfferingInputSchema.parse(v))
+
+  if (
+    validatedData.type === EventTypeEnum.IN_PERSON &&
+    !validatedData.location
+  ) {
+    throw new Error('Location is required for in-person events')
+  }
+
+  if (
+    validatedData.type === EventTypeEnum.ONLINE &&
+    !validatedData.virtualLink
+  ) {
+    throw new Error('Virtual link is required for online events')
+  }
 
   const event = await prisma.event.create({
     data: {

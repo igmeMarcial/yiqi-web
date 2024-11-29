@@ -7,10 +7,10 @@ export const createConnectAccount = async (organizationId: string) => {
   const account = await stripe.accounts.create({
     controller: {
       stripe_dashboard: {
-        type: 'express'
+        type: 'full'
       },
       fees: {
-        payer: 'application'
+        payer: 'account'
       },
       losses: {
         payments: 'application'

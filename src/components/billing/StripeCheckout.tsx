@@ -8,9 +8,11 @@ import {
 import { createCheckoutSession } from '@/services/actions/billing/createCheckoutSession'
 
 export default function StripeCheckout({
-  offerings
+  registrationId,
+  onComplete
 }: {
-  offerings: { ticketOfferingId: string; amount: number }[]
+  onComplete: () => void
+  registrationId: string
 }) {
   const [clientSecret, setClientSecret] = useState('')
   const [stripeAccountId, setStripeAccountId] = useState('')
@@ -19,7 +21,7 @@ export default function StripeCheckout({
     const fetchClientSecret = async () => {
       try {
         const { clientSecret, connectAccountId } =
-          await createCheckoutSession(offerings)
+          await createCheckoutSession(registrationId)
         setClientSecret(clientSecret)
         setStripeAccountId(connectAccountId)
       } catch (error) {
@@ -28,7 +30,7 @@ export default function StripeCheckout({
     }
 
     fetchClientSecret()
-  }, [offerings])
+  }, [registrationId])
 
   const stripePromise = useMemo(() => {
     if (!stripeAccountId) return null
@@ -37,10 +39,6 @@ export default function StripeCheckout({
       stripeAccount: stripeAccountId
     })
   }, [stripeAccountId])
-
-  function onComplete() {
-    console.log('onComplete')
-  }
 
   return (
     <EmbeddedCheckoutProvider

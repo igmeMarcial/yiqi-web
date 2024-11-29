@@ -31,6 +31,7 @@ import { checkExistingRegistration } from '@/services/actions/event/checkExistin
 import { createRegistration } from '@/services/actions/event/createRegistration'
 import { toast } from '@/hooks/use-toast'
 import { RegistrationForm } from './registration-form'
+import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
 
 export type RegistrationProps = {
   event: PublicEventType
@@ -49,6 +50,9 @@ export function Registration({ event, user }: RegistrationProps) {
     useState<EventRegistrationSchemaType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
+  const [currentRegistrationId, setCurrentRegistrationId] = useState<
+    string | undefined
+  >()
 
   const form = useForm<RegistrationInput>({
     resolver: zodResolver(registrationInputSchema),
@@ -108,12 +112,17 @@ export function Registration({ event, user }: RegistrationProps) {
         tickets: ticketSelections
       })
 
-      if (result.success) {
-        toast({
-          title: result.message
-        })
-        setIsDialogOpen(false)
-        router.refresh()
+      if (result.success && result.registration) {
+        if (isFreeEvent) {
+          toast({
+            title: result.message
+          })
+          setIsDialogOpen(false)
+          router.refresh()
+        } else {
+          // Store registration ID for payment
+          setCurrentRegistrationId(result.registration.id)
+        }
       } else {
         toast({
           title: result.error,
@@ -129,12 +138,35 @@ export function Registration({ event, user }: RegistrationProps) {
     }
   }
 
+  const handlePaymentComplete = async () => {
+    if (currentRegistrationId) {
+      const result = await markRegistrationPaid(currentRegistrationId)
+      if (result.success) {
+        toast({
+          title: translations.es.eventRegistrationSuccess
+        })
+        setIsDialogOpen(false)
+      } else {
+        toast({
+          title: translations.es.eventRegistrationError,
+          variant: 'destructive'
+        })
+      }
+    }
+  }
+
   if (isLoading) {
     return <div>Loading...</div>
   }
 
   if (existingRegistration) {
-    return <RegistrationConfirmation registration={existingRegistration} />
+    const requiresPayment = !event.tickets.every(ticket => ticket.price === 0)
+    return (
+      <RegistrationConfirmation
+        registration={existingRegistration}
+        requiresPayment={requiresPayment}
+      />
+    )
   }
 
   return (
@@ -209,6 +241,8 @@ export function Registration({ event, user }: RegistrationProps) {
                 onSubmit={onSubmit}
                 user={user}
                 isFreeEvent={isFreeEvent}
+                registrationId={currentRegistrationId}
+                onPaymentComplete={handlePaymentComplete}
               />
             </motion.div>
           </DialogContent>

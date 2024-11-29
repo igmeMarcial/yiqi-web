@@ -1,4 +1,5 @@
 'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -105,7 +106,9 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const [showTicketManager, setShowTicketManager] = useState(false)
   const [showStripeDialog, setShowStripeDialog] = useState(false)
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    event?.openGraphImage ?? null
+  )
   const [minStartTime, setMinStartTime] = useState<string | number>(
     event ? '00:00' : defaultStartTimeStr
   )
@@ -241,7 +244,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
           ...locationDetails,
           startDate: startDateTime,
           endDate: endDateTime,
-          openGraphImage: imageUrl, // Add the image URL to the payload
+          openGraphImage: imageUrl || event?.openGraphImage, // Add the image URL to the payload
           description
         }
 

@@ -21,6 +21,7 @@ import {
   User as UserIcon
 } from 'lucide-react'
 import Link from 'next/link'
+import SignOutButton from './auth/sign-out'
 
 interface User {
   name?: string
@@ -29,10 +30,9 @@ interface User {
 }
 interface AccountDropdownProps {
   readonly user: User | null
-  readonly signOut: () => void
 }
 
-export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
+export function AccountDropdown({ user }: AccountDropdownProps) {
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
@@ -78,9 +78,9 @@ export function AccountDropdown({ user, signOut }: AccountDropdownProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4 text-muted-foreground" />
-          {translations.es.signOut}
+          <SignOutButton>{translations.es.signOut}</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
