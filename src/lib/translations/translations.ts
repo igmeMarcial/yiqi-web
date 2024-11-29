@@ -409,7 +409,11 @@ export const translations: Record<string, { [key: string]: string }> = {
     viewMyTickets: 'View My Tickets',
     alreadyRegistered: "You're Already Registered",
     alreadyRegisteredDescription:
-      "You've already registered for this event. You can view your tickets below."
+      "You've already registered for this event. You can view your tickets below.",
+    registrationPaymentPending: 'Pago Pendiente',
+    registrationPaymentPendingDescription:
+      'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
+    registrationContinuePayment: 'Continuar con el Pago'
   },
   es: {
     // General
@@ -845,6 +849,10 @@ export const translations: Record<string, { [key: string]: string }> = {
     viewMyTickets: 'Ver Mis Entradas',
     alreadyRegistered: 'Ya Estás Registrado',
     alreadyRegisteredDescription:
-      'Ya te has registrado para este evento. Puedes ver tus entradas abajo.'
+      'Ya te has registrado para este evento. Puedes ver tus entradas abajo.',
+    registrationPaymentPending: 'Pago Pendiente',
+    registrationPaymentPendingDescription:
+      'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
+    registrationContinuePayment: 'Continuar con el Pago'
   }
 }

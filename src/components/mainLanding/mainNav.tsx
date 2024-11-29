@@ -24,7 +24,6 @@ interface User {
 
 interface HeaderProps {
   user: User | null
-  logOut: () => void
   showExtraButton?: boolean
   buttonName?: string
   dialogTriggerRef?: React.RefObject<HTMLButtonElement>
@@ -32,7 +31,6 @@ interface HeaderProps {
 
 export default function MainLandingNav({
   user,
-  logOut,
   showExtraButton = false,
   buttonName = '',
   dialogTriggerRef
@@ -100,7 +98,7 @@ export default function MainLandingNav({
                 </Button>
               </Link>
             ) : (
-              <AccountDropdown user={user} signOut={logOut} />
+              <AccountDropdown user={user} />
             )}
           </nav>
 

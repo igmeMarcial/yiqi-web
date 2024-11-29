@@ -10,7 +10,6 @@ import { EventDescription } from './template1-components/event-description'
 import { RegistrationProps } from './template1-components/registration'
 import { EventLocation } from './template1-components/event-location'
 import MainLandingNav from '../mainLanding/mainNav'
-import { logOut } from '@/services/auth/auth'
 import { translations } from '@/lib/translations/translations'
 
 export function EventPage({ event, user }: RegistrationProps) {
@@ -54,7 +53,6 @@ export function EventPage({ event, user }: RegistrationProps) {
     <>
       <MainLandingNav
         user={user}
-        logOut={logOut}
         showExtraButton={isSticky}
         buttonName={translations.es.eventRegister}
         dialogTriggerRef={dialogTriggerRef}

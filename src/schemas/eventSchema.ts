@@ -96,7 +96,8 @@ export const TicketSchema = z.object({
   id: z.string(),
   user: userSchema.nullable(),
   checkedInDate: z.date().nullable(),
-  category: TicketCategorySchema
+  category: TicketCategorySchema,
+  ticketType: SavedTicketOfferingSchema.nullable().optional()
 })
 
 export const EventRegistrationSchema = z.object({
@@ -159,7 +160,13 @@ export const SavedEventSchema = EventInputSchema.extend({
     .optional()
     .nullable()
     .transform(val => val ?? []),
-  tickets: z.array(SavedTicketOfferingSchema).optional().nullable()
+  tickets: z
+    .union([
+      z.array(EventTicketOfferingInputSchema),
+      z.array(SavedTicketOfferingSchema)
+    ])
+    .optional()
+    .nullable()
 })
 
 export const PublicEventSchema = SavedEventSchema.extend({
@@ -167,7 +174,8 @@ export const PublicEventSchema = SavedEventSchema.extend({
   registrations: z.number(),
   organization: z.object({
     logo: z.string().nullable(),
-    name: z.string()
+    name: z.string(),
+    stripeAccountId: z.string().optional().nullable()
   }),
   heroImage: z.string().nullable(),
   backgroundColor: z.string().nullable(),

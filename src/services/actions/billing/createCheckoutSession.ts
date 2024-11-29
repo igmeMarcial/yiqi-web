@@ -3,81 +3,101 @@
 import { stripe } from '@/lib/stripe'
 import prisma from '@/lib/prisma'
 
-type Props = {
-  ticketOfferingId: string
-  amount: number
-}
+export const createCheckoutSession = async (registrationId: string) => {
+  const registration = await prisma.eventRegistration.findUniqueOrThrow({
+    where: { id: registrationId },
+    include: {
+      tickets: { include: { ticketType: true } },
+      event: {
+        include: {
+          organization: true
+        }
+      }
+    }
+  })
 
-export const createCheckoutSession = async (offerings: Props[]) => {
-  if (offerings.length === 0) {
-    throw new Error('No offerings provided')
+  const stripeAccountId = registration.event.organization.stripeAccountId
+
+  if (!stripeAccountId) {
+    throw new Error('Organization does not have a stripe account')
   }
 
-  let stripeAccountId: string = ''
+  if (registration.paymentId) {
+    const session = await stripe.checkout.sessions.retrieve(
+      registration.paymentId
+    )
 
-  const lineItems = await Promise.all(
-    offerings.map(async ({ ticketOfferingId, amount }) => {
-      const ticketOffering = await prisma.ticketOfferings.findUnique({
-        where: { id: ticketOfferingId },
-        include: {
-          event: {
-            include: {
-              organization: true
-            }
-          }
-        }
-      })
+    if (!session.client_secret) {
+      throw new Error('Checkout session not found')
+    }
 
-      if (!ticketOffering) {
-        throw new Error('Ticket offering not found')
-      }
+    return {
+      clientSecret: session.client_secret,
+      connectAccountId: stripeAccountId
+    }
+  }
 
-      if (!ticketOffering.event.organization.stripeAccountId) {
-        throw new Error('Organization does not have a stripe account')
-      }
+  // Group tickets by ticket type and count quantities
+  const ticketGroups = registration.tickets.reduce<Record<string, number>>(
+    (acc, ticket) => {
+      const id = ticket.ticketType.id
+      acc[id] = (acc[id] || 0) + 1
+      return acc
+    },
+    {}
+  )
 
-      stripeAccountId = ticketOffering.event.organization.stripeAccountId
+  const lineItems = Object.entries(ticketGroups).map(
+    ([ticketTypeId, quantity]) => {
+      const ticket = registration.tickets.find(
+        t => t.ticketType.id === ticketTypeId
+      )
+      if (!ticket) throw new Error('Ticket not found')
 
       return {
         price_data: {
           currency: 'pen',
           product_data: {
-            name: `${ticketOffering.event.title} - ${ticketOffering.name}`,
-            description: ticketOffering.description ?? undefined
+            name: `${registration.event.title} - ${ticket.ticketType.name}`,
+            description: `${ticket.ticketType.description} ${ticket.ticketType.category}`
           },
-          unit_amount: ticketOffering.price.toNumber() * 100
+          unit_amount: ticket.ticketType.price.toNumber() * 100
         },
-        quantity: amount
+        quantity
       }
-    })
+    }
   )
 
-  const line_items = await Promise.all(lineItems)
-
-  const commission = 0.05
+  const commission = 0.03
 
   const application_fee_amount =
-    line_items.reduce((acc, item) => {
+    lineItems.reduce((acc, item) => {
       return acc + item.price_data.unit_amount * item.quantity
     }, 0) * commission
 
   const session = await stripe.checkout.sessions.create(
     {
-      line_items,
+      line_items: lineItems,
       payment_intent_data: {
         application_fee_amount: Math.round(application_fee_amount)
       },
+      redirect_on_completion: 'never',
       mode: 'payment',
-      ui_mode: 'embedded',
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/checkout/return?session_id={CHECKOUT_SESSION_ID}`
+      ui_mode: 'embedded'
     },
     {
       stripeAccount: stripeAccountId
     }
   )
+
   if (!session.client_secret) {
     throw new Error('Checkout session not created')
   }
+
+  await prisma.eventRegistration.update({
+    where: { id: registrationId },
+    data: { paymentId: session.id }
+  })
 
   return {
     clientSecret: session.client_secret,
