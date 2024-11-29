@@ -3,11 +3,13 @@ import { searchUsers } from '../actions/userActions'
 import { publicProcedure, router } from './util'
 import { getUserRegistrationStatus } from '../actions/eventActions'
 import { getOrganization } from '../actions/organizationActions'
-import { SavedEventSchema } from '@/schemas/eventSchema'
+import {
+  registrationInputSchema,
+  SavedEventSchema
+} from '@/schemas/eventSchema'
 import {
   SearchUserResultSchema,
   PublicEventsSchema,
-  RegistrationSchema,
   UserRegistrationStatusSchema,
   OrganizationSchema
 } from '@/schemas/apiSchemas'
@@ -37,15 +39,15 @@ export const appRouter = router({
     .input(
       z.object({
         eventId: z.string(),
-        attendeeData: z.record(z.unknown())
+        registrationData: registrationInputSchema
       })
     )
     .mutation(async ({ input }) => {
       const registration = await createRegistration(
         input.eventId,
-        input.attendeeData
+        input.registrationData
       )
-      return RegistrationSchema.parse(registration)
+      return registrationInputSchema.parse(registration)
     }),
 
   getUserRegistrationStatus: publicProcedure

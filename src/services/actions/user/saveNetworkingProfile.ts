@@ -19,7 +19,7 @@ export async function saveNetworkingProfile(formData: FormData) {
     })
 
     const existingData = userDataCollectedShema.parse(
-      existingUser?.dataCollected
+      existingUser?.dataCollected || {}
     )
 
     // Get the new resume URL and last updated timestamp

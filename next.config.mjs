@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: config => {
-    config.externals.push('@node-rs/argon2', '@node-rs/bcrypt')
-    return config
-  },
   images: {
     remotePatterns: [
       {
@@ -16,15 +12,17 @@ const nextConfig = {
         hostname: 'randomuser.me'
       },
       {
-        hostname: 'andinoweb.s3.us-east-1.amazonaws.com'
+        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
+        hostname: '*.s3.us-east-1.amazonaws.com'
+      },
+      {
+        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
+        hostname: '*.s3.us-east-2.amazonaws.com'
       },
       {
         hostname: 'www.yiqi.lat'
       }
     ]
-  },
-  experimental: {
-    serverComponentsExternalPackages: ['@node-rs/argon2']
   }
 }
 

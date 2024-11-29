@@ -24,10 +24,9 @@ interface User {
 
 interface HeaderProps {
   user: User | null
-  logOut: () => void
 }
 
-export default function MainLandingNav({ user, logOut }: HeaderProps) {
+export default function MainLandingNav({ user }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -75,7 +74,7 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
                 </Button>
               </Link>
             ) : (
-              <AccountDropdown user={user} signOut={logOut} />
+              <AccountDropdown user={user} />
             )}
           </nav>
 

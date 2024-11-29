@@ -19,7 +19,7 @@ import {
   EventTicketInputType,
   EventTypeEnum,
   SavedEventType,
-  SavedTicketType
+  SavedTicketOfferingType
 } from '@/schemas/eventSchema'
 import { useRouter } from 'next/navigation'
 import { MapPin, Clock, Users, Pencil } from 'lucide-react'
@@ -87,7 +87,7 @@ const defaultMinEndTimeStr = defaultEndDate
 export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const [tickets, setTickets] = useState<
-    EventTicketInputType[] | SavedTicketType[]
+    EventTicketInputType[] | SavedTicketOfferingType[]
   >(
     event?.tickets ?? [
       {
@@ -106,7 +106,9 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const [showTicketManager, setShowTicketManager] = useState(false)
   const [showStripeDialog, setShowStripeDialog] = useState(false)
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    event?.openGraphImage ?? null
+  )
   const [minStartTime, setMinStartTime] = useState<string | number>(
     event ? '00:00' : defaultStartTimeStr
   )
@@ -242,7 +244,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
           ...locationDetails,
           startDate: startDateTime,
           endDate: endDateTime,
-          openGraphImage: imageUrl, // Add the image URL to the payload
+          openGraphImage: imageUrl || event?.openGraphImage, // Add the image URL to the payload
           description
         }
 
