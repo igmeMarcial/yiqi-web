@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Card, CardContent } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 import { translations } from '@/lib/translations/translations'
