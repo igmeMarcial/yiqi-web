@@ -14,16 +14,18 @@ export async function getTicketsWithEvents(userId: string) {
 
   const eventsList = events.events || []
 
-  const ticketsWithEvents = eventsList.map(event => {
-    const eventTickets = tickets
-      .filter(ticket => ticket.registration?.eventId === event.id)
-      .map(ticket => ({
-        ...ticket,
-        status: ticket.registration?.status
-      }))
+  const ticketsWithEvents = eventsList
+    .map(event => {
+      const eventTickets = tickets
+        .filter(ticket => ticket.registration?.eventId === event.id)
+        .map(ticket => ({
+          ...ticket,
+          status: ticket.registration?.status
+        }))
 
-    return { event, tickets: eventTickets }
-  })
+      return { event, tickets: eventTickets }
+    })
+    .filter(item => item.tickets.length > 0)
 
   return ticketEventSchema.parse(ticketsWithEvents)
 }

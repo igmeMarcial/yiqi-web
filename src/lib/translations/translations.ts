@@ -426,6 +426,8 @@ export const translations: Record<string, { [key: string]: string }> = {
     ticketEventImageAlt: 'Event Banner',
     ticketNumber: 'Ticket #',
     ticketLabelView: 'View Ticket',
+    ticketPaymentRequired: 'Payment is required',
+    ticketPayment: 'Pay now',
     // QRModal
     qrModalTicketLabel: 'Ticket #',
     qrModalTicketName: 'Name',
@@ -447,7 +449,8 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventCheckInSearchByName: 'Search by name...',
     eventCheckInTableName: 'Name',
     eventCheckInTableTicketId: 'Ticket ID',
-    eventCheckInTableCheckIn: 'Checked In'
+    eventCheckInTableCheckIn: 'Checked In',
+    eventCheckinBackButton: 'Go to Tickets'
   },
   es: {
     // General
@@ -901,13 +904,15 @@ export const translations: Record<string, { [key: string]: string }> = {
     ticketEventImageAlt: 'Banner del Evento',
     ticketNumber: 'Ticket #',
     ticketLabelView: 'Ver Ticket',
+    ticketPaymentRequired: 'El pago es requerido',
+    ticketPayment: 'Pagar ahora',
     // QRModal
     qrModalTicketLabel: 'Ticket #',
     qrModalTicketName: 'Nombre',
     qrModalTicketEmail: 'Correo',
-    qrModalTicketStatus: 'Correo',
+    qrModalTicketStatus: 'Status',
     qrModalTicketChecked: 'Chequeado',
-    qrModalTicketNotChecked: 'Chequeado',
+    qrModalTicketNotChecked: 'No Chequeado',
     // CheckIn QR
     checkInQrEventNotFound: 'Escanear Código QR',
     checkInQrEventDontExist: 'El evento no existe',
@@ -922,6 +927,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventCheckInSearchByName: 'Buscar por nombre...',
     eventCheckInTableName: 'Nombre',
     eventCheckInTableTicketId: 'Ticket ID',
-    eventCheckInTableCheckIn: 'Checked In'
+    eventCheckInTableCheckIn: 'Checked In', 
+    eventCheckinBackButton: 'Ir a Tickets'
   }
 }

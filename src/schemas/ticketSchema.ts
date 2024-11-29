@@ -12,7 +12,9 @@ export const customFieldsSchema = z.object({
 })
 
 const registrationSchema = z.object({
-  customFields: customFieldsSchema
+  customFields: customFieldsSchema,
+  paid: z.boolean(),
+  paymentId: z.string().nullable(),
 })
 
 const ticketSchema = z.object({

@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { QRModal } from '../qrModal/QrModal'
 import { ticketEventSchemaType } from '@/schemas/ticketSchema'
 import { translations } from '@/lib/translations/translations'
+import { PaymentModal } from '../paymentModal/PaymentModal'
 
 interface TicketModalState {
   isOpen: boolean
@@ -59,6 +60,7 @@ export default function TicketsPage({
 }: {
   tickets: ticketEventSchemaType
 }) {
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [modalState, setModalState] = useState<TicketModalState>({
     isOpen: false,
     eventTitle: '',
@@ -156,23 +158,28 @@ export default function TicketsPage({
                         <Button
                           variant="outline"
                           className="flex items-center gap-2 bg-white/5 border-zinc-700 hover:bg-white/10 text-white hover:text-white"
-                          onClick={() =>
-                            openModal(
-                              data.event.title,
-                              ticket.registration.customFields.name,
-                              ticket.registration.customFields.email,
-                              (index + 1).toString(),
-                              data.event.id,
-                              data.event.organizationId,
-                              ticket.id,
-                              ticket.checkedInDate
-                                ? ticket.checkedInDate.toString()
-                                : ''
-                            )
-                          }
-                          disabled={['PENDING', 'REJECTED'].includes(
-                            ticket.status
-                          )}
+                          onClick={() => {
+                            if (ticket.registration.paymentId && !ticket.registration.paid) {
+                              setModalState((prev) => ({
+                                ...prev,
+                                eventId: data.event.id,
+                                organizationId: data.event.organizationId
+                              }));
+                              setPaymentModalOpen(true);
+                            } else {
+                              openModal(
+                                data.event.title,
+                                ticket.registration.customFields.name,
+                                ticket.registration.customFields.email,
+                                (index + 1).toString(),
+                                data.event.id,
+                                data.event.organizationId,
+                                ticket.id,
+                                ticket.checkedInDate ? ticket.checkedInDate.toString() : ''
+                              );
+                            }
+                          }}
+                          disabled={['PENDING', 'REJECTED'].includes(ticket.status)}
                         >
                           <Ticket className="w-4 h-4" />
                           {translations.es.ticketLabelView}
@@ -198,6 +205,12 @@ export default function TicketsPage({
         organizationId={modalState.organizationId}
         ticketId={modalState.ticketId}
         checkedInDate={modalState.checkedInDate}
+      />
+
+      <PaymentModal
+        isOpen={paymentModalOpen}
+        onOpenChange={setPaymentModalOpen}
+        eventId={modalState.eventId}
       />
     </>
   )
