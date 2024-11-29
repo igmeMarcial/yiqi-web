@@ -9,7 +9,7 @@ import Youtube from '@tiptap/extension-youtube'
 import Underline from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import { Card, CardContent } from '@/components/ui/card'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -17,10 +17,12 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
-import { Check } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { MdPreview } from './MdPreview'
 import { MantineProvider } from '@mantine/core'
+import { useUpload } from '@/hooks/useUpload'
+import { useToast } from '@/hooks/use-toast'
 
 export const defaultValue = `
 <h1>Welcome to the Rich Text Editor</h1>
@@ -41,9 +43,25 @@ export function MarkdownEditor({
   const [stagingContent, setStagingContent] = useState(
     initialValue || defaultValue
   )
+  const { toast } = useToast()
+  const { uploadSingle, isUploading } = useUpload()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleImageUpload = async (file: File) => {
+    try {
+      const url = await uploadSingle(file)
+      editor?.chain().focus().setImage({ src: url }).run()
+    } catch (error) {
+      console.error(error)
+      toast({
+        title: 'Upload Failed',
+        description: 'Failed to upload image. Please try again.',
+        variant: 'destructive'
+      })
+    }
+  }
 
   const editor = useEditor({
-    immediatelyRender: false,
     extensions: [
       StarterKit,
       Underline,
@@ -86,6 +104,18 @@ export function MarkdownEditor({
 
   return (
     <MantineProvider>
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        accept="image/*"
+        onChange={e => {
+          const file = e.target.files?.[0]
+          if (file) {
+            handleImageUpload(file)
+          }
+        }}
+      />
       <Card className="mx-auto max-w-full">
         <CardContent className="p-6">
           <Dialog>
@@ -152,19 +182,18 @@ export function MarkdownEditor({
                       <RichTextEditor.AlignRight />
                     </RichTextEditor.ControlsGroup>
 
-                    {/* Custom controls for Image and YouTube */}
                     <RichTextEditor.ControlsGroup>
                       <RichTextEditor.Control
-                        onClick={() => {
-                          const url = window.prompt('Enter image URL:')
-                          if (url) {
-                            editor.chain().focus().setImage({ src: url }).run()
-                          }
-                        }}
+                        disabled={isUploading}
+                        onClick={() => fileInputRef.current?.click()}
                         aria-label="Insert image"
                         title="Insert image"
                       >
-                        🖼️
+                        {isUploading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          '🖼️'
+                        )}
                       </RichTextEditor.Control>
 
                       <RichTextEditor.Control
