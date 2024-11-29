@@ -927,7 +927,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     eventCheckInSearchByName: 'Buscar por nombre...',
     eventCheckInTableName: 'Nombre',
     eventCheckInTableTicketId: 'Ticket ID',
-    eventCheckInTableCheckIn: 'Checked In', 
+    eventCheckInTableCheckIn: 'Checked In',
     eventCheckinBackButton: 'Ir a Tickets'
   }
 }

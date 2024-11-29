@@ -1,4 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { translations } from '@/lib/translations/translations'
@@ -9,7 +14,11 @@ interface PaymentModalProps {
   eventId: string
 }
 
-export const PaymentModal = ({ isOpen, onOpenChange, eventId }: PaymentModalProps) => {
+export const PaymentModal = ({
+  isOpen,
+  onOpenChange,
+  eventId
+}: PaymentModalProps) => {
   console.log(eventId, 'eventId')
   const router = useRouter()
 
@@ -33,7 +42,7 @@ export const PaymentModal = ({ isOpen, onOpenChange, eventId }: PaymentModalProp
               className="w-full"
               onClick={() => router.push(paymentUrl)}
             >
-                {translations.es.ticketPayment}
+              {translations.es.ticketPayment}
             </Button>
           </div>
         </div>

@@ -159,13 +159,16 @@ export default function TicketsPage({
                           variant="outline"
                           className="flex items-center gap-2 bg-white/5 border-zinc-700 hover:bg-white/10 text-white hover:text-white"
                           onClick={() => {
-                            if (ticket.registration.paymentId && !ticket.registration.paid) {
-                              setModalState((prev) => ({
+                            if (
+                              ticket.registration.paymentId &&
+                              !ticket.registration.paid
+                            ) {
+                              setModalState(prev => ({
                                 ...prev,
                                 eventId: data.event.id,
                                 organizationId: data.event.organizationId
-                              }));
-                              setPaymentModalOpen(true);
+                              }))
+                              setPaymentModalOpen(true)
                             } else {
                               openModal(
                                 data.event.title,
@@ -175,11 +178,15 @@ export default function TicketsPage({
                                 data.event.id,
                                 data.event.organizationId,
                                 ticket.id,
-                                ticket.checkedInDate ? ticket.checkedInDate.toString() : ''
-                              );
+                                ticket.checkedInDate
+                                  ? ticket.checkedInDate.toString()
+                                  : ''
+                              )
                             }
                           }}
-                          disabled={['PENDING', 'REJECTED'].includes(ticket.status)}
+                          disabled={['PENDING', 'REJECTED'].includes(
+                            ticket.status
+                          )}
                         >
                           <Ticket className="w-4 h-4" />
                           {translations.es.ticketLabelView}
