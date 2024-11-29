@@ -1,5 +1,9 @@
+'use server'
+
+import { PublicCommunitySchema } from '@/schemas/communitySchema'
 import { organizationService } from '@/services/organizationService'
 
-export const getCommunities = async () => {
-  return await organizationService.getAll()
+export default async function getCommunities() {
+  const communities = await organizationService.getAll()
+  return PublicCommunitySchema.array().parse(communities)
 }
