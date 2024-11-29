@@ -66,7 +66,7 @@ export function PublishSuccessModal({
               className="shrink-0 gap-1.5"
             >
               <Copy className="h-4 w-4" />
-              {copied ? translations.es.copyLink : translations.es.copied}
+              {copied ? translations.es.copied : translations.es.copyLink}
             </Button>
           </div>
           <div>

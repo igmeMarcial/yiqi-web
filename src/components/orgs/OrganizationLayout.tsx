@@ -9,7 +9,8 @@ import {
   BookUser,
   ChevronDown,
   Building2,
-  Banknote
+  Banknote,
+  Plus
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -99,6 +100,11 @@ export default function OrganizationLayout({
       name: translations.es.billing,
       icon: Banknote,
       href: `/admin/organizations/${orgId}/billing`
+    },
+    {
+      name: translations.es.forms,
+      icon: Plus,
+      href: `/admin/organizations/${orgId}/forms`
     }
   ]
 

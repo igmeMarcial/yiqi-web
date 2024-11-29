@@ -37,11 +37,26 @@ function LeftSidebar({ addField, setFocusedField, form }: SidebarProps) {
                 </div>
               ) : (
                 <div className="p-4 space-y-4">
-                  {form.map(item => (
-                    <div key={item.id} className="p-3 rounded-lg bg-muted">
-                      {item.elementType}
-                    </div>
-                  ))}
+                  {form
+                    .slice()
+                    .reverse()
+                    .map(item => (
+                      <div
+                        key={item.id}
+                        className="p-3 rounded-lg bg-muted h-16 overflow-hidden"
+                      >
+                        <div>
+                          {translations.es[`${item.elementType}Element`]}
+                        </div>
+                        <span
+                          className={`text-[12px] line-clamp-1 ${item.question === '' ? 'text-red-500' : ''}`}
+                        >
+                          {item.question === ''
+                            ? 'Sin pregunta'
+                            : item.question}
+                        </span>
+                      </div>
+                    ))}
                 </div>
               )}
             </ScrollArea>

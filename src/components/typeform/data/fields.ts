@@ -12,6 +12,7 @@ import {
   ImageIcon
 } from 'lucide-react'
 import { FormElement, FormElementType } from '../types/yiqiFormTypes'
+import { translations } from '@/lib/translations/translations'
 
 export const placeholderQuestions: Record<FormElementType, string> = {
   email: 'Enter your email address',
@@ -54,13 +55,13 @@ export const textInputsElements: FormElement[] = [
   {
     elementType: 'longText',
     icon: ListTree,
-    label: 'Long Text',
+    label: translations.es.longTextElement,
     description: 'For longer answers'
   },
   {
     elementType: 'shortText',
     icon: TextIcon,
-    label: 'Short Text',
+    label: translations.es.shortTextElement,
     description: 'For short answers'
   }
 ]
@@ -69,19 +70,19 @@ export const contactInformationElements: FormElement[] = [
   {
     elementType: 'email',
     icon: Mail,
-    label: 'Email Address',
+    label: translations.es.emailElement,
     description: 'For email input'
   },
   {
     elementType: 'phoneNumber',
     icon: Phone,
-    label: 'Phone Number',
+    label: translations.es.phoneNumberElement,
     description: 'For phone number input'
   },
   {
     elementType: 'website',
     icon: Globe,
-    label: 'Website',
+    label: translations.es.websiteElement,
     description: 'For website URLs'
   }
 ]
@@ -90,20 +91,20 @@ export const mediaElements: FormElement[] = [
   {
     elementType: 'video',
     icon: Video,
-    label: 'Video',
+    label: translations.es.videoTextElement,
     description: 'Add video content'
   },
 
   {
     elementType: 'fileUpload',
     icon: Upload,
-    label: 'File Upload',
+    label: translations.es.fileUploadTextElement,
     description: 'Allow file uploads'
   },
   {
     elementType: 'pictureChoice',
     icon: ImageIcon,
-    label: 'Picture Choice',
+    label: translations.es.pictureChoiceTextElement,
     description: 'Choose from images'
   }
 ]
@@ -112,13 +113,13 @@ export const choiceElements: FormElement[] = [
   {
     elementType: 'multipleChoice',
     icon: ListTree,
-    label: 'Multiple Choice',
+    label: translations.es.multipleChoiceElement,
     description: 'Multiple options, one choice'
   },
   {
     elementType: 'dropdown',
     icon: ListTree,
-    label: 'Dropdown',
+    label: translations.es.dropdownElement,
     description: 'Select from a list'
   }
 ]
@@ -127,19 +128,19 @@ export const numbersAndDatesElements: FormElement[] = [
   {
     elementType: 'date',
     icon: Calendar,
-    label: 'Date',
+    label: translations.es.dateElement,
     description: 'Date picker input'
   },
   {
     elementType: 'number',
     icon: Hash,
-    label: 'Number',
+    label: translations.es.numberElement,
     description: 'Numerical input'
   },
   {
     elementType: 'rating',
     icon: Star,
-    label: 'Rating',
+    label: translations.es.ratingElement,
     description: 'Rating scale input'
   }
 ]

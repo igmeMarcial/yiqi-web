@@ -99,6 +99,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     organizers: 'Organizers',
     billing: 'Billing',
     logOut: 'Log out',
+    forms: 'Forms',
     // Sidebar dropdown
     switchOrganization: 'Switch Organization',
     // Chat
@@ -486,9 +487,20 @@ export const translations: Record<string, { [key: string]: string }> = {
     duplicateField: 'Duplicar campo',
     deleteField: 'Eliminar campo',
     typeYourQuestion: 'Escribe tu pregunta',
-    addDescription: 'Agrega una descripción (opcional)'
-
-
+    addDescription: 'Agrega una descripción (opcional)',
+    longTextElement: 'Long Text',
+    shortTextElement: 'Short Text',
+    emailElement: 'Email Address',
+    phoneNumberElement: 'Phone Number',
+    websiteElement: 'Website',
+    videoElement: 'Video',
+    fileUploadElement: 'File Upload',
+    pictureChoiceElement: 'Picture Choice',
+    multipleChoiceElement: 'Multiple Choice',
+    dropdownElement: 'Dropdown',
+    dateElement: 'Date',
+    numberElement: 'Number',
+    ratingElement: 'Rating'
   },
   es: {
     // General
@@ -590,6 +602,7 @@ export const translations: Record<string, { [key: string]: string }> = {
     organizers: 'Organizadores',
     billing: 'Facturación',
     logOut: 'Cerrar sesión',
+    forms: 'Formularios',
     // Sidebar dropdown
     switchOrganization: 'Cambiar Organización',
     // Chat
@@ -1001,6 +1014,19 @@ export const translations: Record<string, { [key: string]: string }> = {
     duplicateField: 'Duplicar campo',
     deleteField: 'Eliminar campo',
     typeYourQuestion: 'Escribe tu pregunta',
-    addDescription: 'Agrega una descripción (opcional)'
+    addDescription: 'Agrega una descripción (opcional)',
+    longTextElement: 'Texto largo',
+    shortTextElement: 'Texto corto',
+    emailElement: 'Correo electrónico',
+    phoneNumberElement: 'Número de teléfono',
+    websiteElement: 'Sitio web',
+    videoElement: 'Video',
+    fileUploadElement: 'Cargar archivo',
+    pictureChoiceElement: 'Selección de imagen',
+    multipleChoiceElement: 'Elección múltiple',
+    dropdownElement: 'Desplegable',
+    dateElement: 'Fecha',
+    numberElement: 'Número',
+    ratingElement: 'Calificación'
   }
 }
