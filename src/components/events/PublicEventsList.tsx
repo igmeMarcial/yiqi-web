@@ -54,7 +54,7 @@ const PublicEventsList = ({ events, showHeader = true }: Props) => {
           {events.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {events.map(event => (
-                <Link key={event.id} href={`/${event.id}`}>
+                <Link key={event.id} href={`/${event.id}`} prefetch={true}>
                   <EventCard key={event.id} event={event} />
                 </Link>
               ))}
