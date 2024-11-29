@@ -94,7 +94,11 @@ export function EventPage({ event, user }: RegistrationProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <Registration event={event} user={user} />
+                  <Registration
+                    event={event}
+                    user={user}
+                    dialogTriggerRef={dialogTriggerRef}
+                  />
                 </motion.div>
               )}
             </div>
