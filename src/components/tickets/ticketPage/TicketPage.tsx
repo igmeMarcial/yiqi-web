@@ -151,7 +151,7 @@ export default function TicketsPage({
                         <div className="flex gap-5">
                           <Badge className="bg-zinc-800/50 border border-zinc-700">
                             {translations.es.ticketNumber}
-                            {index + 1}
+                            {index + 1} {ticket.category}
                           </Badge>
                           <TicketStatusBadge status={ticket.status} />
                         </div>
