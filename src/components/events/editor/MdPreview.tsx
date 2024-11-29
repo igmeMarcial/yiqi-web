@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 
 interface MdPreviewProps {
   content: string
@@ -15,22 +15,31 @@ export function MdPreview({
   stripStyles = false,
   textOnly = false
 }: MdPreviewProps) {
-  const contentEl = useMemo(() => {
-    let processedContent = content
+  const [processedContent, setProcessedContent] = useState(
+    textOnly ? '' : content
+  )
 
+  useEffect(() => {
     if (textOnly) {
-      // Create a temporary div to parse HTML
-      const tempDiv = document.createElement('div')
-      tempDiv.innerHTML = content
+      try {
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = content
 
-      // Remove images, iframes, and videos
-      const elementsToRemove = tempDiv.querySelectorAll('img, iframe, video')
-      elementsToRemove.forEach(el => el.remove())
+        // Remove images, iframes, and videos
+        const elementsToRemove = tempDiv.querySelectorAll('img, iframe, video')
+        elementsToRemove.forEach(el => el.remove())
 
-      // Get only the text content
-      processedContent = tempDiv.innerHTML
+        setProcessedContent(tempDiv.innerHTML)
+      } catch (error) {
+        console.error('Error processing content:', error)
+        setProcessedContent('')
+      }
+    } else {
+      setProcessedContent(content)
     }
+  }, [content, textOnly])
 
+  return useMemo(() => {
     return (
       <div
         dangerouslySetInnerHTML={{ __html: processedContent }}
@@ -78,7 +87,5 @@ export function MdPreview({
         `}
       />
     )
-  }, [content, darkMode, stripStyles, textOnly])
-
-  return contentEl
+  }, [processedContent, darkMode, stripStyles, textOnly])
 }
