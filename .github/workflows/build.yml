@@ -45,9 +45,9 @@ jobs:
       SENTRY_DISABLED: 'true'
       NEXT_PUBLIC_SENTRY_ENABLED: 'false'
       # Stripe Configuration
-      STRIPE_SECRET_KEY: ''
-      STRIPE_WEBHOOK_SECRET: ''
-      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ''
+      STRIPE_SECRET_KEY: 'sk_test_dummy'
+      STRIPE_WEBHOOK_SECRET: 'whsec_dummy'
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_dummy'
 
     steps:
       - uses: actions/checkout@v3
