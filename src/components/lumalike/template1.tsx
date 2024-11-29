@@ -20,7 +20,7 @@ export function EventPage({ event, user }: RegistrationProps) {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024) // Asegúrate de usar el tamaño correcto para móviles
+      setIsMobile(window.innerWidth < 1024)
     }
     checkMobile()
 
@@ -29,15 +29,14 @@ export function EventPage({ event, user }: RegistrationProps) {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Detectar el scroll y si hemos pasado el contenedor de Registration
   useEffect(() => {
     const handleScroll = () => {
       if (registrationRef.current) {
         const rect = registrationRef.current.getBoundingClientRect()
         if (rect.top <= 0) {
-          setIsSticky(true) // Si se ha desplazado más allá de la parte superior, hacerlo sticky
+          setIsSticky(true)
         } else {
-          setIsSticky(false) // Si no, quitar la clase sticky
+          setIsSticky(false)
         }
       }
     }
@@ -46,8 +45,6 @@ export function EventPage({ event, user }: RegistrationProps) {
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  console.log(isSticky)
 
   return (
     <>
@@ -68,15 +65,39 @@ export function EventPage({ event, user }: RegistrationProps) {
       <main className="container mx-auto px-4 py-12 text-primary-foreground pt-16 bg-black">
         <div className="mt-6">
           <motion.div
-            className={`space-y-12 flex flex-col sm:flex-row gap-12 ${isMobile ? 'opacity-100 transform-none px-5' : ''}`}
+            className={`flex flex-col sm:flex-row gap-8 ${isMobile ? 'opacity-100 transform-none px-5' : ''}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {event.openGraphImage && (
-              <HeroImage src={event.openGraphImage} alt={event.title} />
-            )}
-
+            <div className="flex flex-col gap-4">
+              {event.openGraphImage && (
+                <div className="w-full md:w-3/4 lg:w-full">
+                  <HeroImage src={event.openGraphImage} alt={event.title} />
+                </div>
+              )}
+              {event.hosts && (
+                <>
+                  <h2 className="text-2xl font-semibold text-primary-foreground">
+                    {translations.es.membersOrganizedBy}
+                  </h2>
+                  <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+                  <Hosts hosts={event.hosts} />
+                </>
+              )}
+              {!isMobile && isSticky && (
+                <motion.div
+                  className={`space-y-12 ${
+                    isMobile ? '' : 'lg:sticky lg:top-24 lg:self-start'
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Registration event={event} user={user} />
+                </motion.div>
+              )}
+            </div>
             <div className="flex flex-col gap-8 w-full">
               <EventDetails event={event} />
               <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
@@ -87,15 +108,16 @@ export function EventPage({ event, user }: RegistrationProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Registration
-                  event={event}
-                  user={user}
-                  dialogTriggerRef={dialogTriggerRef}
-                />
-                {event.hosts && <Hosts hosts={event.hosts} />}
+                {(isMobile || !isSticky) && (
+                  <Registration
+                    event={event}
+                    user={user}
+                    dialogTriggerRef={dialogTriggerRef}
+                  />
+                )}
               </motion.div>
               <EventDescription description={event.description || ''} />
-              <EventLocation location="San Juan de Lurigancho" />
+              {location && <EventLocation location={event.location} />}
             </div>
           </motion.div>
         </div>

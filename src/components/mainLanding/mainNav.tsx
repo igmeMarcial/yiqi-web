@@ -138,9 +138,11 @@ export default function MainLandingNav({
                   <NavLink href="/communities" mobile>
                     {translations.es.communities}
                   </NavLink>
+                  <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <NavLink href="/events" mobile>
                     {translations.es.events}
                   </NavLink>
+                  <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   {!user ? (
                     <Link href={'/user'}>
                       <Button
@@ -165,7 +167,9 @@ export default function MainLandingNav({
                           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                         </AvatarFallback>
                       </Avatar>
-                      <span>{translations.es.myAccount}</span>
+                      <span className="text-white text-sm">
+                        {translations.es.myAccount}
+                      </span>
                     </Link>
                   )}
                 </div>
@@ -192,7 +196,7 @@ function NavLink({
       <Button
         variant="ghost"
         size={mobile ? 'default' : 'sm'}
-        className={`text-[hsla(0,0%,100%,.79)] hover:text-white hover:bg-transparent text-sm font-medium space-x-0 ${mobile ? 'w-full justify-start' : ''}`}
+        className={`text-[hsla(0,0%,100%,.79)] hover:text-white hover:bg-transparent text-sm font-medium space-x-0 ${mobile ? 'w-full justify-start text-white' : ''}`}
       >
         {children}
       </Button>
