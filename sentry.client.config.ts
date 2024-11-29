@@ -4,6 +4,7 @@
 
 import * as Sentry from '@sentry/nextjs'
 
+// using env variables to configure sentry
 if (process.env.SENTRY_AUTH_TOKEN) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
