@@ -1,3 +1,5 @@
+'use server'
+
 import prisma from '@/lib/prisma'
 import { subDays } from 'date-fns'
 import setupNewThreads from './setupNewThreads'
