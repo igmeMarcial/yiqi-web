@@ -15,12 +15,16 @@ const nextConfig = {
         hostname: 'randomuser.me'
       },
       {
-        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
-        hostname: '*.s3.us-east-1.amazonaws.com'
+        protocol: 'https',
+        hostname: '**.us-east-1.amazonaws.com',
+        port: '',
+        pathname: '/**'
       },
       {
-        // Matches any bucket in the 's3.us-east-1.amazonaws.com' region
-        hostname: '*.s3.us-east-2.amazonaws.com'
+        protocol: 'https',
+        hostname: '**.us-east-2.amazonaws.com',
+        port: '',
+        pathname: '/**'
       },
       {
         hostname: 'www.yiqi.lat'
