@@ -38,9 +38,14 @@ export type RegistrationProps = {
     email: string | undefined
     name: string | undefined
   }
+  dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
 }
 
-export function Registration({ event, user }: RegistrationProps) {
+export function Registration({
+  event,
+  user,
+  dialogTriggerRef
+}: RegistrationProps) {
   const [ticketSelections, setTicketSelections] = useState<
     Record<string, number>
   >({})
@@ -171,6 +176,7 @@ export function Registration({ event, user }: RegistrationProps) {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button
+              ref={dialogTriggerRef}
               size="lg"
               className="w-full text-white"
               disabled={!hasSelectedTickets}

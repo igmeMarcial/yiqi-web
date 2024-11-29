@@ -18,6 +18,7 @@ export default async function Page({
 
   return (
     <>
+      <div className="fixed inset-0 h-screen w-screen -z-10 bg-black"></div>
       <EventPage
         event={event}
         user={{

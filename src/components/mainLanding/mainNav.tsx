@@ -25,10 +25,25 @@ interface User {
 interface HeaderProps {
   user: User | null
   logOut: () => void
+  showExtraButton?: boolean
+  buttonName?: string
+  dialogTriggerRef?: React.RefObject<HTMLButtonElement>
 }
 
-export default function MainLandingNav({ user, logOut }: HeaderProps) {
+export default function MainLandingNav({
+  user,
+  logOut,
+  showExtraButton = false,
+  buttonName = '',
+  dialogTriggerRef
+}: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const handleOpenRegistrationDialog = () => {
+    if (dialogTriggerRef?.current) {
+      dialogTriggerRef.current.click()
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +75,16 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-4">
+            {showExtraButton && (
+              <Button
+                size="sm"
+                variant="default"
+                className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
+                onClick={handleOpenRegistrationDialog}
+              >
+                {buttonName}
+              </Button>
+            )}
             <NavLink href="/events">
               <TicketSlash size={16} />
               <span>{translations.es.events}</span>
@@ -79,55 +104,76 @@ export default function MainLandingNav({ user, logOut }: HeaderProps) {
             )}
           </nav>
 
-          <Sheet>
-            <SheetTrigger asChild>
+          {/* Mobile view (Hamburger Menu + Extra Button) */}
+          <div className="md:hidden flex items-center space-x-4">
+            {showExtraButton && (
               <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden hover:bg-transparent"
+                size="sm"
+                variant="default"
+                className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
+                onClick={handleOpenRegistrationDialog}
               >
-                <Menu className="h-6 w-6 text-white " />
-                <span className="sr-only">{translations.es.openMenu}</span>
+                {buttonName}
               </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle>{translations.es.menu}</SheetTitle>
-              </SheetHeader>
-              <div className="mt-6 flex flex-col space-y-4">
-                <NavLink href="/communities" mobile>
-                  {translations.es.communities}
-                </NavLink>
-                <NavLink href="/events" mobile>
-                  {translations.es.events}
-                </NavLink>
-                {!user ? (
-                  <Link href={'/user'}>
-                    <Button
-                      size="sm"
-                      variant="default"
-                      className="w-full font-semibold"
+            )}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-transparent"
+                >
+                  <Menu className="h-6 w-6 text-white" />
+                  <span className="sr-only text-white">
+                    {translations.es.openMenu}
+                  </span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[400px] bg-black"
+              >
+                <SheetHeader>
+                  <SheetTitle>{translations.es.menu}</SheetTitle>
+                </SheetHeader>
+                <div className="mt-6 flex flex-col space-y-4">
+                  <NavLink href="/communities" mobile>
+                    {translations.es.communities}
+                  </NavLink>
+                  <NavLink href="/events" mobile>
+                    {translations.es.events}
+                  </NavLink>
+                  {!user ? (
+                    <Link href={'/user'}>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        className="w-full font-semibold"
+                      >
+                        {translations.es.login}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link
+                      href={'/admin'}
+                      className="flex items-center space-x-2"
                     >
-                      {translations.es.login}
-                    </Button>
-                  </Link>
-                ) : (
-                  <Link href={'/admin'} className="flex items-center space-x-2">
-                    <Avatar className="w-8 h-8">
-                      <AvatarImage
-                        alt={user.name ?? ''}
-                        src={user.picture ?? ''}
-                      />
-                      <AvatarFallback>
-                        {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span>{translations.es.myAccount}</span>
-                  </Link>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage
+                          alt={user.name ?? ''}
+                          src={user.picture ?? ''}
+                        />
+                        <AvatarFallback>
+                          {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span>{translations.es.myAccount}</span>
+                    </Link>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
@@ -148,7 +194,7 @@ function NavLink({
       <Button
         variant="ghost"
         size={mobile ? 'default' : 'sm'}
-        className={` text-[hsla(0,0%,100%,.79)] hover:text-white hover:bg-transparent text-sm font-medium space-x-0 ${mobile ? 'w-full justify-start' : ''}`}
+        className={`text-[hsla(0,0%,100%,.79)] hover:text-white hover:bg-transparent text-sm font-medium space-x-0 ${mobile ? 'w-full justify-start' : ''}`}
       >
         {children}
       </Button>

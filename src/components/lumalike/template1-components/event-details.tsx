@@ -32,10 +32,11 @@ export function EventDetails({ event }: { event: PublicEventType }) {
           </Badge>
         ))}
       <h1 className="text-3xl md:text-4xl font-bold leading-tight">{title}</h1>
+      <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mt-8 ml-0 w-[100%]" />
       <p className="text-lg md:text-xl text-primary-foreground/80">
         {subtitle}
       </p>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
+      <div className="flex flex-col gap-4 text-sm">
         <div className="flex items-center gap-2">
           <Calendar className="h-5 w-5 text-primary-foreground/60" />
           <time>
