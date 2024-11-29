@@ -52,6 +52,7 @@ export default async function EventsPage({
                   href={`/admin/organizations/${params.id}/events/${event.id}`}
                   key={event.id}
                   className="block p-4 border rounded-md cursor-pointer"
+                  prefetch={true}
                 >
                   {event.title} - {new Date(event.startDate).toLocaleString()}
                 </Link>

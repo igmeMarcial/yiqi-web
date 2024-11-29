@@ -9,7 +9,7 @@ interface MdPreviewProps {
   textOnly?: boolean
 }
 
-// very cool stuff
+// very cool
 export function MdPreview({
   content,
   darkMode = false,

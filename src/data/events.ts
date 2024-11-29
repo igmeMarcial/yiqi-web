@@ -124,37 +124,6 @@ export const eventListItem: EventListItem[] = [
   }
 ]
 
-export const communityHighlights = [
-  {
-    id: 'org1',
-    name: 'Tech Innovators',
-    logo: 'https://images.unsplash.com/photo-1542744095-291d1f67b221',
-    description: 'A community of tech enthusiasts driving innovation.',
-    link: '/communities/org1'
-  },
-  {
-    id: 'org2',
-    name: 'Health and Wellness',
-    logo: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    description: 'Join us to promote a healthy lifestyle and well-being.',
-    link: '/communities/org2'
-  },
-  {
-    id: 'org3',
-    name: 'Green Earth Advocates',
-    logo: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564',
-    description: 'Environmental activists working to make a greener planet.',
-    link: '/communities/org3'
-  },
-  {
-    id: 'org4',
-    name: 'Art & Culture Society',
-    logo: 'https://images.unsplash.com/photo-1504386106331-3e4e71712b38',
-    description: 'Where art, music, and culture enthusiasts meet.',
-    link: '/communities/org4'
-  }
-]
-
 export const eventDetails = {
   id: '1', // ID del evento
   title: 'Tech Conference 2023', // Título
