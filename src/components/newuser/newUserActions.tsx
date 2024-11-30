@@ -30,6 +30,7 @@ import { Textarea } from '../ui/textarea'
 import { makeRegularUser } from '@/services/actions/userActions'
 import { SingleFileUpload } from '../upload/upload'
 import { useTranslations } from 'next-intl'
+import { redirect } from 'next/navigation'
 
 function BeRegularUserButton({ userId }: { userId: { value: string } }) {
   const { toast } = useToast()
@@ -43,6 +44,7 @@ function BeRegularUserButton({ userId }: { userId: { value: string } }) {
           description: `${t('welcome')}`,
           variant: 'default'
         })
+        redirect('/events')
       }}
     >
       {t('attended')}

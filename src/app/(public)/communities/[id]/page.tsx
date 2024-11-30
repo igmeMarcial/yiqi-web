@@ -14,13 +14,14 @@ export default async function CommunityDetail({
   params: { id: string }
 }) {
   const t = await getTranslations('Community')
+  const user = await getUser()
+
   const [organization, events, members, organizers] = await Promise.all([
     getOrganization(params.id),
     getOrganizationEvents(params.id),
     getOrganizationContacts(params.id),
     getOrganizersByOrganization(params.id)
   ])
-  const user = await getUser()
 
   const description = organization?.description || 'No description available'
 

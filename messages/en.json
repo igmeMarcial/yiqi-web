@@ -488,7 +488,8 @@
     "settingsOrganizationAltLogo": "Logo de la organización",
     "settingsOrganizationFormColor": "Color",
     "settingsOrganizationFormUrl": "Url de",
-    "settingsOrganizationFormSaved": "Guardar Cambios"
+    "settingsOrganizationFormSaved": "Guardar Cambios",
+    "eventRegister": "Register"
   },
   "EventDescription": {
     "eventAbout": "About Event",
@@ -533,6 +534,42 @@
     "registrationConfirmedDescription": "Your registration has been confirmed. You can view your tickets below.",
     "viewMyTickets": "View My Tickets",
     "alreadyRegistered": "You're Already Registered",
-    "alreadyRegisteredDescription": "You've already registered for this event. You can view your tickets below."
+    "alreadyRegisteredDescription": "You've already registered for this event. You can view your tickets below.",
+    "registrationPaymentPending": "Pago Pendiente",
+    "registrationPaymentPendingDescription": "Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.",
+    "registrationContinuePayment": "Continuar con el Pago",
+    "stripeAccountActive": "Stripe Account Active",
+    "stripeAccountActiveDescription": "Your Stripe account is fully set up and ready to accept payments.",
+    "stripeViewDashboard": "View Stripe Dashboard"
+  },
+
+  "Ticket":{
+    "ticketStatusApproved": "Approved",
+    "ticketStatusPending": "Pending",
+    "ticketStatusRejected": "Rejected",
+    "ticketTitlePage": "Your Tickets",
+    "ticketEventImageAlt": "Event Banner",
+    "ticketNumber": "Ticket #",
+    "ticketLabelView": "View Ticket",
+    "ticketPaymentRequired": "Payment is required",
+    "ticketPayment": "Pay now",
+    "qrModalTicketLabel": "Ticket #",
+    "qrModalTicketName": "Name",
+    "qrModalTicketEmail": "Email",
+    "qrModalTicketStatus": "Status",
+    "qrModalTicketChecked": "Checked",
+    "qrModalTicketNotChecked": "Not Checked",
+    "checkInQrEventNotFound": "Scan QR Code",
+    "checkInQrEventDontExist": "The event does not exist",
+    "checkInQrDontAccess": "You do not have access",
+    "checkInQrContactAdministrator": "To proceed, contact your organization’s administrator to validate your ticket.",
+    "checkInQrOrganizationEventDontFound": "Organization or Event not found",
+    "checkInQrInformation": "Ensure the information is correct or contact support.",
+    "eventCheckInTableTitle": "Event Records:",
+    "eventCheckInSearchByName": "Search by name...",
+    "eventCheckInTableName": "Name",
+    "eventCheckInTableTicketId": "Ticket ID",
+    "eventCheckInTableCheckIn": "Checked In",
+    "eventCheckinBackButton": "Go to Tickets"
   }
 }

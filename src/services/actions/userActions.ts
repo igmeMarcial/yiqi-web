@@ -1,7 +1,6 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { revalidatePath } from 'next/cache'
 import { Roles } from '@prisma/client'
 import { getUser } from '@/lib/auth/lucia'
 import {
@@ -35,8 +34,6 @@ export async function makeRegularUser(user: { userId: string }) {
     })
   } catch (error) {
     throw new Error(`${error}`)
-  } finally {
-    revalidatePath('/', 'layout')
   }
 }
 

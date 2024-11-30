@@ -43,7 +43,8 @@ export async function getEventRegistrations(eventId: string) {
   const registrations = await prisma.eventRegistration.findMany({
     where: { eventId },
     include: {
-      user: true
+      user: true,
+      tickets: true
     }
   })
 

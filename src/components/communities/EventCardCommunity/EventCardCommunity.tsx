@@ -1,5 +1,6 @@
 import { EventCommunityType } from '@/schemas/eventSchema'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface EventCardProps {
   events: EventCommunityType[]
@@ -10,7 +11,8 @@ const EventCardCommunity = ({ events }: EventCardProps) => {
     <>
       <div className="flex flex-col gap-5">
         {events.map(event => (
-          <div
+          <Link
+            href={`/events/${event.id}`}
             className="rounded-lg p-4 sm:p-6 w-full max-w-[90%] sm:max-w-[500px] mx-auto bg-gradient-to-r from-[#1E1B4B] to-[#3F1D38] shadow-lg shadow-[#FF0080]/20 relative overflow-hidden"
             key={event.id}
           >
@@ -43,7 +45,7 @@ const EventCardCommunity = ({ events }: EventCardProps) => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>

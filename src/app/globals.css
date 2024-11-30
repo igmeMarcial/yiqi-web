@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@mantine/core/styles.css';
+@import '@mantine/tiptap/styles.css';
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -97,6 +100,10 @@ body {
   input[type='date'].date-input--has-value::-webkit-datetime-edit-day-field,
   input[type='date'].date-input--has-value::-webkit-datetime-edit-year-field {
     color: black;
+  }
+
+  .border-white-opacity-40 {
+    border-color: rgba(255, 255, 255, 0.4);
   }
 }
 

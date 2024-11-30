@@ -1,6 +1,6 @@
 export const translations: Record<string, { [key: string]: string }> = {
   en: {
-    // General
+    userNotFound: 'User Not Found',
     eventTitle: 'Event Title',
     location: 'Location',
     startDate: 'Start Date',
@@ -409,10 +409,52 @@ export const translations: Record<string, { [key: string]: string }> = {
     viewMyTickets: 'View My Tickets',
     alreadyRegistered: "You're Already Registered",
     alreadyRegisteredDescription:
-      "You've already registered for this event. You can view your tickets below."
+      "You've already registered for this event. You can view your tickets below.",
+    registrationPaymentPending: 'Pago Pendiente',
+    registrationPaymentPendingDescription:
+      'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
+    registrationContinuePayment: 'Continuar con el Pago',
+    stripeAccountActive: 'Stripe Account Active',
+    stripeAccountActiveDescription:
+      'Your Stripe account is fully set up and ready to accept payments.',
+    stripeViewDashboard: 'View Stripe Dashboard',
+    // Tickets
+    ticketStatusApproved: 'Approved',
+    ticketStatusPending: 'Pending',
+    ticketStatusRejected: 'Rejected',
+    ticketTitlePage: 'Your Tickets',
+    ticketEventImageAlt: 'Event Banner',
+    ticketNumber: 'Ticket #',
+    ticketLabelView: 'View Ticket',
+    ticketPaymentRequired: 'Payment is required',
+    ticketPayment: 'Pay now',
+    // QRModal
+    qrModalTicketLabel: 'Ticket #',
+    qrModalTicketName: 'Name',
+    qrModalTicketEmail: 'Email',
+    qrModalTicketStatus: 'Status',
+    qrModalTicketChecked: 'Checked',
+    qrModalTicketNotChecked: 'Not Checked',
+    // Check-In QR
+    checkInQrEventNotFound: 'Scan QR Code',
+    checkInQrEventDontExist: 'The event does not exist',
+    checkInQrDontAccess: 'You do not have access',
+    checkInQrContactAdministrator:
+      'To proceed, contact your organization’s administrator to validate your ticket.',
+    checkInQrOrganizationEventDontFound: 'Organization or Event not found',
+    checkInQrInformation:
+      'Ensure the information is correct or contact support.',
+    // Event Check-In Table
+    eventCheckInTableTitle: 'Event Records:',
+    eventCheckInSearchByName: 'Search by name...',
+    eventCheckInTableName: 'Name',
+    eventCheckInTableTicketId: 'Ticket ID',
+    eventCheckInTableCheckIn: 'Checked In',
+    eventCheckinBackButton: 'Go to Tickets'
   },
   es: {
     // General
+    userNotFound: 'Usuario no encontrado',
     eventTitle: 'Nombre del Evento',
     location: 'Lugar',
     startDate: 'Fecha de Inicio',
@@ -845,6 +887,47 @@ export const translations: Record<string, { [key: string]: string }> = {
     viewMyTickets: 'Ver Mis Entradas',
     alreadyRegistered: 'Ya Estás Registrado',
     alreadyRegisteredDescription:
-      'Ya te has registrado para este evento. Puedes ver tus entradas abajo.'
+      'Ya te has registrado para este evento. Puedes ver tus entradas abajo.',
+    registrationPaymentPending: 'Pago Pendiente',
+    registrationPaymentPendingDescription:
+      'Tu registro está pendiente de pago. Por favor, completa el pago para confirmar tu asistencia.',
+    registrationContinuePayment: 'Continuar con el Pago',
+    stripeAccountActive: 'Cuenta de Stripe Activa',
+    stripeAccountActiveDescription:
+      'Tu cuenta de Stripe está completamente configurada y lista para aceptar pagos.',
+    stripeViewDashboard: 'Ver Panel de Stripe',
+    // tickets
+    ticketStatusApproved: 'Aprobado',
+    ticketStatusPending: 'Pendiente',
+    ticketStatusRejected: 'Rechazado',
+    ticketTitlePage: 'Tus Tickets',
+    ticketEventImageAlt: 'Banner del Evento',
+    ticketNumber: 'Ticket #',
+    ticketLabelView: 'Ver Ticket',
+    ticketPaymentRequired: 'El pago es requerido',
+    ticketPayment: 'Pagar ahora',
+    // QRModal
+    qrModalTicketLabel: 'Ticket #',
+    qrModalTicketName: 'Nombre',
+    qrModalTicketEmail: 'Correo',
+    qrModalTicketStatus: 'Status',
+    qrModalTicketChecked: 'Chequeado',
+    qrModalTicketNotChecked: 'No Chequeado',
+    // CheckIn QR
+    checkInQrEventNotFound: 'Escanear Código QR',
+    checkInQrEventDontExist: 'El evento no existe',
+    checkInQrDontAccess: 'No tienes acceso',
+    checkInQrContactAdministrator:
+      'Para continuar, contacta al administrador de tu organización para validar tu ticket.',
+    checkInQrOrganizationEventDontFound: 'Organización o Evento no encontrados',
+    checkInQrInformation:
+      'Asegúrate de que la información sea correcta o contacta al soporte.',
+    // Event CheckIn Table
+    eventCheckInTableTitle: 'Registros del Evento:',
+    eventCheckInSearchByName: 'Buscar por nombre...',
+    eventCheckInTableName: 'Nombre',
+    eventCheckInTableTicketId: 'Ticket ID',
+    eventCheckInTableCheckIn: 'Checked In',
+    eventCheckinBackButton: 'Ir a Tickets'
   }
 }

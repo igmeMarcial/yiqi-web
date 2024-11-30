@@ -94,9 +94,10 @@ export type SavedTicketOfferingType = z.infer<typeof SavedTicketOfferingSchema>
 // this is the ticket the user has
 export const TicketSchema = z.object({
   id: z.string(),
-  user: userSchema.nullable(),
+  user: userSchema.nullable().optional(),
   checkedInDate: z.date().nullable(),
-  category: TicketCategorySchema
+  category: TicketCategorySchema,
+  ticketType: SavedTicketOfferingSchema.nullable().optional()
 })
 
 export const EventRegistrationSchema = z.object({
@@ -211,7 +212,7 @@ export const eventRegistrationsSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   paid: z.boolean(),
-  paymentId: z.string().optional()
+  paymentId: z.string().optional().nullable()
 })
 
 export type EventRegistrationsSchemaType = z.infer<

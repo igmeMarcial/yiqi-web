@@ -5,6 +5,11 @@ import { motion } from 'framer-motion'
 import { PublicEventType } from '@/schemas/eventSchema'
 import { useTranslations } from 'next-intl'
 
+function createGoogleMapsUrl(location: string) {
+  const searchQuery = encodeURIComponent(location)
+  return `https://www.google.com/maps/search/?api=1&query=${searchQuery}`
+}
+
 export function EventDetails({ event }: { event: PublicEventType }) {
   const { featuredIn, title, subtitle, location, city, startDate, endDate } =
     event
@@ -33,10 +38,11 @@ export function EventDetails({ event }: { event: PublicEventType }) {
           </Badge>
         ))}
       <h1 className="text-3xl md:text-4xl font-bold leading-tight">{title}</h1>
+      <div className="bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mt-8 ml-0 w-[100%]" />
       <p className="text-lg md:text-xl text-primary-foreground/80">
         {subtitle}
       </p>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
+      <div className="flex flex-col gap-4 text-sm">
         <div className="flex items-center gap-2">
           <Calendar className="h-5 w-5 text-primary-foreground/60" />
           <time>
@@ -45,10 +51,21 @@ export function EventDetails({ event }: { event: PublicEventType }) {
           </time>
         </div>
         <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-primary-foreground/60" />
-          <address className="not-italic">
-            {location}, {city}
-          </address>
+          {location && city && (
+            <>
+              <MapPin className="h-5 w-5 text-primary-foreground/60" />
+              <address className="not-italic">
+                <a
+                  href={createGoogleMapsUrl(location)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline hover:text-primary-foreground/90 transition-colors"
+                >
+                  {location}, {city}
+                </a>
+              </address>
+            </>
+          )}
         </div>
       </div>
     </motion.div>

@@ -2,6 +2,7 @@ import { Calendar, MapPin, Users } from 'lucide-react'
 import Image from 'next/image'
 import { format } from 'date-fns'
 import { PublicEventType } from '@/schemas/eventSchema'
+import { MdPreview } from '@/components/events/editor/MdPreview'
 
 const EventCard = ({ event }: { event: PublicEventType }) => (
   <div className="group relative bg-gray-900/80 backdrop-blur-sm rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300">
@@ -25,9 +26,14 @@ const EventCard = ({ event }: { event: PublicEventType }) => (
         <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">
           {event.title}
         </h3>
-        <p className="text-gray-400 text-sm line-clamp-2 mb-4">
-          {event.description}
-        </p>
+        <div className="text-gray-400 max-h-[42px] text-sm line-clamp-2 mb-4 [&_h1]:text-sm [&_h2]:text-sm [&_h3]:text-sm [&_p]:text-sm [&_*]:text-gray-400 [&_*]:!m-0 [&_*]:!p-0">
+          <MdPreview
+            content={event.description || ''}
+            darkMode={true}
+            stripStyles={true}
+            textOnly={true}
+          />
+        </div>
       </div>
 
       <div className="space-y-3">

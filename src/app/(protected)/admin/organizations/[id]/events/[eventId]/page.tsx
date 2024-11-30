@@ -7,6 +7,8 @@ import { EventAdminView } from '@/components/EventAdminView'
 import { getEventRegistrations } from '@/services/actions/event/getEventAttendees'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import { Link2, Pencil } from 'lucide-react'
+import { MdPreview } from '@/components/events/editor/MdPreview'
 
 export default async function EventDetailsPage({
   params
@@ -45,6 +47,18 @@ export default async function EventDetailsPage({
             </h1>
             <div className="flex space-x-2">
               <Link
+                href={`/admin/organizations/${params.id}/events/${params.eventId}/edit`}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
+              >
+                <Pencil />
+              </Link>
+              <Link
+                href={`/${params.eventId}`}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
+              >
+                <Link2 />
+              </Link>
+              <Link
                 href={`/admin/organizations/${params.id}/events`}
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-200 text-gray-800 hover:bg-gray-300 h-10 px-4 py-2"
               >
@@ -69,8 +83,13 @@ export default async function EventDetailsPage({
               </div>
             </div>
             <div>
-              <span className="font-semibold">{t('description')}</span>
-              <p>{event.description}</p>
+              <span className="font-semibold">
+                {t("description")}
+              </span>
+
+              <div className="prose prose-sm max-w-none mb-4  dark:prose-invert">
+                <MdPreview content={event.description!} />
+              </div>
             </div>
           </section>
 
