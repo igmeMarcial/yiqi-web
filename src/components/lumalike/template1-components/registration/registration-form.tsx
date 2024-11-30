@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import {
   Form,
@@ -9,9 +10,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { translations } from '@/lib/translations/translations'
 import { UseFormReturn } from 'react-hook-form'
 import { RegistrationInput } from '@/schemas/eventSchema'
-import { useTranslations } from 'next-intl'
 import StripeCheckout from '@/components/billing/StripeCheckout'
 
 interface RegistrationFormProps {
@@ -27,6 +28,7 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({
+  form: formProps,
   onSubmit,
   user,
   isFreeEvent,
@@ -34,7 +36,6 @@ export function RegistrationForm({
   onPaymentComplete
 }: RegistrationFormProps) {
   const [showStripeCheckout, setShowStripeCheckout] = useState(false)
-  const t = useTranslations('RegistrationComponent')
 
   const handleSubmit = async (values: RegistrationInput) => {
     await onSubmit(values)
@@ -69,10 +70,10 @@ export function RegistrationForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('eventFormName')}</FormLabel>
+              <FormLabel>{translations.es.eventFormName}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('eventFormNamePlaceholder')}
+                  placeholder={translations.es.eventFormNamePlaceholder}
                   {...field}
                   disabled={!!user.name}
                   className={user ? 'bg-muted' : ''}
@@ -87,11 +88,11 @@ export function RegistrationForm({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('eventFormEmail')}</FormLabel>
+              <FormLabel>{translations.es.eventFormEmail}</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder={t('eventFormEmailPlaceholder')}
+                  placeholder={translations.es.eventFormEmailPlaceholder}
                   {...field}
                   disabled={!!user.email}
                   className={user ? 'bg-muted' : ''}
@@ -103,8 +104,8 @@ export function RegistrationForm({
         />
         <Button type="submit" className="w-full">
           {isFreeEvent
-            ? t('eventConfirmRegistration')
-            : t('eventConfirmPurchase')}
+            ? translations.es.eventConfirmRegistration
+            : translations.es.eventConfirmPurchase}
         </Button>
       </form>
     </Form>

@@ -8,30 +8,36 @@ import {
   Select
 } from '@/components/ui/select'
 import { useLocale } from 'next-intl'
-import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { setCookie } from 'cookies-next'
 
-export default function LangSelector() {
-  const localActive = useLocale()
-  const [selectedLanguage, setSelectedLanguage] = useState(localActive)
+type Language = 'en' | 'es' | 'fr' | 'pt'
 
-  // language switch
-  const router = useRouter()
-  const pathname = usePathname()
-  const onselectchange = (value: string) => {
-    const nextLocale = value
-    setSelectedLanguage(nextLocale)
-    if (pathname) {
-      const newUrl = pathname.replace(
-        new RegExp(`^/(${localActive})`),
-        `/${nextLocale}`
-      )
-      router.replace(newUrl)
-    }
+function getLanguageName(lang: Language): string {
+  const languageNames: Record<Language, string> = {
+    en: 'English',
+    es: 'Spanish',
+    fr: 'French',
+    pt: 'Portuguese'
   }
+  return languageNames[lang]
+}
+
+export default function LangSelector(): JSX.Element {
+  const localActive = useLocale() as Language
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<Language>(localActive)
+
+  function handleLanguageChange(value: string): void {
+    const nextLocale = value as Language
+    setSelectedLanguage(nextLocale)
+    setCookie('locale', nextLocale, { maxAge: 60 * 60 * 24 * 365 })
+    window.location.reload()
+  }
+
   return (
     <div className="w-25">
-      <Select defaultValue={localActive} onValueChange={onselectchange}>
+      <Select defaultValue={localActive} onValueChange={handleLanguageChange}>
         <SelectTrigger
           id="language"
           className="w-[180px] bg-transparent text-white"
@@ -40,10 +46,7 @@ export default function LangSelector() {
             placeholder="Select Language"
             className="bg-transparent text-white"
           >
-            {selectedLanguage === 'en' && 'English'}
-            {selectedLanguage === 'es' && 'Spanish'}
-            {selectedLanguage === 'fr' && 'French'}
-            {selectedLanguage === 'pt' && 'Portuguese'}
+            {getLanguageName(selectedLanguage)}
           </SelectValue>
         </SelectTrigger>
         <SelectContent
