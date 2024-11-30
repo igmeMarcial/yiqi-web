@@ -58,7 +58,8 @@
     "profile": "Perfil",
     "settings": "Configuración",
     "signOut": "Cerrar sesión",
-    "defaultAvatarAlt": "Avatar del Usuario"
+    "defaultAvatarAlt": "Avatar del Usuario",
+    "myAccount": "Mi Cuenta"
   },
   "WelcomeNewOrg": {
     "welcomeScreenTitle": "¡Bienvenido, Nuevo Administrador!",
