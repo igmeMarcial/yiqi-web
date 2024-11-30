@@ -2,8 +2,6 @@ import { getOrganization } from '@/services/actions/organizationActions'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-// import { ImportContactButton } from './ImportContactButton'
-// import { ImportContactTemplateButton } from './ImportContactTemplateButton'
 import { ContactText1 } from '@/components/contacts'
 import Link from 'next/link'
 import { ImportContactTemplateButton } from './ImportContactTemplateButton'
@@ -64,13 +62,6 @@ export default async function ContactsPage({
           <span>{t('backToDashboard')}</span>
         </Link>
       </div>
-
-      {/* <ContactText
-        contacts={contacts}
-        id={user?.id}
-        name={organization.name}
-        organizationId={organization.id}
-      /> */}
     </OrganizationLayout>
   )
 }

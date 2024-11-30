@@ -15,7 +15,6 @@ export function TabList() {
   )
 }
 
-// export function ContactText1(props:{name:string, userId: string, id: string, contact:ContactDetailsType[]}){
 export function ContactText1(props: { name: string }) {
   const t = useTranslations('contactText')
   return (

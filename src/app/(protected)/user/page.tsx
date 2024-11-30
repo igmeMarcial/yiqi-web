@@ -16,7 +16,7 @@ export default async function Page() {
   const t = await getTranslations('user')
   const user = await getUser()
   if (!user) {
-    redirect(`/auth`)
+    redirect(`/auth`) 
   }
   if (user.role === Roles.USER) {
     return (
