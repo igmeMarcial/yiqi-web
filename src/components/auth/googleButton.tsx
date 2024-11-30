@@ -25,7 +25,7 @@ export default function GoogleOAuthButton() {
         }
       }}
     >
-      `${t('withGoogle')}` <GoogleIcon />
+      {t('withGoogle')} <GoogleIcon />
     </Button>
   )
 }

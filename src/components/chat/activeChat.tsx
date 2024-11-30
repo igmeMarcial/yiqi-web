@@ -10,7 +10,7 @@ import { Users } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
 import { cn } from '@/lib/utils'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 function Chats({
   contextUserName: name,
@@ -18,7 +18,6 @@ function Chats({
   lastMessage,
   isActive
 }: OrgMessageListItemSchemaType & { isActive: boolean }) {
-  const localActive = useLocale()
   function getFirst5Words(str: string): string {
     const words = str.split(' ')
     const first5Words = words.slice(0, 5)
@@ -26,7 +25,7 @@ function Chats({
   }
 
   return (
-    <Link prefetch={true} href={`${localActive}/chat/${userId}`}>
+    <Link prefetch={true} href={`/chat/${userId}`}>
       <div className={cn('border-b last:border-b-0', isActive && 'bg-accent')}>
         <div className="flex flex-row items-start gap-3 p-3 hover:bg-accent">
           <Avatar>

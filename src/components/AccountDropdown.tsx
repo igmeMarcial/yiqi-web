@@ -19,7 +19,7 @@ import {
   Settings,
   User as UserIcon
 } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import SignOutButton from './auth/sign-out'
 
@@ -34,7 +34,6 @@ interface AccountDropdownProps {
 
 export function AccountDropdown({ user }: AccountDropdownProps) {
   const t = useTranslations('AccountDropdown')
-  const localActive = useLocale()
   return (
     <DropdownMenu modal={false}>
       <TooltipProvider>
@@ -62,19 +61,19 @@ export function AccountDropdown({ user }: AccountDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={`/${localActive}/admin`} className="cursor-pointer">
+          <Link href={`/admin`} className="cursor-pointer">
             <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
             <span>{t('organization')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/${localActive}/user`} className="cursor-pointer">
+          <Link href={`/user`} className="cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
             <span>{t('profile')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/${localActive}/user/edit`} className="cursor-pointer">
+          <Link href={`/user/edit`} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
             <span>{t('settings')}</span>
           </Link>

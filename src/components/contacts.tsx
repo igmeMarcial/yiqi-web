@@ -1,8 +1,8 @@
 'use client'
 
-import { ImportContactButton } from '@/app/[locale]/(protected)/admin/organizations/[id]/contacts/ImportContactButton'
-import { ImportContactTemplateButton } from '@/app/[locale]/(protected)/admin/organizations/[id]/contacts/ImportContactTemplateButton'
-import { useLocale, useTranslations } from 'next-intl'
+import { ImportContactButton } from '@/app/(protected)/admin/organizations/[id]/contacts/ImportContactButton'
+import { ImportContactTemplateButton } from '@/app/(protected)/admin/organizations/[id]/contacts/ImportContactTemplateButton'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 interface Contact {
@@ -21,7 +21,6 @@ export default function ContactText(props: {
   contacts: Contact[]
 }) {
   const t = useTranslations('contactFor')
-  const localActive = useLocale()
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
@@ -37,7 +36,7 @@ export default function ContactText(props: {
         {props.contacts.map(user => (
           <li key={props.id} className="border p-2 rounded">
             <Link
-              href={`/${localActive}/admin/organizations/${props.id}/contacts/${user?.id}`}
+              href={`/admin/organizations/${props.id}/contacts/${user?.id}`}
               className="text-blue-500 hover:underline"
             >
               {user?.name} ({user?.email})
@@ -46,7 +45,7 @@ export default function ContactText(props: {
         ))}
       </ul>
       <Link
-        href={`/${localActive}/admin/organizations/${props.id}`}
+        href={`/admin/organizations/${props.id}`}
         className="mt-4 inline-block text-blue-500 hover:underline"
       >
         <span>{t('backToDashboard')}</span>

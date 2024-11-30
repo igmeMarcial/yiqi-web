@@ -371,7 +371,8 @@
     "personalizedContent": "Contenido personalizado",
     "contentBody": "Recibe recomendaciones de contenido basadas en tus interacciones y preferencias",
     "diconnectLinkedIn": "Desconectar cuenta de LinkedIn",
-    "diconnectBody": "Tu cuenta de LinkedIn está conectada. Puedes desconectarla en cualquier momento."
+    "diconnectBody": "Tu cuenta de LinkedIn está conectada. Puedes desconectarla en cualquier momento.",
+    "login": "Iniciar sesión con LinkedIn"
   },
   "Bootcamp": {
     "eventsAndTestimonials": "Nuestros eventos y testimonios",

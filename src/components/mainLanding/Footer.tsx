@@ -1,10 +1,9 @@
 import { Mail } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function Footer() {
   const t = useTranslations('General')
-  const localActive = useLocale()
   return (
     <footer className=" text-white py-4">
       {/* Contenedor principal, centrado y con márgenes responsivos */}
@@ -49,10 +48,7 @@ export default function Footer() {
 
       {/* Enlace inferior */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex justify-center space-x-6 text-sm">
-        <Link
-          href={`/${localActive}/politics/privacy`}
-          className="hover:underline"
-        >
+        <Link href={`/politics/privacy`} className="hover:underline">
           {t('privacy')}
         </Link>
       </div>

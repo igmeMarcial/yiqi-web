@@ -3,12 +3,11 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { Calendar, Sparkles, Users } from 'lucide-react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function Hero() {
   const t = useTranslations('HeroSection')
-  const localActive = useLocale()
   return (
     <div className="bg-black relative overflow-hidden mt-10">
       <div className="relative max-w-7xl mx-auto pt-20 pb-12 sm:py-16 lg:py-20">
@@ -38,10 +37,7 @@ export default function Hero() {
             <p className="text-gray-400 text-base sm:text-lg max-w-xl">
               {t('heroDescription')}
             </p>
-            <Link
-              href={`/${localActive}/admin/organizations`}
-              className="block"
-            >
+            <Link href={`/admin/organizations`} className="block">
               <Button
                 size="lg"
                 className="font-bold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-[40%] sm:w-auto"

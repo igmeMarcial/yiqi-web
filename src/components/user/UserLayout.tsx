@@ -13,7 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '../ui/sidebar'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,33 +37,32 @@ interface UserLayoutProps {
 }
 
 export default function UserLayout({ children, userProps }: UserLayoutProps) {
-  const localActive = useLocale()
   const t = useTranslations('AddOrganizer')
   const navItems = [
     {
       name: `${t('profileSettings')}`,
       icon: User,
-      href: `/${localActive}/user/profile`
+      href: `/user/profile`
     },
     {
       name: `${t('payments')}`,
       icon: CreditCard,
-      href: `/${localActive}/user/payments`
+      href: `/user/payments`
     },
     {
       name: `${t('history')}`,
       icon: History,
-      href: `/${localActive}/user/history`
+      href: `/user/history`
     },
     {
       name: `${t('tickets')}`,
       icon: Ticket,
-      href: `/${localActive}/user/tickets`
+      href: `/user/tickets`
     },
     {
       name: `${t('networkingSettings')}`,
       icon: Speech,
-      href: `/${localActive}/user/networking-settings`
+      href: `/user/networking-settings`
     }
   ]
 

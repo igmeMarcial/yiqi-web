@@ -17,7 +17,7 @@ import { TriangleAlert } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
 import { deleteUserAccount } from '@/services/actions/userActions'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 export default function DeleteAccountDialog() {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +25,6 @@ export default function DeleteAccountDialog() {
   const router = useRouter()
 
   const t = useTranslations('DeleteAccount')
-  const localActive = useLocale()
 
   const handleDelete = useCallback(async () => {
     try {
@@ -36,7 +35,7 @@ export default function DeleteAccountDialog() {
           title: `${t('accountDeleted')}`,
           description: `${t('accountDeletedDescription')}`
         })
-        router.push(`/${localActive}/auth`)
+        router.push(`/auth`)
       } else {
         toast({
           title: `${t('error')}`,

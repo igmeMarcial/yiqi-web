@@ -11,7 +11,7 @@ export const logOut = async () => {
     sessionCookie.value,
     sessionCookie.attributes
   )
-  return redirect('/es/auth')
+  return redirect('/auth')
 }
 
 export const getGoogleOauthConsentUrl = async () => {

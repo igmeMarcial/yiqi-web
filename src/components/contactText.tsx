@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import * as Tabs from '@radix-ui/react-tabs'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { ContactDetailsType } from '@/services/actions/contactActions'
 
 export function TabList() {
@@ -55,7 +55,6 @@ export function ContactText3(props: {
   contact: ContactDetailsType | null
 }) {
   const t = useTranslations('contactText')
-  const localActive = useLocale()
   // Handle case where props.contact is null
   if (!props.contact) {
     return <p>No contact details available.</p>
@@ -67,7 +66,7 @@ export function ContactText3(props: {
         {props.contact.registeredEvents?.map(attendee => (
           <li key={attendee.id} className="border p-2 rounded">
             <Link
-              href={`/${localActive}/admin/organizations/${props.id}/events/${attendee.event.id}`}
+              href={`/admin/organizations/${props.id}/events/${attendee.event.id}`}
               className="text-blue-500 hover:underline"
             >
               {attendee.event.title}
@@ -84,10 +83,9 @@ export function ContactText3(props: {
 
 export function Link1(props: { id: string }) {
   const t = useTranslations('contactText')
-  const localActive = useLocale()
   return (
     <Link
-      href={`/${localActive}/admin/organizations/${props.id}/contacts`}
+      href={`/admin/organizations/${props.id}/contacts`}
       className="mt-4 inline-block text-blue-500 hover:underline"
     >
       {t('back')}

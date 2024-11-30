@@ -12,7 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Progress } from '@/components/ui/progress'
 import { Import, CreditCard, Calendar, Bell } from 'lucide-react'
 import Link from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   importedContacts: boolean
@@ -30,7 +30,6 @@ export default function WelcomeScreen({
   orgId
 }: Props) {
   const t = useTranslations('WelcomeNewOrg')
-  const localActive = useLocale()
   const [tasks] = useState([
     {
       id: 1,
@@ -38,7 +37,7 @@ export default function WelcomeScreen({
       description: `${t('welcomeScreenTasksImportDescription')}`,
       icon: Import,
       completed: importedContacts,
-      link: `/${localActive}/admin/organizations/${orgId}/contacts`
+      link: `/admin/organizations/${orgId}/contacts`
     },
     {
       id: 2,
@@ -46,7 +45,7 @@ export default function WelcomeScreen({
       description: `${t('welcomeScreenTasksPaymentDescription')}`,
       icon: CreditCard,
       completed: paymentsIsSetup,
-      link: `/${localActive}/admin/organizations/${orgId}/billing`
+      link: `/admin/organizations/${orgId}/billing`
     },
     {
       id: 3,
@@ -54,7 +53,7 @@ export default function WelcomeScreen({
       description: `${t('welcomeScreenTasksEventDescription')}`,
       icon: Calendar,
       completed: eventCreated,
-      link: `/${localActive}/admin/organizations/${orgId}/events`
+      link: `/admin/organizations/${orgId}/events`
     },
     {
       id: 4,
@@ -62,7 +61,7 @@ export default function WelcomeScreen({
       description: `${t('welcomeScreenTasksNotificationDescription')}`,
       icon: Bell,
       completed: notificationsSent,
-      link: `/${localActive}/admin/organizations/${orgId}/chat`
+      link: `/admin/organizations/${orgId}/chat`
     }
   ])
 

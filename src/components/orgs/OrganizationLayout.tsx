@@ -35,7 +35,7 @@ import {
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 import { useEffect, useMemo, useState } from 'react'
 import { OrganizationType } from '@/schemas/organizerSchema'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -56,7 +56,6 @@ export default function OrganizationLayout({
   orgId
 }: AdminLayoutProps) {
   const t = useTranslations('Sidebar')
-  const localActive = useLocale()
   const [organizations, setOrganizations] = useState<OrganizationType[]>([])
 
   useEffect(() => {
@@ -75,32 +74,32 @@ export default function OrganizationLayout({
     {
       name: `${t('chat')}`,
       icon: Building2,
-      href: `/${localActive}/admin/organizations/${orgId}/settings`
+      href: `/admin/organizations/${orgId}/settings`
     },
     {
       name: `${t('chat')}`,
       icon: MessageSquare,
-      href: `/${localActive}/admin/organizations/${orgId}/chat`
+      href: `/admin/organizations/${orgId}/chat`
     },
     {
       name: `${t('events')}`,
       icon: Calendar,
-      href: `/${localActive}/admin/organizations/${orgId}/events`
+      href: `/admin/organizations/${orgId}/events`
     },
     {
       name: `${t('contacts')}`,
       icon: BookUser,
-      href: `/${localActive}/admin/organizations/${orgId}/contacts`
+      href: `/admin/organizations/${orgId}/contacts`
     },
     {
       name: `${t('organizers')}`,
       icon: Users,
-      href: `/${localActive}/admin/organizations/${orgId}/organizers`
+      href: `/admin/organizations/${orgId}/organizers`
     },
     {
       name: `${t('billing')}`,
       icon: Banknote,
-      href: `/${localActive}/admin/organizations/${orgId}/billing`
+      href: `/admin/organizations/${orgId}/billing`
     }
   ]
 
@@ -125,9 +124,7 @@ export default function OrganizationLayout({
               <DropdownMenuContent className="w-56">
                 {organizations.map(org => (
                   <DropdownMenuItem key={org.id}>
-                    <Link
-                      href={`/${localActive}/admin/organizations/${org.id}`}
-                    >
+                    <Link href={`/admin/organizations/${org.id}`}>
                       {org.name}
                     </Link>
                   </DropdownMenuItem>
@@ -193,13 +190,12 @@ export default function OrganizationLayout({
 }
 
 export function EventText(props: { id: string }) {
-  const localActive = useLocale()
   const t = useTranslations('EventsList')
   return (
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold">{t('events')}</h1>
       <Link
-        href={`/${localActive}/admin/organizations/${props.id}/events/new`}
+        href={`/admin/organizations/${props.id}/events/new`}
         className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
       >
         {t('createNewEvents')}
@@ -209,13 +205,12 @@ export function EventText(props: { id: string }) {
 }
 
 export function EventText2(props: { id: string }) {
-  const localActive = useLocale()
   const t = useTranslations('EventsPage')
   return (
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-2xl font-bold">{t('createNewEvent')}</h1>
       <Link
-        href={`/${localActive}/admin/organizations/${props.id}/events`}
+        href={`/admin/organizations/${props.id}/events`}
         className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700 transition-colors"
       >
         {t('cancel')}

@@ -47,7 +47,7 @@ import {
   DialogFooter
 } from '@/components/ui/dialog'
 import Link from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   organizationId: string
@@ -86,7 +86,6 @@ const defaultMinEndTimeStr = defaultEndDate
 
 export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
-  const localActive = useLocale()
   const t = useTranslations('DeleteAccount')
   const [tickets, setTickets] = useState<
     EventTicketInputType[] | SavedTicketOfferingType[]
@@ -258,9 +257,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
           await createEvent(organizationId, eventData, tickets)
         }
 
-        router.push(
-          `/${localActive}/admin/organizations/${organizationId}/events`
-        )
+        router.push(`/admin/organizations/${organizationId}/events`)
         setLoading(false)
       } catch (error) {
         setLoading(false)
@@ -565,7 +562,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                   <DialogDescription>
                     {t('stripeSetupInfo')}
                     <Link
-                      href={`/${localActive}/admin/organizations/${organizationId}/billing`}
+                      href={`/admin/organizations/${organizationId}/billing`}
                     >
                       {t('clickHereStart')}
                     </Link>

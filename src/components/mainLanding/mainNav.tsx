@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sheet'
 import { AccountDropdown } from '../AccountDropdown'
 import Image from 'next/image'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import LangSelector from '../languageSelector'
 
 interface User {
@@ -30,7 +30,6 @@ interface HeaderProps {
 export default function MainLandingNav({ user }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const t = useTranslations('General')
-  const localActive = useLocale()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,16 +63,16 @@ export default function MainLandingNav({ user }: HeaderProps) {
           <div className="hidden md:flex space-x-3 items-center">
             <LangSelector />
             <nav className="hidden md:flex items-center space-x-4">
-              <NavLink href={`/${localActive}/events`}>
+              <NavLink href={`/events`}>
                 <TicketSlash size={16} />
                 <span>{t('events')}</span>
               </NavLink>
-              <NavLink href={`/${localActive}/communities`}>
+              <NavLink href={`/communities`}>
                 <Users size={16} />
                 <span>{t('communities')}</span>
               </NavLink>
               {!user || Object.keys(user).length === 0 ? (
-                <Link href={`/${localActive}/user`}>
+                <Link href={`/user`}>
                   <Button size="sm" variant="default" className="font-semibold">
                     {t('login')}
                   </Button>
@@ -99,14 +98,14 @@ export default function MainLandingNav({ user }: HeaderProps) {
                 <SheetTitle>{t('menu')}</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col space-y-4">
-                <NavLink href={`/${localActive}/communities`} mobile>
+                <NavLink href={`/communities`} mobile>
                   {t('communities')}
                 </NavLink>
-                <NavLink href={`/${localActive}/events`} mobile>
+                <NavLink href={`/events`} mobile>
                   {t('events')}
                 </NavLink>
                 {!user ? (
-                  <Link href={`/${localActive}/user`}>
+                  <Link href={`/user`}>
                     <Button
                       size="sm"
                       variant="default"
@@ -116,10 +115,7 @@ export default function MainLandingNav({ user }: HeaderProps) {
                     </Button>
                   </Link>
                 ) : (
-                  <Link
-                    href={`/${localActive}/admin`}
-                    className="flex items-center space-x-2"
-                  >
+                  <Link href={`/admin`} className="flex items-center space-x-2">
                     <Avatar className="w-8 h-8">
                       <AvatarImage
                         alt={user.name ?? ''}

@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import SignOutButton from '../auth/sign-out'
 import { SidebarProvider } from '../ui/sidebar'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -27,18 +27,17 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children, userProps }: AdminLayoutProps) {
-  const localActive = useLocale()
   const t = useTranslations('AdminLayout')
   const navItems = [
     {
       name: `${t('organization')}`,
       icon: Users,
-      href: `/${localActive}/admin/organizations`
+      href: `/admin/organizations`
     },
     {
       name: `${t('settings')}`,
       icon: Settings,
-      href: `/${localActive}/admin/settings`
+      href: `/admin/settings`
     }
   ]
 
