@@ -34,7 +34,7 @@ export function RegistrationForm({
   onPaymentComplete
 }: RegistrationFormProps) {
   const [showStripeCheckout, setShowStripeCheckout] = useState(false)
-  const t = useTranslations("RegistrationComponent")
+  const t = useTranslations('RegistrationComponent')
 
   const handleSubmit = async (values: RegistrationInput) => {
     await onSubmit(values)
@@ -69,10 +69,10 @@ export function RegistrationForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("eventFormName")}</FormLabel>
+              <FormLabel>{t('eventFormName')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t("eventFormNamePlaceholder")}
+                  placeholder={t('eventFormNamePlaceholder')}
                   {...field}
                   disabled={!!user.name}
                   className={user ? 'bg-muted' : ''}
@@ -87,11 +87,11 @@ export function RegistrationForm({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("eventFormEmail")}</FormLabel>
+              <FormLabel>{t('eventFormEmail')}</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder={t("eventFormEmailPlaceholder")}
+                  placeholder={t('eventFormEmailPlaceholder')}
                   {...field}
                   disabled={!!user.email}
                   className={user ? 'bg-muted' : ''}
@@ -103,8 +103,8 @@ export function RegistrationForm({
         />
         <Button type="submit" className="w-full">
           {isFreeEvent
-            ? t("eventConfirmRegistration")
-            : t("eventConfirmPurchase")}
+            ? t('eventConfirmRegistration')
+            : t('eventConfirmPurchase')}
         </Button>
       </form>
     </Form>

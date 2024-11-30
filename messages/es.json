@@ -488,12 +488,12 @@
     "settingsOrganizationFormUrl": "URL de",
     "settingsOrganizationFormSaved": "Guardar cambios",
     "eventRegister": "Registrar"
-},
-"EventDescription": {
+  },
+  "EventDescription": {
     "eventAbout": "Acerca del evento",
     "eventFeaturedIn": "Destacado en"
-},
-"RegistrationComponent": {
+  },
+  "RegistrationComponent": {
     "eventApprovalRequired": "Aprobación requerida",
     "eventApprovalDescription": "Tu registro está sujeto a la aprobación del anfitrión.",
     "eventRequestToJoin": "Solicitar unirse",
@@ -539,8 +539,8 @@
     "stripeAccountActive": "Cuenta de Stripe activa",
     "stripeAccountActiveDescription": "Tu cuenta de Stripe está completamente configurada y lista para aceptar pagos.",
     "stripeViewDashboard": "Ver panel de Stripe"
-},
-"Ticket": {
+  },
+  "Ticket": {
     "ticketStatusApproved": "Aprobado",
     "ticketStatusPending": "Pendiente",
     "ticketStatusRejected": "Rechazado",
@@ -568,6 +568,5 @@
     "eventCheckInTableTicketId": "ID de entrada",
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
-}
-
+  }
 }

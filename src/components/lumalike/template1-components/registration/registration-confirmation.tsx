@@ -28,19 +28,19 @@ export function RegistrationConfirmation({
 }: RegistrationConfirmationProps) {
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false)
 
-  const t = useTranslations("RegistrationComponent")
+  const t = useTranslations('RegistrationComponent')
   const handlePaymentComplete = async () => {
     const result = await markRegistrationPaid(registration.id)
     if (result.success) {
       toast({
-        title: `${t("eventRegistrationSuccess")}`,
+        title: `${t('eventRegistrationSuccess')}`,
         variant: 'default'
       })
       setIsPaymentDialogOpen(false)
       redirect('/user/tickets')
     } else {
       toast({
-        title: `${t("eventRegistrationError")}`,
+        title: `${t('eventRegistrationError')}`,
         variant: 'destructive'
       })
     }
@@ -57,10 +57,10 @@ export function RegistrationConfirmation({
             </div>
           </div>
           <CardTitle className="text-center">
-            {t("registrationPaymentPending")}
+            {t('registrationPaymentPending')}
           </CardTitle>
           <CardDescription className="text-center">
-            {t("registrationPaymentPendingDescription")}
+            {t('registrationPaymentPendingDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -70,7 +70,7 @@ export function RegistrationConfirmation({
           >
             <DialogTrigger asChild>
               <Button className="w-full">
-                {t("registrationContinuePayment")}
+                {t('registrationContinuePayment')}
               </Button>
             </DialogTrigger>
             <DialogContent>

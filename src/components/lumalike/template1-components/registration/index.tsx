@@ -106,7 +106,7 @@ export function Registration({
   const onSubmit = async (values: RegistrationInput) => {
     if (!hasSelectedTickets) {
       toast({
-        title: `${t("eventNoTicketsSelected")}`,
+        title: `${t('eventNoTicketsSelected')}`,
         variant: 'destructive'
       })
       return
@@ -149,12 +149,12 @@ export function Registration({
       const result = await markRegistrationPaid(currentRegistrationId)
       if (result.success) {
         toast({
-          title: `${t("eventRegistrationSuccess")}`
+          title: `${t('eventRegistrationSuccess')}`
         })
         setIsDialogOpen(false)
       } else {
         toast({
-          title: `${t("eventRegistrationError")}`,
+          title: `${t('eventRegistrationError')}`,
           variant: 'destructive'
         })
       }

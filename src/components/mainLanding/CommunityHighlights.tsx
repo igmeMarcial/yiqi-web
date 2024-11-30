@@ -9,7 +9,7 @@ const CommunityHighlights = ({
 }: {
   communities: PublicCommunityType[]
 }) => {
-  const t = useTranslations("CommunityHighlights")
+  const t = useTranslations('CommunityHighlights')
   return (
     <section className="w-full bg-black py-12">
       <div className="max-w-7xl mx-auto">

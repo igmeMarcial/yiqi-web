@@ -18,7 +18,7 @@ export function EventPage({ event, user }: RegistrationProps) {
   const registrationRef = useRef<HTMLDivElement>(null)
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
 
-  const t = useTranslations("Community")
+  const t = useTranslations('Community')
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024)
@@ -52,7 +52,7 @@ export function EventPage({ event, user }: RegistrationProps) {
       <MainLandingNav
         user={user}
         showExtraButton={isSticky}
-        buttonName={t("eventRegister")}
+        buttonName={t('eventRegister')}
         dialogTriggerRef={dialogTriggerRef}
       />
       <div
@@ -80,7 +80,7 @@ export function EventPage({ event, user }: RegistrationProps) {
               {event.hosts && !isMobile && (
                 <>
                   <h2 className="text-2xl font-semibold text-primary-foreground">
-                    {t("membersOrganizedBy")}
+                    {t('membersOrganizedBy')}
                   </h2>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <Hosts hosts={event.hosts} />
@@ -108,7 +108,7 @@ export function EventPage({ event, user }: RegistrationProps) {
               {event.hosts && isMobile && (
                 <>
                   <h2 className="text-2xl font-semibold text-primary-foreground">
-                    {t("membersOrganizedBy")}
+                    {t('membersOrganizedBy')}
                   </h2>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <Hosts hosts={event.hosts} />

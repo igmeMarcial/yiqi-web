@@ -83,9 +83,7 @@ export default async function EventDetailsPage({
               </div>
             </div>
             <div>
-              <span className="font-semibold">
-                {t("description")}
-              </span>
+              <span className="font-semibold">{t('description')}</span>
 
               <div className="prose prose-sm max-w-none mb-4  dark:prose-invert">
                 <MdPreview content={event.description!} />

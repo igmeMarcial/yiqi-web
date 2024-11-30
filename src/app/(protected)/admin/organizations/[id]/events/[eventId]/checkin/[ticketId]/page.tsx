@@ -20,11 +20,9 @@ export default async function CheckinPage({
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-red-600">
-            {t("checkInQrEventNotFound")}
+            {t('checkInQrEventNotFound')}
           </h1>
-          <p className="mt-2 text-gray-600">
-            {t("checkInQrEventDontExist")}
-          </p>
+          <p className="mt-2 text-gray-600">{t('checkInQrEventDontExist')}</p>
           <BackButton />
         </div>
       </div>
@@ -36,10 +34,10 @@ export default async function CheckinPage({
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="text-center bg-white p-6 rounded-lg shadow-lg">
           <h1 className="text-2xl font-semibold text-red-600">
-            {t("checkInQrDontAccess")}
+            {t('checkInQrDontAccess')}
           </h1>
           <p className="mt-4 text-gray-700">
-            {t("checkInQrContactAdministrator")}
+            {t('checkInQrContactAdministrator')}
           </p>
           <BackButton />
         </div>
@@ -52,11 +50,9 @@ export default async function CheckinPage({
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-red-600">
-            {t("checkInQrOrganizationEventDontFound")}
+            {t('checkInQrOrganizationEventDontFound')}
           </h1>
-          <p className="mt-2 text-gray-600">
-            {t("checkInQrInformation")}
-          </p>
+          <p className="mt-2 text-gray-600">{t('checkInQrInformation')}</p>
         </div>
         <BackButton />
       </div>
@@ -68,7 +64,7 @@ export default async function CheckinPage({
   return (
     <div className="container mx-auto max-w-screen-lg p-4 space-y-4 pt-10">
       <h1 className="text-2xl font-bold text-gray-800 text-center">
-        {t("eventCheckInTableTitle")} {event.title}
+        {t('eventCheckInTableTitle')} {event.title}
       </h1>
 
       <div className="overflow-x-auto bg-gray-50 rounded-lg shadow-md p-4">

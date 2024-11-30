@@ -543,7 +543,7 @@
     "stripeViewDashboard": "View Stripe Dashboard"
   },
 
-  "Ticket":{
+  "Ticket": {
     "ticketStatusApproved": "Approved",
     "ticketStatusPending": "Pending",
     "ticketStatusRejected": "Rejected",

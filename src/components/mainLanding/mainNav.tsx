@@ -88,16 +88,16 @@ export default function MainLandingNav({
             )}
             <NavLink href="/events">
               <TicketSlash size={16} />
-              <span>{t("events")}</span>
+              <span>{t('events')}</span>
             </NavLink>
             <NavLink href="/communities">
               <Users size={16} />
-              <span>{t("communities")}</span>
+              <span>{t('communities')}</span>
             </NavLink>
             {!user || Object.keys(user).length === 0 ? (
               <Link href={'/user'}>
                 <Button size="sm" variant="default" className="font-semibold">
-                  {t("login")}
+                  {t('login')}
                 </Button>
               </Link>
             ) : (
@@ -125,9 +125,7 @@ export default function MainLandingNav({
                   className="hover:bg-transparent"
                 >
                   <Menu className="h-6 w-6 text-white" />
-                  <span className="sr-only text-white">
-                    {t("openMenu")}
-                  </span>
+                  <span className="sr-only text-white">{t('openMenu')}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -135,15 +133,15 @@ export default function MainLandingNav({
                 className="w-[300px] sm:w-[400px] bg-black"
               >
                 <SheetHeader>
-                  <SheetTitle>{t("menu")}</SheetTitle>
+                  <SheetTitle>{t('menu')}</SheetTitle>
                 </SheetHeader>
                 <div className="mt-6 flex flex-col space-y-4">
                   <NavLink href="/communities" mobile>
-                    {t("communities")}
+                    {t('communities')}
                   </NavLink>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <NavLink href="/events" mobile>
-                    {t("events")}
+                    {t('events')}
                   </NavLink>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   {!user ? (
@@ -153,7 +151,7 @@ export default function MainLandingNav({
                         variant="default"
                         className="w-full font-semibold"
                       >
-                        {t("login")}
+                        {t('login')}
                       </Button>
                     </Link>
                   ) : (
@@ -171,7 +169,7 @@ export default function MainLandingNav({
                         </AvatarFallback>
                       </Avatar>
                       <span className="text-white text-sm">
-                        {t("myAccount")}
+                        {t('myAccount')}
                       </span>
                     </Link>
                   )}

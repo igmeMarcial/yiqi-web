@@ -40,7 +40,7 @@ export default function EventCheckinTable({
       <div className="p-4">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder={t("eventCheckInSearchByName")}
+          placeholder={t('eventCheckInSearchByName')}
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           className="pl-8"
@@ -52,13 +52,13 @@ export default function EventCheckinTable({
           <thead className="bg-gray-100 sticky top-0 z-10">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {t("eventCheckInTableName")}
+                {t('eventCheckInTableName')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {t("eventCheckInTableTicketId")}
+                {t('eventCheckInTableTicketId')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {t("eventCheckInTableCheckIn")}
+                {t('eventCheckInTableCheckIn')}
               </th>
               <th className="px-6 py-3 border-b border-gray-200"></th>
             </tr>
