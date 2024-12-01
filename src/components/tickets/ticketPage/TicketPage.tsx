@@ -99,7 +99,7 @@ export default function TicketsPage({
   return (
     <>
       <div className="min-h-screen bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white">
-        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold mb-6 text-center">
             {translations.es.ticketTitlePage}
           </h1>
@@ -110,10 +110,10 @@ export default function TicketsPage({
                 className="group bg-zinc-900/60 border-zinc-800/50 shadow-lg transition hover:bg-zinc-900/80 hover:shadow-xl"
               >
                 <div className="p-6">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-3 text-sm text-zinc-400">
-                        <time className="text-sm">
+                        <time>
                           {new Date(data.event.startDate).toLocaleDateString()}{' '}
                           - {new Date(data.event.endDate).toLocaleDateString()}
                         </time>
@@ -131,13 +131,13 @@ export default function TicketsPage({
                       </div>
                     </div>
 
-                    <div>
+                    <div className="w-full lg:w-auto">
                       <Image
                         src={data.event.openGraphImage}
                         alt={translations.es.ticketEventImageAlt}
                         width={600}
                         height={100}
-                        className="relative rounded-xl border border-zinc-800/50 w-full h-60 object-cover"
+                        className="relative rounded-xl border border-zinc-800/50 w-full h-60 lg:w-72 lg:h-40 object-cover"
                       />
                     </div>
                   </div>
@@ -146,7 +146,7 @@ export default function TicketsPage({
                     {data.tickets.map((ticket, index) => (
                       <div
                         key={ticket.id}
-                        className="flex justify-between items-center border-t border-zinc-800 pt-4"
+                        className="flex flex-col sm:flex-row sm:justify-between items-center border-t border-zinc-800 pt-4 gap-4 sm:gap-0"
                       >
                         <div className="flex gap-5">
                           <Badge className="bg-zinc-800/50 border border-zinc-700">
