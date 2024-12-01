@@ -38,8 +38,6 @@ export async function createOrganization(
     })
   } catch (error) {
     throw new Error(`${error}`)
-  } finally {
-    revalidatePath('/', 'layout')
   }
 }
 
