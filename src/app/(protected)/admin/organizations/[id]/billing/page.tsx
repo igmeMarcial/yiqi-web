@@ -25,7 +25,7 @@ export default async function OrganizationBillingPage({
   const user = await getUser()
 
   if (!user) {
-    redirect('/login')
+    redirect(`/login`)
   }
 
   if (!organization) {

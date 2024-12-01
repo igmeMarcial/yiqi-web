@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser()
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/auth`)
   }
 
   const chats = await getOrganizationMessageThreads(params.id)
@@ -35,10 +35,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/newuser`)
   } else if (user.role == Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/andino-admin`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/user`)
   }
 }

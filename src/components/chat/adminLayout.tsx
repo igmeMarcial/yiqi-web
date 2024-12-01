@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import SignOutButton from '../auth/sign-out'
 import { SidebarProvider } from '../ui/sidebar'
+import { useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -26,9 +27,18 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children, userProps }: AdminLayoutProps) {
+  const t = useTranslations('AdminLayout')
   const navItems = [
-    { name: 'Organizaciones', icon: Users, href: `/admin/organizations` },
-    { name: 'Settings', icon: Settings, href: '/admin/settings' }
+    {
+      name: `${t('organization')}`,
+      icon: Users,
+      href: `/admin/organizations`
+    },
+    {
+      name: `${t('settings')}`,
+      icon: Settings,
+      href: `/admin/settings`
+    }
   ]
 
   return (
@@ -109,7 +119,7 @@ export default function AdminLayout({ children, userProps }: AdminLayoutProps) {
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex flex-row items-center justify-center gap-4">
-                      <span>Log out</span>
+                      <span>{t('logout')}</span>
                       <LogOut className="mr-2 h-4 w-4" />
                     </div>
                   </SignOutButton>

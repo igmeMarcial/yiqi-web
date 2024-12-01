@@ -6,12 +6,13 @@ import { getOrganization } from '@/services/actions/organizationActions'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import WelcomeScreen from '@/components/orgs/WelcomeNewOrg'
 import { getNewOrgWelcomeProps } from '@/services/actions/org/getNewOrgWelcomeProps'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page({ params }: { params: { id: string } }) {
+  const t = await getTranslations('contactFor')
   const organization = await getOrganization(params.id)
-
   if (!organization) {
-    return <div>Organization not found</div>
+    return <div>{t('organizationNotFound')}</div>
   }
   const {
     hasContacts,
@@ -24,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser()
 
   if (!user) {
-    redirect('/auth')
+    redirect(`/auth`)
   }
 
   if (user.role === Roles.ADMIN) {
@@ -55,10 +56,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/newuser`)
   } else if (user.role === Roles.USER) {
-    redirect('/user')
+    redirect(`/user`)
   } else if (user.role === Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/andino-admin`)
   }
 }

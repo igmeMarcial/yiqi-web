@@ -6,7 +6,7 @@ import { useState, useMemo } from 'react'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/useDebounce'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export default function EventCheckinTable({
   eventId,
@@ -17,6 +17,8 @@ export default function EventCheckinTable({
   registrations: EventRegistrationSchemaType[]
   ticketId?: string
 }) {
+  const t = useTranslations('Ticket')
+
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 1500)
 
@@ -38,7 +40,7 @@ export default function EventCheckinTable({
       <div className="p-4">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder={translations.es.eventCheckInSearchByName}
+          placeholder={t('eventCheckInSearchByName')}
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           className="pl-8"
@@ -50,13 +52,13 @@ export default function EventCheckinTable({
           <thead className="bg-gray-100 sticky top-0 z-10">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {translations.es.eventCheckInTableName}
+                {t('eventCheckInTableName')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {translations.es.eventCheckInTableTicketId}
+                {t('eventCheckInTableTicketId')}
               </th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">
-                {translations.es.eventCheckInTableCheckIn}
+                {t('eventCheckInTableCheckIn')}
               </th>
               <th className="px-6 py-3 border-b border-gray-200"></th>
             </tr>

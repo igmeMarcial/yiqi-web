@@ -3,9 +3,11 @@ import { Button } from '../ui/button'
 import { getGoogleOauthConsentUrl } from '@/services/auth/auth'
 import { useToast } from '@/hooks/use-toast'
 import { GoogleIcon } from './icons'
+import { useTranslations } from 'next-intl'
 
 export default function GoogleOAuthButton() {
   const { toast } = useToast()
+  const t = useTranslations('General')
   return (
     <Button
       className="flex flex-row gap-2 w-full"
@@ -23,7 +25,7 @@ export default function GoogleOAuthButton() {
         }
       }}
     >
-      Ingresa con Google <GoogleIcon />
+      {t('withGoogle')} <GoogleIcon />
     </Button>
   )
 }

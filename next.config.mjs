@@ -1,6 +1,10 @@
 import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {import('next').NextConfig} */
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin()
+
 const nextConfig = {
   productionBrowserSourceMaps: true,
   images: {
@@ -60,4 +64,4 @@ const finalConfig = shouldSkipSentry
       sourcemaps: true
     })
 
-export default finalConfig
+export default withNextIntl(finalConfig)

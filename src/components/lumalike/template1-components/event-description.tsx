@@ -1,13 +1,14 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { motion } from 'framer-motion'
-import { translations } from '@/lib/translations/translations'
 import { MdPreview } from '@/components/events/editor/MdPreview'
+import { useTranslations } from 'next-intl'
 
 interface EventDescriptionProps {
   description: string
 }
 
 export function EventDescription({ description }: EventDescriptionProps) {
+  const t = useTranslations('EventDescription')
   return (
     <motion.div
       className="space-y-4"
@@ -16,7 +17,7 @@ export function EventDescription({ description }: EventDescriptionProps) {
       transition={{ duration: 0.5, delay: 0.8 }}
     >
       <h2 className="text-2xl font-semibold text-primary-foreground">
-        {translations.es.eventAbout}
+        {t('eventAbout')}
       </h2>
       <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%]  mx-auto ml-0" />
       <Card className="bg-black backdrop-blur-sm text-white w-[100%] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[700px] xl:max-w-[800px] border-0">

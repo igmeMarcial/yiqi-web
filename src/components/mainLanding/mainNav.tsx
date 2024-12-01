@@ -13,8 +13,9 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { AccountDropdown } from '../AccountDropdown'
-import { translations } from '@/lib/translations/translations'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import LangSelector from '../languageSelector'
 
 interface User {
   name?: string
@@ -36,6 +37,7 @@ export default function MainLandingNav({
   dialogTriggerRef
 }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const t = useTranslations('General')
 
   const handleOpenRegistrationDialog = () => {
     if (dialogTriggerRef?.current) {
@@ -72,35 +74,38 @@ export default function MainLandingNav({
             />
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-4">
-            {showExtraButton && (
-              <Button
-                size="sm"
-                variant="default"
-                className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
-                onClick={handleOpenRegistrationDialog}
-              >
-                {buttonName}
-              </Button>
-            )}
-            <NavLink href="/events">
-              <TicketSlash size={16} />
-              <span>{translations.es.events}</span>
-            </NavLink>
-            <NavLink href="/communities">
-              <Users size={16} />
-              <span>{translations.es.communities}</span>
-            </NavLink>
-            {!user || Object.keys(user).length === 0 ? (
-              <Link href={'/user'}>
-                <Button size="sm" variant="default" className="font-semibold">
-                  {translations.es.login}
+          <div className="flex space-x-3 items-center">
+            <LangSelector />
+            <nav className="hidden md:flex items-center space-x-4">
+              {showExtraButton && (
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
+                  onClick={handleOpenRegistrationDialog}
+                >
+                  {buttonName}
                 </Button>
-              </Link>
-            ) : (
-              <AccountDropdown user={user} />
-            )}
-          </nav>
+              )}
+              <NavLink href="/events">
+                <TicketSlash size={16} />
+                <span>{t('events')}</span>
+              </NavLink>
+              <NavLink href="/communities">
+                <Users size={16} />
+                <span>{t('communities')}</span>
+              </NavLink>
+              {!user || Object.keys(user).length === 0 ? (
+                <Link href={'/user'}>
+                  <Button size="sm" variant="default" className="font-semibold">
+                    {t('login')}
+                  </Button>
+                </Link>
+              ) : (
+                <AccountDropdown user={user} />
+              )}
+            </nav>
+          </div>
 
           {/* Mobile view (Hamburger Menu + Extra Button) */}
           <div className="md:hidden flex items-center space-x-4">
@@ -122,9 +127,7 @@ export default function MainLandingNav({
                   className="hover:bg-transparent"
                 >
                   <Menu className="h-6 w-6 text-white" />
-                  <span className="sr-only text-white">
-                    {translations.es.openMenu}
-                  </span>
+                  <span className="sr-only text-white">{t('openMenu')}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -132,15 +135,15 @@ export default function MainLandingNav({
                 className="w-[300px] sm:w-[400px] bg-black"
               >
                 <SheetHeader>
-                  <SheetTitle>{translations.es.menu}</SheetTitle>
+                  <SheetTitle>{t('menu')}</SheetTitle>
                 </SheetHeader>
                 <div className="mt-6 flex flex-col space-y-4">
                   <NavLink href="/communities" mobile>
-                    {translations.es.communities}
+                    {t('communities')}
                   </NavLink>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <NavLink href="/events" mobile>
-                    {translations.es.events}
+                    {t('events')}
                   </NavLink>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   {!user ? (
@@ -150,7 +153,7 @@ export default function MainLandingNav({
                         variant="default"
                         className="w-full font-semibold"
                       >
-                        {translations.es.login}
+                        {t('login')}
                       </Button>
                     </Link>
                   ) : (
@@ -168,10 +171,11 @@ export default function MainLandingNav({
                         </AvatarFallback>
                       </Avatar>
                       <span className="text-white text-sm">
-                        {translations.es.myAccount}
+                        {t('myAccount')}
                       </span>
                     </Link>
                   )}
+                  <LangSelector />
                 </div>
               </SheetContent>
             </Sheet>

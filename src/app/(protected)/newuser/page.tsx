@@ -13,11 +13,13 @@ import {
 import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page() {
+  const t = await getTranslations('user')
   const user = await getUser()
   if (!user) {
-    redirect('/auth')
+    redirect(`/auth`)
   }
 
   if (user.role === Roles.NEW_USER) {
@@ -28,10 +30,8 @@ export default async function Page() {
             <div style={{ filter: 'brightness(0)' }}>
               <Image src={'/AndinoLabs.svg'} alt="" height={100} width={100} />
             </div>
-            <CardTitle>Cual es tu caso de uso?</CardTitle>
-            <CardDescription>
-              Elije tu caso de uso para continuar
-            </CardDescription>
+            <CardTitle>{t('useCase')}</CardTitle>
+            <CardDescription>{t('choose')}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center gap-3">
             <BeRegularUserButton userId={{ value: user.id }} />
@@ -41,10 +41,10 @@ export default async function Page() {
       </main>
     )
   } else if (user.role === Roles.ADMIN) {
-    redirect('/admin')
+    redirect(`/admin`)
   } else if (user.role === Roles.USER) {
     redirect('/events')
   } else if (user.role === Roles.ANDINO_ADMIN) {
-    redirect('/andino-admin')
+    redirect(`/andino-admin`)
   }
 }

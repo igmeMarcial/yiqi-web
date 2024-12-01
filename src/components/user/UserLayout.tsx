@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { User, CreditCard, History, Ticket, Speech } from 'lucide-react'
+import { User, CreditCard, History, Ticket, Speech, LogOut } from 'lucide-react'
 
 import {
   Sidebar,
@@ -13,9 +13,17 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from '../ui/sidebar'
-import { translations } from '@/lib/translations/translations'
-import { AccountDropdown } from '../AccountDropdown'
-
+import { useTranslations } from 'next-intl'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '../ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import SignOutButton from '../auth/sign-out'
 interface UserProps {
   name: string
   email: string
@@ -29,29 +37,30 @@ interface UserLayoutProps {
 }
 
 export default function UserLayout({ children, userProps }: UserLayoutProps) {
+  const t = useTranslations('AddOrganizer')
   const navItems = [
     {
-      name: translations.es.profileSettings,
+      name: `${t('profileSettings')}`,
       icon: User,
       href: `/user/edit`
     },
     {
-      name: translations.es.payments,
+      name: `${t('payments')}`,
       icon: CreditCard,
       href: `/user/payments`
     },
     {
-      name: translations.es.history,
+      name: `${t('history')}`,
       icon: History,
       href: `/user/history`
     },
     {
-      name: translations.es.tickets,
+      name: `${t('tickets')}`,
       icon: Ticket,
       href: `/user/tickets`
     },
     {
-      name: translations.es.networkingSettings,
+      name: `${t('networkingSettings')}`,
       icon: Speech,
       href: `/user/networking-settings`
     }
@@ -82,7 +91,35 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
           <header className="flex items-center justify-between bg-white p-4 shadow-md">
             <SidebarTrigger />
 
-            <AccountDropdown user={userProps} />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={userProps.picture} alt="User" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {userProps.name}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {userProps.email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <SignOutButton>
+                    <div className="flex items-center gap-4">
+                      <span>{t('logOut')}</span>
+                      <LogOut className="h-4 w-4" />
+                    </div>
+                  </SignOutButton>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </header>
           <div className="p-4">{children}</div>
         </div>

@@ -4,15 +4,16 @@ import CommunityBanner from '@/components/communities/CommunityBanner/CommunityB
 import { getOrganizationEvents } from '@/services/actions/event/getOrganizationEvents'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
 import { getOrganizersByOrganization } from '@/services/actions/organizerActions'
-import { translations } from '@/lib/translations/translations'
 import MainLandingNav from '@/components/mainLanding/mainNav'
 import { getUser } from '@/lib/auth/lucia'
+import { getTranslations } from 'next-intl/server'
 
 export default async function CommunityDetail({
   params
 }: {
   params: { id: string }
 }) {
+  const t = await getTranslations('Community')
   const user = await getUser()
 
   const [organization, events, members, organizers] = await Promise.all([
@@ -24,10 +25,7 @@ export default async function CommunityDetail({
 
   const description = organization?.description || 'No description available'
 
-  const navItems = [
-    translations.es.navigationAbout,
-    translations.es.navigationMembers
-  ]
+  const navItems = [`${t('navigationAbout')}`, `${t('navigationMembers')}`]
 
   return (
     <div className="flex flex-col min-h-screen bg-black pt-10">

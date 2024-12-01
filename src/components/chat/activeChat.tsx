@@ -10,6 +10,7 @@ import { Users } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 function Chats({
   contextUserName: name,
@@ -53,6 +54,7 @@ export default function ActiveChatComponent({
   children: React.ReactNode
   activeUserId: string
 }) {
+  const t = useTranslations('Chat')
   return (
     <Card className="h-[80vh]">
       <CardContent className="p-0 h-full">
@@ -60,7 +62,7 @@ export default function ActiveChatComponent({
           <ResizablePanel defaultSize={25} minSize={20}>
             <div className="h-full flex flex-col">
               <div className="p-4 border-b">
-                <h2 className="text-lg font-semibold">Chats</h2>
+                <h2 className="text-lg font-semibold">{t('chats')}</h2>
               </div>
               <ScrollArea className="flex-1">
                 <div className="pr-4">

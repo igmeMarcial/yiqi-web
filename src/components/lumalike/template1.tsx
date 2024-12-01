@@ -10,7 +10,7 @@ import { EventDescription } from './template1-components/event-description'
 import { RegistrationProps } from './template1-components/registration'
 import { EventLocation } from './template1-components/event-location'
 import MainLandingNav from '../mainLanding/mainNav'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export function EventPage({ event, user }: RegistrationProps) {
   const [isMobile, setIsMobile] = useState(false)
@@ -18,6 +18,7 @@ export function EventPage({ event, user }: RegistrationProps) {
   const registrationRef = useRef<HTMLDivElement>(null)
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
 
+  const t = useTranslations('Community')
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024)
@@ -51,7 +52,7 @@ export function EventPage({ event, user }: RegistrationProps) {
       <MainLandingNav
         user={user}
         showExtraButton={isSticky}
-        buttonName={translations.es.eventRegister}
+        buttonName={t('eventRegister')}
         dialogTriggerRef={dialogTriggerRef}
       />
       <div
@@ -79,7 +80,7 @@ export function EventPage({ event, user }: RegistrationProps) {
               {event.hosts && !isMobile && (
                 <>
                   <h2 className="text-2xl font-semibold text-primary-foreground">
-                    {translations.es.membersOrganizedBy}
+                    {t('membersOrganizedBy')}
                   </h2>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <Hosts hosts={event.hosts} />
@@ -107,7 +108,7 @@ export function EventPage({ event, user }: RegistrationProps) {
               {event.hosts && isMobile && (
                 <>
                   <h2 className="text-2xl font-semibold text-primary-foreground">
-                    {translations.es.membersOrganizedBy}
+                    {t('membersOrganizedBy')}
                   </h2>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <Hosts hosts={event.hosts} />

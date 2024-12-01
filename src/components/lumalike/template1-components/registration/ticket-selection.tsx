@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { translations } from '@/lib/translations/translations'
 import { SavedTicketOfferingType } from '@/schemas/eventSchema'
 import { Minus, Plus } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface TicketSelectionProps {
   tickets: SavedTicketOfferingType[]
@@ -19,6 +19,7 @@ export function TicketSelection({
   hasSelectedTickets,
   calculateTotal
 }: TicketSelectionProps) {
+  const t = useTranslations('RegistrationComponent')
   return (
     <div className="space-y-4">
       {tickets.map(ticket => (
@@ -30,7 +31,7 @@ export function TicketSelection({
             </div>
             <div className="text-right text-white">
               {ticket.price === 0
-                ? translations.es.eventFree
+                ? `${t('eventFree')}`
                 : `$${ticket.price.toFixed(2)}`}
             </div>
           </div>
@@ -64,7 +65,7 @@ export function TicketSelection({
         <>
           <Separator className="bg-white/20" />
           <div className="flex justify-between text-white font-medium">
-            <span>{translations.es.eventTotal}</span>
+            <span>{t('eventTotal')}</span>
             <span>${calculateTotal().toFixed(2)}</span>
           </div>
         </>

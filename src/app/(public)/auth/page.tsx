@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import LinkedInOAuthButton from '@/components/auth/LinkedinButton'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page() {
+  const t = await getTranslations('auth')
   return (
     <main className="flex min-h-[calc(100vh-176px)] items-center justify-center p-4 bg-gradient-to-b from-background/50 to-background">
       <Card className="w-full max-w-[400px] border-neutral-800/30 bg-neutral-900/90 backdrop-blur-sm">
@@ -22,11 +24,9 @@ export default async function Page() {
           </div>
           <div className="space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight text-white">
-              Welcome to Yiqi
+              {t('welcome')}
             </h1>
-            <p className="text-sm text-neutral-400">
-              Please sign in or sign up below
-            </p>
+            <p className="text-sm text-neutral-400">{t('signUp')}</p>
           </div>
         </CardHeader>
 
@@ -39,13 +39,13 @@ export default async function Page() {
 
         <CardFooter className="flex flex-col items-center border-t border-neutral-800/50 px-6 py-4">
           <p className="text-sm text-neutral-400">
-            En caso de problemas ingresando, comuníquese a{' '}
+            {t('issues')}{' '}
             <Button
               className="h-auto p-0 font-medium text-primary hover:text-primary/90"
               asChild
               variant="link"
             >
-              <Link href="https://wa.me/51943056060">soporte técnico</Link>
+              <Link href="https://wa.me/51943056060">{t('support')}</Link>
             </Button>
           </p>
         </CardFooter>

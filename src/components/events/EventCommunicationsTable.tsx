@@ -9,12 +9,14 @@ import {
   TableBody,
   TableCell
 } from '../ui/table'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   eventId: string
 }
 
 export default function EventCommunicationsTable({ eventId }: Props) {
+  const t = useTranslations('Event')
   const [communications, setCommunications] = useState<
     NotificationSchemaType[]
   >([])
@@ -31,9 +33,9 @@ export default function EventCommunicationsTable({ eventId }: Props) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Subject</TableHead>
-          <TableHead>Sent Date</TableHead>
-          <TableHead>Sent to</TableHead>
+          <TableHead>{t('Subject')}</TableHead>
+          <TableHead>{t('date')}</TableHead>
+          <TableHead>{t('sentTo')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

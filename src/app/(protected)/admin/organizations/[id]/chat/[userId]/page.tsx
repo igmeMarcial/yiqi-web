@@ -14,9 +14,8 @@ export default async function Page({
   params: { id: string; userId: string }
 }) {
   const user = await getUser()
-
   if (!user) {
-    redirect('/auth')
+    redirect(`/auth`)
   }
 
   const chats = await getOrganizationMessageThreads(params.id)
@@ -48,6 +47,6 @@ export default async function Page({
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/newuser`)
   }
 }

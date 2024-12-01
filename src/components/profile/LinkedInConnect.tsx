@@ -15,7 +15,7 @@ import { Users, Sparkles, Layout, Link2Off } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { disconnectLinkedin } from '@/services/actions/user/disconnectLinkedin'
 import { toast } from '@/hooks/use-toast'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface BenefitProps {
   icon: React.ReactNode
@@ -36,6 +36,7 @@ function Benefit({ icon, title, description }: BenefitProps) {
 }
 
 function LinkedInLink() {
+  const t = useTranslations('LinkedIn')
   const handleLinkClick = () => {
     const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
     const redirectUri = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_URI}`
@@ -52,7 +53,7 @@ function LinkedInLink() {
 
   return (
     <Button onClick={() => handleLinkClick()} className="btn-linkedin">
-      {translations.es.linkedinConnectButton}
+      {t('linkAccount')}
     </Button>
   )
 }
@@ -62,50 +63,53 @@ type Props = {
 export default function LinkedInConnect({
   isConnected: isLinkedinConnected
 }: Props) {
+  const t = useTranslations('LinkedIn')
+
   const [isConnected, setIsConnected] = useState(isLinkedinConnected)
 
   const handleDisconnect = useCallback(async () => {
     const { success } = await disconnectLinkedin()
     if (success) {
       toast({
-        title: translations.es.linkedinDisconnectedToast,
-        description: translations.es.linkedinDisconnectedToastDesc
+        title: `${t('linkedInDisconnected')}`,
+        description: `${t('reconnect')}`
       })
       setIsConnected(false)
     } else {
       toast({
-        title: translations.es.linkedinErrorToast,
-        description: translations.es.linkedinErrorToastDesc
+        title: `${t('errorDiconnecting')}`,
+        description: `${t('tryAgain')}`
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl sm:text-3xl">
-          {translations.es.linkedinEnhanceTitle}
+          {t('enhanceNetwork')}
         </CardTitle>
         <CardDescription className="text-base">
-          {translations.es.linkedinEnhanceDescription}
+          {t('connectAccount')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 sm:grid-cols-1">
           <Benefit
             icon={<Users className="w-5 h-5 text-primary" />}
-            title={translations.es.linkedinBenefitMatchTitle}
-            description={translations.es.linkedinBenefitMatchDescription}
+            title={t('personalizedMatch')}
+            description={t('personalizedDescription')}
           />
           <Benefit
             icon={<Sparkles className="w-5 h-5 text-primary" />}
-            title={translations.es.linkedinBenefitHighlightsTitle}
-            description={translations.es.linkedinBenefitHighlightsDescription}
+            title={t('communityHighlights')}
+            description={t('stayUpdated')}
           />
           <Benefit
             icon={<Layout className="w-5 h-5 text-primary" />}
-            title={translations.es.linkedinBenefitContentTitle}
-            description={translations.es.linkedinBenefitContentDescription}
+            title={t('personalizedContent')}
+            description={t('contentBody')}
           />
         </div>
       </CardContent>
@@ -121,10 +125,10 @@ export default function LinkedInConnect({
               onClick={handleDisconnect}
             >
               <Link2Off className="w-5 h-5 mr-2" />
-              {translations.es.linkedinDisconnectButton}
+              {t('diconnectLinkedIn')}
             </Button>
             <p className="text-sm text-muted-foreground">
-              {translations.es.linkedinConnectedMessage}
+              {t('diconnectBody')}
             </p>
           </>
         )}

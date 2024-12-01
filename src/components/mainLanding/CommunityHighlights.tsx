@@ -1,25 +1,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import { translations } from '@/lib/translations/translations'
 import { PublicCommunityType } from '@/schemas/communitySchema'
+import { useTranslations } from 'next-intl'
 
 const CommunityHighlights = ({
   communities
 }: {
   communities: PublicCommunityType[]
 }) => {
+  const t = useTranslations('CommunityHighlights')
   return (
     <section className="w-full bg-black py-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white">
-            {translations.es.highlightsTitle}
+            {t('highlightsTitle')}
           </h2>
-          <p className="mt-2 text-gray-400">
-            {translations.es.highlightsSubtitle}
-          </p>
+          <p className="mt-2 text-gray-400">{t('highlightsSubtitle')}</p>
         </div>
 
         {/* Grid Layout */}

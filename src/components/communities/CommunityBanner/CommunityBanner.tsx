@@ -10,8 +10,8 @@ import {
 
 import { OrganizationUserType } from '@/schemas/organizerSchema'
 import { UserType } from '@/schemas/userSchema'
-import { translations } from '@/lib/translations/translations'
 import { PublicCommunityType } from '@/schemas/communitySchema'
+import { useTranslations } from 'next-intl'
 
 interface CommunityBannerProps {
   organization: PublicCommunityType
@@ -28,6 +28,7 @@ export default function CommunityBanner({
   const firstOrganizer = allOrganizers[0]?.name || 'Unknown Organizer'
   const remainingOrganizersCount = allOrganizers.length - 1
   const membersLength = members.length
+  const t = useTranslations('Community')
 
   return (
     <div className="mb-8 bg-[#111827] rounded-lg overflow-hidden">
@@ -36,7 +37,7 @@ export default function CommunityBanner({
           {organization.logo && (
             <Image
               src={organization.logo}
-              alt={organization.name || translations.es.noLogoAvailable}
+              alt={organization.name || `${t('noLogoAvailable')}`}
               fill
               style={{ objectFit: 'cover' }}
               priority
@@ -58,22 +59,22 @@ export default function CommunityBanner({
             <div className="flex items-center gap-2 text-gray-400 justify-center md:justify-start">
               <Users className="h-5 w-5" />
               <span>
-                {membersLength} {translations.es.bannerMembers}
+                {membersLength} {t('bannerMembers')}
               </span>
             </div>
 
             <div className="flex items-center gap-2 text-gray-400 justify-center md:justify-start">
               <Users className="h-5 w-5" />
               <span>
-                {translations.es.bannerOrganizedBy}{' '}
+                {t('bannerOrganizedBy')}{' '}
                 <span className="font-semibold text-white">
                   {firstOrganizer}
                 </span>
                 {remainingOrganizersCount > 0 && (
                   <span>
                     {' '}
-                    {translations.es.bannerAnd}
-                    {remainingOrganizersCount} {translations.es.bannerOther}
+                    {t('bannerAnd')}
+                    {remainingOrganizersCount} {t('bannerOther')}
                     {remainingOrganizersCount > 1 ? 's' : ''}
                   </span>
                 )}
