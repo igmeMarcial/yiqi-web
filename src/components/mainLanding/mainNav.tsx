@@ -175,7 +175,7 @@ export default function MainLandingNav({
                       </span>
                     </Link>
                   )}
-                   <LangSelector />
+                  <LangSelector />
                 </div>
               </SheetContent>
             </Sheet>

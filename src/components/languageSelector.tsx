@@ -53,10 +53,30 @@ export default function LangSelector(): JSX.Element {
           position="popper"
           className="bg-zinc-900 border-none text-white"
         >
-          <SelectItem className="focus:bg-accent/35 focus:text-[#61f1f8]" value="en">English</SelectItem>
-          <SelectItem className="focus:bg-accent/35 focus:text-[#61f1f8]" value="es">Spanish</SelectItem>
-          <SelectItem className="focus:bg-accent/35 focus:text-[#61f1f8]" value="fr">French</SelectItem>
-          <SelectItem className="focus:bg-accent/35 focus:text-[#61f1f8]" value="pt">Portuguese</SelectItem>
+          <SelectItem
+            className="focus:bg-accent/35 focus:text-[#61f1f8]"
+            value="en"
+          >
+            English
+          </SelectItem>
+          <SelectItem
+            className="focus:bg-accent/35 focus:text-[#61f1f8]"
+            value="es"
+          >
+            Spanish
+          </SelectItem>
+          <SelectItem
+            className="focus:bg-accent/35 focus:text-[#61f1f8]"
+            value="fr"
+          >
+            French
+          </SelectItem>
+          <SelectItem
+            className="focus:bg-accent/35 focus:text-[#61f1f8]"
+            value="pt"
+          >
+            Portuguese
+          </SelectItem>
         </SelectContent>
       </Select>
     </div>
