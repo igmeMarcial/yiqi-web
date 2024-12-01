@@ -17,4 +17,11 @@ export const PublicCommunitySchema = z.object({
   userId: z.string().nullable().optional()
 })
 
+export const GetCommunitiesParamsSchema = z.object({
+  page: z.number().min(1).default(1),
+  limit: z.number().min(1).max(100).default(12),
+  search: z.string().optional()
+})
+
 export type PublicCommunityType = z.infer<typeof PublicCommunitySchema>
+export type GetCommunitiesParams = z.infer<typeof GetCommunitiesParamsSchema>
