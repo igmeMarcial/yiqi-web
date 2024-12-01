@@ -476,12 +476,12 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                 </div>
               </motion.div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
                 <DeleteAccountDialog />
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="flex items-center space-x-2"
+                  className="w-full sm:w-auto flex items-center justify-center space-x-2"
                 >
                   {isLoading ? (
                     <>

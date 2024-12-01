@@ -1,3 +1,10 @@
+import { getUser } from '@/lib/auth/lucia'
+import { redirect } from 'next/navigation'
+import { Roles } from '@prisma/client'
+import SignOutButton from '@/components/auth/sign-out'
+import { getTranslations } from 'next-intl/server'
+import { getUserProfile } from '@/services/actions/userActions'
+import { translations } from '@/lib/translations/translations'
 import {
   Card,
   CardContent,
@@ -6,18 +13,21 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import Image from 'next/image'
-import { getUser } from '@/lib/auth/lucia'
-import { redirect } from 'next/navigation'
-import { Roles } from '@prisma/client'
-import SignOutButton from '@/components/auth/sign-out'
-import { getTranslations } from 'next-intl/server'
 
 export default async function Page() {
   const t = await getTranslations('user')
   const user = await getUser()
+
   if (!user) {
-    redirect(`/auth`) 
+    redirect(`/auth`)
   }
+
+  const userInformation = await getUserProfile(user.id)
+
+  if (!userInformation) {
+    return <div>{translations.es.userNotFound}</div>
+  }
+
   if (user.role === Roles.USER) {
     return (
       <main className="flex min-h-[calc(100vh-176px)] items-center justify-center p-4 bg-gradient-to-b from-background/50 to-background">

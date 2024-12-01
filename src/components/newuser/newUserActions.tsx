@@ -30,11 +30,12 @@ import { Textarea } from '../ui/textarea'
 import { makeRegularUser } from '@/services/actions/userActions'
 import { SingleFileUpload } from '../upload/upload'
 import { useTranslations } from 'next-intl'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 function BeRegularUserButton({ userId }: { userId: { value: string } }) {
   const { toast } = useToast()
   const t = useTranslations('newUser')
+  const router = useRouter()
   return (
     <Button
       className="min-w-full"
@@ -44,7 +45,7 @@ function BeRegularUserButton({ userId }: { userId: { value: string } }) {
           description: `${t('welcome')}`,
           variant: 'default'
         })
-        redirect('/events')
+        router.push('/events')
       }}
     >
       {t('attended')}
@@ -87,6 +88,7 @@ export default function BeEventAdminForm({
 }: {
   userId: { value: string }
 }) {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -112,6 +114,7 @@ export default function BeEventAdminForm({
         description: `${t('success')}`,
         variant: 'default'
       })
+      router.push('/admin')
     } catch (error) {
       toast({
         description: `${error}`,

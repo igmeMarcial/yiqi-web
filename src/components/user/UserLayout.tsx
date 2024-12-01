@@ -42,7 +42,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
     {
       name: `${t('profileSettings')}`,
       icon: User,
-      href: `/user/profile`
+      href: `/user/edit`
     },
     {
       name: `${t('payments')}`,
