@@ -14,7 +14,7 @@ import { translations } from '@/lib/translations/translations'
 function Chats({
   contextUserName,
   lastMessage,
-  userId
+  contextUserId
 }: OrgMessageListItemSchemaType) {
   function getFirst5Words(str: string): string {
     const words = str.split(' ')
@@ -23,7 +23,7 @@ function Chats({
   }
 
   return (
-    <Link prefetch={true} href={`/chat/${userId}`}>
+    <Link prefetch={true} href={`/chat/${contextUserId}`}>
       <div className="border-b last:border-b-0">
         <div className="flex flex-row items-start gap-3 p-3 hover:bg-accent">
           <Avatar>
@@ -34,7 +34,7 @@ function Chats({
           <div className="flex flex-col items-start gap-1">
             <p className="font-bold">{contextUserName}</p>
             <p className="text-muted-foreground text-sm">
-              {getFirst5Words(lastMessage.content)}
+              {getFirst5Words(lastMessage?.content ?? '')}
             </p>
           </div>
         </div>

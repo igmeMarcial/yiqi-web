@@ -34,5 +34,37 @@ export async function getOrganizationMessageThreads(orgId: string) {
     }
   })
 
-  return messageThreads.map(thread => OrgMessageListItemSchema.parse(thread))
+  //   id: z.string(),
+  //   type: z.enum(['whatsapp', 'email']),
+  //   organizationId: z.string(),
+  //   contextUserId: z.string(),
+  //   userId: z.string().nullable(),
+  //   contextUserName: z.string().nullable(),
+  //   contextUserEmail: z.string().nullable(),
+  //   contextUserPicture: z.string().nullable(),
+  //   lastMessage: z.object({
+  //     id: z.string(),
+  //     content: z.string(),
+  //     createdAt: z.string(),
+  //     senderUserId: z.string()
+  //   })
+  return messageThreads.map(thread =>
+    OrgMessageListItemSchema.parse({
+      id: thread.id,
+      type: thread.type,
+      organizationId: thread.organizationId,
+      contextUserId: thread.contextUserId,
+      contextUserName: thread.contextUser.name,
+      contextUserEmail: thread.contextUser.email,
+      contextUserPicture: thread.contextUser.picture,
+      lastMessage: thread.messages[0]
+        ? {
+            id: thread.messages[0].id,
+            content: thread.messages[0].content,
+            createdAt: thread.messages[0].createdAt,
+            senderUserId: thread.messages[0].senderUserId
+          }
+        : null
+    })
+  )
 }

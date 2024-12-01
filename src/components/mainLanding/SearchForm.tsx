@@ -49,7 +49,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
 
   return (
     <div className="bg-black relative overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-16 lg:py-16 lg:pb-0 pb-0 sm:py-16">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16  lg:py-16 lg:pb-0 pb-0 sm:py-16">
         <div>
           <div className="flex items-center space-x-4">
             <p>{translations.es.welcome}</p>
