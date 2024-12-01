@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 
 interface WindowSize {
@@ -7,8 +9,8 @@ interface WindowSize {
 
 const useWindowSize = (): WindowSize => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: window ? window.innerWidth : 0,
+    height: window ? window.innerHeight : 0
   })
 
   useEffect(() => {
@@ -19,9 +21,15 @@ const useWindowSize = (): WindowSize => {
       })
     }
 
-    window.addEventListener('resize', handleResize)
+    if (window) {
+      window.addEventListener('resize', handleResize)
+    }
 
-    return () => window.removeEventListener('resize', handleResize)
+    return () => {
+      if (window) {
+        window.removeEventListener('resize', handleResize)
+      }
+    }
   }, [])
 
   return windowSize

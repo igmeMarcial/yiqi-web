@@ -2,9 +2,9 @@ import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 import ChatComponent from '@/components/chat/chat'
-import { getOrganizationMessageThreads } from '@/services/actions/messagesActions'
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
+import { getOrganizationMessageThreads } from '@/services/actions/communications/getOrganizationMessageThreads'
 
 export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser()

@@ -2,10 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  sendUserCommunicationAction,
-  getUserMessageList
-} from '@/services/actions/messagesActions'
+import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
+import { sendUserCommunicationAction } from '@/services/actions/communications/sendUserCommunications'
 import {
   MessageList,
   MessageThreadType,

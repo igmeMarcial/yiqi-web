@@ -3,10 +3,8 @@ import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 import ActiveChatComponent from '@/components/chat/activeChat'
 import ConnectedChat from '@/components/chat/connectedChat'
-import {
-  getOrganizationMessageThreads,
-  getUserMessageList
-} from '@/services/actions/messagesActions'
+import { getOrganizationMessageThreads } from '@/services/actions/communications/getOrganizationMessageThreads'
+import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 

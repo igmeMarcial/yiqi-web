@@ -30,19 +30,20 @@ export type MessageList = z.infer<typeof MessageListSchema>
 
 export const OrgMessageListItemSchema = z.object({
   id: z.string(),
-  type: z.string(),
+  type: z.enum(['whatsapp', 'email']),
   organizationId: z.string(),
   contextUserId: z.string(),
-  userId: z.string(),
   contextUserName: z.string().nullable(),
   contextUserEmail: z.string().nullable(),
   contextUserPicture: z.string().nullable(),
-  lastMessage: z.object({
-    id: z.string(),
-    content: z.string(),
-    createdAt: z.string(),
-    senderUserId: z.string()
-  })
+  lastMessage: z
+    .object({
+      id: z.string(),
+      content: z.string(),
+      createdAt: z.string(),
+      senderUserId: z.string()
+    })
+    .nullable()
 })
 
 export type OrgMessageListItemSchemaType = z.infer<
