@@ -1,6 +1,6 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getContactDetails } from '@/services/actions/contactActions'
-import { getUserMessageList } from '@/services/actions/messagesActions'
+import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
 import Link from 'next/link'
 import * as Tabs from '@radix-ui/react-tabs'
 import ConnectedChat from '@/components/chat/connectedChat'
