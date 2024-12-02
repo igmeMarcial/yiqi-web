@@ -40,18 +40,16 @@ export default async function Page({ params }: { params: { id: string } }) {
             name: user.name
           }}
         >
-          <div className="container mx-auto p-4">
-            {/* we only show welcome screen until they got their first event regirstation Maybe change in the future */}
-            {!hasFirstRegistration && (
-              <WelcomeScreen
-                importedContacts={hasContacts}
-                paymentsIsSetup={isStripeSetup}
-                eventCreated={hasEvents}
-                notificationsSent={hasNotifications}
-                orgId={params.id}
-              />
-            )}
-          </div>
+          {/* we only show welcome screen until they got their first event regirstation Maybe change in the future */}
+          {!hasFirstRegistration && (
+            <WelcomeScreen
+              importedContacts={hasContacts}
+              paymentsIsSetup={isStripeSetup}
+              eventCreated={hasEvents}
+              notificationsSent={hasNotifications}
+              orgId={params.id}
+            />
+          )}
         </OrganizationLayout>
       </main>
     )
