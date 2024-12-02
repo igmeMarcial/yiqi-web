@@ -11,7 +11,7 @@ import getCommunities from '@/services/actions/communities/getCommunities'
 export default async function Home() {
   const user = await getUser()
   const { events } = await getPublicEvents({ limit: 8 })
-  const communities = await getCommunities()
+  const { communities } = await getCommunities({ limit: 8 })
   return (
     <>
       <div className="fixed inset-0 h-screen w-screen -z-10 bg-black"></div>

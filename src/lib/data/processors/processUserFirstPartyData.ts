@@ -1,24 +1,16 @@
-import { LinkedInProfileType, UGCPostsResponse } from '@/schemas/linkedin'
-import OpenAI from 'openai'
+'use server'
+
+import client from '@/lib/llm/openAI'
+import prisma from '@/lib/prisma'
+import { translations } from '@/lib/translations/translations'
+import { UserDataCollected, userDataCollectedShema } from '@/schemas/userSchema'
 import { encoding_for_model } from 'tiktoken'
+import { generateEmbedding } from './generateEmbedding'
+import pgvector from 'pgvector'
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
-})
-
-type Props = {
-  profile: LinkedInProfileType
-  posts: UGCPostsResponse
-  likedPosts: UGCPostsResponse
-}
-
-const createPrompt = (
-  profileData: string,
-  postsData: string,
-  likedPostsData: string
-) => `
+const createPrompt = (collectedData: UserDataCollected) => `
 Objective:
-Using the provided LinkedIn data (profile information, job history, posts, and liked posts), generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.
+Using the provided user data, generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.
 
 Instructions:
 Please analyze the user's LinkedIn data and answer the following questions thoroughly. Your responses should be concise yet informative, focusing on insights that would be valuable for networking and co-founder matching.
@@ -113,36 +105,45 @@ Ensure confidentiality and handle all data in compliance with privacy regulation
 Avoid making assumptions; base your analysis solely on the provided data.
 
 
-Here is the user linkedin profile:
-${profileData}\n\n
+Here is the user resume:
+${collectedData.resumeText}\n\n
 
 ==================
 
-Here are the user posts:
-${postsData}\n\n
+Here are the user profile answers:
 
-===================
+${translations.es.professionalMotivationsLabel}: ${collectedData.professionalMotivations}
+${translations.es.communicationStyleLabel}: ${collectedData.communicationStyle}
+${translations.es.professionalValuesLabel}: ${collectedData.professionalValues}
+${translations.es.careerAspirationsLabel}: ${collectedData.careerAspirations}
+${translations.es.significantChallengeLabel}: ${collectedData.significantChallenge}
 
-Here are the user liked posts:
-${likedPostsData}
+ 
 
 
 `
 
 const MODEL = 'o1-preview'
-const EMBEDDING_MODEL = 'text-embedding-3-large'
 const SUMMARY_MODEL = 'gpt-4o-mini'
+type Props = {
+  userId: string
+}
 
-export async function processUserLinkedinData({
-  profile,
-  posts,
-  likedPosts
-}: Props) {
-  const profileData = JSON.stringify(profile, null, 2)
-  const postsData = JSON.stringify(posts.elements, null, 2)
-  const likedPostsData = JSON.stringify(likedPosts.elements, null, 2)
+export async function processUserFirstPartyData({ userId }: Props) {
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } })
+  const dataCollected = userDataCollectedShema.parse(user.dataCollected)
+  if (
+    !dataCollected.resumeText &&
+    !dataCollected.careerAspirations &&
+    !dataCollected.communicationStyle &&
+    !dataCollected.professionalMotivations &&
+    !dataCollected.professionalValues &&
+    !dataCollected.significantChallenge
+  ) {
+    throw new Error('Not enough information about the user to proceed')
+  }
 
-  const calculatedPrompt = createPrompt(profileData, postsData, likedPostsData)
+  const calculatedPrompt = createPrompt(dataCollected)
 
   const encoder = encoding_for_model(MODEL)
   const numberOfTokens = encoder.encode(calculatedPrompt).length
@@ -195,11 +196,6 @@ export async function processUserLinkedinData({
     throw new Error('User embeddable profile is empty')
   }
 
-  const embedding = await client.embeddings.create({
-    model: EMBEDDING_MODEL,
-    input: userEmbeddableProfile
-  })
-
   const userContentPreferencesResult = await client.chat.completions.create({
     model: SUMMARY_MODEL,
     messages: [
@@ -219,10 +215,18 @@ export async function processUserLinkedinData({
     throw new Error('User content preferences is empty')
   }
 
-  return {
-    userDetailedProfile,
-    userEmbeddableProfile: userEmbeddableProfile,
-    embedding: embedding.data[0].embedding,
-    userContentPreferences: userContentPreferences
-  }
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      userDetailedProfile: userDetailedProfile,
+      userEmbeddableProfile: userEmbeddableProfile,
+      userContentPreferences: userContentPreferences
+    }
+  })
+
+  const rawEmbedding = await generateEmbedding(userEmbeddableProfile)
+  const embedding = pgvector.toSql(rawEmbedding)
+
+  // we cannot use prisma.user.update here because the embedding is a vector and prisma does not support it
+  await prisma.$executeRaw`UPDATE "public"."User" SET embedding = ${embedding}::vector WHERE id = ${userId};`
 }
