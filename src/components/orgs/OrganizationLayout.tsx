@@ -102,16 +102,15 @@ export default function OrganizationLayout({
       href: `/admin/organizations/${orgId}/billing`
     }
   ]
-
   const currentOrg = useMemo(
     () => organizations.find(org => org.id === orgId),
     [organizations, orgId]
   )
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen w-full">
-        <Sidebar collapsible="icon">
+    <SidebarProvider className="bg-primary">
+      <div className="flex h-screen w-full bg-primary">
+        <Sidebar collapsible="icon" className="bg-primary">
           <SidebarHeader>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -121,7 +120,7 @@ export default function OrganizationLayout({
                   <ChevronDown className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent className="w-56 bg-primary">
                 {organizations.map(org => (
                   <DropdownMenuItem key={org.id}>
                     <Link href={`/admin/organizations/${org.id}`}>
@@ -149,9 +148,9 @@ export default function OrganizationLayout({
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 overflow-auto bg-gray-100">
-          <header className="flex items-center justify-between bg-white p-4 shadow-md">
-            <SidebarTrigger />
+        <main className="flex flex-col flex-1 h-full overflow-hidden bg-primary">
+          <header className="flex items-center justify-between p-4 shadow-md bg-primary">
+            <SidebarTrigger className="bg-primary text-primary" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-8 w-8">
@@ -182,7 +181,9 @@ export default function OrganizationLayout({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <div className="p-4">{children}</div>
+          <div className="flex-1 overflow-auto p-2 sm:p-4 bg-primary">
+            {children}
+          </div>
         </main>
       </div>
     </SidebarProvider>

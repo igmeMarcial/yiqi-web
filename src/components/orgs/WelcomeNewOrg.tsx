@@ -30,6 +30,7 @@ export default function WelcomeScreen({
   orgId
 }: Props) {
   const t = useTranslations('WelcomeNewOrg')
+
   const [tasks] = useState([
     {
       id: 1,
@@ -69,59 +70,67 @@ export default function WelcomeScreen({
   const progress = (completedTasks / tasks.length) * 100
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 p-8">
-      <Card className="w-full max-w-4xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center text-purple-800">
-            {t('welcomeScreenTitle')}
-          </CardTitle>
-          <CardDescription className="text-center text-lg mt-2">
-            {t('welcomeScreenDescription')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {/* Progress bar section */}
-          <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-2">
-              {t('welcomeScreenProgressTitle')}
-            </p>
-            <Progress value={progress} className="w-full h-2" />
-            <p className="text-right text-sm text-gray-600 mt-1">
-              {completedTasks} {t('welcomeOf')} {tasks.length}{' '}
-              {t('welcomeScreenTasks')}
-            </p>
-          </div>
-          {/* Task Cards */}
-          <div className="grid gap-6 md:grid-cols-2">
-            {tasks.map(task => (
-              <Link href={task.link} key={task.id}>
-                <Card
-                  className={`transition-all duration-300 ease-in-out ${task.completed ? 'bg-green-50 border-green-200' : 'hover:shadow-md'}`}
-                >
-                  <CardContent className="p-6 flex items-start space-x-4">
-                    <div
-                      className={`p-2 rounded-full ${task.completed ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'}`}
-                    >
-                      <task.icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex-grow">
-                      <h3 className="font-semibold text-lg mb-1">
-                        {task.title}
-                      </h3>
-                      <p className="text-gray-600">{task.description}</p>
-                    </div>
-                    <Checkbox
-                      checked={task.completed}
-                      className="mt-1"
-                      disabled={true}
-                    />
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+    <div className={`container mx-auto p-2 sm:p-4 bg-primary`}>
+      <div className={`bg-gradient-to-br bg-primary rounded p-2 sm:p-4 `}>
+        <Card className={`w-full max-w-4xl mx-auto bg-primary`}>
+          <CardHeader>
+            <CardTitle
+              className={`text-3xl font-bold text-center dark:text-white text-purple-800'`}
+            >
+              {t('welcomeScreenTitle')}
+            </CardTitle>
+            <CardDescription className="text-center text-lg mt-2">
+              {t('welcomeScreenDescription')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {/* Progress bar section */}
+            <div className="mb-6">
+              <p className={`text-sm font-medium text-secondary mb-2`}>
+                {t('welcomeScreenProgressTitle')}
+              </p>
+              <Progress value={progress} className="w-full h-2" />
+              <p className={`text-right text-sm text-secondary mt-1`}>
+                {completedTasks} {t('welcomeOf')} {tasks.length}{' '}
+                {t('welcomeScreenTasks')}
+              </p>
+            </div>
+            {/* Task Cards */}
+            <div className="grid gap-6 md:grid-cols-2">
+              {tasks.map(task => (
+                <Link href={task.link} key={task.id}>
+                  <Card
+                    className={`transition-all duration-300 ease-in-out bg-secondary dark:bg-gray-800 text-white`}
+                  >
+                    <CardContent className="p-4 sm:p-4 md:p-6 lg:p-8 flex items-start space-x">
+                      <div
+                        className={`p-2 rounded-full mr-2 ${task.completed ? 'bg-green-100 text-green-600' : 'bg-purple-100 text-purple-600'} dark:bg-white text-black`}
+                      >
+                        <task.icon className={`w-6 h-6 dark:text-black`} />
+                      </div>
+                      <div className="flex-grow">
+                        <h3
+                          className={`font-semibold text-lg mb-1 text-primary`}
+                        >
+                          {task.title}
+                        </h3>
+                        <p className={`text-gray-600 text-secondary`}>
+                          {task.description}
+                        </p>
+                      </div>
+                      <Checkbox
+                        checked={task.completed}
+                        className={`mt-1 ${task.completed ? 'bg-green-500' : 'bg-gray-300'} dark:border-white dark:text-white`}
+                        disabled={true}
+                      />
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

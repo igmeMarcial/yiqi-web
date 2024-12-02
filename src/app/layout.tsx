@@ -44,8 +44,9 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale()
   const messages = await getMessages()
+
   return (
-    <html lang={locale} className="h-screen w-full">
+    <html lang={locale} className="h-screen w-full dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-full`}
       >
