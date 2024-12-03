@@ -17,8 +17,15 @@ import {
 import { getEvent } from '../actions/event/getEvent'
 import { getPublicEvents } from '../actions/event/getPublicEvents'
 import { createRegistration } from '@/lib/event/createRegistration'
+import { loginLinkedin } from '@/lib/auth/loginLinkedin'
 
 export const appRouter = router({
+  loginLinkedin: publicProcedure
+    .input(z.object({ code: z.string() }))
+    .mutation(async ({ input }) => {
+      return loginLinkedin(input)
+    }),
+
   searchUsers: publicProcedure
     .input(z.object({ query: z.string() }))
     .query(async ({ input }) => {

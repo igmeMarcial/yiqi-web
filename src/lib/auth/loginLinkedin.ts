@@ -1,19 +1,10 @@
 import { lucia } from '@/lib/auth/lib'
 import prisma from '@/lib/prisma'
 import { AuthClient } from 'linkedin-api-client'
-import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import { LinkedInJWTSchema } from '@/types/linkedin'
 
-// http://localhost:3000/api/auth/linkedin/callback
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url)
-  const code = searchParams.get('code')
-
-  if (!code) {
-    return new Response('Unauthorized', { status: 401 })
-  }
-
+export async function loginLinkedin({ code }: { code: string }) {
   const redirectUrl = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_AUTH_URI}`
   console.log(redirectUrl)
 
@@ -67,9 +58,9 @@ export async function GET(req: NextRequest) {
 
     const session = await lucia.createSession(userId, {})
 
-    return NextResponse.json({
+    return {
       sessionId: session.id
-    })
+    }
   } catch (error) {
     console.error('Error during LinkedIn authentication:', error)
     return new Response('Internal Server Error', { status: 500 })
