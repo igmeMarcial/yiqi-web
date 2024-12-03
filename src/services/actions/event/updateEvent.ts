@@ -16,7 +16,7 @@ export async function updateEvent(
   eventData: unknown,
   rawTickets: unknown[]
 ) {
-  const event = await getEvent(eventId)
+  const event = await getEvent({ eventId, includeTickets: true })
   if (!event) throw new Error('Event not found')
 
   const currentUser = await getUser()

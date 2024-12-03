@@ -16,7 +16,7 @@ export default async function EventDetailsPage({
 }: {
   params: { id: string; eventId: string }
 }) {
-  const event = await getEvent(params.eventId)
+  const event = await getEvent({ eventId: params.eventId })
   const user = await getUser()
   const attendees = await getEventRegistrations(params.eventId)
 

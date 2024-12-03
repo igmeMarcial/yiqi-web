@@ -4,20 +4,28 @@ import { publicProcedure, router } from './util'
 import { getUserRegistrationStatus } from '../actions/eventActions'
 import { getOrganization } from '../actions/organizationActions'
 import {
+  getEventFilterSchema,
+  getPublicEventsFilterSchema,
   registrationInputSchema,
   SavedEventSchema
 } from '@/schemas/eventSchema'
 import {
   SearchUserResultSchema,
-  PublicEventsSchema,
   UserRegistrationStatusSchema,
   OrganizationSchema
 } from '@/schemas/apiSchemas'
 import { getEvent } from '../actions/event/getEvent'
 import { getPublicEvents } from '../actions/event/getPublicEvents'
-import { createRegistration } from '../actions/event/createRegistration'
+import { createRegistration } from '@/lib/event/createRegistration'
+import { loginLinkedin } from '@/lib/auth/loginLinkedin'
 
 export const appRouter = router({
+  loginLinkedin: publicProcedure
+    .input(z.object({ code: z.string() }))
+    .mutation(async ({ input }) => {
+      return loginLinkedin(input)
+    }),
+
   searchUsers: publicProcedure
     .input(z.object({ query: z.string() }))
     .query(async ({ input }) => {
@@ -25,15 +33,19 @@ export const appRouter = router({
       return SearchUserResultSchema.parse(result)
     }),
 
-  getPublicEvents: publicProcedure.query(async () => {
-    const events = await getPublicEvents({})
-    return PublicEventsSchema.parse(events)
-  }),
+  getPublicEvents: publicProcedure
+    .input(z.optional(getPublicEventsFilterSchema))
+    .query(async ({ input }) => {
+      const events = await getPublicEvents(input)
+      return events
+    }),
 
-  getEvent: publicProcedure.input(z.string()).query(async ({ input }) => {
-    const event = await getEvent(input)
-    return SavedEventSchema.parse(event)
-  }),
+  getEvent: publicProcedure
+    .input(getEventFilterSchema)
+    .query(async ({ input }) => {
+      const event = await getEvent(input)
+      return SavedEventSchema.parse(event)
+    }),
 
   createRegistration: publicProcedure
     .input(
@@ -42,11 +54,17 @@ export const appRouter = router({
         registrationData: registrationInputSchema
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+
       const registration = await createRegistration(
+        ctx.user,
         input.eventId,
         input.registrationData
       )
+
       return registrationInputSchema.parse(registration)
     }),
 

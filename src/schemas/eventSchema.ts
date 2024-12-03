@@ -233,4 +233,19 @@ export const registrationInputSchema = z.object({
   tickets: z.record(z.string(), z.number().min(0).max(5))
 })
 
+export const getPublicEventsFilterSchema = z.object({
+  title: z.string().optional(),
+  location: z.string().optional(),
+  startDate: z.string().optional(),
+  type: z.string().optional(),
+  page: z.number().optional(),
+  limit: z.number().optional()
+})
+export const getEventFilterSchema = z.object({
+  eventId: z.string(),
+  includeTickets: z.boolean().optional()
+})
+
 export type RegistrationInput = z.infer<typeof registrationInputSchema>
+export type GetPublicEventsInput = z.infer<typeof getPublicEventsFilterSchema>
+export type GetEventFilterSchemaType = z.infer<typeof getEventFilterSchema>
