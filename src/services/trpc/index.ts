@@ -9,7 +9,6 @@ import {
 } from '@/schemas/eventSchema'
 import {
   SearchUserResultSchema,
-  PublicEventsSchema,
   UserRegistrationStatusSchema,
   OrganizationSchema
 } from '@/schemas/apiSchemas'
@@ -26,8 +25,9 @@ export const appRouter = router({
     }),
 
   getPublicEvents: publicProcedure.query(async () => {
-    const events = await getPublicEvents({})
-    return PublicEventsSchema.parse(events)
+    const eventsResult = await getPublicEvents({})
+
+    return eventsResult
   }),
 
   getEvent: publicProcedure.input(z.string()).query(async ({ input }) => {

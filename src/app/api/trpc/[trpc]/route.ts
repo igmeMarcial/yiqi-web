@@ -1,11 +1,22 @@
-import { createNextApiHandler } from "@trpc/server/adapters/next";
 import { appRouter } from '@/services/trpc'
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { createContext } from '@/services/trpc/context'
 
-// tRPC handler for Next.js App Router
-export const handler = createNextApiHandler({
-  router: appRouter,
-  createContext,
-});
+async function handler(req: Request) {
+  return fetchRequestHandler({
+    endpoint: '/api/trpc',
+    req,
+    router: appRouter,
+    createContext,
+    onError({ error, type, path, input, ctx, req }) {
+      console.log('error', error)
+      console.log('type', type)
+      console.log('path', path)
+      console.log('input', input)
+      console.log('ctx', ctx)
+      console.log('req', req)
+    }
+  })
+}
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }
