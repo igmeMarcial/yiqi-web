@@ -47,7 +47,12 @@ export default async function EventsPage({
                 <Link
                   href={`/admin/organizations/${params.id}/events/new`}
                   className="font-bold text-primary hover:opacity-90 transition-opacity rounded-md text-center w-full sm:w-auto px-4 py-2"
-                  style={{ paddingLeft: '1.2rem', paddingRight: '1.2rem', whiteSpace: 'normal', backgroundColor: 'gray' }}
+                  style={{
+                    paddingLeft: '1.2rem',
+                    paddingRight: '1.2rem',
+                    whiteSpace: 'normal',
+                    backgroundColor: 'gray'
+                  }}
                 >
                   {t('createNewEvents')}
                 </Link>
@@ -63,7 +68,9 @@ export default async function EventsPage({
                   <h3 className="text-xl font-semibold text-primary truncate sm:whitespace-normal sm:overflow-visible sm:text-ellipsis">
                     {event.title}
                   </h3>
-                  <p className="text-gray-400 text-sm">{new Date(event.startDate).toLocaleString()}</p>
+                  <p className="text-gray-400 text-sm">
+                    {new Date(event.startDate).toLocaleString()}
+                  </p>
 
                   {/* Íconos para ver y eliminar */}
                   <div className="absolute top-4 right-4 flex space-x-3">
@@ -73,9 +80,7 @@ export default async function EventsPage({
                     >
                       <Eye className="w-5 h-5 text-primary" />
                     </Link>
-                    <button
-                      className="text-red-600 hover:text-red-500"
-                    >
+                    <button className="text-red-600 hover:text-red-500">
                       <Trash className="w-5 h-5 text-primary" />
                     </button>
                   </div>
@@ -91,9 +96,4 @@ export default async function EventsPage({
   } else if (user.role === Roles.USER) {
     redirect(`/user`)
   }
-}
-
-const handleDelete = (eventId: string) => {
-  // eliminar el evento
-  console.log(`Eliminar evento con ID: ${eventId}`)
 }
