@@ -51,46 +51,87 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         _output_out: typeof _trpc_server.unsetMarker;
         _meta: object;
     }, {
-        id: string;
-        title: string;
-        startDate: Date;
-        endDate: Date;
-        organizationId: string;
-        customFields: {
-            name: string;
-            type: "number" | "select" | "date" | "text";
-            required: boolean;
-            options?: string | undefined;
-        }[];
-        createdAt: Date;
-        updatedAt: Date;
-        requiresApproval: boolean;
-        type: EventTypeEnum;
-        description?: string | undefined;
-        location?: string | null | undefined;
-        city?: string | null | undefined;
-        state?: string | null | undefined;
-        country?: string | null | undefined;
-        virtualLink?: string | null | undefined;
-        maxAttendees?: number | null | undefined;
-        openGraphImage?: string | null | undefined;
-        tickets?: {
-            name: string;
-            category: "GENERAL" | "VIP" | "BACKSTAGE";
-            price: number;
-            limit: number;
-            ticketsPerPurchase: number;
-            description?: string | undefined;
-        }[] | {
-            name: string;
+        events: {
             id: string;
-            category: "GENERAL" | "VIP" | "BACKSTAGE";
-            price: number;
-            limit: number;
-            ticketsPerPurchase: number;
+            title: string;
+            startDate: Date;
+            endDate: Date;
+            organizationId: string;
+            customFields: {
+                name: string;
+                type: "number" | "select" | "date" | "text";
+                required: boolean;
+                options?: string | undefined;
+            }[];
+            createdAt: Date;
+            updatedAt: Date;
+            requiresApproval: boolean;
+            type: EventTypeEnum;
+            backgroundColor: string | null;
+            heroImage: string | null;
+            organization: {
+                name: string;
+                logo: string | null;
+                stripeAccountId?: string | null | undefined;
+            };
+            registrations: number;
+            tickets: {
+                name: string;
+                id: string;
+                category: "GENERAL" | "VIP" | "BACKSTAGE";
+                price: number;
+                limit: number;
+                ticketsPerPurchase: number;
+                description?: string | undefined;
+            }[];
+            subtitle?: string | null | undefined;
             description?: string | undefined;
-        }[] | null | undefined;
-    }[]>;
+            location?: string | null | undefined;
+            city?: string | null | undefined;
+            state?: string | null | undefined;
+            country?: string | null | undefined;
+            virtualLink?: string | null | undefined;
+            maxAttendees?: number | null | undefined;
+            openGraphImage?: string | null | undefined;
+            featuredIn?: {
+                name: string;
+                url: string;
+            }[] | null | undefined;
+            hosts?: {
+                name: string;
+                id: string;
+                email: string;
+                privacySettings: {
+                    linkedin: boolean;
+                    website: boolean;
+                    email: boolean;
+                    phoneNumber: boolean;
+                    x: boolean;
+                };
+                stopCommunication: boolean;
+                isLinkedinLinked: boolean;
+                instagram?: string | null | undefined;
+                linkedin?: string | null | undefined;
+                website?: string | null | undefined;
+                picture?: string | undefined;
+                phoneNumber?: string | undefined;
+                linkedinAccessToken?: string | undefined;
+                company?: string | null | undefined;
+                position?: string | null | undefined;
+                shortDescription?: string | null | undefined;
+                x?: string | null | undefined;
+                professionalMotivations?: string | null | undefined;
+                communicationStyle?: string | null | undefined;
+                professionalValues?: string | null | undefined;
+                careerAspirations?: string | null | undefined;
+                significantChallenge?: string | null | undefined;
+                resumeUrl?: string | null | undefined;
+                resumeText?: string | null | undefined;
+                resumeLastUpdated?: string | null | undefined;
+            }[] | null | undefined;
+        }[];
+        totalCount: number;
+    }>;
     getEvent: _trpc_server.BuildProcedure<"query", {
         _config: _trpc_server.RootConfig<{
             ctx: object;

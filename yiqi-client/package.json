@@ -1,13 +1,13 @@
 {
   "name": "@andino-labs/yiqi-client",
-  "version": "1.0.8",
+  "version": "1.0.13",
   "types": "dist/index.d.mts",
   "files": [
     "dist",
     "index.d.ts"
   ],
   "dependencies": {
-    "@trpc/server": "^11.0.0-rc.569"
+    "@trpc/server": "10.45.2"
   },
   "devDependencies": {
     "@types/react": "^18.x.x",

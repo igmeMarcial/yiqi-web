@@ -7,7 +7,7 @@ import { getUser, isOrganizerAdmin } from '@/lib/auth/lucia'
 import { getEvent } from './event/getEvent'
 
 export async function deleteEvent(eventId: string) {
-  const event = await getEvent(eventId)
+  const event = await getEvent({ eventId })
   if (!event) throw new Error('Event not found')
 
   const currentUser = await getUser()
@@ -68,7 +68,7 @@ export async function getEventRegistrationsByUserId(userId: string) {
 }
 
 export async function checkInUserToEvent(eventId: string, ticketId: string) {
-  const event = await getEvent(eventId)
+  const event = await getEvent({ eventId })
   if (!event) throw new Error('Event not found')
 
   const currentUser = await getUser()

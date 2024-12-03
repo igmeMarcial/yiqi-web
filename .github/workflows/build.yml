@@ -28,6 +28,7 @@ jobs:
     env:
       FROM_EMAIL: fake@example.com
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/andino
+      DIRECT_URL: postgresql://postgres:postgres@localhost:5432/andino
       AWS_ACCESS_KEY_ID: aws-access-key_id
       AWS_SECRET_ACCESS_KEY: aws-secret-access-key
       AWS_REGION: aws-region
@@ -48,6 +49,7 @@ jobs:
       STRIPE_SECRET_KEY: 'sk_test_dummy'
       STRIPE_WEBHOOK_SECRET: 'whsec_dummy'
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_dummy'
+      OPENAI_API_KEY: 'dummy'
 
     steps:
       - uses: actions/checkout@v3

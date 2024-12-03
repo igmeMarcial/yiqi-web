@@ -9,7 +9,10 @@ export default async function Page({
   params: { eventId: string; id: string }
 }) {
   const organization = await getOrganization(params.id)
-  const event = await getEvent(params.eventId, true)
+  const event = await getEvent({
+    eventId: params.eventId,
+    includeTickets: true
+  })
 
   if (!event || !organization) {
     notFound()

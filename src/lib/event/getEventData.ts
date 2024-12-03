@@ -6,7 +6,7 @@ import { getEvent } from '@/services/actions/event/getEvent'
 export async function getEventData(organizationId: string, eventId: string) {
   const [organization, event, currentUser] = await Promise.all([
     getOrganization(organizationId),
-    getEvent(eventId),
+    getEvent({ eventId }),
     getUser()
   ])
 
