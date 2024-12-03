@@ -277,7 +277,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterCompany')}
+                              placeholder={t('enterYourCompany')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -312,7 +312,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={t('enterPosition')}
+                              placeholder={t('enterYourPosition')}
                               {...field}
                               value={field.value ?? ''}
                             />

@@ -150,7 +150,10 @@
     "payments": "Pagos",
     "history": "Historial",
     "tickets": "Tickets",
-    "logOut": "Finalizar la sesión"
+    "logOut": "Finalizar la sesión",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "networkingSettings": "Networking"
   },
   "ProfileSettings": {
     "name": "Nombre",
@@ -170,7 +173,16 @@
     "enterYourPosition": "Introduce tu cargo",
     "tellUsAboutYourself": "Cuéntanos sobre ti",
     "setToPublic": "Establecer como público",
-    "User": "Usuario"
+    "User": "Usuario",
+    "profileSettings": "Configuración del Perfil",
+    "enterYourX": "Introduce tu link de x",
+    "enterInstagramURL": "Introduce tu link de Instagram",
+    "enterWebsiteURL": "Introduce tu link de sitio web",
+    "enterLinkedinURL": "Introduce tu link de LinkedIn",
+    "website":"Sitio web",
+    "stopCommunications":"Detener Comunicaciones",
+    "disableCommunications": "Deshabilitar todas las comunicaciones",
+    "role": "Rol"
   },
   "DeleteAccount": {
     "apply": "Quiero Postular!",
