@@ -16,7 +16,7 @@ import {
 } from '@/schemas/apiSchemas'
 import { getEvent } from '../actions/event/getEvent'
 import { getPublicEvents } from '../actions/event/getPublicEvents'
-import { createRegistration } from '../actions/event/createRegistration'
+import { createRegistration } from '@/lib/event/createRegistration'
 
 export const appRouter = router({
   searchUsers: publicProcedure
@@ -47,11 +47,17 @@ export const appRouter = router({
         registrationData: registrationInputSchema
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+
       const registration = await createRegistration(
+        ctx.user,
         input.eventId,
         input.registrationData
       )
+
       return registrationInputSchema.parse(registration)
     }),
 

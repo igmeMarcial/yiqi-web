@@ -1,22 +1,31 @@
 import { appRouter } from '@/services/trpc'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
+import { getUserByMobileAuthToken } from '@/lib/auth/getUserByMobileAuthToken'
 
-async function handler(req: Request) {
+const handler = async (req: Request) => {
   return fetchRequestHandler({
     endpoint: '/api/trpc',
     req,
     router: appRouter,
-    createContext: () => {
-      // Example context setup (e.g., auth)
-      return {}
+    createContext: async ({ req }) => {
+      const authHeader = req.headers.get('authorization')
+      const mobileAuthToken = authHeader?.replace('Bearer ', '')
+
+      const user = await getUserByMobileAuthToken(mobileAuthToken)
+
+      return {
+        user
+      }
     },
     onError({ error, type, path, input, ctx, req }) {
-      console.log('error', error)
-      console.log('type', type)
-      console.log('path', path)
-      console.log('input', input)
-      console.log('ctx', ctx)
-      console.log('req', req)
+      console.error('TRPC Error:', {
+        error,
+        type,
+        path,
+        input,
+        ctx,
+        req
+      })
     }
   })
 }

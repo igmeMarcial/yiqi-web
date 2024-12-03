@@ -11,6 +11,7 @@ export const getUser = async () => {
   if (!sessionId) {
     return null
   }
+
   const { session, user } = await lucia.validateSession(sessionId)
 
   if (!user || !session || !user.id) {
@@ -57,7 +58,6 @@ export const getUser = async () => {
 
   return luciaUserSchema.parse(dbUser)
 }
-
 export async function isEventAdmin(
   eventId: string,
   userId: string
