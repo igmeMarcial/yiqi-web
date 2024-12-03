@@ -13,12 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import {
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  User as UserIcon
-} from 'lucide-react'
+import { LogOut, Settings, User as UserIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import SignOutButton from './auth/sign-out'
@@ -61,16 +56,14 @@ export function AccountDropdown({ user }: AccountDropdownProps) {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {
-          user?.role === 'USER' && (
-            <DropdownMenuItem asChild>
-              <Link href={`/user`} className="cursor-pointer">
-                <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-                <span>{t('profile')}</span>
-              </Link>
-            </DropdownMenuItem>
-          )
-        }
+        {user?.role === 'USER' && (
+          <DropdownMenuItem asChild>
+            <Link href={`/user`} className="cursor-pointer">
+              <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+              <span>{t('profile')}</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
           <Link href={`/user/edit`} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />

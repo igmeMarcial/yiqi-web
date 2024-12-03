@@ -6,7 +6,6 @@ import { getUserProfile } from '@/services/actions/userActions'
 import UserProfilePage from '@/components/user/UserProfile'
 import MainLandingNav from '@/components/mainLanding/mainNav'
 
-
 export default async function Page() {
   const t = await getTranslations('user')
   const user = await getUser()

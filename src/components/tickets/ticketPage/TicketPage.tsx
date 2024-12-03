@@ -29,15 +29,15 @@ const TicketStatusBadge = ({ status }: { status: string }) => {
     status === 'APPROVED'
       ? 'bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
       : status === 'PENDING'
-      ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
-      : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
+        ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
+        : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
 
   const badgeText =
     status === 'APPROVED'
       ? translations.es.ticketStatusApproved
       : status === 'PENDING'
-      ? translations.es.ticketStatusPending
-      : translations.es.ticketStatusRejected
+        ? translations.es.ticketStatusPending
+        : translations.es.ticketStatusRejected
 
   return (
     <Badge
@@ -45,8 +45,8 @@ const TicketStatusBadge = ({ status }: { status: string }) => {
         status === 'APPROVED'
           ? 'default'
           : status === 'PENDING'
-          ? 'secondary'
-          : 'destructive'
+            ? 'secondary'
+            : 'destructive'
       }
       className={badgeClass}
     >
@@ -222,27 +222,26 @@ export default function TicketsPage({
             ))}
           </div>
 
-
           {tickets.length > 0 && (
-          <div className="flex justify-center items-center mt-6 space-x-4">
-            <Button
-              variant="outline"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <span className="text-white">
-              Pagina {currentPage} de {totalPages}
-            </span>
-            <Button
-              variant="outline"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
+            <div className="flex justify-center items-center mt-6 space-x-4">
+              <Button
+                variant="outline"
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <span className="text-white">
+                Pagina {currentPage} de {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
           )}
         </main>
       </Card>
