@@ -98,10 +98,10 @@ export default function TicketsPage({
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-zinc-800 via-zinc-900 to-black text-white">
-        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Card className="w-full max-w-4xl mx-auto">
+        <main className="max-w-5xl mx-auto sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold mb-6 text-center">
-            {translations.es.ticketTitlePage}
+            {tickets.length === 0 ? translations.es.ticketNo : translations.es.ticketTitlePage}
           </h1>
           <div className="space-y-8">
             {tickets.map(data => (
@@ -199,7 +199,7 @@ export default function TicketsPage({
             ))}
           </div>
         </main>
-      </div>
+      </Card>
 
       <QRModal
         isOpen={modalState.isOpen}

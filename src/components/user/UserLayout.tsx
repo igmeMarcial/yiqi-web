@@ -67,8 +67,8 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
   ]
 
   return (
-    <SidebarProvider>
-      <div className="flex  w-full">
+    <SidebarProvider className='bg-primary'>
+      <div className="flex  w-full bg-primary">
         <Sidebar collapsible="icon">
           <SidebarContent>
             <SidebarGroup>
@@ -87,8 +87,8 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <div className="flex-1 overflow-auto bg-gray-100">
-          <header className="flex items-center justify-between bg-white p-4 shadow-md">
+        <div className="flex-1 overflow-auto bg-gray-100 bg-primary">
+          <header className="flex items-center justify-between p-4 shadow-md bg-primary">
             <SidebarTrigger />
 
             <DropdownMenu>

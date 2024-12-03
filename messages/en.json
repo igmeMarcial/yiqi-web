@@ -549,6 +549,7 @@
     "ticketStatusPending": "Pending",
     "ticketStatusRejected": "Rejected",
     "ticketTitlePage": "Your Tickets",
+    "ticketNo": "You don´t have any tickets",
     "ticketEventImageAlt": "Event Banner",
     "ticketNumber": "Ticket #",
     "ticketLabelView": "View Ticket",
