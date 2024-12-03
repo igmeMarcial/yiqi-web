@@ -83,6 +83,15 @@ export const profileWithPrivacySchema = baseProfileSchema.extend({
   isLinkedinLinked: z.boolean().default(false)
 })
 
+export const luciaUserSchema = z.object({
+  role: z.enum(['USER', 'ADMIN', 'ANDINO_ADMIN', 'NEW_USER']),
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  picture: z.string().nullable()
+})
+
+export type LuciaUserType = z.infer<typeof luciaUserSchema>
 export type UserDataCollected = z.infer<typeof userDataCollectedShema>
 export type ProfileDataValues = z.infer<typeof profileDataSchema>
 export type ProfileFormValues = z.infer<typeof profileFormSchema>
