@@ -4,6 +4,8 @@ import { publicProcedure, router } from './util'
 import { getUserRegistrationStatus } from '../actions/eventActions'
 import { getOrganization } from '../actions/organizationActions'
 import {
+  getEventFilterSchema,
+  getPublicEventsFilterSchema,
   registrationInputSchema,
   SavedEventSchema
 } from '@/schemas/eventSchema'
@@ -24,15 +26,19 @@ export const appRouter = router({
       return SearchUserResultSchema.parse(result)
     }),
 
-  getPublicEvents: publicProcedure.query(async () => {
-    const events = await getPublicEvents({})
-    return events
-  }),
+  getPublicEvents: publicProcedure
+    .input(z.optional(getPublicEventsFilterSchema))
+    .query(async ({ input }) => {
+      const events = await getPublicEvents(input)
+      return events
+    }),
 
-  getEvent: publicProcedure.input(z.string()).query(async ({ input }) => {
-    const event = await getEvent(input)
-    return SavedEventSchema.parse(event)
-  }),
+  getEvent: publicProcedure
+    .input(getEventFilterSchema)
+    .query(async ({ input }) => {
+      const event = await getEvent(input)
+      return SavedEventSchema.parse(event)
+    }),
 
   createRegistration: publicProcedure
     .input(
