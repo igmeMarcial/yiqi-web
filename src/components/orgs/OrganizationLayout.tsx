@@ -181,7 +181,7 @@ export default function OrganizationLayout({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <div className="flex-1 overflow-auto p-2 sm:p-8 px-4 bg-primary">
+          <div className="flex-1 overflow-auto p-2 sm:px-8 sm:py-2 px-4 bg-primary">
             {children}
           </div>
         </main>
