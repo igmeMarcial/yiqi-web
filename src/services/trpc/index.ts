@@ -25,9 +25,8 @@ export const appRouter = router({
     }),
 
   getPublicEvents: publicProcedure.query(async () => {
-    const eventsResult = await getPublicEvents({})
-
-    return eventsResult
+    const events = await getPublicEvents({})
+    return events
   }),
 
   getEvent: publicProcedure.input(z.string()).query(async ({ input }) => {

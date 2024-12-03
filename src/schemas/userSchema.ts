@@ -76,7 +76,7 @@ export const profileDataSchema = baseProfileSchema.extend({
   id: z.string()
 })
 export const profileWithPrivacySchema = baseProfileSchema.extend({
-  picture: z.any().optional(),
+  picture: z.string().optional(),
   id: z.string(),
   privacySettings: privacySettingsSchema,
   linkedinAccessToken: z.string().optional(),

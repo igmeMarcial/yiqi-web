@@ -1,13 +1,15 @@
 import { appRouter } from '@/services/trpc'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import { createContext } from '@/services/trpc/context'
 
 async function handler(req: Request) {
   return fetchRequestHandler({
     endpoint: '/api/trpc',
     req,
     router: appRouter,
-    createContext,
+    createContext: () => {
+      // Example context setup (e.g., auth)
+      return {}
+    },
     onError({ error, type, path, input, ctx, req }) {
       console.log('error', error)
       console.log('type', type)

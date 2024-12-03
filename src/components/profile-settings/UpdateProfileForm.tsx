@@ -46,6 +46,11 @@ import {
 } from '@/schemas/userSchema'
 import { translations } from '@/lib/translations/translations'
 import { useTranslations } from 'next-intl'
+import { z } from 'zod'
+
+const ProfileFormSchema = profileWithPrivacySchema.extend({
+  picture: z.instanceof(File).nullable().optional()
+})
 
 function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -53,8 +58,8 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const router = useRouter()
   const t = useTranslations('ProfileSettings')
 
-  const form = useForm<ProfileWithPrivacy>({
-    resolver: zodResolver(profileWithPrivacySchema),
+  const form = useForm<z.infer<typeof ProfileFormSchema>>({
+    resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
       ...user,
       name: user.name ?? '',
@@ -72,7 +77,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     }
   })
 
-  async function onSubmit(data: ProfileWithPrivacy) {
+  async function onSubmit(data: z.infer<typeof ProfileFormSchema>) {
     setIsLoading(true)
     try {
       let imageUrl: string | null = null
