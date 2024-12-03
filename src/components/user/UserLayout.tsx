@@ -1,7 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { User, CreditCard, History, Ticket, Speech, LogOut, UserIcon, Settings, HomeIcon } from 'lucide-react'
+import {
+  User,
+  CreditCard,
+  History,
+  Ticket,
+  Speech,
+  LogOut,
+  UserIcon,
+  Settings,
+  HomeIcon
+} from 'lucide-react'
 
 import {
   Sidebar,

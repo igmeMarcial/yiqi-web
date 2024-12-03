@@ -32,7 +32,7 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
     <Card className="min-h-screen bg-black text-gray-100 py-12 px-4 sm:px-6 lg:px-8 font-sans mt-5">
       <div className="max-w-3xl mx-auto">
         <div className="bg-[#0A0A0A] rounded-lg shadow-xl overflow-hidden border border-[#1A1A1A]">
-        <div className="h-32 bg-gradient-to-r from-gray-700 to-black opacity-90"></div>
+          <div className="h-32 bg-gradient-to-r from-gray-700 to-black opacity-90"></div>
           <div className="relative px-4 sm:px-6 lg:px-8 pb-8">
             <div className="flex flex-col sm:flex-row items-center">
               {user.picture && (
@@ -87,7 +87,7 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
             {translations.es.aboutMe}
           </h2>
           <Separator />
-          <div className='pt-5'>
+          <div className="pt-5">
             <p className="text-gray-400 leading-relaxed">
               {user.shortDescription || translations.es.notDescriptionAvailable}
             </p>
@@ -99,57 +99,57 @@ export default function UserProfilePage({ user }: UserProfilePageProps) {
             {translations.es.links}
           </h2>
           <Separator />
-          <div className='pt-5'>
-          {!hasLinks ? (
-            <p className="text-gray-400">{translations.es.availableLinks}</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {user.privacySettings.website && user.website ? (
-                <a
-                  href={user.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-[#00E5BE] hover:underline"
-                >
-                  <Globe className="w-5 h-5 mr-2 text-muted-foreground" />
-                  {translations.es.website}
-                </a>
-              ) : null}
-              {user.privacySettings.linkedin && user.linkedin ? (
-                <a
-                  href={user.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-[#00E5BE] hover:underline"
-                >
-                  <BiLinkedinIcon className="w-5 h-5 mr-2 text-muted-foreground" />
-                  {translations.es.linkedin}
-                </a>
-              ) : null}
-              {user.privacySettings.x && user.x ? (
-                <a
-                  href={user.x}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-[#00E5BE] hover:underline"
-                >
-                  <Twitter className="w-5 h-5 mr-2 text-muted-foreground" />
-                  {translations.es.x}
-                </a>
-              ) : null}
-              {user.instagram ? (
-                <a
-                  href={user.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center text-[#00E5BE] hover:underline"
-                >
-                  <BiInstagramIcon className="w-5 h-5 mr-2 text-muted-foreground" />
-                  {translations.es.instagram}
-                </a>
-              ) : null}
-            </div>
-          )}
+          <div className="pt-5">
+            {!hasLinks ? (
+              <p className="text-gray-400">{translations.es.availableLinks}</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {user.privacySettings.website && user.website ? (
+                  <a
+                    href={user.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-muted-foreground hover:underline"
+                  >
+                    <Globe className="w-5 h-5 mr-2 text-muted-foreground" />
+                    {translations.es.website}
+                  </a>
+                ) : null}
+                {user.privacySettings.linkedin && user.linkedin ? (
+                  <a
+                    href={user.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-muted-foreground hover:underline"
+                  >
+                    <BiLinkedinIcon className="w-5 h-5 mr-2 text-muted-foreground" />
+                    {translations.es.linkedin}
+                  </a>
+                ) : null}
+                {user.privacySettings.x && user.x ? (
+                  <a
+                    href={user.x}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-muted-foreground hover:underline"
+                  >
+                    <Twitter className="w-5 h-5 mr-2 text-muted-foreground" />
+                    {translations.es.x}
+                  </a>
+                ) : null}
+                {user.instagram ? (
+                  <a
+                    href={user.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-muted-foreground hover:underline"
+                  >
+                    <BiInstagramIcon className="w-5 h-5 mr-2 text-muted-foreground" />
+                    {translations.es.instagram}
+                  </a>
+                ) : null}
+              </div>
+            )}
           </div>
         </div>
       </div>

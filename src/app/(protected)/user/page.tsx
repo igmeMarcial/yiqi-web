@@ -26,7 +26,11 @@ export default async function Page() {
       return (
         <>
           <MainLandingNav
-            user={{ name: user?.name ?? '', picture: user?.picture ?? '', role: user.role || '' }}
+            user={{
+              name: user?.name ?? '',
+              picture: user?.picture ?? '',
+              role: user.role || ''
+            }}
           />
           <UserProfilePage user={userInformation} />
         </>

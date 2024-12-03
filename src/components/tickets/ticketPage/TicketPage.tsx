@@ -4,7 +4,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Ticket } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Ticket } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { QRModal } from '../qrModal/QrModal'
@@ -29,15 +29,15 @@ const TicketStatusBadge = ({ status }: { status: string }) => {
     status === 'APPROVED'
       ? 'bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/20'
       : status === 'PENDING'
-        ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
-        : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
+      ? 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
+      : 'bg-rose-500/10 text-rose-200 hover:bg-rose-500/20'
 
   const badgeText =
     status === 'APPROVED'
       ? translations.es.ticketStatusApproved
       : status === 'PENDING'
-        ? translations.es.ticketStatusPending
-        : translations.es.ticketStatusRejected
+      ? translations.es.ticketStatusPending
+      : translations.es.ticketStatusRejected
 
   return (
     <Badge
@@ -45,8 +45,8 @@ const TicketStatusBadge = ({ status }: { status: string }) => {
         status === 'APPROVED'
           ? 'default'
           : status === 'PENDING'
-            ? 'secondary'
-            : 'destructive'
+          ? 'secondary'
+          : 'destructive'
       }
       className={badgeClass}
     >
@@ -72,6 +72,27 @@ export default function TicketsPage({
     ticketId: '',
     checkedInDate: ''
   })
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 3
+
+  const totalPages = Math.ceil(tickets.length / itemsPerPage)
+  const currentTickets = tickets.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1)
+    }
+  }
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1)
+    }
+  }
 
   const openModal = (
     eventTitle: string,
@@ -106,7 +127,7 @@ export default function TicketsPage({
               : translations.es.ticketTitlePage}
           </h1>
           <div className="space-y-8">
-            {tickets.map(data => (
+            {currentTickets.map(data => (
               <Card
                 key={data.event.id}
                 className="group bg-zinc-900/60 border-zinc-800/50 shadow-lg transition hover:bg-zinc-900/80 hover:shadow-xl"
@@ -200,6 +221,29 @@ export default function TicketsPage({
               </Card>
             ))}
           </div>
+
+
+          {tickets.length > 0 && (
+          <div className="flex justify-center items-center mt-6 space-x-4">
+            <Button
+              variant="outline"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+            <span className="text-white">
+              Pagina {currentPage} de {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+          )}
         </main>
       </Card>
 

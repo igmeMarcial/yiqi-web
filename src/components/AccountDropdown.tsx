@@ -62,21 +62,15 @@ export function AccountDropdown({ user }: AccountDropdownProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {
-          user?.role === 'admin' && (
+          user?.role === 'USER' && (
             <DropdownMenuItem asChild>
-              <Link href={`/admin`} className="cursor-pointer">
-                <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
-                <span>{t('organization')}</span>
+              <Link href={`/user`} className="cursor-pointer">
+                <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+                <span>{t('profile')}</span>
               </Link>
             </DropdownMenuItem>
           )
         }
-        <DropdownMenuItem asChild>
-          <Link href={`/user`} className="cursor-pointer">
-            <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t('profile')}</span>
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={`/user/edit`} className="cursor-pointer">
             <Settings className="mr-2 h-4 w-4 text-muted-foreground" />

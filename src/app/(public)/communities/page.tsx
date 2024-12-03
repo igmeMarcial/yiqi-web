@@ -11,7 +11,7 @@ export default async function communities() {
   return (
     <>
       <MainLandingNav
-        user={{ name: user?.name, picture: user?.picture as string }}
+        user={{ name: user?.name, picture: user?.picture as string, role: user?.role  }}
       />
       <CommunitiesList communities={communities} />
       <Footer />
