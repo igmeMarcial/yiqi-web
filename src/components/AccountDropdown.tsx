@@ -27,6 +27,7 @@ interface User {
   name?: string
   picture?: string
   email?: string
+  role?: string
 }
 interface AccountDropdownProps {
   readonly user: User | null
@@ -60,12 +61,16 @@ export function AccountDropdown({ user }: AccountDropdownProps) {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href={`/admin`} className="cursor-pointer">
-            <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
-            <span>{t('organization')}</span>
-          </Link>
-        </DropdownMenuItem>
+        {
+          user?.role === 'admin' && (
+            <DropdownMenuItem asChild>
+              <Link href={`/admin`} className="cursor-pointer">
+                <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
+                <span>{t('organization')}</span>
+              </Link>
+            </DropdownMenuItem>
+          )
+        }
         <DropdownMenuItem asChild>
           <Link href={`/user`} className="cursor-pointer">
             <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />

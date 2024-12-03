@@ -202,7 +202,9 @@ export default function NetworkingProfileForm({ initialData }: Props) {
                     ) : (
                       <>
                         <Upload className="h-4 w-4 mr-2" />
-                        <p className="text-black">{translations.es.selectResumeTypes}</p>
+                        <p className="text-black">
+                          {translations.es.selectResumeTypes}
+                        </p>
                       </>
                     )}
                   </label>

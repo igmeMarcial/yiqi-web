@@ -167,14 +167,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="flex justify-center items-center">
-              <ProfilePictureUpload
-                currentValue={form.watch('picture')}
-                onChange={handleProfilePictureChange}
-                name={form.watch('name')}
-                userPicture={user.picture ?? ''}
-              />
-            </div>
+              <div className="flex justify-center items-center">
+                <ProfilePictureUpload
+                  currentValue={form.watch('picture')}
+                  onChange={handleProfilePictureChange}
+                  name={form.watch('name')}
+                  userPicture={user.picture ?? ''}
+                />
+              </div>
 
               <Separator />
 

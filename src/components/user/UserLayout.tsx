@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { User, CreditCard, History, Ticket, Speech, LogOut } from 'lucide-react'
+import { User, CreditCard, History, Ticket, Speech, LogOut, UserIcon, Settings, HomeIcon } from 'lucide-react'
 
 import {
   Sidebar,
@@ -67,7 +67,7 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
   ]
 
   return (
-    <SidebarProvider className='bg-primary'>
+    <SidebarProvider className="bg-primary">
       <div className="flex  w-full bg-primary">
         <Sidebar collapsible="icon">
           <SidebarContent>
@@ -110,6 +110,24 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href={`/user`} className="cursor-pointer">
+                    <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+                    <span>{t('profile')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={`/user/edit`} className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
+                    <span>{t('settings')}</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={`/`} className="cursor-pointer">
+                    <HomeIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+                    <span>Home</span>
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">

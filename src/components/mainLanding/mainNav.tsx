@@ -21,6 +21,7 @@ interface User {
   name?: string
   picture?: string
   email?: string
+  role?: string
 }
 
 interface HeaderProps {
