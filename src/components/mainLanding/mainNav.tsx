@@ -158,24 +158,33 @@ export default function MainLandingNav({
                       </Button>
                     </Link>
                   ) : (
-                    <Link
-                      href={'/admin'}
-                      className="flex items-center space-x-2"
-                    >
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage
-                          alt={user.name ?? ''}
-                          src={user.picture ?? ''}
-                        />
-                        <AvatarFallback>
-                          {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-white text-sm">
-                        {t('myAccount')}
-                      </span>
-                    </Link>
+                    <>
+                      <NavLink href="/user" mobile>
+                        {t('profile')}
+                      </NavLink>
+                      <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+                      <Link
+                        href={'/user/edit'}
+                        className="flex items-center space-x-2"
+                      >
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage
+                            alt={user.name ?? ''}
+                            src={user.picture ?? ''}
+                          />
+                          <AvatarFallback>
+                            {user.name
+                              ? user.name.charAt(0).toUpperCase()
+                              : 'U'}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="text-white text-sm">
+                          {t('myAccount')}
+                        </span>
+                      </Link>
+                    </>
                   )}
+                  <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                   <LangSelector />
                 </div>
               </SheetContent>
