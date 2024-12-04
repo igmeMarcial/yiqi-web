@@ -66,11 +66,11 @@ export default function EventSection({
         {/* Encabezado para la tabla */}
         <div className="hidden sm:grid grid-cols-12 bg-gray-700 p-4 rounded">
           <div className="col-span-6 text-sm font-semibold text-primary">
-            Title
+            {t('event')}
           </div>
           <div className="col-span-3 text-sm font-semibold text-primary"></div>
           <div className="col-span-3 text-sm font-semibold text-primary text-right">
-            Actions
+            {t('action')}
           </div>
         </div>
         {/* Lista de eventos */}
