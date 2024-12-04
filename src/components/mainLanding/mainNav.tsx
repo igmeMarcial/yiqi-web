@@ -160,17 +160,16 @@ export default function MainLandingNav({
                   ) : (
                     <>
                       <NavLink href="/user" mobile>
-                          {t('profile')}
+                        {t('profile')}
                       </NavLink>
-                      {
-                        user.role === 'ADMIN' && (
+                      {user.role === 'ADMIN' && (
                         <>
                           <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                           <NavLink href="/admin" mobile>
                             {t('organization')}
-                          </NavLink></>
-                        )
-                      }
+                          </NavLink>
+                        </>
+                      )}
                       <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                       <Link
                         href={'/user/edit'}

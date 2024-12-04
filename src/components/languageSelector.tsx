@@ -24,7 +24,7 @@ function getLanguageName(lang: Language): string {
 }
 
 interface LangSelectorProps {
-  className?: string;
+  className?: string
 }
 
 export default function LangSelector({ className }: LangSelectorProps) {
