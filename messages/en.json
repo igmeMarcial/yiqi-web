@@ -27,7 +27,8 @@
     "terms": "Terms",
     "privacy": "Privacy",
     "security": "Security",
-    "profile": "Profile"
+    "profile": "Profile",
+    "organization": "Organization"
   },
   "HeroSection": {
     "heroSubtitle": "The Future of Events",
@@ -154,7 +155,8 @@
     "logOut": "Log out",
     "profile": "Profile",
     "settings": "Settings",
-    "networkingSettings": "Networking"
+    "networkingSettings": "Networking",
+    "organization": "Organization"
   },
   "ProfileSettings": {
     "name": "Name",

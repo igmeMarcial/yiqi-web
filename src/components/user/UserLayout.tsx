@@ -10,7 +10,8 @@ import {
   LogOut,
   UserIcon,
   Settings,
-  HomeIcon
+  HomeIcon,
+  LayoutDashboard
 } from 'lucide-react'
 
 import {
@@ -34,11 +35,13 @@ import {
 } from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import SignOutButton from '../auth/sign-out'
+import Image from 'next/image'
 interface UserProps {
   name: string
   email: string
   picture: string
   id: string
+  role: string
 }
 
 interface UserLayoutProps {
@@ -83,6 +86,15 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
           <SidebarContent>
             <SidebarGroup>
               <SidebarMenu>
+              <Link href={'/'} className="flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  height={90}
+                  width={90}
+                  className="mr-2 p-2"
+                />
+              </Link>
                 {navItems.map(item => (
                   <SidebarMenuItem key={item.name}>
                     <SidebarMenuButton asChild>
@@ -126,6 +138,16 @@ export default function UserLayout({ children, userProps }: UserLayoutProps) {
                     <span>{t('profile')}</span>
                   </Link>
                 </DropdownMenuItem>
+                {
+                  userProps.role === 'ADMIN' && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`/admin`} className="cursor-pointer">
+                        <LayoutDashboard className="mr-2 h-4 w-4 text-muted-foreground" />
+                        <span>{t('organization')}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )
+                }
                 <DropdownMenuItem asChild>
                   <Link href={`/user/edit`} className="cursor-pointer">
                     <Settings className="mr-2 h-4 w-4 text-muted-foreground" />

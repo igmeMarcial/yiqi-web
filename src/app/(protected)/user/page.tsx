@@ -22,6 +22,7 @@ export default async function Page() {
 
   switch (user.role) {
     case Roles.USER:
+    case Roles.ADMIN:
       return (
         <>
           <MainLandingNav
