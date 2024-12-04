@@ -35,9 +35,6 @@ export default async function Page() {
           <UserProfilePage user={userInformation} />
         </>
       )
-    case Roles.ADMIN:
-      redirect(`/admin`)
-      break
     case Roles.NEW_USER:
       redirect(`/newuser`)
       break
