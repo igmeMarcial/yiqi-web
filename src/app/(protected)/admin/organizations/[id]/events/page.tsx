@@ -11,19 +11,19 @@ import EventSection from '@/components/EventSection'
 export default async function EventsPage({
   params
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  const t = await getTranslations('contactFor');
-  const organization = await getOrganization(params.id);
-  const user = await getUser();
-  const events = await getOrganizationEvents(params.id);
+  const t = await getTranslations('contactFor')
+  const organization = await getOrganization(params.id)
+  const user = await getUser()
+  const events = await getOrganizationEvents(params.id)
 
   if (!organization) {
-    return <div>{t('organizationNotFound')}</div>;
+    return <div>{t('organizationNotFound')}</div>
   }
 
   if (!user) {
-    redirect(`/auth`);
+    redirect(`/auth`)
   }
 
   if (user.role === Roles.ADMIN) {
@@ -39,16 +39,13 @@ export default async function EventsPage({
           }}
         >
           {/* Pasar los datos al Client Component */}
-          <EventSection
-            events={events}
-            orgId={params.id}
-          />
+          <EventSection events={events} orgId={params.id} />
         </OrganizationLayout>
       </main>
-    );
+    )
   } else if (user.role === Roles.NEW_USER) {
-    redirect(`/newuser`);
+    redirect(`/newuser`)
   } else if (user.role === Roles.USER) {
-    redirect(`/user`);
+    redirect(`/user`)
   }
 }
