@@ -159,9 +159,13 @@ export default function MainLandingNav({
                     </Link>
                   ) : (
                     <>
-                      <NavLink href="/user" mobile>
-                        {t('profile')}
-                      </NavLink>
+                      {
+                        user.role === 'USER' && (
+                          <NavLink href="/user" mobile>
+                            {t('profile')}
+                          </NavLink>
+                        )
+                      }
                       <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                       <Link
                         href={'/user/edit'}
