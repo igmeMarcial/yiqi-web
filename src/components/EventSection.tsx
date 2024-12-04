@@ -81,15 +81,26 @@ export default function EventSection({
               className="relative flex flex-row items-center dark:bg-primary p-2 border-b border-gray-700 last:rounded-b-md hover:bg-gray-700 transition-all"
             >
               <div className="flex flex-row w-full">
-                <div className="flex-1 flex flex-col">
-                  <div className="text-lg font-semibold dark:text-primary truncate">
+                {/* Contenedor para el texto */}
+                <div
+                  className={`flex-1 flex flex-col ${
+                    isMobile ? 'w-[70%]' : 'w-full'
+                  }`}
+                >
+                  <div className="text-lg font-semibold dark:text-primary truncate overflow-hidden whitespace-nowrap">
                     {event.title}
                   </div>
                   <div className="text-sm text-gray-400 mt-1">
                     {new Date(event.startDate).toLocaleString()}
                   </div>
                 </div>
-                <div className="flex justify-end space-x-3 mt-2 sm:mt-0">
+
+                {/* Contenedor para los iconos */}
+                <div
+                  className={`flex justify-end space-x-3 mt-2 sm:mt-0 ${
+                    isMobile ? 'w-[30%]' : 'w-auto'
+                  }`}
+                >
                   <Link
                     href={`/admin/organizations/${orgId}/events/${event.id}`}
                     className="text-gray-300 hover:text-primary mt-4"
