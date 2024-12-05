@@ -1,0 +1,181 @@
+'use client'
+import { Button } from '@/components/ui/button'
+import { FileText, SendHorizonal } from 'lucide-react'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuLink
+} from '@/components/ui/navigation-menu'
+import { createTypeForm } from '@/services/actions/typeForm/typeFormActions'
+import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
+import { translations } from '@/lib/translations/translations'
+import { generateUniqueId } from './utils'
+import { Form, FormProps } from './yiqiTypes'
+import { PublishSuccessModal } from './PublishSuccessModal'
+
+export function FormHeader({
+  form,
+  orgId,
+  onNavigate,
+  currentView
+}: {
+  form: FormProps[]
+  orgId: string
+  onNavigate: (view: 'create' | 'results') => void
+  currentView: 'create' | 'results'
+}) {
+  const navigationItems = [
+    {
+      title: 'Preguntas',
+      view: 'create' as const,
+      disabled: false
+    }
+    // {
+    //   title: 'Respuestas',
+    //   view: 'results' as const,
+    //   disabled: false
+    // }
+  ]
+
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
+  const [publishedFormUrl, setPublishedFormUrl] = useState('')
+  const { toast } = useToast()
+  const handlePublish = async () => {
+    console.log(form)
+    if (form.length === 0) {
+      toast({
+        title: 'Error',
+        description:
+          'El formulario debe tener al menos un campo antes de publicarlo.',
+        variant: 'destructive'
+      })
+      return
+    }
+    const description = Array.isArray(form[0]?.contents)
+      ? form[0]?.contents.map(item => item.text).join(', ')
+      : (form[0]?.contents ?? '')
+    try {
+      const formToSubmit: Form = {
+        id: generateUniqueId(),
+        name: form[0]?.cardTitle,
+        description: description,
+        fields: form,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      const response = await createTypeForm(orgId, formToSubmit)
+      if (response.success) {
+        setPublishedFormUrl(
+          `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`
+        )
+        setIsPublishModalOpen(true)
+
+        toast({
+          title: `${translations.es.publishSuccessTitle}`,
+          description: `${translations.es.publishSuccessDescription.replace('{formName}', formToSubmit.name)}`,
+          variant: 'default'
+        })
+      } else {
+        toast({
+          title: `${translations.es.publishErrorTitle}`,
+          description: `${translations.es.publishErrorDescription}`,
+          variant: 'destructive'
+        })
+      }
+    } catch (error) {
+      toast({
+        title: `${translations.es.formErrorTitle}`,
+        description: `${translations.es.formErrorDescription}`,
+        variant: 'destructive'
+      })
+      console.error('Form publish error:', error)
+    }
+  }
+  return (
+    <>
+      <header
+        style={{ boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 1px' }}
+        className="bg-white dark:bg-gray-800 z-30 w-full"
+      >
+        <div className="flex flex-col ">
+          <div className="relative flex flex-col sm:flex-row items-center justify-between px-4 pr-4 md:pr-8 pt-4 gap-4">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="bg-gradient-to-r from-black to-[#04F1FF]/10 dark:from-gray-900 dark:to-[#04F1FF]/20 p-2 rounded-full shadow-lg">
+                <FileText className="text-white" size={24} />
+              </div>
+              <span className="text-base font-bold dark:text-white text-black">
+                YiqiForm
+              </span>
+              <span className="hidden md:block text-muted-foreground">/</span>
+              <span className="hidden md:block text-base font-bold dark:text-white text-black">
+                {form[0]?.cardTitle?.length > 30
+                  ? form[0]?.cardTitle.slice(0, 30) + '...'
+                  : form[0]?.cardTitle}
+              </span>
+            </div>
+
+            <div className="absolute top-4 right-8 sm:static">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={handlePublish}
+              >
+                <SendHorizonal className="h-4 w-4" />
+                {translations.es.publish}
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex justify-center w-full px-4 py-2">
+            <NavigationMenu className="w-full">
+              <NavigationMenuList className="flex flex-col sm:flex-row justify-center gap-6">
+                {navigationItems.map(({ title, view }) => (
+                  <NavigationMenuItem
+                    key={view}
+                    className="text-center group relative"
+                    onClick={() => onNavigate(view)}
+                  >
+                    <NavigationMenuLink
+                      className={`
+                      text-black dark:text-white
+                      transition-colors
+                      pb-1
+                      relative
+                      cursor-pointer
+                      
+                      ${currentView === view ? 'font-semibold' : 'hover:opacity-70 hover:text-gray-700 dark:hover:text-gray-300'}
+                    `}
+                    >
+                      <span
+                        className={`
+                        absolute
+                        -bottom-2
+                        left-0
+                        right-0
+                        h-1
+                        rounded-tl-sm rounded-tr-sm
+                        transition-all
+                        duration-300
+                        ${currentView === view ? 'bg-gray-400 dark:bg-gray-500 scale-x-100' : 'bg-transparent scale-x-0'}
+                      `}
+                      />
+                      {title}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+        </div>
+      </header>
+      <PublishSuccessModal
+        isOpen={isPublishModalOpen}
+        onClose={() => setIsPublishModalOpen(false)}
+        formUrl={publishedFormUrl}
+      />
+    </>
+  )
+}

@@ -1,4 +1,4 @@
-import YiqiForm from '@/components/typeform/MainForm'
+import MainForm from '@/components/yiqiForm/MainForm'
 import { getUser } from '@/lib/auth/lucia'
 import { getOrganization } from '@/services/actions/organizationActions'
 import { redirect } from 'next/navigation'
@@ -19,5 +19,9 @@ export default async function FormsPage({
     redirect('/auth')
   }
 
-  return <YiqiForm orgId={params.id} />
+  return (
+    <div className="h-screen bg-gray-100 dark:bg-[rgb(28, 28, 28)]">
+      <MainForm orgId={params.id} />
+    </div>
+  )
 }
