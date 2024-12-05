@@ -1,5 +1,4 @@
-import { z } from "zod"
-
+import { z } from 'zod'
 
 export enum InputTypes {
   TITLE = 'TITLE',
@@ -20,21 +19,21 @@ export enum InputTypes {
   DATE = 'date',
   NUMBER = 'number',
   RATING = 'rating',
-  FILEUPLOAD = 'fileUpload',
+  FILEUPLOAD = 'fileUpload'
 }
 const ItemTypePropsSchema = z.object({
   id: z.string(),
   text: z.string().optional(),
-  isEtc: z.boolean().optional(),
+  isEtc: z.boolean().optional()
 })
 
 export const FormFieldSchema = z.object({
-   id: z.string(),
+  id: z.string(),
   cardTitle: z.string(),
   inputType: z.nativeEnum(InputTypes),
   contents: z.union([z.string(), z.array(ItemTypePropsSchema)]),
   isFocused: z.boolean(),
-  isRequired: z.boolean(),
+  isRequired: z.boolean()
 })
 export type FormProps = z.infer<typeof FormFieldSchema>
 export type ItemTypeProps = z.infer<typeof ItemTypePropsSchema>
