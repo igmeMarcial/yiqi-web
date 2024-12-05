@@ -1,19 +1,14 @@
-import { getLinkedInData } from '@/services/data/collectLinkedinUserProfile'
-import { z } from 'zod'
 import prisma from '../prisma'
-import { Prisma } from '@prisma/client'
+import { processUserFirstPartyData } from '../data/processors/processUserFirstPartyData'
+import { CollectUserDataJobSchema } from '@/schemas/cronSchemas'
 
-const CollectUserDataJobSchema = z.object({
-  userId: z.string(),
-  platforms: z.array(z.enum(['linkedin', 'twitter']))
-})
 export async function dataCollectorsCron() {
   // Find jobs that need to be processed
   const jobs = await prisma.queueJob.findMany({
     where: {
       type: 'COLLECT_USER_DATA',
       status: 'PENDING',
-      attempts: { lt: 3 } // Only get jobs that have been attempted less than 3 times
+      attempts: { lt: 3 }
     },
     orderBy: [{ priority: 'desc' }, { createdAt: 'asc' }],
     take: 5
@@ -33,24 +28,9 @@ export async function dataCollectorsCron() {
         })
 
         // Process the job
-        const { userId, platforms } = CollectUserDataJobSchema.parse(job.data)
-        const collectedData: Record<string, unknown> = {}
+        const { userId } = CollectUserDataJobSchema.parse(job.data)
 
-        for (const platform of platforms) {
-          if (platform === 'linkedin') {
-            collectedData.linkedin = await getLinkedInData(userId)
-          } else if (platform === 'twitter') {
-            // collectedData.twitter = await getTwitterData(userId);
-          }
-        }
-
-        // Update user with collected data
-        await prisma.user.update({
-          where: { id: userId },
-          data: {
-            dataCollected: collectedData as Prisma.InputJsonValue
-          }
-        })
+        await processUserFirstPartyData({ userId })
 
         // Update job status to COMPLETED
         await prisma.queueJob.update({

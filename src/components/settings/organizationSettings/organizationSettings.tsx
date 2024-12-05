@@ -21,7 +21,7 @@ import { SingleFileUpload } from '@/components/upload/upload'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { PublicCommunityType } from '@/schemas/communitySchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 function ColorPicker({
   value,
@@ -60,6 +60,7 @@ export default function OrganizationSettings({
   userId: string
   organization: PublicCommunityType
 }) {
+  const t = useTranslations('Community')
   const [logo, setLogo] = useState<string>(organization.logo || '')
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -100,7 +101,7 @@ export default function OrganizationSettings({
     try {
       await updateOrganization(organization.id, values, userId)
       toast({
-        description: translations.es.settingsOrganizationUpdated,
+        description: `${t('settingsOrganizationUpdated')}`,
         variant: 'default'
       })
     } catch (error) {
@@ -118,7 +119,7 @@ export default function OrganizationSettings({
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-semibold mb-4 text-center">
-          {translations.es.settingOrganizationTitle}
+          {t('settingOrganizationTitle')}
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -127,9 +128,7 @@ export default function OrganizationSettings({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {translations.es.settingsOrganizationFormName}
-                  </FormLabel>
+                  <FormLabel>{t('settingsOrganizationFormName')}</FormLabel>
                   <FormControl>
                     <Input placeholder="Andino" {...field} />
                   </FormControl>
@@ -143,12 +142,10 @@ export default function OrganizationSettings({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{translations.es.description}</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={
-                        translations.es.settingsPlaceholderDescription
-                      }
+                      placeholder={t('settingsPlaceholderDescription')}
                       {...field}
                       className="resize-none"
                     />
@@ -159,9 +156,7 @@ export default function OrganizationSettings({
             />
 
             <FormItem>
-              <FormLabel>
-                {translations.es.settingsOrganizationFormLogo}
-              </FormLabel>
+              <FormLabel>{t('settingsOrganizationFormLogo')}</FormLabel>
               <FormControl>
                 <div className="flex flex-col items-center space-y-2">
                   {logo && (
@@ -169,7 +164,7 @@ export default function OrganizationSettings({
                       src={logo}
                       width={128}
                       height={128}
-                      alt={translations.es.settingsOrganizationAltLogo}
+                      alt={t('settingsOrganizationAltLogo')}
                       className="w-32 h-32 object-cover rounded-lg border"
                     />
                   )}
@@ -187,9 +182,7 @@ export default function OrganizationSettings({
               name="colour"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {translations.es.settingsOrganizationFormColor}
-                  </FormLabel>
+                  <FormLabel>{t('settingsOrganizationFormColor')}</FormLabel>
                   <FormControl>
                     <ColorPicker
                       value={field.value}
@@ -223,7 +216,7 @@ export default function OrganizationSettings({
                   name={fieldName}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{`${translations.es.settingsOrganizationFormUrl} ${fieldName.charAt(0).toUpperCase()}${fieldName.slice(
+                      <FormLabel>{`${t('settingsOrganizationFormUrl')} ${fieldName.charAt(0).toUpperCase()}${fieldName.slice(
                         1
                       )}`}</FormLabel>
                       <FormControl>
@@ -239,7 +232,7 @@ export default function OrganizationSettings({
               )
             )}
             <Button className="w-full" type="submit">
-              {translations.es.settingsOrganizationFormSaved}
+              {t('settingsOrganizationFormSaved')}
             </Button>
           </form>
         </Form>

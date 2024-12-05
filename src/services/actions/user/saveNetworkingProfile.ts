@@ -72,6 +72,16 @@ export async function saveNetworkingProfile(formData: FormData) {
       }
     })
 
+    // this triggers the AI profile builder cron job.
+    // if u developing locally u will have to trigger it manually by going to the route using browser.
+    await prisma.queueJob.create({
+      data: {
+        type: 'COLLECT_USER_DATA',
+        data: { userId: user.id },
+        priority: 1
+      }
+    })
+
     return { success: true }
   } catch (error) {
     console.error('Error in saveNetworkingProfile:', error)

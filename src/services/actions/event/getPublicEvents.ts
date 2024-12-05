@@ -3,15 +3,9 @@
 import prisma from '@/lib/prisma'
 import { EventCommunityType, PublicEventSchema } from '@/schemas/eventSchema'
 import { EventTypes, Prisma } from '@prisma/client'
+import { GetPublicEventsInput } from '@/schemas/eventSchema'
 
-export async function getPublicEvents(filters?: {
-  title?: string
-  location?: string
-  startDate?: string
-  type?: string
-  page?: number
-  limit?: number
-}) {
+export async function getPublicEvents(filters?: GetPublicEventsInput) {
   const now = new Date()
 
   const whereClause: Prisma.EventWhereInput = {

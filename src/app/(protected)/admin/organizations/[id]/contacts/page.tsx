@@ -1,11 +1,12 @@
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getOrganizationContacts } from '@/services/actions/contactActions'
-import Link from 'next/link'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-import { ImportContactButton } from './ImportContactButton'
+import { ContactText1 } from '@/components/contacts'
+import Link from 'next/link'
 import { ImportContactTemplateButton } from './ImportContactTemplateButton'
-import { translations } from '@/lib/translations/translations'
+import { ImportContactButton } from './ImportContactButton'
+import { getTranslations } from 'next-intl/server'
 
 export default async function ContactsPage({
   params
@@ -13,12 +14,13 @@ export default async function ContactsPage({
   params: { id: string }
 }) {
   const user = await getUser()
+  const t = await getTranslations('contactFor')
 
   const organization = await getOrganization(params.id)
   const contacts = await getOrganizationContacts(params.id)
 
   if (!organization || !user) {
-    return <div>{translations.es.noOrganizationFound}</div>
+    return <ContactText1 />
   }
 
   return (
@@ -34,7 +36,7 @@ export default async function ContactsPage({
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">
-            <span>{translations.es.contactsFor}</span> {organization.name}
+            <span>{t('contactsFor')}</span> {organization.name}
           </h1>
           <ImportContactButton organizationId={organization.id} />
         </div>
@@ -57,7 +59,7 @@ export default async function ContactsPage({
           href={`/admin/organizations/${params.id}`}
           className="mt-4 inline-block text-blue-500 hover:underline"
         >
-          <span>{translations.es.backToDashboard}</span>
+          <span>{t('backToDashboard')}</span>
         </Link>
       </div>
     </OrganizationLayout>

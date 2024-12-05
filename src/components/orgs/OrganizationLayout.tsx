@@ -36,7 +36,7 @@ import {
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
 import { useEffect, useMemo, useState } from 'react'
 import { OrganizationType } from '@/schemas/organizerSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface UserProps {
   name: string
@@ -56,6 +56,7 @@ export default function OrganizationLayout({
   userProps,
   orgId
 }: AdminLayoutProps) {
+  const t = useTranslations('Sidebar')
   const [organizations, setOrganizations] = useState<OrganizationType[]>([])
 
   useEffect(() => {
@@ -72,32 +73,32 @@ export default function OrganizationLayout({
 
   const navItems = [
     {
-      name: translations.es.settings,
+      name: `${t('chat')}`,
       icon: Building2,
       href: `/admin/organizations/${orgId}/settings`
     },
     {
-      name: translations.es.chat,
+      name: `${t('chat')}`,
       icon: MessageSquare,
       href: `/admin/organizations/${orgId}/chat`
     },
     {
-      name: translations.es.events,
+      name: `${t('events')}`,
       icon: Calendar,
       href: `/admin/organizations/${orgId}/events`
     },
     {
-      name: translations.es.contacts,
+      name: `${t('contacts')}`,
       icon: BookUser,
       href: `/admin/organizations/${orgId}/contacts`
     },
     {
-      name: translations.es.organizers,
+      name: `${t('organizers')}`,
       icon: Users,
       href: `/admin/organizations/${orgId}/organizers`
     },
     {
-      name: translations.es.billing,
+      name: `${t('billing')}`,
       icon: Banknote,
       href: `/admin/organizations/${orgId}/billing`
     },
@@ -107,16 +108,15 @@ export default function OrganizationLayout({
       href: `/admin/organizations/${orgId}/forms`
     }
   ]
-
   const currentOrg = useMemo(
     () => organizations.find(org => org.id === orgId),
     [organizations, orgId]
   )
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen w-full">
-        <Sidebar collapsible="icon">
+    <SidebarProvider className="bg-primary">
+      <div className="flex h-full w-full bg-primary">
+        <Sidebar collapsible="icon" className="bg-primary">
           <SidebarHeader>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -126,7 +126,7 @@ export default function OrganizationLayout({
                   <ChevronDown className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent className="w-56 bg-primary">
                 {organizations.map(org => (
                   <DropdownMenuItem key={org.id}>
                     <Link href={`/admin/organizations/${org.id}`}>
@@ -154,9 +154,9 @@ export default function OrganizationLayout({
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 overflow-auto bg-gray-100">
-          <header className="flex items-center justify-between bg-white p-4 shadow-md">
-            <SidebarTrigger />
+        <main className="flex flex-col flex-1 h-full overflow-hidden bg-primary">
+          <header className="flex items-center justify-between p-4 shadow-md bg-primary">
+            <SidebarTrigger className="bg-primary text-primary" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-8 w-8">
@@ -179,7 +179,7 @@ export default function OrganizationLayout({
                 <DropdownMenuItem>
                   <SignOutButton>
                     <div className="flex items-center gap-4">
-                      <span>{translations.es.logOut}</span>
+                      <span>{t('logOut')}</span>
                       <LogOut className="h-4 w-4" />
                     </div>
                   </SignOutButton>
@@ -187,9 +187,41 @@ export default function OrganizationLayout({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <div className="p-4">{children}</div>
+          <div className="flex-1 overflow-auto p-2 sm:px-8 sm:py-2 px-4 bg-primary">
+            {children}
+          </div>
         </main>
       </div>
     </SidebarProvider>
+  )
+}
+
+export function EventText(props: { id: string }) {
+  const t = useTranslations('EventsList')
+  return (
+    <div className="flex justify-between items-center mb-6">
+      <h1 className="text-2xl font-bold">{t('events')}</h1>
+      <Link
+        href={`/admin/organizations/${props.id}/events/new`}
+        className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        {t('createNewEvents')}
+      </Link>
+    </div>
+  )
+}
+
+export function EventText2(props: { id: string }) {
+  const t = useTranslations('EventsPage')
+  return (
+    <div className="flex justify-between items-center mb-6">
+      <h1 className="text-2xl font-bold">{t('createNewEvent')}</h1>
+      <Link
+        href={`/admin/organizations/${props.id}/events`}
+        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700 transition-colors"
+      >
+        {t('cancel')}
+      </Link>
+    </div>
   )
 }

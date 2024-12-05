@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { translations } from '@/lib/translations/translations'
 import { PublicCommunityType } from '@/schemas/communitySchema'
+import { useTranslations } from 'next-intl'
 
 interface CommunityCardProps {
   community: PublicCommunityType
@@ -9,6 +9,7 @@ interface CommunityCardProps {
 
 const CommunityCard: React.FC<CommunityCardProps> = ({ community }) => {
   const { id, name, description, logo } = community
+  const t = useTranslations('Community')
 
   return (
     <Link href={`/communities/${id}`}>
@@ -21,9 +22,7 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ community }) => {
             <Image src={logo} alt={name} fill className="object-cover" />
           ) : (
             <div className="h-full w-full bg-gray-700 flex items-center justify-center">
-              <span className="text-white text-sm">
-                {translations.es.noLogoAvailable}
-              </span>
+              <span className="text-white text-sm">{t('noLogoAvailable')}</span>
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />

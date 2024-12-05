@@ -4,15 +4,17 @@ import { cookies } from 'next/headers'
 import { lucia } from './lib'
 import prisma from '../prisma'
 import { OrganizerRole } from '@prisma/client'
+import { luciaUserSchema } from '@/schemas/userSchema'
 
 export const getUser = async () => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value || null
   if (!sessionId) {
     return null
   }
+
   const { session, user } = await lucia.validateSession(sessionId)
 
-  if (!user || !session) {
+  if (!user || !session || !user.id) {
     return null
   }
 
@@ -36,6 +38,7 @@ export const getUser = async () => {
   } catch (error) {
     console.error(error)
   }
+
   const dbUser = await prisma.user.findUnique({
     where: {
       id: user?.id
@@ -48,9 +51,13 @@ export const getUser = async () => {
       role: true
     }
   })
-  return dbUser
-}
 
+  if (!dbUser) {
+    return null
+  }
+
+  return luciaUserSchema.parse(dbUser)
+}
 export async function isEventAdmin(
   eventId: string,
   userId: string

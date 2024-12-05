@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import {
   Form,
@@ -74,7 +75,7 @@ export function RegistrationForm({
                 <Input
                   placeholder={translations.es.eventFormNamePlaceholder}
                   {...field}
-                  disabled={!!user}
+                  disabled={!!user.name}
                   className={user ? 'bg-muted' : ''}
                 />
               </FormControl>
@@ -93,7 +94,7 @@ export function RegistrationForm({
                   type="email"
                   placeholder={translations.es.eventFormEmailPlaceholder}
                   {...field}
-                  disabled={!!user}
+                  disabled={!!user.email}
                   className={user ? 'bg-muted' : ''}
                 />
               </FormControl>

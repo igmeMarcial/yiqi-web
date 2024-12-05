@@ -16,7 +16,6 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
-import { translations } from '@/lib/translations/translations'
 import {
   PublicEventType,
   registrationInputSchema,
@@ -32,6 +31,7 @@ import { createRegistration } from '@/services/actions/event/createRegistration'
 import { toast } from '@/hooks/use-toast'
 import { RegistrationForm } from './registration-form'
 import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
+import { useTranslations } from 'next-intl'
 
 export type RegistrationProps = {
   event: PublicEventType
@@ -39,12 +39,18 @@ export type RegistrationProps = {
     email: string | undefined
     name: string | undefined
   }
+  dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
 }
 
-export function Registration({ event, user }: RegistrationProps) {
+export function Registration({
+  event,
+  user,
+  dialogTriggerRef
+}: RegistrationProps) {
   const [ticketSelections, setTicketSelections] = useState<
     Record<string, number>
   >({})
+  const t = useTranslations('RegistrationComponent')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [existingRegistration, setExistingRegistration] =
     useState<EventRegistrationSchemaType | null>(null)
@@ -100,7 +106,7 @@ export function Registration({ event, user }: RegistrationProps) {
   const onSubmit = async (values: RegistrationInput) => {
     if (!hasSelectedTickets) {
       toast({
-        title: translations.es.eventNoTicketsSelected,
+        title: `${t('eventNoTicketsSelected')}`,
         variant: 'destructive'
       })
       return
@@ -132,7 +138,7 @@ export function Registration({ event, user }: RegistrationProps) {
     } catch (error) {
       console.error('Error submitting registration:', error)
       toast({
-        title: translations.es.eventRegistrationError,
+        title: `${t('eventRegistrationError')}`,
         variant: 'destructive'
       })
     }
@@ -143,12 +149,12 @@ export function Registration({ event, user }: RegistrationProps) {
       const result = await markRegistrationPaid(currentRegistrationId)
       if (result.success) {
         toast({
-          title: translations.es.eventRegistrationSuccess
+          title: `${t('eventRegistrationSuccess')}`
         })
         setIsDialogOpen(false)
       } else {
         toast({
-          title: translations.es.eventRegistrationError,
+          title: `${t('eventRegistrationError')}`,
           variant: 'destructive'
         })
       }
@@ -179,13 +185,13 @@ export function Registration({ event, user }: RegistrationProps) {
           <div>
             <div className="font-semibold text-lg mb-1 text-white">
               {isFreeEvent
-                ? translations.es.eventFreeRegistration
-                : translations.es.eventRegistration}
+                ? `${t('eventFreeRegistration')}`
+                : `${t('eventRegistration')}`}
             </div>
             <p className="text-sm text-muted-foreground text-white">
               {isFreeEvent
-                ? translations.es.eventFreeRegistrationDescription
-                : translations.es.eventRegistrationDescription}
+                ? `${t('eventFreeRegistrationDescription')}`
+                : `${t('eventRegistrationDescription')}`}
             </p>
           </div>
         </div>
@@ -203,25 +209,24 @@ export function Registration({ event, user }: RegistrationProps) {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button
+              ref={dialogTriggerRef}
               size="lg"
               className="w-full text-white"
               disabled={!hasSelectedTickets}
             >
-              {isFreeEvent
-                ? translations.es.eventRegister
-                : translations.es.eventPurchase}
+              {isFreeEvent ? `${t('eventRegister')}` : `${t('eventPurchase')}`}
             </Button>
           </DialogTrigger>
 
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle className="text-2xl font-semibold">
-                {translations.es.eventRegistrationSummary}
+                {t('eventRegistrationSummary')}
               </DialogTitle>
               <DialogDescription>
                 {user
-                  ? translations.es.eventRegistrationDescriptionLoggedIn
-                  : translations.es.eventRegistrationDescription}
+                  ? `${t('eventRegistrationDescriptionLoggedIn')}`
+                  : `${t('eventRegistrationDescription')}`}
               </DialogDescription>
             </DialogHeader>
 

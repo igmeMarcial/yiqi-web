@@ -29,21 +29,26 @@ import { useToast } from '@/hooks/use-toast'
 import { Textarea } from '../ui/textarea'
 import { makeRegularUser } from '@/services/actions/userActions'
 import { SingleFileUpload } from '../upload/upload'
+import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
 
 function BeRegularUserButton({ userId }: { userId: { value: string } }) {
   const { toast } = useToast()
+  const t = useTranslations('newUser')
+  const router = useRouter()
   return (
     <Button
       className="min-w-full"
       onClick={async () => {
         await makeRegularUser({ userId: userId.value })
         toast({
-          description: 'Bienvenido nuevo usuario!',
+          description: `${t('welcome')}`,
           variant: 'default'
         })
+        router.push('/events')
       }}
     >
-      Asisto a los eventos!
+      {t('attended')}
     </Button>
   )
 }
@@ -83,6 +88,7 @@ export default function BeEventAdminForm({
 }: {
   userId: { value: string }
 }) {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -99,14 +105,16 @@ export default function BeEventAdminForm({
   })
 
   const { toast } = useToast()
+  const t = useTranslations('newUser')
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await createOrganization(values, userId.value)
       toast({
-        description: 'Organización creada exitosamente!',
+        description: `${t('success')}`,
         variant: 'default'
       })
+      router.push('/admin')
     } catch (error) {
       toast({
         description: `${error}`,
@@ -125,13 +133,11 @@ export default function BeEventAdminForm({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Organización</FormLabel>
+              <FormLabel>{t('Organization')}</FormLabel>
               <FormControl>
                 <Input placeholder="Andino" {...field} />
               </FormControl>
-              <FormDescription>
-                Ingresa el nombre de tu organización principal
-              </FormDescription>
+              <FormDescription>{t('organizationBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -142,7 +148,7 @@ export default function BeEventAdminForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descripción</FormLabel>
+              <FormLabel>{t('Description')}</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Describe tu organización"
@@ -150,20 +156,18 @@ export default function BeEventAdminForm({
                   className="resize-none"
                 />
               </FormControl>
-              <FormDescription>
-                Proporciona una breve descripción de tu organización
-              </FormDescription>
+              <FormDescription>{t('descriptionBody')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormLabel>Logo</FormLabel>
+        <FormLabel>{t('Logo')}</FormLabel>
         <FormControl>
           <SingleFileUpload
             onUploadComplete={url => form.setValue('logo', url)}
           />
         </FormControl>
-        <FormDescription>Sube el logo de tu organización</FormDescription>
+        <FormDescription>{t('logoDescription')}</FormDescription>
 
         <FormField
           control={form.control}
@@ -174,9 +178,7 @@ export default function BeEventAdminForm({
               <FormControl>
                 <ColorPicker value={field.value} onChange={field.onChange} />
               </FormControl>
-              <FormDescription>
-                Selecciona un color para tu organización
-              </FormDescription>
+              <FormDescription>{t('color')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -266,24 +268,23 @@ export default function BeEventAdminForm({
         />
 
         <Button className="w-full" type="submit">
-          Empezar
+          {t('Begin')}
         </Button>
       </form>
     </Form>
   )
 }
 function BeEventAdmin(userId: { value: string }) {
+  const t = useTranslations('newUser')
   return (
     <Dialog>
       <DialogTrigger asChild className="w-full">
-        <Button className="min-w-full">Quiero manejar mi comunidad!</Button>
+        <Button className="min-w-full">{t('manage')}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Crea tu manejador de comunidades</DialogTitle>
-          <DialogDescription>
-            Llena los campos libres para continuar, luego podrás modificarlos!
-          </DialogDescription>
+          <DialogTitle>{t('createCommunityManager')}</DialogTitle>
+          <DialogDescription>{t('form')}</DialogDescription>
         </DialogHeader>
         <BeEventAdminForm userId={userId} />
       </DialogContent>

@@ -3,6 +3,7 @@ import { dataCollectorsCron } from '@/lib/cron/dataCollectorsCron'
 import { NextResponse } from 'next/server'
 
 const JOB_NAME = 'dataCollectors'
+
 export async function POST() {
   try {
     await tryToGetLock(JOB_NAME)

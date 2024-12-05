@@ -1,20 +1,21 @@
 {
   "name": "@andino-labs/yiqi-client",
-  "version": "1.0.8",
+  "version": "1.0.13",
   "types": "dist/index.d.mts",
   "files": [
     "dist",
     "index.d.ts"
   ],
   "dependencies": {
-    "@trpc/server": "^11.0.0-rc.569"
+    "@andino-labs/yiqi-client": "file:",
+    "@trpc/server": "10.45.2"
   },
   "devDependencies": {
     "@types/react": "^18.x.x",
+    "dts-bundle-generator": "^8.x.x",
     "trpc-openapi": "^1.x.x",
     "ts-node": "^10.x.x",
-    "typescript": "^4.x.x",
-    "dts-bundle-generator": "^8.x.x"
+    "typescript": "^4.x.x"
   },
   "peerDependencies": {
     "react": "^18.x.x"

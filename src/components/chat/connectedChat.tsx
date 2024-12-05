@@ -2,16 +2,15 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  sendUserCommunicationAction,
-  getUserMessageList
-} from '@/services/actions/messagesActions'
+import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
+import { sendUserCommunicationAction } from '@/services/actions/communications/sendUserCommunications'
 import {
   MessageList,
   MessageThreadType,
   MessageThreadTypeEnum
 } from '@/schemas/messagesSchema'
 import { MessageForm } from './MessageForm'
+import { useTranslations } from 'next-intl'
 
 export default function ConnectedChat({
   defaultMessages,
@@ -22,6 +21,7 @@ export default function ConnectedChat({
   userId: string
   orgId: string
 }) {
+  const t = useTranslations('ConnectedChat')
   const [messages, setMessages] = useState(defaultMessages)
   const [messageType, setMessageType] = useState<MessageThreadType>(
     defaultMessages.at(0)?.messageThread.type ||
@@ -105,7 +105,7 @@ export default function ConnectedChat({
   return (
     <div className="flex flex-col h-full w-full">
       <ScrollArea className="flex-grow" ref={scrollAreaRef}>
-        {isLoading && <div ref={loadingRef}>Loading more messages...</div>}
+        {isLoading && <div ref={loadingRef}>{t('loading')}</div>}
         {messages
           .map(message => (
             <div key={message.id} className="mb-4">

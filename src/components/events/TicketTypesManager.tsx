@@ -21,6 +21,7 @@ import { Badge } from '@/components/ui/badge'
 import { Trash2 } from 'lucide-react'
 import { EventTicketOfferingInputSchema } from '@/schemas/eventSchema'
 import { z } from 'zod'
+import { useTranslations } from 'next-intl'
 
 const MAX_TICKETS = 5
 
@@ -44,6 +45,8 @@ export function TicketTypesManager({
   tickets = [],
   onUpdate
 }: TicketTypesManagerProps) {
+  const t = useTranslations('TicketType')
+
   const [ticketList, setTicketList] = useState(tickets)
 
   const handleInputChange = (
@@ -96,7 +99,7 @@ export function TicketTypesManager({
 
           <div className="grid grid-cols-2 gap-4">
             <FormItem>
-              <FormLabel>Ticket Name</FormLabel>
+              <FormLabel>{t('ticketName')}</FormLabel>
               <FormControl>
                 <Input
                   value={ticket.name}
@@ -109,7 +112,7 @@ export function TicketTypesManager({
             </FormItem>
 
             <FormItem>
-              <FormLabel>Category</FormLabel>
+              <FormLabel>{t('Category')}</FormLabel>
               <Select
                 value={ticket.category}
                 onValueChange={value =>
@@ -118,20 +121,20 @@ export function TicketTypesManager({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue placeholder={t('selectCategory')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="GENERAL">General</SelectItem>
-                  <SelectItem value="VIP">VIP</SelectItem>
-                  <SelectItem value="BACKSTAGE">Backstage</SelectItem>
+                  <SelectItem value="GENERAL">{t('General')}</SelectItem>
+                  <SelectItem value="VIP">{t('VIP')}</SelectItem>
+                  <SelectItem value="BACKSTAGE">{t('Backstage')}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
 
             <FormItem>
-              <FormLabel>Price</FormLabel>
+              <FormLabel>{t('Price')}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -151,7 +154,7 @@ export function TicketTypesManager({
             </FormItem>
 
             <FormItem>
-              <FormLabel>Ticket Limit</FormLabel>
+              <FormLabel>{t('limit')}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -166,7 +169,7 @@ export function TicketTypesManager({
             </FormItem>
 
             <FormItem>
-              <FormLabel>Tickets Per Purchase</FormLabel>
+              <FormLabel>{t('ticketsPerPurchase')}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -181,14 +184,12 @@ export function TicketTypesManager({
                   }
                 />
               </FormControl>
-              <FormDescription>
-                How many tickets can be bought at once
-              </FormDescription>
+              <FormDescription>{t('howMany')}</FormDescription>
               <FormMessage />
             </FormItem>
 
             <FormItem className="col-span-2">
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t('Description')}</FormLabel>
               <FormControl>
                 <Input
                   value={ticket.description}
@@ -205,12 +206,12 @@ export function TicketTypesManager({
 
       {ticketList.length < MAX_TICKETS && (
         <Button type="button" variant="outline" onClick={addTicket}>
-          Add Ticket Type
+          {t('addTicketType')}
         </Button>
       )}
 
       <Button type="button" onClick={handleSubmit}>
-        Save Ticket Types
+        {t('saveTicketTYpe')}
       </Button>
     </div>
   )

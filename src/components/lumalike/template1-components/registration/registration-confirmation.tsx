@@ -6,15 +6,15 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { translations } from '@/lib/translations/translations'
 import { EventRegistrationSchemaType } from '@/schemas/eventSchema'
 import { Check, AlertCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 import StripeCheckout from '@/components/billing/StripeCheckout'
 import { useState } from 'react'
 import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { toast } from '@/hooks/use-toast'
 
 interface RegistrationConfirmationProps {
@@ -27,19 +27,20 @@ export function RegistrationConfirmation({
   requiresPayment = false
 }: RegistrationConfirmationProps) {
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false)
-  const router = useRouter()
 
+  const t = useTranslations('RegistrationComponent')
   const handlePaymentComplete = async () => {
     const result = await markRegistrationPaid(registration.id)
     if (result.success) {
       toast({
-        title: translations.es.eventRegistrationSuccess
+        title: `${t('eventRegistrationSuccess')}`,
+        variant: 'default'
       })
       setIsPaymentDialogOpen(false)
-      router.refresh()
+      redirect('/user/tickets')
     } else {
       toast({
-        title: translations.es.eventRegistrationError,
+        title: `${t('eventRegistrationError')}`,
         variant: 'destructive'
       })
     }
@@ -56,10 +57,10 @@ export function RegistrationConfirmation({
             </div>
           </div>
           <CardTitle className="text-center">
-            {translations.es.registrationPaymentPending}
+            {t('registrationPaymentPending')}
           </CardTitle>
           <CardDescription className="text-center">
-            {translations.es.registrationPaymentPendingDescription}
+            {t('registrationPaymentPendingDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -69,7 +70,7 @@ export function RegistrationConfirmation({
           >
             <DialogTrigger asChild>
               <Button className="w-full">
-                {translations.es.registrationContinuePayment}
+                {t('registrationContinuePayment')}
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -95,19 +96,19 @@ export function RegistrationConfirmation({
         </div>
         <CardTitle className="text-center">
           {registration.status === 'PENDING'
-            ? translations.es.registrationPending
-            : translations.es.registrationConfirmed}
+            ? `${t('registrationPending')}`
+            : `${t('registrationConfirmed')}`}
         </CardTitle>
         <CardDescription className="text-center">
           {registration.status === 'PENDING'
-            ? translations.es.registrationPendingDescription
-            : translations.es.registrationConfirmedDescription}
+            ? `${t('registrationPendingDescription')}`
+            : `${t('registrationConfirmedDescription')}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="text-center">
           <Link href="/user/tickets">
-            <Button>{translations.es.viewMyTickets}</Button>
+            <Button>{t('viewMyTickets')}</Button>
           </Link>
         </div>
       </CardContent>

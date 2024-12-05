@@ -1,8 +1,10 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Button } from '../ui/button'
 
 export default function LinkedInOAuthButton() {
+  const t = useTranslations('LinkedIn')
   const handleLinkClick = () => {
     const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID
     const redirectUri = `${process.env.NEXT_PUBLIC_URL}${process.env.NEXT_PUBLIC_LINKEDIN_REDIRECT_AUTH_URI}`
@@ -25,7 +27,7 @@ export default function LinkedInOAuthButton() {
         handleLinkClick()
       }}
     >
-      Ingresa con Linkedin
+      {t('login')}
     </Button>
   )
 }

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@mantine/core/styles.css';
+@import '@mantine/tiptap/styles.css';
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -80,7 +83,20 @@ body {
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 217.2 91.2% 59.8%;  
+  }
+
+  .dark {
+    --bg-primary: 0 0 0;
+    --bg-secondary: 128 128 128; 
+    --bg-opposite: 255 255 255; 
+    --text-primary: 255 255 255;
+    --text-secondary: 128 128 128;
+    --text-opposite: 0 0 0;
+    --border-primary: 153 153 153;
+    --border-secondary: 204 204 204;
+    --shadow-primary: rgba(0, 0, 0, 0.3);
+    --shadow-secondary: rgba(0, 0, 0, 0.4);
   }
 
   /* placeholder text style */
@@ -97,6 +113,10 @@ body {
   input[type='date'].date-input--has-value::-webkit-datetime-edit-day-field,
   input[type='date'].date-input--has-value::-webkit-datetime-edit-year-field {
     color: black;
+  }
+
+  .border-white-opacity-40 {
+    border-color: rgba(255, 255, 255, 0.4);
   }
 }
 

@@ -10,6 +10,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import { useTranslations } from 'next-intl'
 
 interface TicketProps {
   ownerName: string
@@ -28,6 +29,7 @@ export default function Component({
   ticketId = 'TICKET-123-456-789',
   qrCodeData = `https://example.com/verify-ticket`
 }: TicketProps) {
+  const t = useTranslations('TicketType')
   const formattedEventDate = new Date(eventDate).toLocaleString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -48,7 +50,7 @@ export default function Component({
         <div className="col-span-2 sm:col-span-1 space-y-4">
           <div>
             <Label className="text-sm font-medium text-muted-foreground">
-              Ticket Holder
+              {t('ticketHolder')}
             </Label>
             <p className="text-lg font-semibold flex items-center gap-2">
               <User className="h-5 w-5" />
@@ -57,7 +59,7 @@ export default function Component({
           </div>
           <div>
             <Label className="text-sm font-medium text-muted-foreground">
-              Event Date
+              {t('date')}
             </Label>
             <p className="text-lg font-semibold flex items-center gap-2">
               <CalendarDays className="h-5 w-5" />
@@ -66,7 +68,7 @@ export default function Component({
           </div>
           <div>
             <Label className="text-sm font-medium text-muted-foreground">
-              Purchase Date
+              {t('purchaseDate')}
             </Label>
             <p className="text-lg font-semibold flex items-center gap-2">
               <Clock className="h-5 w-5" />
@@ -79,7 +81,7 @@ export default function Component({
         </div>
       </CardContent>
       <CardFooter className="bg-muted text-muted-foreground text-center text-sm rounded-b-lg">
-        Ticket ID: {ticketId}
+        {t('ticketId')} {ticketId}
       </CardFooter>
     </Card>
   )

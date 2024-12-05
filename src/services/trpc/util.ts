@@ -1,13 +1,12 @@
 import { initTRPC } from '@trpc/server'
+import { type LuciaUserType } from '@/schemas/userSchema'
 import SuperJSON from 'superjson'
 
-/**
- * Initialization of tRPC backend
- * Should be done only once per backend!
- */
-const t = initTRPC.create({
-  transformer: SuperJSON // Optional if using superjson
-})
+export type Context = {
+  user: LuciaUserType | null
+}
+
+const t = initTRPC.context<Context>().create({ transformer: SuperJSON })
 
 export const router = t.router
 export const publicProcedure = t.procedure

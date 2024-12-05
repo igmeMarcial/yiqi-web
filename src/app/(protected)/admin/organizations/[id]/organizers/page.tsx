@@ -4,7 +4,7 @@ import Link from 'next/link'
 import AddOrganizerButton from './AddOrganizerButton'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-import { translations } from '@/lib/translations/translations'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 export default async function OrganizersPage({
   params
@@ -15,8 +15,11 @@ export default async function OrganizersPage({
   const organization = await getOrganization(params.id)
   const organizers = await getOrganizersByOrganization(params.id)
 
+  const t = await getTranslations('contactFor')
+  const localActive = await getLocale()
+
   if (!organization || !user) {
-    return <div>{translations.es.organizationNotFound}</div>
+    return <div>{t('organizationNotFound')}</div>
   }
 
   return (
@@ -31,7 +34,7 @@ export default async function OrganizersPage({
     >
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
-          {translations.es.manageOrganizersFor} {organization.name}
+          {t('manageOrganizersFor')} {organization.name}
         </h1>
         <ul className="space-y-2">
           {organizers.map(organizer => (
@@ -42,10 +45,10 @@ export default async function OrganizersPage({
         </ul>
         <AddOrganizerButton organizationId={params.id} />
         <Link
-          href={`/admin/organizations/${params.id}`}
+          href={`/${localActive}/admin/organizations/${params.id}`}
           className="mt-4 inline-block text-blue-500 hover:underline"
         >
-          {translations.es.backToOrganizationDashboard}
+          {t('backToOrganizationDashboard')}
         </Link>
       </div>
     </OrganizationLayout>

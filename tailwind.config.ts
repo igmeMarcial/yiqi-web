@@ -9,6 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundColor: {
+        primary: 'rgb(var(--bg-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--bg-secondary) / <alpha-value>)',
+        opposite: 'rgb(var(--bg-opposite) / <alpha-value>)'
+      },
+      textColor: {
+        primary: 'rgb(var(--text-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
+        opposite: 'rgb(var(--text-opposite) / <alpha-value>)'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

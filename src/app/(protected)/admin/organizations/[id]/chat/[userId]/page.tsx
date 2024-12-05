@@ -3,10 +3,8 @@ import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 import ActiveChatComponent from '@/components/chat/activeChat'
 import ConnectedChat from '@/components/chat/connectedChat'
-import {
-  getOrganizationMessageThreads,
-  getUserMessageList
-} from '@/services/actions/messagesActions'
+import { getOrganizationMessageThreads } from '@/services/actions/communications/getOrganizationMessageThreads'
+import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 
@@ -16,9 +14,8 @@ export default async function Page({
   params: { id: string; userId: string }
 }) {
   const user = await getUser()
-
   if (!user) {
-    redirect('/auth')
+    redirect(`/auth`)
   }
 
   const chats = await getOrganizationMessageThreads(params.id)
@@ -50,6 +47,6 @@ export default async function Page({
       </main>
     )
   } else if (user.role === Roles.NEW_USER) {
-    redirect('/newuser')
+    redirect(`/newuser`)
   }
 }

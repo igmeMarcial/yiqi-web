@@ -94,7 +94,7 @@ export type SavedTicketOfferingType = z.infer<typeof SavedTicketOfferingSchema>
 // this is the ticket the user has
 export const TicketSchema = z.object({
   id: z.string(),
-  user: userSchema.nullable(),
+  user: userSchema.nullable().optional(),
   checkedInDate: z.date().nullable(),
   category: TicketCategorySchema,
   ticketType: SavedTicketOfferingSchema.nullable().optional()
@@ -212,7 +212,7 @@ export const eventRegistrationsSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   paid: z.boolean(),
-  paymentId: z.string().optional()
+  paymentId: z.string().optional().nullable()
 })
 
 export type EventRegistrationsSchemaType = z.infer<
@@ -233,4 +233,19 @@ export const registrationInputSchema = z.object({
   tickets: z.record(z.string(), z.number().min(0).max(5))
 })
 
+export const getPublicEventsFilterSchema = z.object({
+  title: z.string().optional(),
+  location: z.string().optional(),
+  startDate: z.string().optional(),
+  type: z.string().optional(),
+  page: z.number().optional(),
+  limit: z.number().optional()
+})
+export const getEventFilterSchema = z.object({
+  eventId: z.string(),
+  includeTickets: z.boolean().optional()
+})
+
 export type RegistrationInput = z.infer<typeof registrationInputSchema>
+export type GetPublicEventsInput = z.infer<typeof getPublicEventsFilterSchema>
+export type GetEventFilterSchemaType = z.infer<typeof getEventFilterSchema>

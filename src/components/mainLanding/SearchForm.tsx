@@ -6,7 +6,7 @@ import { ChevronUpIcon, Cross2Icon } from '@radix-ui/react-icons'
 import { EventTypeEnum } from '@/schemas/eventSchema'
 import { ChevronDownIcon } from 'lucide-react'
 import useWindowSize from '@/hooks/useWindowSize'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface SearchFormProps {
   onSearch: (filters: {
@@ -19,6 +19,7 @@ interface SearchFormProps {
 }
 
 export default function SearchForm({ onSearch, locations }: SearchFormProps) {
+  const t = useTranslations('General')
   const [location, setLocation] = useState('')
   const [title, setTitle] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -49,10 +50,10 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
 
   return (
     <div className="bg-black relative overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-16 lg:py-16 lg:pb-0 pb-0 sm:py-16">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-16 lg:pb-0 pb-0 sm:py-16">
         <div>
           <div className="flex items-center space-x-4">
-            <p>{translations.es.welcome}</p>
+            <p>{t('welcome')}</p>
           </div>
         </div>
         <form
@@ -61,13 +62,11 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
         >
           {/* Campo para Título */}
           <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
-            <label className="text-gray-500 text-sm">
-              {translations.es.eventTitle}
-            </label>
+            <label className="text-gray-500 text-sm">{t('eventTitle')}</label>
             <div className="relative">
               <input
                 type="text"
-                placeholder={translations.es.searchByTitle}
+                placeholder={t('searchByTitle')}
                 className={`border-b-2 text-sm p-2 w-full rounded-md ${
                   !title
                     ? 'border-gray-400 text-gray-500'
@@ -93,9 +92,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
 
           {/* Campo para Ubicación */}
           <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
-            <label className="text-gray-500 text-sm">
-              {translations.es.location}
-            </label>
+            <label className="text-gray-500 text-sm">{t('location')}</label>
             <div className="relative">
               <select
                 className={`border-b-2 text-sm p-[0.659375rem] w-full rounded-md bg-white pl-[0.15625rem] ${
@@ -107,7 +104,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                 onChange={e => setLocation(e.target.value)}
               >
                 <option value="" className="text-gray-400">
-                  {translations.es.selectLocation}
+                  {t('selectLocation')}
                 </option>
                 {locations.map((loc, index) => (
                   <option key={index} value={loc}>
@@ -144,8 +141,8 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                   <ChevronDownIcon className="w-5 h-5 mr-2" />
                 )}
                 {showAdditionalFilters
-                  ? translations.es.hideFilters
-                  : translations.es.showMoreFilters}
+                  ? `${t('hideFilters')}`
+                  : `${t('showMoreFilters')}`}
               </button>
             </div>
           )}
@@ -154,7 +151,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
             <>
               <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
                 <label className="text-gray-500 text-sm">
-                  {translations.es.startDate}
+                  {t('startDate')}
                 </label>
                 <div className="relative">
                   <input
@@ -172,7 +169,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
 
               <div className="flex flex-col space-y-2 pl-2 w-full sm:w-1/5">
                 <label className="text-gray-500 text-sm">
-                  {translations.es.eventType}
+                  {t('eventType')}
                 </label>
                 <div className="relative">
                   <select
@@ -185,13 +182,11 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
                     onChange={e => setType(e.target.value as EventTypeEnum)}
                   >
                     <option value="" className="text-gray-400">
-                      {translations.es.selectEventType}
+                      {t('selectEventType')}
                     </option>
-                    <option value={EventTypeEnum.ONLINE}>
-                      {translations.es.virtual}
-                    </option>
+                    <option value={EventTypeEnum.ONLINE}>{t('virtual')}</option>
                     <option value={EventTypeEnum.IN_PERSON}>
-                      {translations.es.onsite}
+                      {t('onsite')}
                     </option>
                   </select>
                   {type && (
@@ -218,7 +213,7 @@ export default function SearchForm({ onSearch, locations }: SearchFormProps) {
               className="font-bold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
               style={{ paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
-              {translations.es.search}
+              {t('search')}
             </Button>
           </div>
         </form>

@@ -1,6 +1,6 @@
-import { translations } from '@/lib/translations/translations'
 import CommunityCard from './CommunityCard/CommunityCard'
 import { PublicCommunityType } from '@/schemas/communitySchema'
+import { useTranslations } from 'next-intl'
 
 type CommunitiesListProps = {
   communities: PublicCommunityType[]
@@ -12,6 +12,7 @@ const CommunitiesList = ({
   showHeader = true
 }: CommunitiesListProps) => {
   const hasCommunities = communities.length > 0
+  const t = useTranslations('Community')
 
   return (
     <section id="communities" className="w-full bg-black min-h-screen pt-9">
@@ -20,7 +21,7 @@ const CommunitiesList = ({
           {showHeader && (
             <div className="mb-8 pb-4">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
-                {translations.es.communities}
+                {t('communities')}
               </h2>
               <div className="mt-2 h-[1px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
             </div>
@@ -34,7 +35,7 @@ const CommunitiesList = ({
             </div>
           ) : (
             <div className="text-center text-gray-400 py-16">
-              <p>{translations.es.noCommunitiesFound}</p>
+              <p>{t('noCommunitiesFound')}</p>
             </div>
           )}
         </div>

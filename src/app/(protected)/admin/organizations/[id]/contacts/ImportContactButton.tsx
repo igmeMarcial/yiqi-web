@@ -1,8 +1,8 @@
 'use client'
 
 import { useToast } from '@/hooks/use-toast'
-import { translations } from '@/lib/translations/translations'
 import { importUsersAction } from '@/services/actions/importActions'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -10,6 +10,7 @@ export function ImportContactButton(params: { organizationId: string }) {
   const { toast } = useToast()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const t = useTranslations('DeleteAccount')
 
   const handleImportContacts = async () => {
     setIsLoading(true)
@@ -64,7 +65,7 @@ export function ImportContactButton(params: { organizationId: string }) {
       onClick={handleImportContacts}
       disabled={isLoading}
     >
-      {isLoading ? translations.es.importing : translations.es.importContacts}
+      {isLoading ? `${t('importing')}` : `${t('importContacts')}`}
     </button>
   )
 }

@@ -23,17 +23,28 @@ export const createCheckoutSession = async (registrationId: string) => {
   }
 
   if (registration.paymentId) {
-    const session = await stripe.checkout.sessions.retrieve(
-      registration.paymentId
-    )
+    try {
+      const session = await stripe.checkout.sessions.retrieve(
+        registration.paymentId
+      )
 
-    if (!session.client_secret) {
+      if (!session.client_secret) {
+        throw new Error('Checkout session not found')
+      }
+
+      return {
+        clientSecret: session.client_secret,
+        connectAccountId: stripeAccountId
+      }
+    } catch (error) {
+      console.error('Error retrieving checkout session', error)
+      // clear out this invalid session and try to make a new one
+      await prisma.eventRegistration.update({
+        where: { id: registrationId },
+        data: { paymentId: null }
+      })
+
       throw new Error('Checkout session not found')
-    }
-
-    return {
-      clientSecret: session.client_secret,
-      connectAccountId: stripeAccountId
     }
   }
 
@@ -68,7 +79,7 @@ export const createCheckoutSession = async (registrationId: string) => {
     }
   )
 
-  const commission = 0.05
+  const commission = 0.03
 
   const application_fee_amount =
     lineItems.reduce((acc, item) => {
@@ -83,8 +94,7 @@ export const createCheckoutSession = async (registrationId: string) => {
       },
       redirect_on_completion: 'never',
       mode: 'payment',
-      ui_mode: 'embedded',
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/checkout/return?session_id={CHECKOUT_SESSION_ID}`
+      ui_mode: 'embedded'
     },
     {
       stripeAccount: stripeAccountId

@@ -9,12 +9,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { MessagesSquare, Users } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 function Chats({
   contextUserName,
   lastMessage,
-  userId
+  contextUserId
 }: OrgMessageListItemSchemaType) {
   function getFirst5Words(str: string): string {
     const words = str.split(' ')
@@ -23,7 +23,7 @@ function Chats({
   }
 
   return (
-    <Link prefetch={true} href={`/chat/${userId}`}>
+    <Link prefetch={true} href={`/chat/${contextUserId}`}>
       <div className="border-b last:border-b-0">
         <div className="flex flex-row items-start gap-3 p-3 hover:bg-accent">
           <Avatar>
@@ -34,7 +34,7 @@ function Chats({
           <div className="flex flex-col items-start gap-1">
             <p className="font-bold">{contextUserName}</p>
             <p className="text-muted-foreground text-sm">
-              {getFirst5Words(lastMessage.content)}
+              {getFirst5Words(lastMessage?.content ?? '')}
             </p>
           </div>
         </div>
@@ -48,6 +48,7 @@ export default function ChatComponent({
 }: {
   chats: OrgMessageListItemSchemaType[]
 }) {
+  const t = useTranslations('Chat')
   return (
     <Card className="h-[80vh]">
       <CardContent className="p-0 h-full">
@@ -55,9 +56,7 @@ export default function ChatComponent({
           <ResizablePanel defaultSize={25} minSize={20}>
             <div className="h-full flex flex-col">
               <div className="p-4 border-b">
-                <h2 className="text-lg font-semibold">
-                  {translations.es.chats}
-                </h2>
+                <h2 className="text-lg font-semibold">{t('chats')}</h2>
               </div>
               <ScrollArea className="flex-1">
                 <div className="pr-4">
@@ -73,7 +72,7 @@ export default function ChatComponent({
             <div className="flex flex-col h-full items-center justify-center p-6">
               <MessagesSquare className="w-10 h-10 mb-4" />
               <span className="font-semibold text-2xl">
-                {translations.es.clickToContinue}
+                {t('clickToContinue')}
               </span>
             </div>
           </ResizablePanel>

@@ -3,13 +3,14 @@ import { Instagram } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { motion } from 'framer-motion'
 import { ProfileWithPrivacy } from '@/schemas/userSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface HostsProps {
   hosts: ProfileWithPrivacy[] | null
 }
 
 export function Hosts({ hosts }: HostsProps) {
+  const t = useTranslations('RegistrationComponent')
   if (!hosts || !hosts[0]?.name) {
     return <div></div>
   }
@@ -22,7 +23,7 @@ export function Hosts({ hosts }: HostsProps) {
       transition={{ duration: 0.5, delay: 0.6 }}
     >
       <h2 className="text-2xl font-semibold text-primary-foreground">
-        {translations.es.eventHostedBy}
+        {t('eventHostedBy')}
       </h2>
       <div className="grid gap-4">
         {hosts.map((host, index) => (
@@ -47,7 +48,7 @@ export function Hosts({ hosts }: HostsProps) {
                   className="text-sm text-primary-foreground/80 hover:text-primary transition-colors flex items-center gap-1 mt-1"
                 >
                   <Instagram className="h-4 w-4" />
-                  {translations.es.eventHostInstagram}
+                  {t('eventHostInstagram')}
                 </Link>
               )}
             </div>

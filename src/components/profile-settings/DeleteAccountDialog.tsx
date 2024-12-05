@@ -17,12 +17,14 @@ import { TriangleAlert } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
 import { deleteUserAccount } from '@/services/actions/userActions'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export default function DeleteAccountDialog() {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+
+  const t = useTranslations('DeleteAccount')
 
   const handleDelete = useCallback(async () => {
     try {
@@ -30,27 +32,28 @@ export default function DeleteAccountDialog() {
       const result = await deleteUserAccount()
       if (result.success) {
         toast({
-          title: translations.es.accountDeleted,
-          description: translations.es.accountDeletedDescription
+          title: `${t('accountDeleted')}`,
+          description: `${t('accountDeletedDescription')}`
         })
-        router.push('/auth')
+        router.push(`/auth`)
       } else {
         toast({
-          title: translations.es.error,
-          description: result.error ?? translations.es.errorDeleting,
+          title: `${t('error')}`,
+          description: result.error ?? `${t('errorDeleting')}`,
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: translations.es.error,
-        description: translations.es.somethingWentWrong,
+        title: `${t('error')}`,
+        description: `${t('somethingWentWrong')}`,
         variant: 'destructive'
       })
     } finally {
       setIsLoading(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, toast])
 
   return (
@@ -58,22 +61,22 @@ export default function DeleteAccountDialog() {
       <AlertDialogTrigger asChild>
         <Button variant="destructive" className="flex items-center space-x-2">
           <TriangleAlert className="h-4 w-4" />
-          <span>{translations.es.deleteAccount}</span>
+          <span>{t('deleteAccount')}</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{translations.es.areYouSure}</AlertDialogTitle>
+          <AlertDialogTitle>{t('areYouSure')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {translations.es.actionCannotBeUndone}
+            {t('actionCannotBeUndone')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{translations.es.cancel}</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
             {isLoading
-              ? translations.es.deleting
-              : translations.es.deleteAccountConfirmation}
+              ? `${t('deleting')}`
+              : `${t('deleteAccountConfirmation')}`}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

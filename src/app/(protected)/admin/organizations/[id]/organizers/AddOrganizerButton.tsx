@@ -5,13 +5,14 @@ import { createOrganizer } from '@/services/actions/organizerActions'
 import { searchUsers } from '@/services/actions/userActions'
 import { useRouter } from 'next/navigation'
 import { User } from '@prisma/client'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 export default function AddOrganizerButton({
   organizationId
 }: {
   organizationId: string
 }) {
+  const t = useTranslations('AddOrganizer')
   const [showForm, setShowForm] = useState(false)
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -39,7 +40,7 @@ export default function AddOrganizerButton({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!selectedUser) {
-      setError(translations.es.selectUserError)
+      setError(`${t('selectUserError')}`)
     }
 
     try {
@@ -49,7 +50,7 @@ export default function AddOrganizerButton({
       router.refresh()
     } catch (error) {
       console.error(error)
-      setError(translations.es.addOrganizerError)
+      setError(`${t('addOrganizerError')}`)
     }
   }
 
@@ -59,7 +60,7 @@ export default function AddOrganizerButton({
         onClick={() => setShowForm(true)}
         className="bg-blue-500 text-white px-4 py-2 rounded"
       >
-        {translations.es.addOrganizer}
+        {t('addOrganizer')}
       </button>
       {showForm && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
@@ -67,15 +68,13 @@ export default function AddOrganizerButton({
             onSubmit={handleSubmit}
             className="bg-white p-4 rounded shadow-lg w-96"
           >
-            <h2 className="text-xl font-bold mb-4">
-              {translations.es.addNewOrganizer}
-            </h2>
+            <h2 className="text-xl font-bold mb-4">{t('addNewOrganizer')}</h2>
             <div className="mb-4">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => handleSearch(e.target.value)}
-                placeholder={translations.es.searchUsers}
+                placeholder={t('searchUsers')}
                 className="w-full p-2 border rounded"
               />
               {searchResults.length > 0 && (
@@ -95,8 +94,8 @@ export default function AddOrganizerButton({
             {selectedUser && (
               <div className="mb-4">
                 <p>
-                  {translations.es.selectedUser}: {selectedUser.name} (
-                  {selectedUser.email})
+                  {t('selectedUser')}: {selectedUser.name} ({selectedUser.email}
+                  )
                 </p>
               </div>
             )}
@@ -105,8 +104,8 @@ export default function AddOrganizerButton({
               onChange={e => setRole(e.target.value as 'ADMIN' | 'VIEWER')}
               className="w-full p-2 mb-4 border rounded"
             >
-              <option value="VIEWER">{translations.es.viewer}</option>
-              <option value="ADMIN">{translations.es.admin}</option>
+              <option value="VIEWER">{t('viewer')}</option>
+              <option value="ADMIN">{t('admin')}</option>
             </select>
             <div className="flex justify-end space-x-2">
               <button
@@ -114,13 +113,13 @@ export default function AddOrganizerButton({
                 onClick={() => setShowForm(false)}
                 className="bg-gray-300 px-4 py-2 rounded"
               >
-                {translations.es.cancel}
+                {t('cancel')}
               </button>
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                {translations.es.add}
+                {t('add')}
               </button>
             </div>
             {error && <p className="text-red-500 mt-2">{error}</p>}

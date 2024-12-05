@@ -45,14 +45,21 @@ import {
   ProfileWithPrivacy
 } from '@/schemas/userSchema'
 import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
+
+const ProfileFormSchema = profileWithPrivacySchema.extend({
+  picture: z.instanceof(File).nullable().optional()
+})
 
 function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations('ProfileSettings')
 
-  const form = useForm<ProfileWithPrivacy>({
-    resolver: zodResolver(profileWithPrivacySchema),
+  const form = useForm<z.infer<typeof ProfileFormSchema>>({
+    resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
       ...user,
       name: user.name ?? '',
@@ -70,7 +77,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     }
   })
 
-  async function onSubmit(data: ProfileWithPrivacy) {
+  async function onSubmit(data: z.infer<typeof ProfileFormSchema>) {
     setIsLoading(true)
     try {
       let imageUrl: string | null = null
@@ -93,21 +100,21 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
       if (result.success) {
         router.refresh()
         toast({
-          description: translations.es.profileUpdated,
+          description: `${t('profileUpdated')}`,
           variant: 'default'
         })
       } else {
         toast({
-          title: translations.es.error,
-          description: translations.es.updateFailed,
+          title: `${t('error')}`,
+          description: `${t('updateFailed')}`,
           variant: 'destructive'
         })
       }
     } catch (error) {
       console.log(error)
       toast({
-        title: translations.es.error,
-        description: translations.es.somethingWentWrong,
+        title: `${t('error')}`,
+        description: `${t('somethingWentWrong')}`,
         variant: 'destructive'
       })
     } finally {
@@ -122,7 +129,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
     <div className="flex items-center justify-between">
       <FormLabel>{label}</FormLabel>
       <div className="flex items-center justify-between gap-2">
-        <FormLabel>Set to Public</FormLabel>
+        <FormLabel>{t('setToPublic')}</FormLabel>
         <Switch
           checked={form.watch(`privacySettings.${field}`)}
           onCheckedChange={checked =>
@@ -158,21 +165,21 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
       transition={{ duration: 0.5 }}
       className="container max-w-4xl pb-10 mx-auto"
     >
-      <Card className="bg-transparent border-none">
+      <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl">
-            {translations.es.profileSettings}
-          </CardTitle>
+          <CardTitle className="text-2xl">{t('profileSettings')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <ProfilePictureUpload
-                currentValue={form.watch('picture')}
-                onChange={handleProfilePictureChange}
-                name={form.watch('name')}
-                userPicture={user.picture ?? ''}
-              />
+              <div className="flex justify-center items-center">
+                <ProfilePictureUpload
+                  currentValue={form.watch('picture')}
+                  onChange={handleProfilePictureChange}
+                  name={form.watch('name')}
+                  userPicture={user.picture ?? ''}
+                />
+              </div>
 
               <Separator />
 
@@ -190,14 +197,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'name'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{translations.es.name}</FormLabel>
+                        <FormLabel>{t('name')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterYourName}
+                              placeholder={t('enterYourName')}
                               {...field}
                             />
                           </div>
@@ -220,7 +227,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterYourEmail}
+                              placeholder={t('enterYourEmail')}
                               disabled
                               {...field}
                             />
@@ -239,7 +246,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                       <FormItem>
                         {renderPrivacySwitch(
                           'phoneNumber',
-                          translations.es.phoneNumber
+                          `${t('phoneNumber')}`
                         )}
                         <FormControl>
                           <div className="relative">
@@ -263,14 +270,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'company'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{translations.es.company}</FormLabel>
+                        <FormLabel>{t('company')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Building2 className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterCompany}
+                              placeholder={t('enterYourCompany')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -298,14 +305,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'position'}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{translations.es.position}</FormLabel>
+                        <FormLabel>{t('position')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterPosition}
+                              placeholder={t('enterYourPosition')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -318,13 +325,13 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                 </div>
 
                 <div className="space-y-2">
-                  <FormLabel>{translations.es.bio}</FormLabel>
+                  <FormLabel>{t('bio')}</FormLabel>
                   <div className="relative">
                     <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Textarea
                       {...form.register('shortDescription')}
                       className="min-h-[100px] pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                      placeholder={translations.es.tellUsAboutYourself}
+                      placeholder={t('tellUsAboutYourself')}
                       value={form.watch('shortDescription') ?? ''}
                     />
                   </div>
@@ -353,7 +360,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterYourX}
+                              placeholder={t('enterYourX')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -377,7 +384,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterLinkedinURL}
+                              placeholder={t('enterLinkedinURL')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -401,7 +408,7 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterInstagramURL}
+                              placeholder={t('enterInstagramURL')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -418,17 +425,14 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     name={'website'}
                     render={({ field }) => (
                       <FormItem>
-                        {renderPrivacySwitch(
-                          'website',
-                          translations.es.website
-                        )}
+                        {renderPrivacySwitch('website', `${t('website')}`)}
                         <FormControl>
                           <div className="relative">
                             <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               type="text"
                               className="pl-9 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
-                              placeholder={translations.es.enterWebsiteURL}
+                              placeholder={t('enterWebsiteURL')}
                               {...field}
                               value={field.value ?? ''}
                             />
@@ -455,11 +459,11 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
                     <div className="text-sm font-medium">
                       <div className="flex items-center gap-2">
                         <BellOff className="h-4 w-4" />
-                        {translations.es.stopCommunications}
+                        {t('stopCommunications')}
                       </div>
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {translations.es.disableCommunications}
+                      {t('disableCommunications')}
                     </div>
                   </div>
                   <Switch
@@ -474,27 +478,27 @@ function UpdateProfileForm({ user }: { user: ProfileWithPrivacy }) {
 
                 <div className="flex items-center gap-2 rounded-lg border p-4">
                   <Shield className="h-4 w-4" />
-                  <div className="flex-1">{translations.es.role}</div>
-                  <Badge>User</Badge>
+                  <div className="flex-1">{t('role')}</div>
+                  <Badge>{t('User')}</Badge>
                 </div>
               </motion.div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
                 <DeleteAccountDialog />
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="flex items-center space-x-2"
+                  className="w-full sm:w-auto flex items-center justify-center space-x-2"
                 >
                   {isLoading ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>{translations.es.saving}</span>
+                      <span>{t('saving')}</span>
                     </>
                   ) : (
                     <>
                       <Save className="h-4 w-4" />
-                      <span>{translations.es.saveChanges}</span>
+                      <span>{t('saveChanges')}</span>
                     </>
                   )}
                 </Button>
