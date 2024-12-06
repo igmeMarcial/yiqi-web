@@ -177,3 +177,4 @@ Andino uses a queue-based notification system to handle various types of communi
 5. generate and API key and secrete so that u can locally test this. You will be using the aws SQS client to receive the emails.
 
 The permissions part is the trickiest part of all. Just use chatgpt to generate it or ask the chat.
+Or maybe use the cloudformation template to create the resources.(i havent tested it but it should work if u replace the placeholders with your own values.)
