@@ -106,6 +106,7 @@
   },
   "EventsPage": {
     "createNewEvent": "Crear Nuevo Evento",
+    "editEvent": "Editar Evento",
     "events": "Eventos",
     "cancel": "Cancelar"
   },
@@ -180,6 +181,11 @@
     "User": "Usuario"
   },
   "DeleteAccount": {
+    "viewEvent": "Ver evento",
+    "editEvent": "Editar evento",
+    "uploadImage":"Subir imagen",
+    "allowedFormats": "Formatos permitidos: ",
+    "location": "Ubicación",
     "settings": "Configuración",
     "name": "Nombre",
     "email": "Correo electrónico",

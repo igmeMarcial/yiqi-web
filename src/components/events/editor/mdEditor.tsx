@@ -121,7 +121,7 @@ export function MarkdownEditor({
           <Dialog>
             <DialogTrigger asChild>
               <div className="prose prose-sm max-w-none mb-4 cursor-pointer dark:prose-invert">
-                <MdPreview content={content} />
+                <MdPreview darkMode={true} content={content} />
               </div>
             </DialogTrigger>
             <DialogContent
@@ -133,7 +133,7 @@ export function MarkdownEditor({
                     setContent(stagingContent)
                   }}
                 >
-                  <Check className="h-8 w-8" />
+                  <Check className="h-12 w-12 text-primary" />
                 </Button>
               }
             >
@@ -143,9 +143,11 @@ export function MarkdownEditor({
               <div className="mt-4">
                 <RichTextEditor
                   editor={editor}
-                  className="max-w-full [&_.mantine-RichTextEditor-content]:min-h-[300px] [&_.mantine-RichTextEditor-content]:max-w-full [&_iframe]:w-full [&_iframe]:aspect-video"
+                  style={{ backgroundColor: 'black' }}
+                  className="max-w-full [&_.mantine-RichTextEditor-content]:min-h-[300px] [&_.mantine-RichTextEditor-content]:max-w-full [&_iframe]:w-full [&_iframe]:aspect-video dark:bg-primary dark:text-primary rounded-md shadow-md dark:border-gray-700"
                 >
-                  <RichTextEditor.Toolbar sticky stickyOffset={0}>
+                  <RichTextEditor.Toolbar className="dark:bg-primary dark:border-gray-700 border-b sticky stickyOffset={0} px-2 sm:px-4 py-2">
+                    {/* Grupo de controles básicos */}
                     <RichTextEditor.ControlsGroup>
                       <RichTextEditor.Bold />
                       <RichTextEditor.Italic />
@@ -156,6 +158,7 @@ export function MarkdownEditor({
                       <RichTextEditor.Code />
                     </RichTextEditor.ControlsGroup>
 
+                    {/* Encabezados */}
                     <RichTextEditor.ControlsGroup>
                       <RichTextEditor.H1 />
                       <RichTextEditor.H2 />
@@ -188,9 +191,10 @@ export function MarkdownEditor({
                         onClick={() => fileInputRef.current?.click()}
                         aria-label="Insert image"
                         title="Insert image"
+                        className="hover:bg-gray-700 focus:outline-none transition dark:bg-primary dark:text-primary"
                       >
                         {isUploading ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
+                          <Loader2 className="h-4 w-4 animate-spin dark:text-primary" />
                         ) : (
                           '🖼️'
                         )}
@@ -207,13 +211,14 @@ export function MarkdownEditor({
                         }}
                         aria-label="Insert YouTube video"
                         title="Insert YouTube video"
+                        className="hover:bg-gray-700 focus:outline-none transition dark:bg-primary dark:text-primary"
                       >
                         📺
                       </RichTextEditor.Control>
                     </RichTextEditor.ControlsGroup>
                   </RichTextEditor.Toolbar>
 
-                  <RichTextEditor.Content />
+                  <RichTextEditor.Content className="px-4 py-3 focus:outline-none rounded-md" />
                 </RichTextEditor>
               </div>
             </DialogContent>

@@ -180,6 +180,7 @@
     "User": "User"
   },
   "DeleteAccount": {
+    "uploadImage":"Upload image",
     "settings": "Settings",
     "name": "Name",
     "email": "Email",
