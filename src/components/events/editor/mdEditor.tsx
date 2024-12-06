@@ -23,14 +23,7 @@ import { MdPreview } from './MdPreview'
 import { MantineProvider } from '@mantine/core'
 import { useUpload } from '@/hooks/useUpload'
 import { useToast } from '@/hooks/use-toast'
-
-export const defaultValue = `
-<h1>Welcome to the Rich Text Editor</h1>
-<p>
-  This editor supports <strong>bold</strong>, <em>italic</em>, and many other formatting options.
-  You can also embed images and YouTube videos!
-</p>
-`
+import { useTranslations } from 'next-intl'
 
 export function MarkdownEditor({
   initialValue,
@@ -39,10 +32,17 @@ export function MarkdownEditor({
   initialValue?: string
   onChange: (value: string) => void
 }) {
+  const t = useTranslations('EventsPage')
+  const defaultValue = `
+  <h1>${t('defaultValueH1')}</h1>
+  <p>
+    ${t('defaultValueP') + ' '}<strong>${t('defaultValueStrong') + ', '}</strong>
+    <em>${t('defaultValueItalic') + ', '}</em>
+    ${' ' + t('defaultValueP2') + '.'}
+  </p>
+  `
   const [content, setContent] = useState(initialValue || defaultValue)
-  const [stagingContent, setStagingContent] = useState(
-    initialValue || defaultValue
-  )
+  const [stagingContent, setStagingContent] = useState(initialValue || t(''))
   const { toast } = useToast()
   const { uploadSingle, isUploading } = useUpload()
   const fileInputRef = useRef<HTMLInputElement>(null)

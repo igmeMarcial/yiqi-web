@@ -37,7 +37,7 @@ import Image from 'next/image'
 import { AddressAutocomplete } from '../forms/AddressAutocomplete'
 import { getLocationDetails } from '@/lib/utils'
 import { updateEvent } from '@/services/actions/event/updateEvent'
-import { defaultValue, MarkdownEditor } from './editor/mdEditor'
+import { MarkdownEditor } from './editor/mdEditor'
 import {
   Dialog,
   DialogContent,
@@ -88,6 +88,7 @@ const defaultMinEndTimeStr = defaultEndDate
 export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const t = useTranslations('DeleteAccount')
+  const tPage = useTranslations('EventsPage')
   const [tickets, setTickets] = useState<
     EventTicketInputType[] | SavedTicketOfferingType[]
   >(
@@ -103,7 +104,14 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
     ]
   )
   console.log('EventxD:', event)
-
+  const defaultValue = `
+  <h1>${tPage('defaultValueH1')}</h1>
+  <p>
+    ${tPage('defaultValueP') + ' '}<strong>${tPage('defaultValueStrong') + ', '}</strong>
+    <em>${tPage('defaultValueItalic') + ', '}</em>
+    ${' ' + tPage('defaultValueP2') + '.'}
+  </p>
+  `
   const [loading, setLoading] = useState(false)
   const [showTicketManager, setShowTicketManager] = useState(false)
   const [showStripeDialog, setShowStripeDialog] = useState(false)
