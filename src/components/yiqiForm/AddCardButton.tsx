@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import {
 import { cn } from '@/lib/utils'
 import { FormProps } from './yiqiTypes'
 import { generateUniqueId } from './utils'
+import { translations } from '@/lib/translations/translations'
 
 interface AddCardButtonProps {
   fields: FormProps[]
@@ -29,12 +30,6 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
     [fields]
   )
 
-  useEffect(() => {
-    if (fields.length < 2) {
-      addCard(focusedCardIndex, generateUniqueId(), 'Pregunta')
-    }
-  }, [addCard, fields.length, focusedCardIndex])
-
   const handleAddCard = useCallback(() => {
     addCard(focusedCardIndex, generateUniqueId())
   }, [addCard, focusedCardIndex])
@@ -42,13 +37,9 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
   return (
     <div
       className={cn(
-        // Mobile positioning
         'md:static fixed bottom-6 right-4',
-        // Z-index and positioning
         'z-50 md:z-auto',
-        // Container styles
         'flex items-center justify-center',
-        // Ensure proper stacking
         'isolation-auto'
       )}
     >
@@ -66,31 +57,28 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
                 onClick={handleAddCard}
                 size="lg"
                 className={cn(
-                  // Base styles
                   'relative h-14 rounded-full shadow-lg',
-                  // Desktop styles
                   'md:h-11 md:w-11 md:rounded-lg md:shadow-sm',
-                  // Colors and effects
-                  'bg-primary hover:bg-primary/90',
+                  'bg-primary dark:bg-[#fff] hover:bg-primary/90',
                   'text-primary-foreground',
-                  // Animation
                   'transition-all duration-200',
-                  // Mobile-specific styles
                   'flex items-center gap-2 px-6 md:px-3',
-                  // Hover effects
                   'hover:shadow-md',
-                  // Focus styles
                   'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
                 )}
               >
-                <Plus className="h-5 w-5" />
-                <span className="md:hidden">Add Question</span>
-                <span className="sr-only">Add new question</span>
+                <Plus className="h-5 w-5  dark:text-[#1F1F1F]" />
+                <span className="md:hidden dark:text-[#1F1F1F]">
+                  {translations.es.addQuestion}
+                </span>
+                <span className="sr-only">
+                  {translations.es.addNewQuestion}
+                </span>
               </Button>
             </motion.div>
           </TooltipTrigger>
           <TooltipContent side="left" className="hidden md:block">
-            Add question
+            {translations.es.addQuestion}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

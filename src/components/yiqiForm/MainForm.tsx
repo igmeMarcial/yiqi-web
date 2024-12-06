@@ -8,20 +8,19 @@ import { usePathname, useRouter } from 'next/navigation'
 import ResultForm from './ResultForm'
 import { Reorder, useDragControls } from 'framer-motion'
 import { generateUniqueId } from './utils'
+import { translations } from '@/lib/translations/translations'
+
+const initialCard = {
+  id: 'TitleCard',
+  cardTitle: translations.es.formWithoutTitle,
+  inputType: InputTypes.TITLE,
+  contents: '',
+  isFocused: false,
+  isRequired: false
+}
+
 function MainForm({ orgId }: { orgId: string }) {
-  const initialCard = {
-    id: 'TitleCard',
-    cardTitle: 'Formulario sin título',
-    inputType: InputTypes.TITLE,
-    contents: '',
-    isFocused: false,
-    isRequired: false
-  }
-
   const [form, setForm] = useState<FormProps[]>([initialCard])
-  // const [requiredCardId, setRequiredCardId] = useState<string>('')
-
-  //Change route (create and result)
   const dragControls = useDragControls()
   const pathname = usePathname()
   const router = useRouter()
@@ -47,7 +46,7 @@ function MainForm({ orgId }: { orgId: string }) {
     contents: [
       {
         id: generateUniqueId(),
-        text: 'Opcion 1'
+        text: translations.es.option1
       }
     ],
     isFocused: true,
@@ -277,6 +276,7 @@ function MainForm({ orgId }: { orgId: string }) {
     })
   }
 
+  console.log(form)
   return (
     <YiqiFormLayout
       form={form}
@@ -286,11 +286,11 @@ function MainForm({ orgId }: { orgId: string }) {
     >
       {currentView === 'create' ? (
         <div className="relative flex flex-col md:flex-row h-full w-full max-w-[500px] md:max-w-[760px] mx-auto">
-          <div className="flex-1 pt-2 px-2 md:px-0 pb-20 md:pb-8 w-full">
+          <div className="flex-1 pt-3 px-3 md:px-0 pb-20 md:pb-8 w-full">
             <Reorder.Group
               axis="y"
               values={form}
-              onReorder={newOrder => setForm(newOrder)}
+              onReorder={setForm}
               className="flex flex-col gap-3 w-full"
             >
               {form.map((card, index) => (
@@ -301,7 +301,7 @@ function MainForm({ orgId }: { orgId: string }) {
                   dragListener={card.inputType !== InputTypes.TITLE}
                   dragControls={dragControls}
                   transition={{ duration: 0 }}
-                  className="w-full"
+                  className="w-full "
                 >
                   <FormBuild
                     dragControls={dragControls}

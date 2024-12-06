@@ -76,7 +76,7 @@ const Card = ({
       className={cn(
         'group relative w-full transition-all duration-200',
         'rounded-lg',
-        'bg-background/50 dark:bg-slate-900/50',
+        'bg-background/50 dark:bg-[#1C1C1C]',
         isFocused &&
           'ring-2 ring-[rgba(0, 178, 218, .6)] dark:ring-[rgba(0, 178, 218, .6)]'
       )}
@@ -84,7 +84,7 @@ const Card = ({
       <ShadcnCard
         onClick={handleFocus}
         className={cn(
-          'relative flex flex-col min-h-[138px] border-none w-full',
+          'relative flex bg-transparent flex-col min-h-[138px] border-none w-full',
           'px-4 py-5 sm:px-6 sm:pt-8 sm:pb-6',
           'transition-colors duration-200',
           isFocused && !isTitle && 'pb-0',

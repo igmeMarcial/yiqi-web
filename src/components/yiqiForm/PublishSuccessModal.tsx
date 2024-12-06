@@ -47,7 +47,7 @@ export function PublishSuccessModal({
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="text-center flex items-center justify-center gap-2 text-2xl">
-            {translations.es.publishSuccessTitleText}
+            {translations.es.formPublished}
             <PartyPopper className="h-6 w-6 text-yellow-500 animate-bounce" />
           </DialogTitle>
         </DialogHeader>
@@ -66,12 +66,12 @@ export function PublishSuccessModal({
               className="shrink-0 gap-1.5"
             >
               <Copy className="h-4 w-4" />
-              {copied ? translations.es.copied : translations.es.copyLink}
+              {copied ? translations.es.copied : translations.es.copy}
             </Button>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4 text-center">
-              {translations.es.nextActionsTitle}
+              {translations.es.whatToDoNext}
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="group relative overflow-hidden rounded-lg border p-4 hover:border-primary/50 transition-colors">
@@ -83,7 +83,7 @@ export function PublishSuccessModal({
                     </div>
                   </div>
                   <h4 className="font-medium">
-                    {translations.es.setUpIntegrations}
+                    {translations.es.configureIntegrations}
                   </h4>
                 </div>
               </div>
@@ -95,7 +95,9 @@ export function PublishSuccessModal({
                       <Share2 className="h-5 w-5 text-purple-500" />
                     </div>
                   </div>
-                  <h4 className="font-medium">{translations.es.shareForm}</h4>
+                  <h4 className="font-medium">
+                    {translations.es.shareEmbedForm}
+                  </h4>
                 </div>
               </div>
             </div>

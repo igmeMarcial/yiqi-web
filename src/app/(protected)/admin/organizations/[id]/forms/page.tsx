@@ -20,7 +20,7 @@ export default async function FormsPage({
   }
 
   return (
-    <div className="h-screen bg-gray-100 dark:bg-[rgb(28, 28, 28)]">
+    <div className="h-screen  dark:bg-[rgb(28, 28, 28)]">
       <MainForm orgId={params.id} />
     </div>
   )

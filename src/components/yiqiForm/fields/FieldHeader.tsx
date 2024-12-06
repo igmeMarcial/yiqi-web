@@ -13,6 +13,7 @@ import {
 import { FormProps, InputTypes } from '../yiqiTypes'
 import { ExtendedCardProps } from '../FormBuild'
 import { cn } from '@/lib/utils'
+import { translations } from '@/lib/translations/translations'
 
 const FieldHeader = ({
   id,
@@ -63,7 +64,7 @@ const FieldHeader = ({
         'dark:bg-transparent dark:text-white',
         'placeholder:text-gray-400',
         isTitle ? 'text-2xl sm:text-3xl font-medium' : 'text-base',
-        isFocused ? 'bg-gray-50 dark:bg-gray-800' : 'bg-transparent'
+        isFocused ? 'bg-gray-50 dark:bg-[#1C1C1C]' : 'bg-transparent'
       ),
     [isTitle, isFocused]
   )
@@ -95,7 +96,9 @@ const FieldHeader = ({
               className={inputClasses}
               value={fieldTitle}
               onChange={handleCardTitleChange}
-              placeholder={isTitle ? 'Título del formulario' : 'Pregunta'}
+              placeholder={
+                isTitle ? translations.es.formTitle : translations.es.pregunta
+              }
             />
           </motion.div>
         )}
@@ -106,7 +109,7 @@ const FieldHeader = ({
           name="inputTypeSelect"
           control={control}
           render={() => (
-            <motion.div {...selectAnimation} className="w-full sm:w-[208px]">
+            <motion.div {...selectAnimation} className="w-full ">
               <Select
                 defaultValue={InputTypes.RADIO}
                 onValueChange={handleInputTypeChange}
@@ -115,27 +118,29 @@ const FieldHeader = ({
                   className={cn(
                     'h-8 sm:h-10',
                     'border-slate-200 dark:border-slate-700',
-                    'bg-white dark:bg-slate-900',
-                    'hover:bg-slate-50 dark:hover:bg-slate-800',
+                    'bg-white dark:bg-[#1C1C1C]',
+                    'hover:bg-slate-50 dark:hover:bg-[#1C1C1C]',
                     'focus:ring-2 focus:ring-indigo-500/20 dark:focus:ring-indigo-400/20',
                     'transition-colors duration-200'
                   )}
                 >
-                  <SelectValue placeholder="Seleccionar tipo" />
+                  <SelectValue placeholder={translations.es.selectType} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={InputTypes.TEXT}>Texto corto</SelectItem>
+                  <SelectItem value={InputTypes.TEXT}>
+                    {translations.es.shortText}
+                  </SelectItem>
                   <SelectItem value={InputTypes.TEXTAREA}>
-                    Text Largo
+                    {translations.es.longText}
                   </SelectItem>
                   <SelectItem value={InputTypes.RADIO}>
-                    Opción múltiple
+                    {translations.es.multipleChoice}
                   </SelectItem>
                   <SelectItem value={InputTypes.CHECKBOX}>
-                    Casilla de verificación
+                    {translations.es.checkbox}
                   </SelectItem>
                   <SelectItem value={InputTypes.SELECT}>
-                    Menú desplegable
+                    {translations.es.dropdownMenu}
                   </SelectItem>
                 </SelectContent>
               </Select>

@@ -103,7 +103,7 @@ export default function OrganizationLayout({
       href: `/admin/organizations/${orgId}/billing`
     },
     {
-      name: translations.es.forms,
+      name: 'Formularios',
       icon: Plus,
       href: `/admin/organizations/${orgId}/forms`
     }

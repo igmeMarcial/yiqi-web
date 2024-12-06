@@ -29,10 +29,10 @@ const InputTextField = ({ id, fields }: InputFieldProps) => {
         <Input
           onChange={onChange}
           value={value}
-          placeholder="pepepe"
+          placeholder="Pregunta"
           className={cn(
-            'h-10 border-0 border-b rounded-none bg-transparent',
-            'focus:border-b-2 focus:border-purple-600',
+            'h-10 border-0 border-b rounded-none bg-red-500',
+            'focus:border-b-2 focus:border-gray-400',
             'placeholder:text-sm',
             'border-gray-300 hover:border-gray-400',
             'transition-all duration-200',

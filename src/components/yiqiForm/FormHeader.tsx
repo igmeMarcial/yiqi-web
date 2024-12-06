@@ -46,9 +46,8 @@ export function FormHeader({
     console.log(form)
     if (form.length === 0) {
       toast({
-        title: 'Error',
-        description:
-          'El formulario debe tener al menos un campo antes de publicarlo.',
+        title: translations.es.formEmptyErrorTitle,
+        description: translations.es.formEmptyErrorDescription,
         variant: 'destructive'
       })
       return
@@ -71,12 +70,6 @@ export function FormHeader({
           `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`
         )
         setIsPublishModalOpen(true)
-
-        toast({
-          title: `${translations.es.publishSuccessTitle}`,
-          description: `${translations.es.publishSuccessDescription.replace('{formName}', formToSubmit.name)}`,
-          variant: 'default'
-        })
       } else {
         toast({
           title: `${translations.es.publishErrorTitle}`,
@@ -90,14 +83,14 @@ export function FormHeader({
         description: `${translations.es.formErrorDescription}`,
         variant: 'destructive'
       })
-      console.error('Form publish error:', error)
+      console.info(error)
     }
   }
   return (
     <>
       <header
-        style={{ boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 1px' }}
-        className="bg-white dark:bg-gray-800 z-30 w-full"
+        style={{ boxShadow: 'inset 0 -1px #ffffff24' }}
+        className="bg-white dark:bg-[#0A0A0A] z-30 w-full"
       >
         <div className="flex flex-col ">
           <div className="relative flex flex-col sm:flex-row items-center justify-between px-4 pr-4 md:pr-8 pt-4 gap-4">

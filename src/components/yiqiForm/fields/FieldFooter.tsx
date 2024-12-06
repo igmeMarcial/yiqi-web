@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { generateUniqueId } from '../utils'
+import { translations } from '@/lib/translations/translations'
 interface FieldFooterProps {
   id: string
   fields: FormProps[]
@@ -57,14 +58,13 @@ const FieldFooter = ({
   const handleRequiredChange = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      console.log('Toggling required for:', id)
       toggleIsRequired(id)
     },
     [toggleIsRequired, id]
   )
 
   return (
-    <footer className="h-14 flex items-center justify-end border-t border-border/40 px-4 sm:px-6 bg-card/50">
+    <footer className="h-14 flex items-center justify-end border-t border-border/40 px-4 sm:px-6 bg-transparent">
       <div className="flex items-center space-x-4">
         <div className="flex items-center gap-2">
           <TooltipProvider delayDuration={300}>
@@ -77,11 +77,13 @@ const FieldFooter = ({
                   className="h-9 w-9 rounded-full hover:bg-accent"
                 >
                   <Copy className="h-4 w-4 text-muted-foreground" />
-                  <span className="sr-only">Copiar Pregunta</span>
+                  <span className="sr-only">
+                    {translations.es.copyQuestion}
+                  </span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
-                Copy field
+                {translations.es.copyField}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -96,11 +98,13 @@ const FieldFooter = ({
                   className="h-9 w-9 rounded-full hover:bg-destructive/10 hover:text-destructive"
                 >
                   <Trash2 className="h-4 w-4" />
-                  <span className="sr-only">Eliminar pregunta</span>
+                  <span className="sr-only">
+                    {translations.es.deleteQuestion}
+                  </span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
-                Delete field
+                {translations.es.deleteQuestion}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -111,14 +115,14 @@ const FieldFooter = ({
             htmlFor="required-toggle"
             className="text-sm font-medium text-muted-foreground cursor-pointer select-none"
           >
-            Requerido
+            {translations.es.required}
           </Label>
           <Switch
             id="required-toggle"
             checked={isRequired}
             onClick={handleRequiredChange}
             className={cn(
-              'data-[state=checked]:bg-primary',
+              'data-[state=checked]:bg-primary text-white',
               'transition-colors duration-200'
             )}
           />
