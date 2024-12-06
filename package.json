@@ -18,13 +18,13 @@
     "build:client-types": "tsup --config yiqi-client/tsup.config.ts",
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
     "prepare": "husky",
-    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts",
-    "deploy-lambda": "serverless deploy"
+    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
     "@aws-sdk/client-s3": "^3.670.0",
     "@aws-sdk/client-ses": "^3.670.0",
+    "@aws-sdk/client-sqs": "^3.699.0",
     "@aws-sdk/client-textract": "^3.699.0",
     "@aws-sdk/s3-request-presigner": "^3.670.0",
     "@hookform/resolvers": "^3.9.0",
@@ -127,7 +127,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.146",
     "@types/jsdom": "^21.1.7",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
