@@ -10,7 +10,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 
-import { FormProps, InputTypes } from '../yiqiTypes'
+import { FormProps, InputTypes } from '../../../schemas/yiqiFormSchema'
 import { ExtendedCardProps } from '../FormBuild'
 import { cn } from '@/lib/utils'
 import { translations } from '@/lib/translations/translations'

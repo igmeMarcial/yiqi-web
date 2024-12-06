@@ -493,10 +493,11 @@ export const translations: Record<string, { [key: string]: string }> = {
     publishErrorDescription: 'Failed to publish the form. Please try again.',
     formErrorTitle: 'Unexpected error',
     formErrorDescription: 'An error occurred while trying to publish the form.',
-    formEmptyErrorTitle: 'Error',
+    formEmptyErrorTitle: 'Add a field to publish',
     formEmptyErrorDescription:
       'The form must have at least one field before publishing.',
-    publish: 'Publish'
+    publish: 'Publish',
+    back: 'Back'
   },
   es: {
     // General
@@ -1019,9 +1020,10 @@ export const translations: Record<string, { [key: string]: string }> = {
     formErrorTitle: 'Error inesperado',
     formErrorDescription:
       'Ocurrió un error al intentar publicar el formulario.',
-    formEmptyErrorTitle: 'Error',
+    formEmptyErrorTitle: 'Añade un campo para publicar',
     formEmptyErrorDescription:
       'El formulario debe tener al menos un campo antes de publicarlo.',
-    publish: 'Publicar'
+    publish: 'Publicar',
+    back: 'Volver'
   }
 }

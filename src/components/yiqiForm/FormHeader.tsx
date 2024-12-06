@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { FileText, SendHorizonal } from 'lucide-react'
+import { ArrowLeft, FileText, SendHorizonal } from 'lucide-react'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,8 +12,9 @@ import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { translations } from '@/lib/translations/translations'
 import { generateUniqueId } from './utils'
-import { Form, FormProps } from './yiqiTypes'
+import { Form, FormProps } from '../../schemas/yiqiFormSchema'
 import { PublishSuccessModal } from './PublishSuccessModal'
+import { useRouter } from 'next/navigation'
 
 export function FormHeader({
   form,
@@ -42,9 +43,12 @@ export function FormHeader({
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
   const [publishedFormUrl, setPublishedFormUrl] = useState('')
   const { toast } = useToast()
+  const router = useRouter()
+  const handleBack = () => {
+    router.back()
+  }
   const handlePublish = async () => {
-    console.log(form)
-    if (form.length === 0) {
+    if (form.length < 2) {
       toast({
         title: translations.es.formEmptyErrorTitle,
         description: translations.es.formEmptyErrorDescription,
@@ -111,9 +115,44 @@ export function FormHeader({
 
             <div className="absolute top-4 right-8 sm:static">
               <Button
+                variant="secondary"
+                size="sm"
+                className="gap-2 mr-2 
+    bg-secondary/10 
+    text-secondary-foreground 
+    hover:bg-secondary/20 
+    dark:bg-secondary/20 
+    dark:hover:bg-secondary/30"
+                onClick={handleBack}
+              >
+                <ArrowLeft className="h-4 w-4" />
+                {translations.es.back}
+              </Button>
+              <Button
                 variant="outline"
                 size="sm"
-                className="gap-2"
+                className="gap-2 
+    relative 
+    overflow-hidden 
+    border-primary/50 
+    text-primary 
+    before:absolute 
+    before:inset-0 
+    before:bg-gradient-to-r 
+    before:from-blue-500/20 
+    before:via-primary/20 
+    before:to-purple-500/20 
+    before:opacity-0 
+    before:transition-opacity 
+    before:-z-10 
+    hover:before:opacity-100 
+    hover:border-primary/80 
+    hover:text-white 
+    hover:shadow-lg 
+    active:scale-100 
+    dark:border-primary/30 
+    dark:text-primary/80 
+    dark:hover:border-primary/60"
                 onClick={handlePublish}
               >
                 <SendHorizonal className="h-4 w-4" />

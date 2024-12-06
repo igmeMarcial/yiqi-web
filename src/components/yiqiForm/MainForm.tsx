@@ -1,7 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormBuild from './FormBuild'
-import { FormProps, InputTypes, ItemTypeProps } from './yiqiTypes'
+import {
+  FormProps,
+  InputTypes,
+  ItemTypeProps
+} from '../../schemas/yiqiFormSchema'
 import AddCardButton from './AddCardButton'
 import YiqiFormLayout from './yiqiFormLayout'
 import { usePathname, useRouter } from 'next/navigation'
@@ -21,9 +25,23 @@ const initialCard = {
 
 function MainForm({ orgId }: { orgId: string }) {
   const [form, setForm] = useState<FormProps[]>([initialCard])
+  const [isMobile, setIsMobile] = useState(false)
+
   const dragControls = useDragControls()
   const pathname = usePathname()
   const router = useRouter()
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const [currentView, setCurrentView] = useState<'create' | 'results'>(
     pathname.includes('/results') ? 'results' : 'create'
   )
@@ -123,21 +141,19 @@ function MainForm({ orgId }: { orgId: string }) {
 
   const removeCard = (cardId: string) => {
     setForm(prev => {
+      if (prev.length <= 1) return prev
       const copiedState = prev.map(card => ({ ...card, isFocused: false }))
       const targetCardIndex = copiedState.findIndex(card => card.id === cardId)
       const filteredState = copiedState.filter(card => card.id !== cardId)
-
-      if (targetCardIndex !== 1) {
+      if (targetCardIndex === 0) {
+        return filteredState.map((card, index) =>
+          index === 0 ? { ...card, isFocused: true } : card
+        )
+      } else {
         return filteredState.map((card, index) =>
           index === targetCardIndex - 1 ? { ...card, isFocused: true } : card
         )
       }
-      if (targetCardIndex === 1) {
-        return filteredState.map((card, index) =>
-          index === targetCardIndex ? { ...card, isFocused: true } : card
-        )
-      }
-      return filteredState
     })
   }
 
@@ -275,7 +291,11 @@ function MainForm({ orgId }: { orgId: string }) {
       })
     })
   }
-
+  const handleReorder = (newOrder: FormProps[]) => {
+    if (!isMobile) {
+      setForm(newOrder)
+    }
+  }
   console.log(form)
   return (
     <YiqiFormLayout
@@ -290,7 +310,7 @@ function MainForm({ orgId }: { orgId: string }) {
             <Reorder.Group
               axis="y"
               values={form}
-              onReorder={setForm}
+              onReorder={handleReorder}
               className="flex flex-col gap-3 w-full"
             >
               {form.map((card, index) => (
@@ -298,10 +318,12 @@ function MainForm({ orgId }: { orgId: string }) {
                   key={card.id + index}
                   value={card}
                   id={card.id}
-                  dragListener={card.inputType !== InputTypes.TITLE}
+                  dragListener={
+                    !isMobile && card.inputType !== InputTypes.TITLE
+                  }
                   dragControls={dragControls}
                   transition={{ duration: 0 }}
-                  className="w-full "
+                  className={isMobile ? 'cursor-default' : 'cursor-move'}
                 >
                   <FormBuild
                     dragControls={dragControls}

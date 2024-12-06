@@ -3,7 +3,7 @@
 import React from 'react'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { FormProps } from './yiqiTypes'
+import { FormProps } from '../../schemas/yiqiFormSchema'
 import { FormHeader } from './FormHeader'
 
 function YiqiFormLayout({

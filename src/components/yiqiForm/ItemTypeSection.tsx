@@ -4,7 +4,11 @@ import { useForm, Controller } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Trash2, Circle, Square, Plus, Settings2 } from 'lucide-react'
-import { FormProps, InputTypes, ItemTypeProps } from './yiqiTypes'
+import {
+  FormProps,
+  InputTypes,
+  ItemTypeProps
+} from '../../schemas/yiqiFormSchema'
 import { cn } from '@/lib/utils'
 import { generateUniqueId } from './utils'
 interface ItemTypeSectionProps {

@@ -1,7 +1,7 @@
 'use server'
 
 import { generateUniqueId } from '@/components/yiqiForm/utils'
-import { Form, FormSchema } from '@/components/yiqiForm/yiqiTypes'
+import { Form, FormSchema } from '@/schemas/yiqiFormSchema'
 import { getUser } from '@/lib/auth/lucia'
 import prisma from '@/lib/prisma'
 

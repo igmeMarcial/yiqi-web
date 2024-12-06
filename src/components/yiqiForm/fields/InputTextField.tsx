@@ -6,7 +6,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
-import { FormProps, InputTypes } from '../yiqiTypes'
+import { FormProps, InputTypes } from '../../../schemas/yiqiFormSchema'
 
 interface InputFieldProps {
   id: string

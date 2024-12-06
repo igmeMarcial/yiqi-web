@@ -11,7 +11,7 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
-import { FormProps } from './yiqiTypes'
+import { FormProps } from '../../schemas/yiqiFormSchema'
 import { generateUniqueId } from './utils'
 import { translations } from '@/lib/translations/translations'
 
