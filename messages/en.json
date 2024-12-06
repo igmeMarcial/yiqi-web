@@ -26,7 +26,9 @@
     "contactUs": "Contact Us",
     "terms": "Terms",
     "privacy": "Privacy",
-    "security": "Security"
+    "security": "Security",
+    "profile": "Profile",
+    "organization": "Organization"
   },
   "HeroSection": {
     "heroSubtitle": "The Future of Events",
@@ -155,8 +157,11 @@
     "payments": "Payments",
     "history": "History",
     "tickets": "Tickets",
-
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "profile": "Profile",
+    "settings": "Settings",
+    "networkingSettings": "Networking",
+    "organization": "Organization"
   },
   "ProfileSettings": {
     "name": "Name",
@@ -175,9 +180,17 @@
     "enterYourCompany": "Enter your Company",
     "enterYourPosition": "Enter your Position",
     "tellUsAboutYourself": "Tell us about yourself",
-
     "setToPublic": "Set to Public",
-    "User": "User"
+    "User": "User",
+    "profileSettings": "Profile Settings",
+    "enterYourX": "Enter your X URL",
+    "enterInstagramURL": "Enter your Instagram URL",
+    "enterWebsiteURL": "Enter your website URL",
+    "enterLinkedinURL": "Enter your LinkedIn URL",
+    "website":"Website",
+    "stopCommunications":"Stop Communications",
+    "disableCommunications": "Disabled Communications",
+    "role": "Role"
   },
   "DeleteAccount": {
     "uploadImage":"Upload image",
@@ -558,6 +571,7 @@
     "ticketStatusPending": "Pending",
     "ticketStatusRejected": "Rejected",
     "ticketTitlePage": "Your Tickets",
+    "ticketNo": "You don´t have any tickets",
     "ticketEventImageAlt": "Event Banner",
     "ticketNumber": "Ticket #",
     "ticketLabelView": "View Ticket",

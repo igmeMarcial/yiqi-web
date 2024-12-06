@@ -165,3 +165,16 @@ Andino uses a queue-based notification system to handle various types of communi
 - `src/lib/` contains the core notification logic and handlers
 - `src/services/actions/` provides server actions that the frontend can use to queue notifications
 - All incoming/outgoing data is validated using Zod schemas defined in `src/schemas/`
+
+### setting up email sending and receiving
+
+1. verify a domain in SES to use. Our platform will use an entire domain to send emails from based on the name of the organization.
+2. setup the MX records for inbound (something like Host:@ value: inbound-smtp.us-east-1.amazonaws.com priority: 10) - use the region that the account is in.
+3. in the SES console, create a receiving rule set with a catch all rule that allows all email to be received and "deliver to s3 bucket". Make a new IAM policy that has the write permissions to the bucket you are using to store. DONOT ASUME THAT THE BUCKET IS CREATED WITH THE CORRECT PERMISSIONS. SO long as u make a IAM policy with the correct permissions, u can use any bucket.
+   In that same rule the second action must be to publish to an SNS topic - AGAIN DO NOT ASSUME THAT THE SNS TOPIC IS CREATED WITH THE CORRECT PERMISSIONS. you need to modify the permissons of the SNS topic to publish from the rule.
+
+4. create a SQS queue and connect it to the SNS topic. Make sure that the SQS has the right permissions to connect to that topic.
+5. generate and API key and secrete so that u can locally test this. You will be using the aws SQS client to receive the emails.
+
+The permissions part is the trickiest part of all. Just use chatgpt to generate it or ask the chat.
+Or maybe use the cloudformation template to create the resources.(i havent tested it but it should work if u replace the placeholders with your own values.)

@@ -18,13 +18,13 @@
     "build:client-types": "tsup --config yiqi-client/tsup.config.ts",
     "run-crons": "chmod +x run-crons.sh && ./run-crons.sh",
     "prepare": "husky",
-    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts",
-    "deploy-lambda": "serverless deploy"
+    "run-script": "ts-node -r ./scripts/register.ts -P tsconfig.script.json scripts/runScript.ts"
   },
   "dependencies": {
     "@algora/xtrpc": "^0.1.1",
     "@aws-sdk/client-s3": "^3.670.0",
     "@aws-sdk/client-ses": "^3.670.0",
+    "@aws-sdk/client-sqs": "^3.699.0",
     "@aws-sdk/client-textract": "^3.699.0",
     "@aws-sdk/s3-request-presigner": "^3.670.0",
     "@hookform/resolvers": "^3.9.0",
@@ -94,6 +94,7 @@
     "csv-parse": "^5.5.6",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.8",
+    "google-auth-library": "^9.15.0",
     "jsdom": "^25.0.1",
     "jsonwebtoken": "^9.0.2",
     "linkedin-api-client": "^0.3.0",
@@ -109,6 +110,7 @@
     "prettier": "^3.3.3",
     "qrcode.react": "^4.1.0",
     "react": "^18",
+    "react-beautiful-dnd": "^13.1.1",
     "react-day-picker": "9.4.0",
     "react-dom": "^18",
     "react-dropzone": "^14.2.10",
@@ -126,7 +128,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.146",
     "@types/jsdom": "^21.1.7",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
