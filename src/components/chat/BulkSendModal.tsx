@@ -16,7 +16,11 @@ import {
 } from '@/schemas/messagesSchema'
 import { useTranslations } from 'next-intl'
 
-export function BulkSendModal() {
+export function BulkSendModal({
+  allowedMessageTypes
+}: {
+  allowedMessageTypes: MessageThreadType[]
+}) {
   const t = useTranslations('BulkSend')
   const [messageType, setMessageType] = useState<MessageThreadType>(
     MessageThreadTypeEnum.Enum.whatsapp
@@ -41,6 +45,7 @@ export function BulkSendModal() {
           onSubmit={handleBulkSend}
           messageType={messageType}
           setMessageType={setMessageType}
+          allowedMessageTypes={allowedMessageTypes}
         />
       </DialogContent>
     </Dialog>

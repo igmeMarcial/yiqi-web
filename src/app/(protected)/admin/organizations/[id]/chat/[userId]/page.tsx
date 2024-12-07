@@ -36,13 +36,14 @@ export default async function Page({
           }}
         >
           <div className="w-full flex justify-end mb-4">
-            <BulkSendModal />
+            <BulkSendModal allowedMessageTypes={chats.map(chat => chat.type)} />
           </div>
           <ActiveChatComponent chats={chats} activeUserId={params.userId}>
             <ConnectedChat
               defaultMessages={messages}
               userId={params.userId}
               orgId={params.id}
+              allowedMessageTypes={chats.map(chat => chat.type)}
             />
           </ActiveChatComponent>
         </OrganizationLayout>
