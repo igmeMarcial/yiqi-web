@@ -1,8 +1,18 @@
 import prisma from '@/lib/prisma'
-import { SendBaseMessageToUserPropsSchema } from '@/services/notifications/sendBaseMessageToUser'
-import { JobType } from '@prisma/client'
+import { SendBaseMessageToUserProps } from '@/services/notifications/sendBaseMessageToUser'
+import { JobType, MessageThreadType } from '@prisma/client'
 
-export async function sendBulkNotifications({ orgId }: { orgId: string }) {
+type SendBulkNotificationsProps = {
+  orgId: string
+  message: string
+  messageType: MessageThreadType
+}
+
+export async function sendBulkNotifications({
+  orgId,
+  message,
+  messageType
+}: SendBulkNotificationsProps) {
   const peopleToSend = await prisma.organizationContact.findMany({
     where: {
       organizationId: orgId
@@ -24,7 +34,12 @@ export async function sendBulkNotifications({ orgId }: { orgId: string }) {
 
   const dataToTake = [
     ...peopleToSend.map(person => {
-      const data = SendBaseMessageToUserPropsSchema.parse(person)
+      const data: SendBaseMessageToUserProps = {
+        destinationUserId: person.user.id,
+        content: message,
+        messageType: messageType,
+        orgId: orgId
+      }
 
       return {
         userId: person.user.id,
@@ -35,7 +50,12 @@ export async function sendBulkNotifications({ orgId }: { orgId: string }) {
       }
     }),
     ...registrations.map(person => {
-      const data = SendBaseMessageToUserPropsSchema.parse(person)
+      const data: SendBaseMessageToUserProps = {
+        destinationUserId: person.user.id,
+        content: message,
+        messageType: messageType,
+        orgId: orgId
+      }
 
       return {
         userId: person.user.id,
