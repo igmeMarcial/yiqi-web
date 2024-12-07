@@ -18,7 +18,8 @@ export async function sendEmail(
   to: string,
   subject: string,
   body: string,
-  threadId: string
+  threadId: string,
+  fromEmail: string
 ): Promise<void> {
   const params = {
     Destination: {
@@ -36,7 +37,7 @@ export async function sendEmail(
         Data: subject
       }
     },
-    Source: FROM_EMAIL,
+    Source: fromEmail,
     MessageAttributes: {
       'Andino-Thread-ID': {
         DataType: 'String',

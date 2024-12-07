@@ -50,7 +50,9 @@ export async function GET() {
     const snsMessage = JSON.parse(message.Body)
 
     // Parse the actual email notification
-    const emailNotification = EmailNotificationSchema.parse(snsMessage.Message)
+    const emailNotificationRaw = JSON.parse(snsMessage.Message)
+    const emailNotification =
+      EmailNotificationSchema.parse(emailNotificationRaw)
 
     // Extract key details
     const fromEmail = emailNotification.mail.source
@@ -58,6 +60,7 @@ export async function GET() {
       v.includes('@yiqi.lat')
     )
     const subject = emailNotification.mail.commonHeaders.subject
+
     if (!toEmail) {
       throw new Error('could not determine where to route the email')
     }
@@ -95,6 +98,7 @@ export async function GET() {
       QueueUrl: queueUrl,
       ReceiptHandle: message.ReceiptHandle
     }
+
     const deleteCommand = new DeleteMessageCommand(deleteParams)
     await sqsClient.send(deleteCommand)
 

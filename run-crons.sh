@@ -6,7 +6,7 @@ BASE_URL="http://localhost:3000/api/cron"
 # Function to call a cron route
 call_cron() {
     echo "Calling $1..."
-    curl -X POST "$BASE_URL/$1"
+    curl -X GET "$BASE_URL/$1"
     echo ""
 }
 
