@@ -140,7 +140,12 @@
     "whatsapp": "WhatsApp",
     "email": "Email",
     "send": "Send",
-    "messageValidation": "Message must be at least 1 character."
+    "messageValidation": "Message must be at least 1 character.",
+    "success": "Success",
+    "messagesSentSuccessfully": "Messages have been queued for sending",
+    "error": "Error",
+    "errorSendingMessages": "There was an error sending the messages",
+    "sending": "Sending..."
   },
   "EventsList": {
     "createNewEvents": "New Event",
@@ -194,14 +199,14 @@
     "enterInstagramURL": "Enter your Instagram URL",
     "enterWebsiteURL": "Enter your website URL",
     "enterLinkedinURL": "Enter your LinkedIn URL",
-    "website":"Website",
-    "stopCommunications":"Stop Communications",
+    "website": "Website",
+    "stopCommunications": "Stop Communications",
     "disableCommunications": "Disabled Communications",
     "role": "Role"
   },
   "DeleteAccount": {
     "editEvent": "Edit event",
-    "uploadImage":"Upload image",
+    "uploadImage": "Upload image",
     "viewEvent": "View event",
     "allowedFormats": "Allowed formats",
     "location": "Location",
