@@ -1,6 +1,4 @@
-import { GenerateEventOpenGraphJobSchema } from '@/schemas/mediaJobs'
 import prisma from '../prisma'
-import { handleGenerateEventOpenGraph } from '@/services/media/handleGenerateEventOpenGraph'
 import { sendUserCommunicationAction } from '@/services/actions/communications/sendUserCommunications'
 import { SendBaseMessageToUserPropsSchema } from '@/services/notifications/sendBaseMessageToUser'
 
@@ -30,11 +28,6 @@ export async function processQueueJobs() {
 
         // Process the job based on its type
         switch (job.type) {
-          case 'GENERATE_EVENT_OPEN_GRAPH': {
-            const { eventId } = GenerateEventOpenGraphJobSchema.parse(job.data)
-            await handleGenerateEventOpenGraph({ eventId })
-            break
-          }
           case 'SEND_USER_MESSAGE': {
             const data = SendBaseMessageToUserPropsSchema.parse(job.data)
             await sendUserCommunicationAction(data)
