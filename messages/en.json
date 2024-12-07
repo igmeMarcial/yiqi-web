@@ -107,9 +107,15 @@
     "clickToContinue": "Click one chat to continue"
   },
   "EventsPage": {
+    "editEvent": "Edit Event",
     "createNewEvent": "Create New Event",
     "events": "Events",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "defaultValueH1": "Welcome to the Rich Text Editor",
+    "defaultValueP": "This editor supports",
+    "defaultValueStrong": "bold",
+    "defaultValueItalic": "italic",
+    "defaultValueP2": "and many other formatting options. You can also embed images and YouTube videos!"
   },
   "contactFor": {
     "contactsFor": "Contacts for",
@@ -193,6 +199,11 @@
     "role": "Role"
   },
   "DeleteAccount": {
+    "editEvent": "Edit event",
+    "uploadImage":"Upload image",
+    "viewEvent": "View event",
+    "allowedFormats": "Allowed formats",
+    "location": "Location",
     "settings": "Settings",
     "name": "Name",
     "email": "Email",

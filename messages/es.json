@@ -108,8 +108,14 @@
   },
   "EventsPage": {
     "createNewEvent": "Crear Nuevo Evento",
+    "editEvent": "Editar Evento",
     "events": "Eventos",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "defaultValueH1": "Bienvenido al Editor de Texto Enriquecido",
+    "defaultValueP": "Este editor soporta",
+    "defaultValueStrong": "negrita",
+    "defaultValueItalic": "cursiva", 
+    "defaultValueP2": "y muchas otras opciones de formato. ¡También puedes insertar imágenes y videos de YouTube!"
   },
   "contactFor": {
     "contactsFor": "Contactos de",
@@ -195,6 +201,11 @@
     "role": "Rol"
   },
   "DeleteAccount": {
+    "viewEvent": "Ver evento",
+    "editEvent": "Editar evento",
+    "uploadImage":"Subir imagen",
+    "allowedFormats": "Formatos permitidos: ",
+    "location": "Ubicación",
     "settings": "Configuración",
     "name": "Nombre",
     "email": "Correo electrónico",
