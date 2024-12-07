@@ -74,11 +74,6 @@ export default function OrganizationLayout({
   const navItems = [
     {
       name: `${t('chat')}`,
-      icon: Building2,
-      href: `/admin/organizations/${orgId}/settings`
-    },
-    {
-      name: `${t('chat')}`,
       icon: MessageSquare,
       href: `/admin/organizations/${orgId}/chat`
     },

@@ -34,7 +34,7 @@ export async function sendEmailToUser<T extends MailTemplatesIds>({
     },
     include: {
       contextUser: true,
-      organization: { select: { id: true } }
+      organization: { select: { id: true, name: true } }
     }
   })
 
@@ -48,7 +48,7 @@ export async function sendEmailToUser<T extends MailTemplatesIds>({
     ...sendMailInput,
     toEmail: user.email,
     threadId,
-    fromEmail: thread.organization.id + '@yiqi.lat'
+    fromEmail: `${thread.organization.name} - Yiqi mail <${thread.organization.id}@yiqi.lat>`
   })
 
   const textContent = await generateEmailPlainText({ ...sendMailInput })

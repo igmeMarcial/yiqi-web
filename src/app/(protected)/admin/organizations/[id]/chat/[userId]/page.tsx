@@ -20,8 +20,10 @@ export default async function Page({
 
   const chats = await getOrganizationMessageThreads(params.id)
   const messages = await getUserMessageList(params.userId, params.id)
-
-  if (user.role === Roles.USER) {
+  console.log('chats', chats)
+  console.log('messages', messages)
+  console.log('id ', params.id)
+  if (user.role === Roles.ADMIN) {
     return (
       <main className="flex flex-col items-center justify-center">
         <OrganizationLayout
