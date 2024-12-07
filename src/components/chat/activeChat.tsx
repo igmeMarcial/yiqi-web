@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Eye } from 'lucide-react'
-import { stripHtml } from '@/lib/utils/html'
 
 export default function ActiveChatComponent({
   chats,

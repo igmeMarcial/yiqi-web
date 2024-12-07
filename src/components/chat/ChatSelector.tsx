@@ -5,8 +5,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, MessageSquare } from 'lucide-react'
-import { stripHtml } from '@/lib/utils/html'
-
+import { useStripHtml } from '@/lib/utils/html'
 export default function ChatSelector({
   contextUserName,
   lastMessage,
@@ -16,9 +15,9 @@ export default function ChatSelector({
   isActive = false
 }: OrgMessageListItemSchemaType & { isActive?: boolean }) {
   const orgId = useParams().id
-
+  const stripHtml = useStripHtml({ html: lastMessage?.content || '' })
   function getPreviewText(content: string): string {
-    const strippedContent = type === 'email' ? stripHtml(content) : content
+    const strippedContent = type === 'email' ? stripHtml : content
     const words = strippedContent.split(' ')
     const first10Words = words.slice(0, 10)
     return first10Words.join(' ') + (words.length > 10 ? '...' : '')

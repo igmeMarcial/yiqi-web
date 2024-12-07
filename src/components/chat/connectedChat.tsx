@@ -11,7 +11,7 @@ import {
 } from '@/schemas/messagesSchema'
 import { MessageForm } from './MessageForm'
 import { useTranslations } from 'next-intl'
-import { stripHtml } from '@/lib/utils/html'
+import MessageListItem from './MessageListItem'
 
 export default function ConnectedChat({
   defaultMessages,
@@ -115,17 +115,7 @@ export default function ConnectedChat({
         {isLoading && <div ref={loadingRef}>{t('loading')}</div>}
         {messages
           .map(message => (
-            <div key={message.id} className="mb-4">
-              <p className="font-bold">{message.messageThread.type}</p>
-              <p className="font-bold">
-                {message.senderUser?.name || 'Unknown'}
-              </p>
-              <div className="p-6 max-w-4xl mx-auto">
-                <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap leading-relaxed">
-                  {stripHtml(message.content)}
-                </div>
-              </div>
-            </div>
+            <MessageListItem key={message.id} message={message} />
           ))
           .reverse()}
       </ScrollArea>

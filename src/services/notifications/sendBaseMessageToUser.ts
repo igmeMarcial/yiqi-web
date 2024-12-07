@@ -43,7 +43,7 @@ export async function sendBaseMessageToUser({
     })
     return MessageSchema.parse(result)
   } else if (thread.type === MessageThreadTypeEnum.Enum.email) {
-    const result = await sendEmailToUser({
+    await sendEmailToUser({
       templateId: MailTemplatesIds.BASE_EMAIL_TEMPLATE,
       dynamicTemplateData: {
         content: content
@@ -52,7 +52,29 @@ export async function sendBaseMessageToUser({
       threadId: thread.id,
       subject: 'Mensaje de la plataforma'
     })
-    return MessageSchema.parse(result)
+    const latestData = await prisma.message.findFirstOrThrow({
+      where: {
+        messageThreadId: thread.id
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        senderUser: {
+          select: { id: true, name: true, picture: true }
+        },
+        destinationUser: {
+          select: { id: true, name: true, picture: true }
+        },
+        messageThread: {
+          select: {
+            type: true,
+            id: true
+          }
+        }
+      }
+    })
+    return MessageSchema.parse(latestData)
   }
 
   throw new Error('Invalid message type')
