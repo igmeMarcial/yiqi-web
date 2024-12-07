@@ -11,6 +11,7 @@ import {
 } from '@/schemas/messagesSchema'
 import { MessageForm } from './MessageForm'
 import { useTranslations } from 'next-intl'
+import { stripHtml } from '@/lib/utils/html'
 
 export default function ConnectedChat({
   defaultMessages,
@@ -119,7 +120,11 @@ export default function ConnectedChat({
               <p className="font-bold">
                 {message.senderUser?.name || 'Unknown'}
               </p>
-              <p>{message.content}</p>
+              <div className="p-6 max-w-4xl mx-auto">
+                <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap leading-relaxed">
+                  {stripHtml(message.content)}
+                </div>
+              </div>
             </div>
           ))
           .reverse()}

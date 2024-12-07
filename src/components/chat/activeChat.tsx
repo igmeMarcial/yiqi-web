@@ -10,6 +10,16 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
 import { useTranslations } from 'next-intl'
 import ChatSelector from './ChatSelector'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Eye } from 'lucide-react'
+import { stripHtml } from '@/lib/utils/html'
 
 export default function ActiveChatComponent({
   chats,
@@ -21,6 +31,9 @@ export default function ActiveChatComponent({
   activeUserId: string
 }) {
   const t = useTranslations('Chat')
+
+  // Find active chat
+  const activeChat = chats.find(chat => chat.contextUserId === activeUserId)
 
   return (
     <Card className="h-[80vh]">
@@ -46,8 +59,35 @@ export default function ActiveChatComponent({
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel defaultSize={75}>
-            <div className="flex flex-col h-full items-center justify-center p-6">
-              {children}
+            <div className="flex flex-col h-full">
+              {activeChat?.type === 'email' && activeChat.lastMessage && (
+                <div className="p-4 border-b flex justify-end">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <Eye className="h-4 w-4 mr-2" />
+                        Preview HTML
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>Email Preview</DialogTitle>
+                      </DialogHeader>
+                      <div
+                        className="mt-4"
+                        dangerouslySetInnerHTML={{
+                          __html: activeChat.lastMessage.content
+                        }}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
+              <ScrollArea className="flex-1">
+                <div className="flex flex-col h-full">
+                  <div className="p-4">{children}</div>
+                </div>
+              </ScrollArea>
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>

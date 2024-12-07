@@ -78,14 +78,7 @@ export async function GET() {
       throw new Error('No body found in email')
     }
 
-    // Here you can handle the extracted data
-    console.log({
-      from: fromEmail,
-      to: toEmail,
-      subject: subject,
-      content: parsedBody
-    })
-
+    // Handle the email with all required fields
     await handleEmailReceived({
       fromEmail,
       toEmail,

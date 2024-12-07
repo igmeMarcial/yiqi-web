@@ -14,42 +14,55 @@ export async function handleEmailReceived({
   toEmail,
   content
 }: HandleEmailReceivedType) {
-  const fromUser = await prisma.user.findFirstOrThrow({
+  // Find the sender user
+  const fromUser = await prisma.user.findFirst({
     where: {
       email: fromEmail
     }
   })
 
-  // the orgId will always be the user of the yiqi.lat domain (j092j190jd09ja09jds09@yiqi.lat -> orgId: j092j190jd09ja09jds09)
+  if (!fromUser) {
+    throw new Error('Sender user not found')
+  }
+
+  // Extract orgId from the yiqi.lat email address
   const orgId = toEmail.split('@')[0]
 
-  const organization = await prisma.organization.findFirstOrThrow({
+  // Find the organization
+  const organization = await prisma.organization.findFirst({
     where: {
       id: orgId
     }
   })
 
-  const thread = await prisma.messageThread.findFirstOrThrow({
+  if (!organization) {
+    throw new Error('Organization not found')
+  }
+
+  // Find or create the message thread
+  let thread = await prisma.messageThread.findFirst({
     where: {
       organizationId: organization.id,
       type: MessageThreadType.email,
       contextUserId: fromUser.id
-    },
-    include: {
-      contextUser: true
     }
   })
 
-  const user = thread.contextUser
-
-  if (!user.email) {
-    throw ' user doesnt have an email'
+  if (!thread) {
+    thread = await prisma.messageThread.create({
+      data: {
+        organizationId: organization.id,
+        type: MessageThreadType.email,
+        contextUserId: fromUser.id
+      }
+    })
   }
 
+  // Create the message record with all required fields
   return createMessageRecord({
     content,
-    attachement: undefined,
     messageThreadId: thread.id,
-    senderUserId: user.id
+    senderUserId: fromUser.id,
+    destinationUserId: null // Since this is an inbound message, there's no specific destination user
   })
 }

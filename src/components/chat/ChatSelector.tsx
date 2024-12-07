@@ -4,19 +4,24 @@ import { OrgMessageListItemSchemaType } from '@/schemas/messagesSchema'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import { Mail, MessageSquare } from 'lucide-react'
+import { stripHtml } from '@/lib/utils/html'
 
 export default function ChatSelector({
   contextUserName,
   lastMessage,
   contextUserId,
   contextUserPicture,
+  type,
   isActive = false
 }: OrgMessageListItemSchemaType & { isActive?: boolean }) {
   const orgId = useParams().id
-  function getFirst5Words(str: string): string {
-    const words = str.split(' ')
-    const first5Words = words.slice(0, 5)
-    return first5Words.join(' ') + (words.length > 5 ? '...' : '')
+
+  function getPreviewText(content: string): string {
+    const strippedContent = type === 'email' ? stripHtml(content) : content
+    const words = strippedContent.split(' ')
+    const first10Words = words.slice(0, 10)
+    return first10Words.join(' ') + (words.length > 10 ? '...' : '')
   }
 
   return (
@@ -31,10 +36,19 @@ export default function ChatSelector({
             <AvatarImage src={contextUserPicture ?? ''} alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col items-start gap-1">
-            <p className="font-bold">{contextUserName}</p>
-            <p className="text-muted-foreground text-sm">
-              {getFirst5Words(lastMessage?.content ?? '')}
+          <div className="flex-1 flex flex-col items-start gap-1">
+            <div className="w-full flex justify-between items-center">
+              <p className="font-bold">{contextUserName}</p>
+              {type === 'email' ? (
+                <Mail className="h-4 w-4 text-muted-foreground" />
+              ) : (
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+              )}
+            </div>
+            <p className="text-muted-foreground text-sm line-clamp-2">
+              {lastMessage
+                ? getPreviewText(lastMessage.content)
+                : 'No messages'}
             </p>
           </div>
         </div>

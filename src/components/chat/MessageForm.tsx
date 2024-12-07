@@ -65,6 +65,7 @@ export function MessageForm({
       console.error('Error sending message:', error)
       toast({
         variant: 'destructive',
+        // TODO: Add error handling
         title: t('error'),
         description: t('errorSendingMessage')
       })

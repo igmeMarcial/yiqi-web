@@ -20,8 +20,7 @@ export default async function Page({
 
   const chats = await getOrganizationMessageThreads(params.id)
   const messages = await getUserMessageList(params.userId, params.id)
-  console.log('chats', chats)
-  console.log('messages', messages)
+  console.log('messages', messages.length)
   console.log('id ', params.id)
   if (user.role === Roles.ADMIN) {
     return (
