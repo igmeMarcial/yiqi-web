@@ -10,7 +10,8 @@ export const SendBaseMessageToUserPropsSchema = z.object({
   destinationUserId: z.string(),
   content: z.string(),
   messageType: z.nativeEnum(MessageThreadTypeEnum.Enum),
-  orgId: z.string()
+  orgId: z.string(),
+  senderUserId: z.string().optional()
 })
 
 export type SendBaseMessageToUserProps = z.infer<
@@ -21,7 +22,8 @@ export async function sendBaseMessageToUser({
   destinationUserId,
   content,
   messageType,
-  orgId
+  orgId,
+  senderUserId
 }: SendBaseMessageToUserProps) {
   const thread = await prisma.messageThread.findFirst({
     where: {
@@ -50,7 +52,8 @@ export async function sendBaseMessageToUser({
       },
       destinationUserId: destinationUserId,
       threadId: thread.id,
-      subject: 'Mensaje de la plataforma'
+      subject: 'Mensaje de la plataforma',
+      senderUserId: senderUserId
     })
     const latestData = await prisma.message.findFirstOrThrow({
       where: {
