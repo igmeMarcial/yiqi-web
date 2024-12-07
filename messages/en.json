@@ -52,7 +52,8 @@
     "highlightsSubtitle": "Join these amazing communities and connect with like-minded people",
     "eventsNear": "Events near",
     "seeAllEvents": "See all events",
-    "noEventsFound": "No events found"
+    "noEventsFound": "No events found",
+    "noDescriptionAvailable": "No description available"
   },
   "AccountDropdown": {
     "guestUser": "Guest User",
@@ -522,7 +523,9 @@
     "settingsOrganizationFormColor": "Color",
     "settingsOrganizationFormUrl": "Url de",
     "settingsOrganizationFormSaved": "Guardar Cambios",
-    "eventRegister": "Register"
+    "eventRegister": "Register",
+    "noNameAvailable": "No name available",
+    "noDescriptionAvailable": "No description available"
   },
   "EventDescription": {
     "eventAbout": "About Event",
