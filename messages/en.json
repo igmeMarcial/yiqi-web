@@ -332,7 +332,8 @@
     "date": "Sent Date",
     "sentTo": "Sent to",
     "UserEventList": "User Event List",
-    "Address": "Address"
+    "Address": "Address",
+    "Going": "Going"
   },
   "TicketType": {
     "ticketName": "Ticket Name",

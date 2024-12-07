@@ -334,7 +334,8 @@
     "date": "Fecha de envío",
     "sentTo": "Enviado a",
     "UserEventList": "Lista de eventos del usuario",
-    "Address": "Dirección"
+    "Address": "Dirección",
+    "Going": "Asistirán"
   },
   "TicketType": {
     "ticketName": "Nombre del ticket",
