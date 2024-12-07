@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { handleEmailReceived } from '@/lib/email/handlers/handleEmailReceived'
 const sqsClient = new SQSClient({ region: 'us-east-1' })
 const queueUrl = process.env.AWS_SQS_QUEUE_URL
+export const dynamic = 'force-dynamic'
 
 const EmailNotificationSchema = z.object({
   notificationType: z.string(),
