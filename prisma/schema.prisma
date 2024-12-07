@@ -479,6 +479,7 @@ enum JobStatus {
 enum JobType {
   GENERATE_EVENT_OPEN_GRAPH
   COLLECT_USER_DATA
+  SEND_USER_MESSAGE
   // Add more job types as needed
 }
 
