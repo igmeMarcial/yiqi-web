@@ -52,7 +52,8 @@
     "highlightsSubtitle": "Join these amazing communities and connect with like-minded people",
     "eventsNear": "Events near",
     "seeAllEvents": "See all events",
-    "noEventsFound": "No events found"
+    "noEventsFound": "No events found",
+    "noDescriptionAvailable": "No description available"
   },
   "AccountDropdown": {
     "guestUser": "Guest User",
@@ -139,7 +140,12 @@
     "whatsapp": "WhatsApp",
     "email": "Email",
     "send": "Send",
-    "messageValidation": "Message must be at least 1 character."
+    "messageValidation": "Message must be at least 1 character.",
+    "success": "Success",
+    "messagesSentSuccessfully": "Messages have been queued for sending",
+    "error": "Error",
+    "errorSendingMessages": "There was an error sending the messages",
+    "sending": "Sending..."
   },
   "EventsList": {
     "createNewEvents": "New Event",
@@ -193,14 +199,14 @@
     "enterInstagramURL": "Enter your Instagram URL",
     "enterWebsiteURL": "Enter your website URL",
     "enterLinkedinURL": "Enter your LinkedIn URL",
-    "website":"Website",
-    "stopCommunications":"Stop Communications",
+    "website": "Website",
+    "stopCommunications": "Stop Communications",
     "disableCommunications": "Disabled Communications",
     "role": "Role"
   },
   "DeleteAccount": {
     "editEvent": "Edit event",
-    "uploadImage":"Upload image",
+    "uploadImage": "Upload image",
     "viewEvent": "View event",
     "allowedFormats": "Allowed formats",
     "location": "Location",
@@ -333,7 +339,8 @@
     "date": "Sent Date",
     "sentTo": "Sent to",
     "UserEventList": "User Event List",
-    "Address": "Address"
+    "Address": "Address",
+    "Going": "Going"
   },
   "TicketType": {
     "ticketName": "Ticket Name",
@@ -524,7 +531,9 @@
     "settingsOrganizationFormColor": "Color",
     "settingsOrganizationFormUrl": "Url de",
     "settingsOrganizationFormSaved": "Guardar Cambios",
-    "eventRegister": "Register"
+    "eventRegister": "Register",
+    "noNameAvailable": "No name available",
+    "noDescriptionAvailable": "No description available"
   },
   "EventDescription": {
     "eventAbout": "About Event",

@@ -52,7 +52,8 @@
     "highlightsSubtitle": "Únete a estas increíbles comunidades y conecta con personas afines",
     "eventsNear": "Eventos cerca de ti",
     "seeAllEvents": "Ver todos los eventos",
-    "noEventsFound": "No se encontraron eventos"
+    "noEventsFound": "No se encontraron eventos",
+    "noDescriptionAvailable": "No hay descripción disponible"
   },
   "AccountDropdown": {
     "guestUser": "Usuario Invitado",
@@ -335,7 +336,8 @@
     "date": "Fecha de envío",
     "sentTo": "Enviado a",
     "UserEventList": "Lista de eventos del usuario",
-    "Address": "Dirección"
+    "Address": "Dirección",
+    "Going": "Asistirán"
   },
   "TicketType": {
     "ticketName": "Nombre del ticket",
@@ -526,7 +528,9 @@
     "settingsOrganizationFormColor": "Color",
     "settingsOrganizationFormUrl": "URL de",
     "settingsOrganizationFormSaved": "Guardar cambios",
-    "eventRegister": "Registrar"
+    "eventRegister": "Registrar",
+    "noNameAvailable": "No hay nombre disponible",
+    "noDescriptionAvailable": "No hay descripción disponible"
   },
   "EventDescription": {
     "eventAbout": "Acerca del evento",
