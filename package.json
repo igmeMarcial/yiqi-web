@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.670.0",
-    "@aws-sdk/client-ses": "^3.670.0",
     "@aws-sdk/client-sqs": "^3.699.0",
     "@aws-sdk/client-textract": "^3.699.0",
     "@aws-sdk/s3-request-presigner": "^3.670.0",
@@ -103,6 +102,7 @@
     "react-dropzone": "^14.2.10",
     "react-hook-form": "^7.53.0",
     "react-resizable-panels": "^2.1.4",
+    "resend": "^4.0.1",
     "stripe": "^17.4.0",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.3",

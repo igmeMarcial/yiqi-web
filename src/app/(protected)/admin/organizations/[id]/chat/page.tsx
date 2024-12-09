@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           }}
         >
           <div className="w-full flex justify-end mb-4">
-            <BulkSendModal allowedMessageTypes={chats.map(chat => chat.type)} />
+            <BulkSendModal allowedMessageTypes={['email']} />
           </div>
           <ChatComponent chats={chats} />
         </OrganizationLayout>
