@@ -44,7 +44,7 @@ export default async function Page({
               <div className="w-full flex justify-start mb-4 gap-2">
                 <Link
                   href={`/admin/organizations/${params.id}/chat`}
-                  className="flex items-center"
+                  className="sm:hidden flex items-center"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </Link>
