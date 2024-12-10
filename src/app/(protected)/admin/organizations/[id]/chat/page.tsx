@@ -5,9 +5,11 @@ import ChatComponent from '@/components/chat/chat'
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getOrganizationMessageThreads } from '@/services/actions/communications/getOrganizationMessageThreads'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser()
+  const t = await getTranslations('Chat')
 
   if (!user) {
     redirect(`/auth`)
@@ -27,10 +29,17 @@ export default async function Page({ params }: { params: { id: string } }) {
             id: user.id
           }}
         >
-          <div className="w-full flex justify-end mb-4">
-            <BulkSendModal allowedMessageTypes={['email']} />
+          <div className=" border border-gray p-2 sm:p-4 rounded">
+            <div className="flex items-center justify-between sm:justify-end pt-4">
+              <div className="w-full flex justify-start mb-4">
+                <h1 className="text-lg font-semibold">{t('chats')}</h1>
+              </div>
+              <div className="w-full flex justify-end mb-4">
+                <BulkSendModal allowedMessageTypes={['email']} />
+              </div>
+            </div>
+            <ChatComponent chats={chats} />
           </div>
-          <ChatComponent chats={chats} />
         </OrganizationLayout>
       </main>
     )

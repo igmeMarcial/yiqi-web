@@ -71,7 +71,9 @@ export function BulkSendModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t('bulkSendButton')}</Button>
+        <Button className="w-70% dark:bg-neutral-600 font-bold">
+          {t('bulkSendButton')}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

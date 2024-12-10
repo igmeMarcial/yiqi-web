@@ -7,6 +7,9 @@ import { getOrganizationMessageThreads } from '@/services/actions/communications
 import { getUserMessageList } from '@/services/actions/communications/getUserMessageList'
 import { BulkSendModal } from '@/components/chat/BulkSendModal'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
+import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default async function Page({
   params
@@ -14,6 +17,8 @@ export default async function Page({
   params: { id: string; userId: string }
 }) {
   const user = await getUser()
+  const t = await getTranslations('Chat')
+
   if (!user) {
     redirect(`/auth`)
   }
@@ -34,17 +39,34 @@ export default async function Page({
             id: user.id
           }}
         >
-          <div className="w-full flex justify-end mb-4">
-            <BulkSendModal allowedMessageTypes={['email']} />
-          </div>
-          <ActiveChatComponent chats={chats} activeUserId={params.userId}>
-            <ConnectedChat
-              defaultMessages={messages}
-              userId={params.userId}
+          <div className="border border-gray p-2 sm:p-4 rounded">
+            <div className="flex items-center justify-between sm:justify-end pt-4">
+              <div className="w-full flex justify-start mb-4 gap-2">
+                <Link
+                  href={`/admin/organizations/${params.id}/chat`}
+                  className="flex items-center"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </Link>
+                <h1 className="text-lg font-semibold">{t('chats')}</h1>
+              </div>
+              <div className="w-full flex justify-end mb-4">
+                <BulkSendModal allowedMessageTypes={['email']} />
+              </div>
+            </div>
+            <ActiveChatComponent
               orgId={params.id}
-              allowedMessageTypes={['email']}
-            />
-          </ActiveChatComponent>
+              chats={chats}
+              activeUserId={params.userId}
+            >
+              <ConnectedChat
+                defaultMessages={messages}
+                userId={params.userId}
+                orgId={params.id}
+                allowedMessageTypes={['email']}
+              />
+            </ActiveChatComponent>
+          </div>
         </OrganizationLayout>
       </main>
     )
