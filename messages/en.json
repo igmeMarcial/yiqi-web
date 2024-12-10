@@ -105,7 +105,12 @@
   },
   "Chat": {
     "chats": "Chats",
-    "clickToContinue": "Click one chat to continue"
+    "messages": "Messages",
+    "clickToContinue": "Click one chat to continue",
+    "previewHTML": "Preview HTML",
+    "emailPreview": "Email Preview",
+    "seeMore": "See more",
+    "seeLess": "See less"
   },
   "EventsPage": {
     "editEvent": "Edit Event",
