@@ -9,7 +9,6 @@ import { getTranslations } from 'next-intl/server'
 import { ContactText2 } from '@/components/contactText'
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import { getUser } from '@/lib/auth/lucia'
-import { useTranslations } from 'next-intl'
 import { ArrowLeft } from 'lucide-react'
 
 export default async function ContactDetailsPage({
@@ -23,13 +22,14 @@ export default async function ContactDetailsPage({
   const user = await getUser()
 
   const t = await getTranslations('contactText')
+  const tSecondary = await getTranslations('DeleteAccount')
 
   if (!organization || !contact) {
     return <div>Contact or Organization not found</div>
   }
 
   if (!organization || !user) {
-    return <ContactText1 />
+    return <div>{tSecondary('noOrganizationFound')}</div>
   }
 
   return (
@@ -43,12 +43,12 @@ export default async function ContactDetailsPage({
           name: user.name
         }}
       >
-        <section className="w-full h-full p-4 rounded-lg border text-card-foreground shadow-sm bg-primary">
+        <section className="w-full h-full sm:p-4 rounded-lg sm:border text-card-foreground shadow-sm bg-primary">
           <div className="container mx-auto gap-2">
             <div className="w-full flex justify-start mb-4 gap-2">
               <Link
                 href={`/admin/organizations/${params.id}/contacts`}
-                className="mt-2 inline-block text-primary hover:underline"
+                className="mt-1 inline-block text-primary hover:underline"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Link>
@@ -61,8 +61,8 @@ export default async function ContactDetailsPage({
               <TabsList className="mb-4 flex border-b">
                 <TabsTrigger
                   className="px-4 py-2 text-sm sm:text-lg rounded-t-md flex items-center transition-all 
-                  data-[state=active]:bg-secondary data-[state=active]:text-white
-                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-white"
+                  data-[state=active]:bg-sidebar-accent data-[state=active]:text-primary
+                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-primary"
                   value="messages"
                 >
                   {t('Messages')}
@@ -70,8 +70,8 @@ export default async function ContactDetailsPage({
 
                 <TabsTrigger
                   className="px-4 py-2 text-sm sm:text-lg rounded-t-md flex items-center transition-all 
-                  data-[state=active]:bg-secondary data-[state=active]:text-white
-                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-white"
+                  data-[state=active]:bg-sidebar-accent data-[state=active]:text-primary
+                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-primary"
                   value="events"
                 >
                   {t('attendEvents')}
@@ -79,8 +79,8 @@ export default async function ContactDetailsPage({
 
                 <TabsTrigger
                   className="px-4 py-2 text-sm sm:text-lg rounded-t-md flex items-center transition-all 
-                  data-[state=active]:bg-secondary data-[state=active]:text-white
-                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-white"
+                  data-[state=active]:bg-sidebar-accent data-[state=active]:text-primary
+                  data-[state=inactive]:bg-transparent data-[state=inactive]:text-primary"
                   value="details"
                 >
                   {t('userDetails')}
@@ -191,9 +191,4 @@ export default async function ContactDetailsPage({
       </OrganizationLayout>
     </main>
   )
-}
-
-export function ContactText1() {
-  const t = useTranslations('DeleteAccount')
-  return <div>{t('noOrganizationFound')}</div>
 }

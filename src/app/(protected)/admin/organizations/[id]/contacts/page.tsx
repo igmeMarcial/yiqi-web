@@ -33,14 +33,14 @@ export default async function ContactsPage({
           name: user.name
         }}
       >
-        <section className="w-full h-screen p-4 rounded-lg border text-card-foreground shadow-sm bg-primary">
-          <div className="flex w-full justify-between">
+        <section className="w-full h-screen sm:p-4 rounded-lg sm:border text-card-foreground shadow-sm bg-primary">
+          <div className="flex w-full justify-between gap-2">
             <h1 className="text-xl sm:text-2xl font-bold">
               <span>{t('contactsFor')}</span> {organization.name}
             </h1>
             <ImportContactButton organizationId={organization.id} />
           </div>
-          <div className="mb-4">
+          <div className="mb-2 mt-2">
             <ImportContactTemplateButton />
           </div>
 
@@ -63,7 +63,7 @@ export default async function ContactsPage({
               >
                 <div
                   className="flex flex-row justify-between items-center text-sm border-b border-gray-700 
-                  p-4 transition-all hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
+                  p-4 transition-all dark:hover:bg-sidebar-accent/60 cursor-pointer"
                 >
                   <div className="flex flex-row items-center">{user.name}</div>
                   <div className="flex flex-row items-center">
