@@ -29,13 +29,13 @@ export const appRouter = router({
   loginLinkedin: publicProcedure
     .input(z.object({ code: z.string() }))
     .mutation(async ({ input }) => {
-      const result = loginLinkedin(input)
+      const result = await loginLinkedin(input)
       return AuthSchemaSchema.parse(result)
     }),
   loginGoogle: publicProcedure
     .input(z.object({ idToken: z.string({ message: 'idToken prob!!' }) }))
     .mutation(async ({ input }) => {
-      const result = loginGoogle(input)
+      const result = await loginGoogle(input)
       return AuthSchemaSchema.parse(result)
     }),
   searchUsers: publicProcedure
