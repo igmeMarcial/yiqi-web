@@ -174,13 +174,7 @@ export const SavedEventSchema = EventInputSchema.extend({
     .optional()
     .nullable()
     .transform(val => val ?? []),
-  tickets: z
-    .union([
-      z.array(EventTicketOfferingInputSchema),
-      z.array(SavedTicketOfferingSchema)
-    ])
-    .optional()
-    .nullable()
+  tickets: z.array(SavedTicketOfferingSchema).optional().nullable()
 })
 
 export const PublicEventSchema = SavedEventSchema.extend({
