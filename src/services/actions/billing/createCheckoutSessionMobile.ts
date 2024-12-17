@@ -3,7 +3,7 @@
 import { stripe } from '@/lib/stripe'
 import prisma from '@/lib/prisma'
 
-export const createCheckoutSession = async (registrationId: string) => {
+export const createCheckoutSessionMobile = async (registrationId: string) => {
   const registration = await prisma.eventRegistration.findUniqueOrThrow({
     where: { id: registrationId },
     include: {
@@ -19,36 +19,33 @@ export const createCheckoutSession = async (registrationId: string) => {
   const stripeAccountId = registration.event.organization.stripeAccountId
 
   if (!stripeAccountId) {
-    throw new Error('Organization does not have a stripe account')
+    throw new Error('Organization does not have a Stripe account')
   }
 
+  // If a Payment Intent already exists
   if (registration.paymentId) {
     try {
-      const session = await stripe.checkout.sessions.retrieve(
+      const paymentIntent = await stripe.paymentIntents.retrieve(
         registration.paymentId,
-        {},
-        {
-          stripeAccount: stripeAccountId
-        }
+        { stripeAccount: stripeAccountId }
       )
 
-      if (!session.client_secret) {
-        throw new Error('Checkout session not found')
+      if (!paymentIntent.client_secret) {
+        throw new Error('Payment Intent not found')
       }
 
       return {
-        clientSecret: session.client_secret,
+        clientSecret: paymentIntent.client_secret,
         connectAccountId: stripeAccountId
       }
     } catch (error) {
-      console.error('Error retrieving checkout session', error)
-      // clear out this invalid session and try to make a new one
+      console.error('Error retrieving Payment Intent', error)
       await prisma.eventRegistration.update({
         where: { id: registrationId },
         data: { paymentId: null }
       })
 
-      throw new Error('Checkout session not found')
+      throw new Error('Payment Intent not found')
     }
   }
 
@@ -85,37 +82,41 @@ export const createCheckoutSession = async (registrationId: string) => {
 
   const commission = 0.03
 
-  const application_fee_amount =
+  const application_fee_amount = Math.round(
     lineItems.reduce((acc, item) => {
       return acc + item.price_data.unit_amount * item.quantity
     }, 0) * commission
+  )
 
-  const session = await stripe.checkout.sessions.create(
+  const totalAmount = lineItems.reduce(
+    (acc, item) => acc + item.price_data.unit_amount * item.quantity,
+    0
+  )
+
+  // Create Payment Intent
+  const paymentIntent = await stripe.paymentIntents.create(
     {
-      line_items: lineItems,
-      payment_intent_data: {
-        application_fee_amount: Math.round(application_fee_amount)
-      },
-      redirect_on_completion: 'never',
-      mode: 'payment',
-      ui_mode: 'embedded'
+      amount: totalAmount,
+      currency: 'pen',
+      application_fee_amount,
+      payment_method_types: ['card']
     },
     {
       stripeAccount: stripeAccountId
     }
   )
 
-  if (!session.client_secret) {
-    throw new Error('Checkout session not created')
+  if (!paymentIntent.client_secret) {
+    throw new Error('Payment Intent not created')
   }
 
   await prisma.eventRegistration.update({
     where: { id: registrationId },
-    data: { paymentId: session.id }
+    data: { paymentId: paymentIntent.id }
   })
 
   return {
-    clientSecret: session.client_secret,
+    clientSecret: paymentIntent.client_secret,
     connectAccountId: stripeAccountId
   }
 }

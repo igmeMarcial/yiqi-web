@@ -55,7 +55,14 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         };
         _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
         _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
-    }, Response | {
+    }, {
+        user: {
+            name: string;
+            id: string;
+            email: string;
+            picture: string | null;
+            role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+        };
         sessionId: string;
     }>;
     loginGoogle: node_modules__trpc_server_dist.BuildProcedure<"mutation", {
@@ -75,7 +82,14 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         };
         _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
         _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
-    }, Response | {
+    }, {
+        user: {
+            name: string;
+            id: string;
+            email: string;
+            picture: string | null;
+            role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+        };
         sessionId: string;
     }>;
     searchUsers: node_modules__trpc_server_dist.BuildProcedure<"query", {
@@ -258,13 +272,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         openGraphImage?: string | null | undefined;
         tickets?: {
             name: string;
-            category: "GENERAL" | "VIP" | "BACKSTAGE";
-            price: number;
-            limit: number;
-            ticketsPerPurchase: number;
-            description?: string | undefined;
-        }[] | {
-            name: string;
             id: string;
             category: "GENERAL" | "VIP" | "BACKSTAGE";
             price: number;
@@ -301,9 +308,18 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
         _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
     }, {
-        name: string;
-        email: string;
-        tickets: Record<string, number>;
+        message: string;
+        success: boolean;
+        registration: {
+            id: string;
+            status: "PENDING" | "APPROVED" | "REJECTED";
+            customFields: Record<string, any>;
+            createdAt: Date;
+            updatedAt: Date;
+            userId: string;
+            paid: boolean;
+            paymentId: string | null;
+        };
     }>;
     getUserRegistrationStatus: node_modules__trpc_server_dist.BuildProcedure<"query", {
         _config: node_modules__trpc_server_dist.RootConfig<{
@@ -346,6 +362,155 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         updatedAt: Date;
         userId: string;
         logo: string | null;
+    }>;
+    checkExistingRegistration: node_modules__trpc_server_dist.BuildProcedure<"mutation", {
+        _config: node_modules__trpc_server_dist.RootConfig<{
+            ctx: Context;
+            meta: object;
+            errorShape: node_modules__trpc_server_dist.DefaultErrorShape;
+            transformer: typeof node_modules_superjson_dist.default;
+        }>;
+        _meta: object;
+        _ctx_out: Context;
+        _input_in: {
+            eventId: string;
+        };
+        _input_out: {
+            eventId: string;
+        };
+        _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
+        _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
+    }, {
+        id: string;
+        status: "PENDING" | "APPROVED" | "REJECTED";
+        customFields: Record<string, any>;
+        createdAt: Date;
+        updatedAt: Date;
+        tickets: {
+            id: string;
+            category: "GENERAL" | "VIP" | "BACKSTAGE";
+            checkedInDate: Date | null;
+            user?: {
+                name: string;
+                id: string;
+                email: string;
+                picture: string | null;
+                emailVerified?: Date | null | undefined;
+                phoneNumber?: string | null | undefined;
+            } | null | undefined;
+            ticketType?: {
+                name: string;
+                id: string;
+                category: "GENERAL" | "VIP" | "BACKSTAGE";
+                price: number;
+                limit: number;
+                ticketsPerPurchase: number;
+                description?: string | undefined;
+            } | null | undefined;
+        }[];
+        userId: string;
+        user: {
+            name: string;
+            id: string;
+            email: string;
+            picture: string | null;
+            emailVerified?: Date | null | undefined;
+            phoneNumber?: string | null | undefined;
+        };
+        paid: boolean;
+        paymentId: string | null;
+    } | null>;
+    createCheckoutSession: node_modules__trpc_server_dist.BuildProcedure<"mutation", {
+        _config: node_modules__trpc_server_dist.RootConfig<{
+            ctx: Context;
+            meta: object;
+            errorShape: node_modules__trpc_server_dist.DefaultErrorShape;
+            transformer: typeof node_modules_superjson_dist.default;
+        }>;
+        _meta: object;
+        _ctx_out: Context;
+        _input_in: {
+            registrationId: string;
+        };
+        _input_out: {
+            registrationId: string;
+        };
+        _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
+        _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
+    }, {
+        clientSecret: string;
+        connectAccountId: string;
+    }>;
+    markRegistrationPaid: node_modules__trpc_server_dist.BuildProcedure<"mutation", {
+        _config: node_modules__trpc_server_dist.RootConfig<{
+            ctx: Context;
+            meta: object;
+            errorShape: node_modules__trpc_server_dist.DefaultErrorShape;
+            transformer: typeof node_modules_superjson_dist.default;
+        }>;
+        _meta: object;
+        _ctx_out: Context;
+        _input_in: {
+            registrationId: string;
+        };
+        _input_out: {
+            registrationId: string;
+        };
+        _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
+        _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
+    }, {
+        success: boolean;
+        error: string;
+    } | {
+        success: boolean;
+        error?: undefined;
+    }>;
+    getCommunities: node_modules__trpc_server_dist.BuildProcedure<"query", {
+        _config: node_modules__trpc_server_dist.RootConfig<{
+            ctx: Context;
+            meta: object;
+            errorShape: node_modules__trpc_server_dist.DefaultErrorShape;
+            transformer: typeof node_modules_superjson_dist.default;
+        }>;
+        _meta: object;
+        _ctx_out: Context;
+        _input_in: {
+            limit?: number | undefined;
+            page?: number | undefined;
+            search?: string | undefined;
+        } | undefined;
+        _input_out: {
+            limit: number;
+            page: number;
+            search?: string | undefined;
+        } | undefined;
+        _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
+        _output_out: typeof node_modules__trpc_server_dist.unsetMarker;
+    }, {
+        communities: {
+            name: string;
+            id: string;
+            description: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            colour: string | null;
+            logo: string | null;
+            stripeAccountId: string | null;
+            linkedin?: string | null | undefined;
+            instagram?: string | null | undefined;
+            website?: string | null | undefined;
+            userId?: string | null | undefined;
+            facebook?: string | null | undefined;
+            tiktok?: string | null | undefined;
+        }[];
+        pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+            hasMore: boolean;
+            nextPage: number | null;
+        };
     }>;
 }>;
 type AppRouter = typeof appRouter;
