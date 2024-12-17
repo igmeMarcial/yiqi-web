@@ -49,7 +49,7 @@ export async function sendUserEventConfirmed(props: QueueJob) {
       dynamicTemplateData: templateData,
       destinationUserId: user.id,
       threadId: thread.id,
-      subject: 'Mensaje de la plataforma'
+      subject: `Confirmación de reserva para ${event.title} de ${event.organization.name}`
     })
 
     const latestData = await prisma.message.findFirstOrThrow({
