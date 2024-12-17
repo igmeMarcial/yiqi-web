@@ -1,5 +1,6 @@
+'use server'
 import prisma from '../prisma'
-import { sendUserCommunicationAction } from '@/services/actions/communications/sendUserCommunications'
+import { sendUserCommunicationsForServer } from '@/services/actions/communications/sendUserCommunicationsForServer'
 import { SendBaseMessageToUserPropsSchema } from '@/services/notifications/sendBaseMessageToUser'
 
 export async function processQueueJobs() {
@@ -30,7 +31,7 @@ export async function processQueueJobs() {
         switch (job.type) {
           case 'SEND_USER_MESSAGE': {
             const data = SendBaseMessageToUserPropsSchema.parse(job.data)
-            await sendUserCommunicationAction(data)
+            await sendUserCommunicationsForServer(data)
             break
           }
           // Add other job types here
