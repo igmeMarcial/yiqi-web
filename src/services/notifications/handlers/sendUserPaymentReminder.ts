@@ -5,7 +5,7 @@ import { sendUserWhatsappMessage } from '@/lib/whatsapp/sendUserWhatsappMessage'
 import { MessageThreadTypeEnum, MessageSchema } from '@/schemas/messagesSchema'
 import { QueueJob } from '@prisma/client'
 
-export async function sendUserEventConfirmed(props: QueueJob) {
+export async function sendUserPaymentReminder(props: QueueJob) {
   const jobdata = await prisma.queueJob.findUniqueOrThrow({
     where: {
       id: props.id
@@ -37,17 +37,20 @@ export async function sendUserEventConfirmed(props: QueueJob) {
   if (thread.type === MessageThreadTypeEnum.Enum.whatsapp) {
     const result = await sendUserWhatsappMessage({
       destinationUserId: user.id,
-      content: `Confirmación de reserva para ${event.title} de ${event.organization.name}`,
+      content: `Recuerda pagar tu reserva para ${event.title} de ${event.organization.name}`,
       threadId: thread.id
     })
     return MessageSchema.parse(result)
   } else if (thread.type === MessageThreadTypeEnum.Enum.email) {
     await sendEmailToUser({
-      templateId: MailTemplatesIds.RESERVATION_CONFIRMED,
-      dynamicTemplateData: { user, event },
+      templateId: MailTemplatesIds.RESERVATION_PAYMENT_REMINDER,
+      dynamicTemplateData: {
+        event,
+        user
+      },
       destinationUserId: user.id,
       threadId: thread.id,
-      subject: `Confirmación de reserva para ${event.title} de ${event.organization.name}`
+      subject: `Recuerda pagar tu reserva para ${event.title} de ${event.organization.name}`
     })
 
     const latestData = await prisma.message.findFirstOrThrow({
