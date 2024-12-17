@@ -51,7 +51,14 @@ export const EventInputSchema = z.object({
   maxAttendees: z.number().int().positive().optional().nullable(),
   requiresApproval: z.boolean().default(false),
   openGraphImage: z.string().optional().nullable(),
-  type: z.nativeEnum(EventTypeEnum)
+  type: z.nativeEnum(EventTypeEnum),
+  latLon: z
+    .object({
+      lat: z.number(),
+      lon: z.number()
+    })
+    .optional()
+    .nullable()
 })
 
 export const EventCommunitySchema = z.object({
