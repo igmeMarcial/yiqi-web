@@ -54,8 +54,8 @@ export const EventInputSchema = z.object({
   type: z.nativeEnum(EventTypeEnum),
   latLon: z
     .object({
-      lat: z.number(),
-      lon: z.number()
+      lat: z.number().optional().nullable(),
+      lon: z.number().optional().nullable()
     })
     .optional()
     .nullable()
