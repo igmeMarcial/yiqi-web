@@ -35,7 +35,7 @@ export const FormFieldSchema = z.object({
   isFocused: z.boolean(),
   isRequired: z.boolean()
 })
-export type InputTypesUnion = keyof typeof InputTypes;
+export type InputTypesUnion = keyof typeof InputTypes
 export type FormProps = z.infer<typeof FormFieldSchema>
 export type ItemTypeProps = z.infer<typeof ItemTypePropsSchema>
 export const FormStatus = z.enum(['draft', 'published', 'archived'])
@@ -76,8 +76,7 @@ export const FormModelSchema = FormSchema.extend({
 export type Form = z.infer<typeof FormSchema>
 export type FormModel = z.infer<typeof FormModelSchema>
 
-
-//Response 
+//Response
 export const FieldReponseSchemas = {
   [InputTypes.TEXT]: z.string().min(1, 'Este campo es requerido.'),
   [InputTypes.TEXTAREA]: z.string().min(1, 'Este campo es requerido.'),
@@ -114,4 +113,4 @@ export const FieldReponseSchemas = {
     })
     .refine(data => data.id, 'Este campo es requerido.')
 }
-export type FieldResponseKeys = keyof typeof FieldReponseSchemas;
+export type FieldResponseKeys = keyof typeof FieldReponseSchemas

@@ -24,7 +24,6 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
   const contents = Array.isArray(currentField.contents)
     ? currentField.contents
     : []
-  // console.log(contents)
   return (
     <Controller
       control={control}

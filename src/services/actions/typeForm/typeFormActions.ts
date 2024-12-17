@@ -48,54 +48,54 @@ export async function createTypeForm(orgId: string, formData: Form) {
   }
 }
 
-type FormFieldValue = string | boolean | { [key: string]: boolean } | null;
+type FormFieldValue = string | boolean | { [key: string]: boolean } | null
 type FormData = {
-  id: string;
-  value?: FormFieldValue;
-}[]; 
+  id: string
+  value?: FormFieldValue
+}[]
 export async function createFormSubmission(submissionData: {
-  formId: string;
+  formId: string
   data: FormData
-  eventId?: string | null;
+  eventId?: string | null
 }) {
   try {
     const currentUser = await getUser()
     if (!currentUser) {
       throw new Error('Unauthorized: User not authenticated')
     }
-    const { formId,  data, eventId } = submissionData;
+    const { formId, data, eventId } = submissionData
     const newSubmission = await prisma.formSubmission.create({
       data: {
         formId,
-        userId:currentUser.id,
+        userId: currentUser.id,
         eventId,
-        data, 
-      },
-    });
-    return newSubmission;
+        data
+      }
+    })
+    return newSubmission
   } catch (error) {
-    console.error('Error creating form submission:', error);
-    throw new Error('Failed to create form submission');
+    console.error('Error creating form submission:', error)
+    throw new Error('Failed to create form submission')
   }
 }
 
-export async function getTypeForm(id:string) {
-  try { 
+export async function getTypeForm(id: string) {
+  try {
     const form = await prisma.form.findUnique({
-      where: { id },
-    });
+      where: { id }
+    })
 
     if (!form) {
       return {
-        notFound: true, 
-      };
+        notFound: true
+      }
     }
-   
-  const parsedForm = FormModelSchema.parse(form);
+
+    const parsedForm = FormModelSchema.parse(form)
 
     return {
       success: true,
-      form: parsedForm,
+      form: parsedForm
     }
   } catch (error) {
     console.error('Unexpected error:', error)
@@ -108,5 +108,3 @@ export async function getTypeForm(id:string) {
     }
   }
 }
-
-
