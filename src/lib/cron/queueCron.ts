@@ -1,6 +1,7 @@
 'use server'
 import prisma from '../prisma'
 import { sendUserCommunicationsForServer } from '@/services/actions/communications/sendUserCommunicationsForServer'
+import { handleNotificationJob } from '@/services/notifications/handlers'
 import { SendBaseMessageToUserPropsSchema } from '@/services/notifications/sendBaseMessageToUser'
 
 export async function processQueueJobs() {
@@ -30,6 +31,13 @@ export async function processQueueJobs() {
         // Process the job based on its type
         switch (job.type) {
           case 'SEND_USER_MESSAGE': {
+            // notifications are messages that are sent to users that are automated
+            if (job.notificationType) {
+              await handleNotificationJob(job)
+              break
+            }
+
+            // regular messages are messages that are sent to users that are not automated
             const data = SendBaseMessageToUserPropsSchema.parse(job.data)
             await sendUserCommunicationsForServer(data)
             break
