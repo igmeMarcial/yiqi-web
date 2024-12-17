@@ -67,6 +67,10 @@ type LocationDetails = {
   city: string
   state: string
   country: string
+  latLon: {
+    lat: number
+    lon: number
+  }
 }
 
 const currentDate = new Date()
@@ -461,10 +465,19 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                       fieldName="location"
                       onSetAddress={field.onChange}
                       onAfterSelection={value => {
-                        if (value) {
-                          setLocationDetails(
-                            getLocationDetails(value.address_components)
+                        if (value?.address_components && value?.geometry) {
+                          const locationDetails = getLocationDetails(
+                            value.address_components
                           )
+                          if (locationDetails) {
+                            setLocationDetails({
+                              ...locationDetails,
+                              latLon: {
+                                lat: value.geometry?.location?.lat() ?? 0,
+                                lon: value.geometry?.location?.lng() ?? 0
+                              }
+                            })
+                          }
                         }
                       }}
                     />
