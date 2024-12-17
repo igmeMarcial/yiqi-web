@@ -1,7 +1,12 @@
 {
+  // each job should run every minute
   "crons": [
     {
       "path": "/api/cron/email",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/jobs",
       "schedule": "* * * * *"
     }
   ]
