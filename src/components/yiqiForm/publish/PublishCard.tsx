@@ -14,6 +14,7 @@ import InputCheckbox from './InputCheckbox'
 import InputSelect from './InputSelect'
 import { useFormContext } from 'react-hook-form'
 import { UserInfoCard } from './UserInfoCard'
+import { useTranslations } from 'next-intl'
 
 interface PublishCardProps {
   fields: FormProps[]
@@ -41,6 +42,7 @@ const PublishCard = ({
   const { id, inputType, isRequired } = card
   const isTitle = inputType === InputTypes.TITLE
   const { watch } = useFormContext()
+  const t = useTranslations('yiqiForm')
   const value = watch(id)
   useEffect(() => {
     if (onValueChange) {
@@ -157,15 +159,13 @@ const PublishCard = ({
                 className="flex items-end h-[30px] w-full"
               >
                 <span className="text-xs text-red-500 dark:text-red-400">
-                  Este campo es requerido
+                  {t('fieldRequired')}
                 </span>
               </motion.div>
             )}
           </div>
         </div>
       </motion.div>
-
-      {/* User Info Card - Rendered after Title Card */}
       {isTitle && <UserInfoCard user={user} />}
     </>
   )

@@ -1,7 +1,5 @@
 'use client'
-
 import React, { useRef } from 'react'
-
 import { Controller, useFormContext } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -9,18 +7,17 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormProps } from '@/schemas/yiqiFormSchema'
 import { cn } from '@/lib/utils'
-
+import { useTranslations } from 'next-intl'
 interface InputRadioProps {
   id: string
   fields: FormProps[]
 }
-
 const InputRadio = ({ id, fields }: InputRadioProps) => {
   const etcRef = useRef<HTMLInputElement>(null)
   const etcRefRadio = useRef<HTMLInputElement>(null)
   const { control } = useFormContext()
+  const t = useTranslations('yiqiForm')
   const currentField = fields.find(field => field.id === id) as FormProps
-
   const contents = Array.isArray(currentField.contents)
     ? currentField.contents
     : []
@@ -37,7 +34,6 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
         >
           <RadioGroup
             onValueChange={(selectedValue: string) => {
-              console.log(selectedValue)
               const selectedOption = contents.find(
                 content => content.id === selectedValue
               )
@@ -78,7 +74,7 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
                 >
                   {content.isEtc ? (
                     <div className="flex items-center gap-3">
-                      <span>Other:</span>
+                      <span>{t('other')}:</span>
                       <Input
                         ref={etcRef}
                         className={cn(
@@ -108,7 +104,7 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
                             isEtc: true
                           })
                         }}
-                        placeholder="Escribe aqui..."
+                        placeholder={t('writeHere')}
                       />
                     </div>
                   ) : (

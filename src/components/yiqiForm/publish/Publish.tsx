@@ -10,6 +10,7 @@ import LinkedInOAuthButton from '@/components/auth/LinkedinButton'
 import { createFormSubmission } from '@/services/actions/typeForm/typeFormActions'
 import { useToast } from '@/hooks/use-toast'
 import { z } from 'zod'
+import { useTranslations } from 'next-intl'
 export interface UserProps {
   name: string
   email: string
@@ -38,6 +39,7 @@ const generateValidationSchema = (requiredFields: FormProps[]) => {
 
 const Publish: React.FC<PublishProps> = ({ form, user }) => {
   const methods = useForm()
+  const t = useTranslations('yiqiForm')
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(!user)
   const [firstEmptyFieldId, setFirstEmptyFieldId] = useState<string | null>(
     null
@@ -64,20 +66,19 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
       const submissionData = {
         formId: form.id,
         data: formData,
-        eventId: form.eventId || null
+        eventId: form.eventId ?? null
       }
       try {
         const response = await createFormSubmission(submissionData)
-        console.log('Form submission saved to database:', response)
         if (response) {
           toast({
-            description: 'Tus respuestas se ha enviado correctamente',
+            description: t('responsesSent'),
             variant: 'default'
           })
         }
       } catch (error) {
         toast({
-          description: `Ocurrio un error ${error}`,
+          description: `${t('errorOccurred')}: ${error}`,
           variant: 'default'
         })
       }
@@ -147,7 +148,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    Inicia sesión para continuar
+                    {t('loginToContinue')}
                   </motion.h2>
                   <motion.p
                     className="text-slate-600 dark:text-slate-400"
@@ -155,7 +156,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    Para rellenar este formulario, debes iniciar sesión.
+                    {t('loginToFillForm')}
                   </motion.p>
                 </div>
 
@@ -172,7 +173,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
                     </div>
                     <div className="relative flex justify-center">
                       <span className="px-4 bg-white dark:bg-black text-slate-500 dark:text-slate-400 text-sm">
-                        o
+                        {t('or')}
                       </span>
                     </div>
                   </div>
@@ -255,7 +256,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
               shadow-md hover:shadow-lg 
               transform "
               >
-                Enviar
+                {t('submit')}
               </Button>
               <Button
                 type="button"
@@ -272,7 +273,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
                   setFirstEmptyFieldId(null)
                 }}
               >
-                LIMPIAR
+                {t('clear')}
               </Button>
             </motion.div>
           </form>

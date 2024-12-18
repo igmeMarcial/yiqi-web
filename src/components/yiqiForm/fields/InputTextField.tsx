@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 import { FormProps, InputTypes } from '../../../schemas/yiqiFormSchema'
+import { useTranslations } from 'next-intl'
 
 interface InputFieldProps {
   id: string
@@ -15,6 +16,7 @@ interface InputFieldProps {
 
 const InputTextField = ({ id, fields }: InputFieldProps) => {
   const { control } = useFormContext()
+  const t = useTranslations('yiqiForm')
   const inputType = useMemo(() => {
     const currentField = fields.find(field => field.id === id) as FormProps
     return currentField.inputType
@@ -27,7 +29,7 @@ const InputTextField = ({ id, fields }: InputFieldProps) => {
         <Input
           onChange={onChange}
           value={value}
-          placeholder="Escribe tu respuesta..."
+          placeholder={t('writeYourAnswer')}
           className={cn(
             'w-full border-0 border-b-2 rounded-none',
             'bg-transparent',
