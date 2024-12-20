@@ -73,7 +73,7 @@ export default function EventSection({
           </div>
         </div>
         {/* Lista de eventos */}
-        <div className="events-list overflow-y-auto rounded-lg cursor-pointer">
+        <div className="events-list overflow-y-auto rounded-lg ">
           {paginatedEvents.map(event => (
             <div
               key={event.id}
@@ -106,9 +106,6 @@ export default function EventSection({
                   >
                     <Eye className="w-5 h-5" />
                   </Link>
-                  <button className="text-red-600 hover:text-red-50 mt-2 sm:mt-0">
-                    <Trash className="w-5 h-5" />
-                  </button>
                 </div>
               </div>
             </div>
