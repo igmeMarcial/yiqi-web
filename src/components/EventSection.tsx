@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight, Eye, Trash } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Eye } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { EventCommunityType } from '@/schemas/eventSchema'
