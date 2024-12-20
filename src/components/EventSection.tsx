@@ -65,7 +65,7 @@ export default function EventSection({
         {/* Encabezado para la tabla */}
         <div className="hidden sm:grid grid-cols-12 bg-gray-700 p-4 rounded">
           <div className="col-span-6 text-sm font-semibold text-primary">
-            {t('event')}
+            {t('events')}
           </div>
           <div className="col-span-3 text-sm font-semibold text-primary"></div>
           <div className="col-span-3 text-sm font-semibold text-primary text-right">
