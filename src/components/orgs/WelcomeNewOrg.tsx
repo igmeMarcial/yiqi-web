@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Progress } from '@/components/ui/progress'
-import { Import, CreditCard, Calendar, Bell } from 'lucide-react'
+import { Import, Calendar, Bell } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
@@ -24,7 +24,6 @@ type Props = {
 
 export default function WelcomeScreen({
   importedContacts,
-  paymentsIsSetup,
   eventCreated,
   notificationsSent,
   orgId
@@ -40,14 +39,14 @@ export default function WelcomeScreen({
       completed: importedContacts,
       link: `/admin/organizations/${orgId}/contacts`
     },
-    {
-      id: 2,
-      title: `${t('welcomeScreenTasksSetupPayments')}`,
-      description: `${t('welcomeScreenTasksPaymentDescription')}`,
-      icon: CreditCard,
-      completed: paymentsIsSetup,
-      link: `/admin/organizations/${orgId}/billing`
-    },
+    // {
+    //   id: 2,
+    //   title: `${t('welcomeScreenTasksSetupPayments')}`,
+    //   description: `${t('welcomeScreenTasksPaymentDescription')}`,
+    //   icon: CreditCard,
+    //   completed: paymentsIsSetup,
+    //   link: `/admin/organizations/${orgId}/billing`
+    // },
     {
       id: 3,
       title: `${t('welcomeScreenTasksCreateEvents')}`,

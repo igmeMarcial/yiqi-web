@@ -46,7 +46,6 @@ import {
   DialogDescription,
   DialogFooter
 } from '@/components/ui/dialog'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { UploadIcon } from '@radix-ui/react-icons'
 import { Switch } from '@/components/ui/switch'
@@ -614,11 +613,11 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                   <DialogTitle>{t('stripeAccountRequired')}</DialogTitle>
                   <DialogDescription>
                     {t('stripeSetupInfo')}
-                    <Link
+                    {/* <Link
                       href={`/admin/organizations/${organizationId}/billing`}
                     >
                       {t('clickHereStart')}
-                    </Link>
+                    </Link> */}
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
