@@ -14,8 +14,8 @@ import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 import StripeCheckout from '@/components/billing/StripeCheckout'
 import { useState } from 'react'
 import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
-import { redirect } from 'next/navigation'
 import { toast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 interface RegistrationConfirmationProps {
   registration: EventRegistrationSchemaType
@@ -26,6 +26,7 @@ export function RegistrationConfirmation({
   registration,
   requiresPayment = false
 }: RegistrationConfirmationProps) {
+  const router = useRouter()
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false)
 
   const t = useTranslations('RegistrationComponent')
@@ -37,7 +38,7 @@ export function RegistrationConfirmation({
         variant: 'default'
       })
       setIsPaymentDialogOpen(false)
-      redirect('/user/tickets')
+      router.push('/user/tickets')
     } else {
       toast({
         title: `${t('eventRegistrationError')}`,

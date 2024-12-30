@@ -26,10 +26,7 @@ export const createCheckoutSession = async (registrationId: string) => {
     try {
       const session = await stripe.checkout.sessions.retrieve(
         registration.paymentId,
-        {},
-        {
-          stripeAccount: stripeAccountId
-        }
+        {}
       )
 
       if (!session.client_secret) {
@@ -37,8 +34,7 @@ export const createCheckoutSession = async (registrationId: string) => {
       }
 
       return {
-        clientSecret: session.client_secret,
-        connectAccountId: stripeAccountId
+        clientSecret: session.client_secret
       }
     } catch (error) {
       console.error('Error retrieving checkout session', error)
@@ -83,27 +79,12 @@ export const createCheckoutSession = async (registrationId: string) => {
     }
   )
 
-  const commission = 0.03
-
-  const application_fee_amount =
-    lineItems.reduce((acc, item) => {
-      return acc + item.price_data.unit_amount * item.quantity
-    }, 0) * commission
-
-  const session = await stripe.checkout.sessions.create(
-    {
-      line_items: lineItems,
-      payment_intent_data: {
-        application_fee_amount: Math.round(application_fee_amount)
-      },
-      redirect_on_completion: 'never',
-      mode: 'payment',
-      ui_mode: 'embedded'
-    },
-    {
-      stripeAccount: stripeAccountId
-    }
-  )
+  const session = await stripe.checkout.sessions.create({
+    line_items: lineItems,
+    redirect_on_completion: 'never',
+    mode: 'payment',
+    ui_mode: 'embedded'
+  })
 
   if (!session.client_secret) {
     throw new Error('Checkout session not created')
@@ -115,7 +96,6 @@ export const createCheckoutSession = async (registrationId: string) => {
   })
 
   return {
-    clientSecret: session.client_secret,
-    connectAccountId: stripeAccountId
+    clientSecret: session.client_secret
   }
 }

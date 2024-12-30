@@ -15,15 +15,12 @@ export default function StripeCheckout({
   registrationId: string
 }) {
   const [clientSecret, setClientSecret] = useState('')
-  const [stripeAccountId, setStripeAccountId] = useState('')
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       try {
-        const { clientSecret, connectAccountId } =
-          await createCheckoutSession(registrationId)
+        const { clientSecret } = await createCheckoutSession(registrationId)
         setClientSecret(clientSecret)
-        setStripeAccountId(connectAccountId)
       } catch (error) {
         console.error('Error creating checkout session:', error)
       }
@@ -33,12 +30,8 @@ export default function StripeCheckout({
   }, [registrationId])
 
   const stripePromise = useMemo(() => {
-    if (!stripeAccountId) return null
-
-    return loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!, {
-      stripeAccount: stripeAccountId
-    })
-  }, [stripeAccountId])
+    return loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+  }, [])
 
   return (
     <EmbeddedCheckoutProvider

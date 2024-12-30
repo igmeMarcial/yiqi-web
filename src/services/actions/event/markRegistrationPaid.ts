@@ -32,10 +32,7 @@ export async function markRegistrationPaid(registrationId: string) {
 
     // Verify payment status with Stripe
     const session = await stripe.checkout.sessions.retrieve(
-      registration.paymentId,
-      {
-        stripeAccount: registration.event.organization.stripeAccountId
-      }
+      registration.paymentId
     )
 
     if (session.payment_status !== 'paid') {
