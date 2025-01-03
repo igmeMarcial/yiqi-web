@@ -32,6 +32,7 @@ import { toast } from '@/hooks/use-toast'
 import { RegistrationForm } from './registration-form'
 import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
 import { useTranslations } from 'next-intl'
+import { PaymentConfirmed } from './payment-confirmed'
 
 export type RegistrationProps = {
   event: PublicEventType
@@ -59,6 +60,7 @@ export function Registration({
   const [currentRegistrationId, setCurrentRegistrationId] = useState<
     string | undefined
   >()
+  const [paymentCompleted, setPaymentCompleted] = useState(false)
 
   const form = useForm<RegistrationInput>({
     resolver: zodResolver(registrationInputSchema),
@@ -145,24 +147,18 @@ export function Registration({
   }
 
   const handlePaymentComplete = async () => {
-    if (currentRegistrationId) {
-      const result = await markRegistrationPaid(currentRegistrationId)
-      if (result.success) {
-        toast({
-          title: `${t('eventRegistrationSuccess')}`
-        })
-        setIsDialogOpen(false)
-      } else {
-        toast({
-          title: `${t('eventRegistrationError')}`,
-          variant: 'destructive'
-        })
-      }
+    const result = await markRegistrationPaid(currentRegistrationId!)
+    if (result.success) {
+      setPaymentCompleted(true)
     }
   }
 
   if (isLoading) {
     return <div>Loading...</div>
+  }
+
+  if (paymentCompleted && currentRegistrationId) {
+    return <PaymentConfirmed eventId={event.id} userEmail={user.email!} />
   }
 
   if (existingRegistration) {
