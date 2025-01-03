@@ -36,3 +36,5 @@ export function getEnvVar(name: string): string {
 }
 
 export const EMAIL_MAIN_CONTENT_CLASS = 'yiqi-main-content'
+
+export const EMAIL_CONTENT_CLASS = 'yiqi-email-content'
