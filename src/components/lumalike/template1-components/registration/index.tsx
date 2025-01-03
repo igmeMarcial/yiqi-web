@@ -22,7 +22,6 @@ import {
   type RegistrationInput,
   type EventRegistrationSchemaType
 } from '@/schemas/eventSchema'
-import { useRouter } from 'next/navigation'
 import { TicketSelection } from './ticket-selection'
 import { RegistrationSummary } from './registration-summary'
 import { RegistrationConfirmation } from './registration-confirmation'
@@ -56,7 +55,6 @@ export function Registration({
   const [existingRegistration, setExistingRegistration] =
     useState<EventRegistrationSchemaType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
   const [currentRegistrationId, setCurrentRegistrationId] = useState<
     string | undefined
   >()
@@ -122,11 +120,8 @@ export function Registration({
 
       if (result.success && result.registration) {
         if (isFreeEvent) {
-          toast({
-            title: result.message
-          })
+          setPaymentCompleted(true)
           setIsDialogOpen(false)
-          router.refresh()
         } else {
           // Store registration ID for payment
           setCurrentRegistrationId(result.registration.id)
