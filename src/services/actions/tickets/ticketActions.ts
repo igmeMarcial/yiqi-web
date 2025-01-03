@@ -84,6 +84,6 @@ export async function getTicketsWithEvents(userId: string) {
       tickets: eventTickets
     }
   })
-
+  console.warn(JSON.stringify(ticketsWithEvents, null, 2))
   return ticketEventSchema.parse(ticketsWithEvents)
 }
