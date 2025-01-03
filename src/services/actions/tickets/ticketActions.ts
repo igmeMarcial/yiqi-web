@@ -84,6 +84,5 @@ export async function getTicketsWithEvents(userId: string) {
       tickets: eventTickets
     }
   })
-
   return ticketEventSchema.parse(ticketsWithEvents)
 }
