@@ -120,7 +120,7 @@ export const appRouter = router({
         return null
       }
 
-      return await checkExistingRegistration(input.eventId)
+      return await checkExistingRegistration(input.eventId, ctx.user.email)
     }),
 
   createCheckoutSession: publicProcedure

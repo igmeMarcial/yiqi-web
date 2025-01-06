@@ -6,7 +6,10 @@ import { markRegistrationPaid } from './markRegistrationPaid'
 import { getUser } from '@/lib/auth/lucia'
 import { getRegistrationCookie } from '@/lib/utils/cookies'
 
-export async function checkExistingRegistration(eventId: string) {
+export async function checkExistingRegistration(
+  eventId: string,
+  email?: string
+) {
   const user = await getUser()
   const cookiedRegistration = getRegistrationCookie(eventId)
 
@@ -23,14 +26,15 @@ export async function checkExistingRegistration(eventId: string) {
     //   }
     // }
     const registration = await prisma.eventRegistration.findFirst({
-      where: cookiedRegistration
-        ? { id: cookiedRegistration }
-        : {
-            eventId,
-            user: {
-              email: user?.email.toLowerCase()
-            }
-          },
+      where:
+        cookiedRegistration && !user
+          ? { id: cookiedRegistration }
+          : {
+              eventId,
+              user: {
+                email: email?.toLocaleLowerCase() || user?.email.toLowerCase()
+              }
+            },
       include: {
         tickets: {
           include: {
