@@ -3,19 +3,34 @@
 import prisma from '@/lib/prisma'
 import { EventRegistrationSchema } from '@/schemas/eventSchema'
 import { markRegistrationPaid } from './markRegistrationPaid'
+import { getUser } from '@/lib/auth/lucia'
+import { getRegistrationCookie } from '@/lib/utils/cookies'
 
-export async function checkExistingRegistration(
-  eventId: string,
-  email: string
-) {
+export async function checkExistingRegistration(eventId: string) {
+  const user = await getUser()
+  const cookiedRegistration = getRegistrationCookie(eventId)
+
+  if (!user && !cookiedRegistration) {
+    console.debug('No user or cookie registration found')
+    return null
+  }
+
   try {
+    // {
+    //   eventId,
+    //   user: {
+    //     email: user?.email.toLowerCase()
+    //   }
+    // }
     const registration = await prisma.eventRegistration.findFirst({
-      where: {
-        eventId,
-        user: {
-          email: email.toLowerCase()
-        }
-      },
+      where: cookiedRegistration
+        ? { id: cookiedRegistration }
+        : {
+            eventId,
+            user: {
+              email: user?.email.toLowerCase()
+            }
+          },
       include: {
         tickets: {
           include: {
