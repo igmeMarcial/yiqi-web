@@ -628,5 +628,9 @@
     "eventCheckInTableTicketId": "ID de entrada",
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
+  },
+  "RegistrationChart": {
+    "title": "Registros de los Últimos 7 Días",
+    "noData": "No hay datos de registro disponibles"
   }
 }
