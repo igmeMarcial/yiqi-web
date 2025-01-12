@@ -314,7 +314,7 @@
     "creatingEvent": "Creando Evento...",
     "updatingEvent": "Actualizando Evento...",
     "createEvent": "Create Event",
-    "updateEvent": "Uodate Evento",
+    "updateEvent": "Actualizar Evento",
     "importing": "Importing...",
     "importContacts": "Import Contacts",
     "noOrganizationFound": "No organization found",
@@ -633,5 +633,9 @@
     "eventCheckInTableTicketId": "Ticket ID",
     "eventCheckInTableCheckIn": "Checked In",
     "eventCheckinBackButton": "Go to Tickets"
+  },
+  "RegistrationChart": {
+    "title": "Registrations Last 7 Days",
+    "noData": "No registration data available"
   }
 }

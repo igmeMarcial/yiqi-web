@@ -64,23 +64,23 @@ type LocationDetails = {
   }
 }
 
-const currentDate = new Date()
-const localCurrentDate = new Date(
-  currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
-)
-const defaultStartDateStr = localCurrentDate.toISOString().split('T')[0]
-const defaultStartTimeStr = localCurrentDate
-  .toISOString()
-  .split('T')[1]
-  .slice(0, 5)
-const defaultEndDate = new Date(localCurrentDate.getTime() + 10 * 60 * 1000)
-const defaultMinEndDateStr = defaultEndDate.toISOString().split('T')[0]
-const defaultMinEndTimeStr = defaultEndDate
-  .toISOString()
-  .split('T')[1]
-  .slice(0, 5)
-
 export function EventForm({ organizationId, event }: Props) {
+  const currentDate = new Date()
+  const localCurrentDate = new Date(
+    currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
+  )
+  const defaultStartDateStr = localCurrentDate.toLocaleDateString('en-CA')
+  const defaultStartTimeStr = localCurrentDate
+    .toISOString()
+    .split('T')[1]
+    .slice(0, 5)
+  const defaultEndDate = new Date(localCurrentDate.getTime() + 10 * 60 * 1000)
+  const defaultMinEndDateStr = defaultEndDate.toLocaleDateString('en-CA')
+  const defaultMinEndTimeStr = defaultEndDate
+    .toISOString()
+    .split('T')[1]
+    .slice(0, 5)
+
   const router = useRouter()
   const t = useTranslations('DeleteAccount')
   const tPage = useTranslations('EventsPage')
@@ -132,10 +132,20 @@ export function EventForm({ organizationId, event }: Props) {
     resolver: zodResolver(EventFormInputSchema),
     defaultValues: {
       title: event?.title ?? '',
-      startDate: event?.startDate.toISOString().split('T')[0] ?? '',
-      startTime: event?.startDate.toISOString().split('T')[1].slice(0, 5) ?? '',
-      endDate: event?.endDate.toISOString().split('T')[0] ?? '',
-      endTime: event?.endDate.toISOString().split('T')[1].slice(0, 5) ?? '',
+      startDate: event
+        ? new Date(event.startDate).toLocaleDateString('en-CA')
+        : '',
+      startTime: event
+        ? new Date(event.startDate)
+            .toLocaleTimeString('en-US', { hour12: false })
+            .slice(0, 5)
+        : '',
+      endDate: event ? new Date(event.endDate).toLocaleDateString('en-CA') : '',
+      endTime: event
+        ? new Date(event.endDate)
+            .toLocaleTimeString('en-US', { hour12: false })
+            .slice(0, 5)
+        : '',
       location: event?.location ?? '',
       virtualLink: event?.virtualLink ?? '',
       description: event?.description ?? 'XYZMON',
@@ -260,7 +270,9 @@ export function EventForm({ organizationId, event }: Props) {
           await createEvent(organizationId, eventData, tickets)
         }
 
-        router.push(`/admin/organizations/${organizationId}/events`)
+        router.push(
+          `/admin/organizations/${organizationId}/events?refresh=true`
+        )
         setLoading(false)
       } catch (error) {
         setLoading(false)

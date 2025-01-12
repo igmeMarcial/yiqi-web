@@ -72,13 +72,9 @@ export function Registration({
 
   useEffect(() => {
     async function checkRegistration() {
-      if (user?.email) {
-        const registration = await checkExistingRegistration(
-          event.id,
-          user.email
-        )
-        setExistingRegistration(registration)
-      }
+      const registration = await checkExistingRegistration(event.id)
+      setExistingRegistration(registration)
+
       setIsLoading(false)
     }
     checkRegistration()
@@ -141,6 +137,7 @@ export function Registration({
         variant: 'destructive'
       })
     } finally {
+      window.location.reload()
       setIsSubmitting(false)
     }
   }
@@ -168,7 +165,7 @@ export function Registration({
   }
 
   if (paymentCompleted && currentRegistrationId) {
-    return <PaymentConfirmed eventId={event.id} userEmail={user.email!} />
+    return <PaymentConfirmed eventId={event.id} />
   }
 
   if (existingRegistration) {
