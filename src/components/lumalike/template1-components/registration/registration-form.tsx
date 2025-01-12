@@ -49,15 +49,17 @@ export function RegistrationForm({
     }
   }, [registrationId, isFreeEvent])
 
-  if (showStripeCheckout && registrationId) {
+  if (registrationId && showStripeCheckout && !isFreeEvent) {
     return (
-      <StripeCheckout
-        registrationId={registrationId}
-        onComplete={() => {
-          setShowStripeCheckout(false)
-          onPaymentComplete?.()
-        }}
-      />
+      <div className="w-full">
+        <StripeCheckout
+          registrationId={registrationId}
+          onComplete={() => {
+            setShowStripeCheckout(false)
+            onPaymentComplete?.()
+          }}
+        />
+      </div>
     )
   }
 
