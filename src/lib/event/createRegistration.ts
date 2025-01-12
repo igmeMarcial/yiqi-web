@@ -135,7 +135,7 @@ export async function createRegistration(
         data: ticketCreations
       }),
       // send them their tickets
-      ticketsRequirePayment
+      ticketsRequirePayment || registration.status === AttendeeStatus.PENDING
         ? null
         : prisma.queueJob.create({
             data: {
