@@ -10,7 +10,7 @@ import { getTranslations } from 'next-intl/server'
 import { ArrowLeft, Calendar, Link2, MapPin, Pencil, Trash } from 'lucide-react'
 import { MdPreview } from '@/components/events/editor/MdPreview'
 import { Card, CardContent } from '@/components/ui/card'
-export const fetchCache = 'no-store'
+export const fetchCache = 'default-no-store'
 
 export default async function EventDetailsPage({
   params
