@@ -18,10 +18,7 @@ import StripeCheckout from '@/components/billing/StripeCheckout'
 interface RegistrationFormProps {
   form: UseFormReturn<RegistrationInput>
   onSubmit: (values: RegistrationInput) => Promise<void>
-  user: {
-    email: string | undefined
-    name: string | undefined
-  }
+  user: { name?: string; picture?: string; email?: string; role?: string }
   isFreeEvent: boolean
   registrationId?: string
   onPaymentComplete?: () => void

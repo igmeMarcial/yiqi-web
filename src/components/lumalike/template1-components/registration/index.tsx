@@ -35,10 +35,7 @@ import { PaymentConfirmed } from './payment-confirmed'
 
 export type RegistrationProps = {
   event: PublicEventType
-  user: {
-    email: string | undefined
-    name: string | undefined
-  }
+  user: { name?: string; picture?: string; email?: string; role?: string }
   dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
 }
 
