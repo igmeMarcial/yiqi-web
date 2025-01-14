@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const organizationSchema = z.object({
+  id: z.string(),
   logo: z.string().url(),
   name: z.string()
 })
@@ -24,17 +25,17 @@ const ticketSchema = z.object({
   userId: z.string(),
   checkedInDate: z.date().nullable(),
   checkedInByUserId: z.string().nullable(),
-  category: z.enum(['GENERAL', 'VIP', 'STUDENT']),
+  category: z.enum(['GENERAL', 'VIP', 'BACKSTAGE']),
   ticketTypeId: z.string(),
   registration: registrationSchema,
-  status: z.enum(['APPROVED', 'PENDING', 'CANCELLED'])
+  status: z.enum(['APPROVED', 'PENDING', 'REJECTED'])
 })
 
 export const eventSchema = z.object({
   title: z.string(),
   startDate: z.date(),
   endDate: z.date(),
-  openGraphImage: z.string().url(),
+  openGraphImage: z.string(),
   type: z.enum(['IN_PERSON', 'VIRTUAL']),
   id: z.string(),
   organizationId: z.string(),

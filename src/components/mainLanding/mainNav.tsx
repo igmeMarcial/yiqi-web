@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, TicketSlash, Users } from 'lucide-react'
+import { Menu, TicketSlash, Users, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -16,8 +16,9 @@ import { AccountDropdown } from '../AccountDropdown'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import LangSelector from '../languageSelector'
+import SignOutButton from '../auth/sign-out'
 
-interface User {
+export interface User {
   name?: string
   picture?: string
   email?: string
@@ -82,7 +83,7 @@ export default function MainLandingNav({
                 <Button
                   size="sm"
                   variant="default"
-                  className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black hover:opacity-90 transition-opacity w-full sm:w-auto"
+                  className="font-semibold bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-white hover:opacity-90 transition-opacity w-full sm:w-auto"
                   onClick={handleOpenRegistrationDialog}
                 >
                   {buttonName}
@@ -96,7 +97,7 @@ export default function MainLandingNav({
                 <Users size={16} />
                 <span>{t('communities')}</span>
               </NavLink>
-              {!user || Object.keys(user).length === 0 ? (
+              {!user?.role || Object.keys(user).length === 0 ? (
                 <Link href={'/user'}>
                   <Button size="sm" variant="default" className="font-semibold">
                     {t('login')}
@@ -147,7 +148,7 @@ export default function MainLandingNav({
                     {t('events')}
                   </NavLink>
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
-                  {!user ? (
+                  {!user?.role ? (
                     <Link href={'/user'}>
                       <Button
                         size="sm"
@@ -190,6 +191,15 @@ export default function MainLandingNav({
                           {t('myAccount')}
                         </span>
                       </Link>
+                      <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
+                      <SignOutButton>
+                        <div className="flex items-center space-x-2 px-2">
+                          <LogOut className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-white text-sm">
+                            {t('signOut')}
+                          </span>
+                        </div>
+                      </SignOutButton>
                     </>
                   )}
                   <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />

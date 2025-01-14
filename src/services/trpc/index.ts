@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { searchUsers } from '../actions/userActions'
+import { searchUsers, updateUserProfile } from '../actions/userActions'
 import { publicProcedure, router } from './util'
 import { getUserRegistrationStatus } from '../actions/eventActions'
 import { getOrganization } from '../actions/organizationActions'
@@ -26,6 +26,15 @@ import { createCheckoutSessionMobile } from '../actions/billing/createCheckoutSe
 import { markRegistrationPaidMobile } from '../actions/event/markRegistrationPaidMobile'
 import getCommunities from '@/services/actions/communities/getCommunities'
 import { GetCommunitiesParamsSchema } from '@/schemas/communitySchema'
+import getCommunityDetails from '../actions/communities/getCommunityDetails'
+import { getTicketsWithEvents } from '../actions/tickets/ticketActions'
+import {
+  profileWithPrivacySchema,
+  userDataCollectedShema
+} from '@/schemas/userSchema'
+import { fetchAndFormatUserProfile } from '@/lib/user/fetchAndFormatUserProfile'
+import { deleteUser } from '@/lib/user/deleteUser'
+import { updateNetworkingProfile } from '@/lib/user/updateNetworkingProfile'
 
 export const appRouter = router({
   loginLinkedin: publicProcedure
@@ -69,10 +78,6 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.user) {
-        throw new Error('User not signed in')
-      }
-
       const registration = await createRegistration(
         ctx.user,
         input.eventId,
@@ -124,11 +129,7 @@ export const appRouter = router({
         registrationId: z.string()
       })
     )
-    .mutation(async ({ input, ctx }) => {
-      if (!ctx.user) {
-        throw new Error('User not signed in')
-      }
-
+    .mutation(async ({ input }) => {
       const session = await createCheckoutSessionMobile(input.registrationId)
       return session
     }),
@@ -138,11 +139,7 @@ export const appRouter = router({
         registrationId: z.string()
       })
     )
-    .mutation(async ({ input, ctx }) => {
-      if (!ctx.user) {
-        throw new Error('User not signed in')
-      }
-
+    .mutation(async ({ input }) => {
       const status = await markRegistrationPaidMobile(input.registrationId)
       return status
     }),
@@ -151,6 +148,62 @@ export const appRouter = router({
     .query(async ({ input }) => {
       const communties = await getCommunities(input)
       return communties
+    }),
+
+  getCommunityDetails: publicProcedure
+    .input(
+      z.object({
+        communityId: z.string()
+      })
+    )
+    .query(async ({ input }) => {
+      const communties = await getCommunityDetails(input.communityId)
+      return communties
+    }),
+  getTicketsWithEvents: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user) {
+      throw new Error('User not signed in')
+    }
+
+    const tickets = await getTicketsWithEvents(ctx.user?.id)
+    return tickets
+  }),
+  getUserProfile: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user) {
+      throw new Error('User not signed in')
+    }
+
+    return await fetchAndFormatUserProfile(ctx.user?.id, true)
+  }),
+  updateUserProfile: publicProcedure
+    .input(profileWithPrivacySchema)
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+      if (input.id !== ctx.user.id) {
+        throw new Error("You don't have permession")
+      }
+
+      const response = await updateUserProfile(input)
+      return {
+        success: response.success,
+        user: profileWithPrivacySchema.parse(response.user)
+      }
+    }),
+  deleteUserAccount: publicProcedure.mutation(async ({ ctx }) => {
+    if (!ctx.user) {
+      throw new Error('User not signed in')
+    }
+    return await deleteUser(ctx.user.id)
+  }),
+  saveNetworkingProfile: publicProcedure
+    .input(userDataCollectedShema)
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+      return await updateNetworkingProfile(ctx.user.id, input)
     })
 })
 

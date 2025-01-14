@@ -26,3 +26,15 @@ export const getLocationDetails = (
 
   return { city, state, country }
 }
+
+export function getEnvVar(name: string): string {
+  const value = process.env[name]
+  if (!value) {
+    throw new Error(`Missing environment variable: ${name}`)
+  }
+  return value
+}
+
+export const EMAIL_MAIN_CONTENT_CLASS = 'yiqi-main-content'
+
+export const EMAIL_CONTENT_CLASS = 'yiqi-email-content'

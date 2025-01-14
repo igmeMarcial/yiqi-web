@@ -2,30 +2,87 @@
 
 import prisma from '@/lib/prisma'
 import { ticketEventSchema } from '@/schemas/ticketSchema'
-import { getPublicEvents } from '../event/getPublicEvents'
 
 export async function getTicketsWithEvents(userId: string) {
-  const tickets = await prisma.ticket.findMany({
-    where: { userId },
-    include: { registration: true }
+  const events = await prisma.event.findMany({
+    where: {
+      deletedAt: null,
+      tickets: {
+        some: {
+          Ticket: {
+            some: {
+              userId
+            }
+          }
+        }
+      }
+    },
+    include: {
+      organization: {
+        select: {
+          id: true,
+          name: true,
+          logo: true
+        }
+      },
+      tickets: {
+        where: {
+          Ticket: {
+            some: {
+              userId
+            }
+          }
+        },
+        include: {
+          Ticket: {
+            where: {
+              userId
+            },
+            include: {
+              registration: true
+            }
+          }
+        }
+      }
+    },
+    orderBy: {
+      startDate: 'desc'
+    }
   })
 
-  const events = await getPublicEvents()
+  const ticketsWithEvents = events.map(event => {
+    const eventTickets = event.tickets.flatMap(ticketType =>
+      ticketType.Ticket.map(ticket => ({
+        id: ticket.id,
+        description: ticketType.description,
+        registrationId: ticket.registrationId,
+        userId: ticket.userId,
+        checkedInDate: ticket.checkedInDate,
+        checkedInByUserId: ticket.checkedInByUserId,
+        category: ticketType.category,
+        ticketTypeId: ticketType.id,
+        registration: ticket.registration,
+        status: ticket.registration?.status || 'PENDING'
+      }))
+    )
 
-  const eventsList = events.events || []
-
-  const ticketsWithEvents = eventsList
-    .map(event => {
-      const eventTickets = tickets
-        .filter(ticket => ticket.registration?.eventId === event.id)
-        .map(ticket => ({
-          ...ticket,
-          status: ticket.registration?.status
-        }))
-
-      return { event, tickets: eventTickets }
-    })
-    .filter(item => item.tickets.length > 0)
-
+    return {
+      event: {
+        id: event.id,
+        title: event.title,
+        startDate: event.startDate,
+        endDate: event.endDate,
+        openGraphImage: event.openGraphImage || '',
+        type: event.type === 'IN_PERSON' ? 'IN_PERSON' : 'VIRTUAL',
+        organizationId: event.organizationId,
+        organization: {
+          id: event.organization.id,
+          name: event.organization.name,
+          logo: event.organization.logo || ''
+        }
+      },
+      tickets: eventTickets
+    }
+  })
   return ticketEventSchema.parse(ticketsWithEvents)
 }

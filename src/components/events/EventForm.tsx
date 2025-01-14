@@ -38,22 +38,13 @@ import { AddressAutocomplete } from '../forms/AddressAutocomplete'
 import { getLocationDetails } from '@/lib/utils'
 import { updateEvent } from '@/services/actions/event/updateEvent'
 import { MarkdownEditor } from './editor/mdEditor'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter
-} from '@/components/ui/dialog'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { UploadIcon } from '@radix-ui/react-icons'
+import { Switch } from '@/components/ui/switch'
 
 type Props = {
   organizationId: string
   event?: SavedEventType
-  hasStripeAccount: boolean
 }
 
 export const EventFormInputSchema = EventInputSchema.extend({
@@ -73,23 +64,23 @@ type LocationDetails = {
   }
 }
 
-const currentDate = new Date()
-const localCurrentDate = new Date(
-  currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
-)
-const defaultStartDateStr = localCurrentDate.toISOString().split('T')[0]
-const defaultStartTimeStr = localCurrentDate
-  .toISOString()
-  .split('T')[1]
-  .slice(0, 5)
-const defaultEndDate = new Date(localCurrentDate.getTime() + 10 * 60 * 1000)
-const defaultMinEndDateStr = defaultEndDate.toISOString().split('T')[0]
-const defaultMinEndTimeStr = defaultEndDate
-  .toISOString()
-  .split('T')[1]
-  .slice(0, 5)
+export function EventForm({ organizationId, event }: Props) {
+  const currentDate = new Date()
+  const localCurrentDate = new Date(
+    currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
+  )
+  const defaultStartDateStr = localCurrentDate.toLocaleDateString('en-CA')
+  const defaultStartTimeStr = localCurrentDate
+    .toISOString()
+    .split('T')[1]
+    .slice(0, 5)
+  const defaultEndDate = new Date(localCurrentDate.getTime() + 10 * 60 * 1000)
+  const defaultMinEndDateStr = defaultEndDate.toLocaleDateString('en-CA')
+  const defaultMinEndTimeStr = defaultEndDate
+    .toISOString()
+    .split('T')[1]
+    .slice(0, 5)
 
-export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   const router = useRouter()
   const t = useTranslations('DeleteAccount')
   const tPage = useTranslations('EventsPage')
@@ -118,7 +109,6 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
   `
   const [loading, setLoading] = useState(false)
   const [showTicketManager, setShowTicketManager] = useState(false)
-  const [showStripeDialog, setShowStripeDialog] = useState(false)
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(
     event?.openGraphImage ?? null
@@ -142,10 +132,20 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
     resolver: zodResolver(EventFormInputSchema),
     defaultValues: {
       title: event?.title ?? '',
-      startDate: event?.startDate.toISOString().split('T')[0] ?? '',
-      startTime: event?.startDate.toISOString().split('T')[1].slice(0, 5) ?? '',
-      endDate: event?.endDate.toISOString().split('T')[0] ?? '',
-      endTime: event?.endDate.toISOString().split('T')[1].slice(0, 5) ?? '',
+      startDate: event
+        ? new Date(event.startDate).toLocaleDateString('en-CA')
+        : '',
+      startTime: event
+        ? new Date(event.startDate)
+            .toLocaleTimeString('en-US', { hour12: false })
+            .slice(0, 5)
+        : '',
+      endDate: event ? new Date(event.endDate).toLocaleDateString('en-CA') : '',
+      endTime: event
+        ? new Date(event.endDate)
+            .toLocaleTimeString('en-US', { hour12: false })
+            .slice(0, 5)
+        : '',
       location: event?.location ?? '',
       virtualLink: event?.virtualLink ?? '',
       description: event?.description ?? 'XYZMON',
@@ -270,7 +270,9 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
           await createEvent(organizationId, eventData, tickets)
         }
 
-        router.push(`/admin/organizations/${organizationId}/events`)
+        router.push(
+          `/admin/organizations/${organizationId}/events?refresh=true`
+        )
         setLoading(false)
       } catch (error) {
         setLoading(false)
@@ -281,10 +283,7 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-5xl mx-auto p-2 mb-4 md:p-6 dark:bg-primary rounded-lg shadow-lg"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="mb-4">
           <FormField
             control={form.control}
@@ -536,16 +535,30 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
               />
             </div>
 
+            {/* Requires Approval */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                  {tPage('requiresApproval')}
+                </span>
+              </div>
+              <FormField
+                control={form.control}
+                name="requiresApproval"
+                render={({ field }) => (
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                )}
+              />
+            </div>
+
             {/* Tickets */}
             <div
               className="flex items-center justify-between cursor-pointer"
-              onClick={() => {
-                if (hasStripeAccount) {
-                  setShowTicketManager(!showTicketManager)
-                } else {
-                  setShowStripeDialog(true)
-                }
-              }}
+              onClick={() => setShowTicketManager(!showTicketManager)}
             >
               <span>{t('tickets')}</span>
               <span>{showTicketManager ? `${t('hide')}` : `${t('edit')}`}</span>
@@ -585,31 +598,6 @@ export function EventForm({ organizationId, event, hasStripeAccount }: Props) {
                 }}
               />
             )}
-
-            {/* Stripe Dialog */}
-            <Dialog open={showStripeDialog} onOpenChange={setShowStripeDialog}>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>{t('stripeAccountRequired')}</DialogTitle>
-                  <DialogDescription>
-                    {t('stripeSetupInfo')}
-                    <Link
-                      href={`/admin/organizations/${organizationId}/billing`}
-                    >
-                      {t('clickHereStart')}
-                    </Link>
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button
-                    className="dark:bg-neutral-600 font-bold"
-                    onClick={() => setShowStripeDialog(false)}
-                  >
-                    {t('close')}
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
 
             {/* Submit */}
             <div className="pt-4">

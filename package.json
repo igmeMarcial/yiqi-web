@@ -84,6 +84,8 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.8",
     "google-auth-library": "^9.15.0",
+    "ics": "^3.8.1",
+    "jose": "^5.9.6",
     "jsdom": "^25.0.1",
     "jsonwebtoken": "^9.0.2",
     "linkedin-api-client": "^0.3.0",
@@ -103,13 +105,14 @@
     "react-dropzone": "^14.2.10",
     "react-hook-form": "^7.53.0",
     "react-resizable-panels": "^2.1.4",
+    "recharts": "^2.15.0",
     "resend": "^4.0.1",
-    "stripe": "^17.4.0",
+    "stripe": "17.4.0",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
     "tiktoken": "^1.0.17",
-    "tsup": "^8.3.0",
+    "tsup": "^8.3.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -127,6 +130,9 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5"
-  }
+    "typescript": "5.6.3"
+  },
+  "trustedDependencies": [
+    "@sentry/cli"
+  ]
 }

@@ -28,7 +28,8 @@
     "privacy": "Privacidad",
     "security": "Seguridad",
     "profile": "Perfil",
-    "organization": "Organización"
+    "organization": "Organización",
+    "signOut": "Cerrar sesión"
   },
   "HeroSection": {
     "heroSubtitle": "El Futuro de los Eventos",
@@ -120,8 +121,10 @@
     "defaultValueH1": "Bienvenido al Editor de Texto Enriquecido",
     "defaultValueP": "Este editor soporta",
     "defaultValueStrong": "negrita",
-    "defaultValueItalic": "cursiva", 
-    "defaultValueP2": "y muchas otras opciones de formato. ¡También puedes insertar imágenes y videos de YouTube!"
+    "defaultValueItalic": "cursiva",
+    "defaultValueP2": "y muchas otras opciones de formato. ¡También puedes insertar imágenes y videos de YouTube!",
+    "requiresApproval": "Requiere Aprobación",
+    "requiresApprovalDescription": "Cuando está activado, los asistentes necesitarán aprobación"
   },
   "contactFor": {
     "contact": "Contacto",
@@ -203,15 +206,15 @@
     "enterInstagramURL": "Introduce tu link de Instagram",
     "enterWebsiteURL": "Introduce tu link de sitio web",
     "enterLinkedinURL": "Introduce tu link de LinkedIn",
-    "website":"Sitio web",
-    "stopCommunications":"Detener Comunicaciones",
+    "website": "Sitio web",
+    "stopCommunications": "Detener Comunicaciones",
     "disableCommunications": "Deshabilitar todas las comunicaciones",
     "role": "Rol"
   },
   "DeleteAccount": {
     "viewEvent": "Ver evento",
     "editEvent": "Editar evento",
-    "uploadImage":"Subir imagen",
+    "uploadImage": "Subir imagen",
     "allowedFormats": "Formatos permitidos: ",
     "location": "Ubicación",
     "settings": "Configuración",
@@ -588,7 +591,13 @@
     "registrationContinuePayment": "Continuar con el pago",
     "stripeAccountActive": "Cuenta de Stripe activa",
     "stripeAccountActiveDescription": "Tu cuenta de Stripe está completamente configurada y lista para aceptar pagos.",
-    "stripeViewDashboard": "Ver panel de Stripe"
+    "stripeViewDashboard": "Ver panel de Stripe",
+    "paymentConfirmedTitle": "¡Pago Confirmado!",
+    "paymentConfirmedDescription": "Tu registro ha sido confirmado. Puedes ver tus entradas a continuación.",
+    "viewTickets": "Ver Mis Entradas",
+    "completeYourProfile": "Completa Tu Perfil",
+    "profileCompletionBenefits": "Completa tu perfil para mejorar tu experiencia de networking y recibir recomendaciones personalizadas para futuros eventos.",
+    "completeProfile": "Completar Perfil"
   },
   "Ticket": {
     "ticketStatusApproved": "Aprobado",
@@ -620,7 +629,11 @@
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
   },
-  "yiqiForm": {
+  "RegistrationChart": {
+    "title": "Registros de los Últimos 7 Días",
+    "noData": "No hay datos de registro disponibles"
+  },
+   "yiqiForm": {
   "formNotFound": "Formulario no encontrado",
   "brokenLinkOrDeleted": "El enlace que has seguido puede estar roto o el formulario ha sido eliminado.",
   "createNewForm": "Crear un nuevo formulario",

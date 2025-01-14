@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Progress } from '@/components/ui/progress'
-import { Import, CreditCard, Calendar, Bell } from 'lucide-react'
+import { Import, Calendar, Bell, Banknote } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
@@ -24,10 +24,10 @@ type Props = {
 
 export default function WelcomeScreen({
   importedContacts,
-  paymentsIsSetup,
   eventCreated,
   notificationsSent,
-  orgId
+  orgId,
+  paymentsIsSetup
 }: Props) {
   const t = useTranslations('WelcomeNewOrg')
 
@@ -44,7 +44,7 @@ export default function WelcomeScreen({
       id: 2,
       title: `${t('welcomeScreenTasksSetupPayments')}`,
       description: `${t('welcomeScreenTasksPaymentDescription')}`,
-      icon: CreditCard,
+      icon: Banknote,
       completed: paymentsIsSetup,
       link: `/admin/organizations/${orgId}/billing`
     },
@@ -114,9 +114,7 @@ export default function WelcomeScreen({
                         >
                           {task.title}
                         </h3>
-                        <p className={`text-gray-600 text-secondary`}>
-                          {task.description}
-                        </p>
+                        <p className={`text-secondary`}>{task.description}</p>
                       </div>
                       <Checkbox
                         checked={task.completed}

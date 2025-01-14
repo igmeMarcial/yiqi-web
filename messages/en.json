@@ -28,7 +28,8 @@
     "privacy": "Privacy",
     "security": "Security",
     "profile": "Profile",
-    "organization": "Organization"
+    "organization": "Organization",
+    "signOut": "Sign out"
   },
   "HeroSection": {
     "heroSubtitle": "The Future of Events",
@@ -121,7 +122,9 @@
     "defaultValueP": "This editor supports",
     "defaultValueStrong": "bold",
     "defaultValueItalic": "italic",
-    "defaultValueP2": "and many other formatting options. You can also embed images and YouTube videos!"
+    "defaultValueP2": "and many other formatting options. You can also embed images and YouTube videos!",
+    "requiresApproval": "Requires Approval",
+    "requiresApprovalDescription": "When enabled, attendees will need manual approval"
   },
   "contactFor": {
     "contact": "Contact",
@@ -132,7 +135,8 @@
     "createNewEvents": "New Event",
     "events": "Events",
     "page": "Page",
-    "of": "of"
+    "of": "of",
+    "action": "Action"
   },
   "ContactTemplateDownload": {
     "exampleCsvContent": "email,phone,name,age,city\njohn.doe@example.com,123456789,John Doe,25,New York\njane.smith@example.com,987654321,Jane Smith,30,Los Angeles\nrobert.brown@example.com,567890123,Robert Brown,35,Chicago\nemily.davis@example.com,345678901,Emily Davis,28,Miami\nmichael.wilson@example.com,123098456,Michael Wilson,40,Seattle\nsarah.johnson@example.com,789012345,Sarah Johnson,32,Houston\ndavid.martinez@example.com,456789012,David Martinez,29,Dallas\nlinda.hernandez@example.com,890123456,Linda Hernandez,34,San Diego\njames.lopez@example.com,234567890,James Lopez,26,Phoenix\npatricia.gonzalez@example.com,678901234,Patricia Gonzalez,38,San Francisco",
@@ -310,7 +314,7 @@
     "creatingEvent": "Creando Evento...",
     "updatingEvent": "Actualizando Evento...",
     "createEvent": "Create Event",
-    "updateEvent": "Uodate Evento",
+    "updateEvent": "Actualizar Evento",
     "importing": "Importing...",
     "importContacts": "Import Contacts",
     "noOrganizationFound": "No organization found",
@@ -591,7 +595,13 @@
     "registrationContinuePayment": "Continuar con el Pago",
     "stripeAccountActive": "Stripe Account Active",
     "stripeAccountActiveDescription": "Your Stripe account is fully set up and ready to accept payments.",
-    "stripeViewDashboard": "View Stripe Dashboard"
+    "stripeViewDashboard": "View Stripe Dashboard",
+    "paymentConfirmedTitle": "Payment Confirmed!",
+    "paymentConfirmedDescription": "Your registration has been confirmed. You can view your tickets below.",
+    "viewTickets": "View My Tickets",
+    "completeYourProfile": "Complete Your Profile",
+    "profileCompletionBenefits": "Complete your profile to enhance your networking experience and get personalized recommendations for future events.",
+    "completeProfile": "Complete Profile"
   },
 
   "Ticket": {
@@ -624,6 +634,10 @@
     "eventCheckInTableCheckIn": "Checked In",
     "eventCheckinBackButton": "Go to Tickets"
   },
+  "RegistrationChart": {
+    "title": "Registrations Last 7 Days",
+    "noData": "No registration data available"
+  },
   "yiqiForm": {
     "formNotFound": "Form not found",
     "brokenLinkOrDeleted": "The link you followed may be broken or the form has been deleted.",
@@ -638,6 +652,6 @@
     "fieldRequired": "This field is required",
     "writeYourAnswer": "Write your answer...",
     "other": "Other",
-    "writeHere": "Write here..."
-  }
+    "writeHere": "Write here..."}
+
 }
