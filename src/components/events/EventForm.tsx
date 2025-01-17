@@ -576,7 +576,9 @@ export function EventForm({ organizationId, event }: Props) {
                     </div>
                     <div className="text-center">
                       <span className="text-sm text-gray-500">
-                        {ticket.price > 0 ? `$${ticket.price}` : `${t('free')}`}
+                        {ticket.price > 0
+                          ? `S/${ticket.price}`
+                          : `${t('free')}`}
                       </span>
                     </div>
                     <div className="text-right">
