@@ -124,7 +124,13 @@
     "defaultValueItalic": "italic",
     "defaultValueP2": "and many other formatting options. You can also embed images and YouTube videos!",
     "requiresApproval": "Requires Approval",
-    "requiresApprovalDescription": "When enabled, attendees will need manual approval"
+    "requiresApprovalDescription": "When enabled, attendees will need manual approval",
+    "eventCreated": "Event Created Successfully",
+    "eventUpdated": "Event Updated Successfully",
+    "eventCreatedDescription": "Your event has been created and is now ready to be shared.",
+    "eventUpdatedDescription": "Your event has been updated with the new changes.",
+    "goToEvents": "Go to Events",
+    "viewEvent": "View Event"
   },
   "contactFor": {
     "contact": "Contact",
@@ -314,7 +320,7 @@
     "creatingEvent": "Creando Evento...",
     "updatingEvent": "Actualizando Evento...",
     "createEvent": "Create Event",
-    "updateEvent": "Uodate Evento",
+    "updateEvent": "Actualizar Evento",
     "importing": "Importing...",
     "importContacts": "Import Contacts",
     "noOrganizationFound": "No organization found",
@@ -601,7 +607,8 @@
     "viewTickets": "View My Tickets",
     "completeYourProfile": "Complete Your Profile",
     "profileCompletionBenefits": "Complete your profile to enhance your networking experience and get personalized recommendations for future events.",
-    "completeProfile": "Complete Profile"
+    "completeProfile": "Complete Profile",
+    "eventSoldOut": "Sold Out"
   },
 
   "Ticket": {
@@ -633,5 +640,9 @@
     "eventCheckInTableTicketId": "Ticket ID",
     "eventCheckInTableCheckIn": "Checked In",
     "eventCheckinBackButton": "Go to Tickets"
+  },
+  "RegistrationChart": {
+    "title": "Registrations Last 7 Days",
+    "noData": "No registration data available"
   }
 }

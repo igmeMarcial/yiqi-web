@@ -124,7 +124,13 @@
     "defaultValueItalic": "cursiva",
     "defaultValueP2": "y muchas otras opciones de formato. ¡También puedes insertar imágenes y videos de YouTube!",
     "requiresApproval": "Requiere Aprobación",
-    "requiresApprovalDescription": "Cuando está activado, los asistentes necesitarán aprobación"
+    "requiresApprovalDescription": "Cuando está activado, los asistentes necesitarán aprobación",
+    "eventCreated": "Evento Creado Exitosamente",
+    "eventUpdated": "Evento Actualizado Exitosamente",
+    "eventCreatedDescription": "Tu evento ha sido creado y está listo para ser compartido.",
+    "eventUpdatedDescription": "Tu evento ha sido actualizado con los nuevos cambios.",
+    "goToEvents": "Ir a Eventos",
+    "viewEvent": "Ver Evento"
   },
   "contactFor": {
     "contact": "Contacto",
@@ -597,7 +603,8 @@
     "viewTickets": "Ver Mis Entradas",
     "completeYourProfile": "Completa Tu Perfil",
     "profileCompletionBenefits": "Completa tu perfil para mejorar tu experiencia de networking y recibir recomendaciones personalizadas para futuros eventos.",
-    "completeProfile": "Completar Perfil"
+    "completeProfile": "Completar Perfil",
+    "eventSoldOut": "Agotado"
   },
   "Ticket": {
     "ticketStatusApproved": "Aprobado",
@@ -628,5 +635,9 @@
     "eventCheckInTableTicketId": "ID de entrada",
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
+  },
+  "RegistrationChart": {
+    "title": "Registros de los Últimos 7 Días",
+    "noData": "No hay datos de registro disponibles"
   }
 }

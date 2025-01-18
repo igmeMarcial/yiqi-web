@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,10 +35,7 @@ import { PaymentConfirmed } from './payment-confirmed'
 
 export type RegistrationProps = {
   event: PublicEventType
-  user: {
-    email: string | undefined
-    name: string | undefined
-  }
+  user: { name?: string; picture?: string; email?: string; role?: string }
   dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
 }
 
@@ -55,6 +52,7 @@ export function Registration({
   const [existingRegistration, setExistingRegistration] =
     useState<EventRegistrationSchemaType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [currentRegistrationId, setCurrentRegistrationId] = useState<
     string | undefined
   >()
@@ -69,19 +67,17 @@ export function Registration({
     }
   })
 
+  const checkRegistration = useCallback(async () => {
+    setIsLoading(true)
+    const registration = await checkExistingRegistration(event.id)
+    setExistingRegistration(registration)
+
+    setIsLoading(false)
+  }, [event.id])
+
   useEffect(() => {
-    async function checkRegistration() {
-      if (user?.email) {
-        const registration = await checkExistingRegistration(
-          event.id,
-          user.email
-        )
-        setExistingRegistration(registration)
-      }
-      setIsLoading(false)
-    }
     checkRegistration()
-  }, [event.id, user?.email])
+  }, [checkRegistration])
 
   const handleQuantityChange = (ticketId: string, change: number) => {
     setTicketSelections(prev => {
@@ -113,6 +109,7 @@ export function Registration({
     }
 
     try {
+      setIsSubmitting(true)
       const result = await createRegistration(event.id, {
         ...values,
         tickets: ticketSelections
@@ -123,8 +120,9 @@ export function Registration({
           setPaymentCompleted(true)
           setIsDialogOpen(false)
         } else {
-          // Store registration ID for payment
+          // For paid events, keep dialog open and show payment
           setCurrentRegistrationId(result.registration.id)
+          // Don't close dialog here - let payment completion handle that
         }
       } else {
         toast({
@@ -138,13 +136,28 @@ export function Registration({
         title: `${t('eventRegistrationError')}`,
         variant: 'destructive'
       })
+    } finally {
+      await checkRegistration()
+      setIsSubmitting(false)
     }
   }
 
   const handlePaymentComplete = async () => {
-    const result = await markRegistrationPaid(currentRegistrationId!)
-    if (result.success) {
-      setPaymentCompleted(true)
+    try {
+      setIsSubmitting(true)
+      const result = await markRegistrationPaid(currentRegistrationId!)
+      if (result.success) {
+        setPaymentCompleted(true)
+        setIsDialogOpen(false) // Close dialog only after successful payment
+      }
+    } catch (error) {
+      console.error('Error processing payment:', error)
+      toast({
+        title: 'Error processing payment',
+        variant: 'destructive'
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -153,7 +166,7 @@ export function Registration({
   }
 
   if (paymentCompleted && currentRegistrationId) {
-    return <PaymentConfirmed eventId={event.id} userEmail={user.email!} />
+    return <PaymentConfirmed eventId={event.id} />
   }
 
   if (existingRegistration) {
@@ -197,7 +210,15 @@ export function Registration({
           calculateTotal={calculateTotal}
         />
 
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog
+          open={isDialogOpen}
+          onOpenChange={isOpen => {
+            setIsDialogOpen(isOpen)
+            if (!isOpen) {
+              checkRegistration()
+            }
+          }}
+        >
           <DialogTrigger asChild>
             <Button
               ref={dialogTriggerRef}
@@ -239,6 +260,7 @@ export function Registration({
                 isFreeEvent={isFreeEvent}
                 registrationId={currentRegistrationId}
                 onPaymentComplete={handlePaymentComplete}
+                isSubmitting={isSubmitting}
               />
             </motion.div>
           </DialogContent>

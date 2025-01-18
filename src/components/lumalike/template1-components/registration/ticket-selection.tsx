@@ -1,8 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { SavedTicketOfferingType } from '@/schemas/eventSchema'
-import { Minus, Plus } from 'lucide-react'
+import { checkTicketsAvailability } from '@/services/actions/event/checkTicketsAvailability'
+import { Loader2, Minus, Plus } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { useEffect } from 'react'
+import { Badge } from '@/components/ui/badge'
 
 interface TicketSelectionProps {
   tickets: SavedTicketOfferingType[]
@@ -20,6 +24,31 @@ export function TicketSelection({
   calculateTotal
 }: TicketSelectionProps) {
   const t = useTranslations('RegistrationComponent')
+
+  // ticket id string -> boolean is available for purchase
+  const [ticketAvailability, setTicketAvailability] = useState<
+    Record<string, number>
+  >({})
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      const availability = await checkTicketsAvailability(
+        tickets.map(v => v.id)
+      )
+      setTicketAvailability(availability)
+    }
+
+    fetchAvailability()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (Object.keys(ticketAvailability).length === 0)
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      </div>
+    )
+
   return (
     <div className="space-y-4">
       {tickets.map(ticket => (
@@ -36,27 +65,37 @@ export function TicketSelection({
             </div>
           </div>
           <div className="flex items-center justify-end space-x-2">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => onQuantityChange(ticket.id, -1)}
-              disabled={!ticketSelections[ticket.id]}
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
-            <span className="w-8 text-center text-white">
-              {ticketSelections[ticket.id] || 0}
-            </span>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => onQuantityChange(ticket.id, 1)}
-              disabled={ticketSelections[ticket.id] >= 5}
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
+            {ticketAvailability[ticket.id] >= 1 ? (
+              <>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => onQuantityChange(ticket.id, -1)}
+                  disabled={!ticketSelections[ticket.id]}
+                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="w-8 text-center text-white">
+                  {ticketSelections[ticket.id] || 0}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => onQuantityChange(ticket.id, 1)}
+                  disabled={
+                    ticketSelections[ticket.id] >= ticketAvailability[ticket.id]
+                  }
+                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </>
+            ) : (
+              <Badge variant="destructive" className="text-xs">
+                {t('eventSoldOut')}
+              </Badge>
+            )}
           </div>
         </div>
       ))}
