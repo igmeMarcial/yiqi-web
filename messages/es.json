@@ -603,7 +603,8 @@
     "viewTickets": "Ver Mis Entradas",
     "completeYourProfile": "Completa Tu Perfil",
     "profileCompletionBenefits": "Completa tu perfil para mejorar tu experiencia de networking y recibir recomendaciones personalizadas para futuros eventos.",
-    "completeProfile": "Completar Perfil"
+    "completeProfile": "Completar Perfil",
+    "eventSoldOut": "Agotado"
   },
   "Ticket": {
     "ticketStatusApproved": "Aprobado",

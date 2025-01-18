@@ -607,7 +607,8 @@
     "viewTickets": "View My Tickets",
     "completeYourProfile": "Complete Your Profile",
     "profileCompletionBenefits": "Complete your profile to enhance your networking experience and get personalized recommendations for future events.",
-    "completeProfile": "Complete Profile"
+    "completeProfile": "Complete Profile",
+    "eventSoldOut": "Sold Out"
   },
 
   "Ticket": {
