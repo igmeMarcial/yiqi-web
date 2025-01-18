@@ -137,8 +137,7 @@ export function Registration({
         variant: 'destructive'
       })
     } finally {
-      checkRegistration()
-
+      await checkRegistration()
       setIsSubmitting(false)
     }
   }
