@@ -10,26 +10,31 @@ export const OrganizationSchema = z.object({
     .string()
     .url({ message: 'Invalid URL' })
     .optional()
+    .nullable()
     .or(z.literal('')),
   instagram: z
     .string()
     .url({ message: 'Invalid URL' })
     .optional()
+    .nullable()
     .or(z.literal('')),
   tiktok: z
     .string()
     .url({ message: 'Invalid URL' })
     .optional()
+    .nullable()
     .or(z.literal('')),
   linkedin: z
     .string()
     .url({ message: 'Invalid URL' })
     .optional()
+    .nullable()
     .or(z.literal('')),
   website: z
     .string()
     .url({ message: 'Invalid URL' })
     .optional()
+    .nullable()
     .or(z.literal(''))
 })
 
