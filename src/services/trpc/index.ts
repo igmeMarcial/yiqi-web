@@ -1,7 +1,10 @@
 import { z } from 'zod'
 import { searchUsers, updateUserProfile } from '../actions/userActions'
 import { publicProcedure, router } from './util'
-import { getUserRegistrationStatus } from '../actions/eventActions'
+import {
+  getEventRegistrations,
+  getUserRegistrationStatus
+} from '../actions/eventActions'
 import { getOrganization } from '../actions/organizationActions'
 import {
   createRegisterSchema,
@@ -13,7 +16,6 @@ import {
 import {
   SearchUserResultSchema,
   UserRegistrationStatusSchema,
-  OrganizationSchema,
   AuthSchemaSchema
 } from '@/schemas/apiSchemas'
 import { getEvent } from '../actions/event/getEvent'
@@ -35,6 +37,10 @@ import {
 import { fetchAndFormatUserProfile } from '@/lib/user/fetchAndFormatUserProfile'
 import { deleteUser } from '@/lib/user/deleteUser'
 import { updateNetworkingProfile } from '@/lib/user/updateNetworkingProfile'
+import { getOrganizationsByUser } from '@/lib/organizations/getOrganizationsByUser'
+import { getEventsByOrganization } from '@/lib/organizations/getEventsByOrganization'
+import { checkInEventTicket } from '@/lib/organizations/checkInEventTicket'
+import { SavedOrganizationSchema } from '@/schemas/organizationSchema'
 
 export const appRouter = router({
   loginLinkedin: publicProcedure
@@ -107,7 +113,7 @@ export const appRouter = router({
     .query(async ({ input }) => {
       const organization = await getOrganization(input)
       if (!organization) throw new Error('Organization not found')
-      return OrganizationSchema.parse(organization)
+      return SavedOrganizationSchema.parse(organization)
     }),
   checkExistingRegistration: publicProcedure
     .input(
@@ -204,6 +210,57 @@ export const appRouter = router({
         throw new Error('User not signed in')
       }
       return await updateNetworkingProfile(ctx.user.id, input)
+    }),
+  getOrganizationsByCurrentUser: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user) {
+      throw new Error('User not signed in')
+    }
+
+    return await getOrganizationsByUser(ctx.user?.id, true)
+  }),
+  getEventsByOrganization: publicProcedure
+    .input(
+      z.object({
+        organizationId: z.string()
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+
+      return await getEventsByOrganization(input.organizationId, ctx.user?.id)
+    }),
+  getEventRegistrations: publicProcedure
+    .input(
+      z.object({
+        eventId: z.string()
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+
+      return await getEventRegistrations(input.eventId)
+    }),
+  checkInTicket: publicProcedure
+    .input(
+      z.object({
+        eventId: z.string(),
+        ticketId: z.string()
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user) {
+        throw new Error('User not signed in')
+      }
+
+      return await checkInEventTicket(
+        input.eventId,
+        input.ticketId,
+        ctx.user.id
+      )
     })
 })
 

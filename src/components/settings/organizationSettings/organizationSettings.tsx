@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { updateOrganization } from '@/services/actions/organizationActions'
-import { OrganizationSchema } from '@/services/organizationService'
 import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -22,6 +21,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { PublicCommunityType } from '@/schemas/communitySchema'
 import { useTranslations } from 'next-intl'
+import { OrganizationSchema } from '@/schemas/organizationSchema'
 
 function ColorPicker({
   value,
@@ -116,8 +116,8 @@ export default function OrganizationSettings({
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+    <div className="flex justify-center items-center min-h-screen  p-4 dark:bg-[rgb(28, 28, 28)]">
+      <div className="w-full max-w-4xl shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-semibold mb-4 text-center">
           {t('settingOrganizationTitle')}
         </h1>
