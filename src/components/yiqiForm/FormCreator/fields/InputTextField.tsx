@@ -6,7 +6,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
-import { FormProps, InputTypes } from '../../../schemas/yiqiFormSchema'
+import { FormProps, InputTypes } from '@/schemas/yiqiFormSchema'
 import { useTranslations } from 'next-intl'
 
 interface InputFieldProps {
@@ -17,9 +17,12 @@ interface InputFieldProps {
 const InputTextField = ({ id, fields }: InputFieldProps) => {
   const { control } = useFormContext()
   const t = useTranslations('yiqiForm')
-  const inputType = useMemo(() => {
+  const { inputType, question } = useMemo(() => {
     const currentField = fields.find(field => field.id === id) as FormProps
-    return currentField.inputType
+    return {
+      inputType: currentField.inputType,
+      question: currentField.cardTitle
+    }
   }, [fields, id])
   return (
     <Controller
@@ -27,8 +30,14 @@ const InputTextField = ({ id, fields }: InputFieldProps) => {
       control={control}
       render={({ field: { onChange, value } }) => (
         <Input
-          onChange={onChange}
-          value={value}
+          onChange={e => {
+            onChange({
+              text: e.target.value,
+              question: question,
+              id: id
+            })
+          }}
+          value={value?.text || ''}
           placeholder={t('writeYourAnswer')}
           className={cn(
             'w-full border-0 border-b-2 rounded-none',

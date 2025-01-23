@@ -7,7 +7,7 @@ import {
 import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import InputTextField from '../fields/InputTextField'
+
 import { UserProps } from './Publish'
 import InputRadio from './InputRadio'
 import InputCheckbox from './InputCheckbox'
@@ -15,6 +15,7 @@ import InputSelect from './InputSelect'
 import { useFormContext } from 'react-hook-form'
 import { UserInfoCard } from './UserInfoCard'
 import { useTranslations } from 'next-intl'
+import InputTextField from '../FormCreator/fields/InputTextField'
 
 interface PublishCardProps {
   fields: FormProps[]

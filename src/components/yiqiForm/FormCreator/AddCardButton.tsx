@@ -11,8 +11,8 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
-import { FormProps } from '../../schemas/yiqiFormSchema'
-import { generateUniqueId } from './utils'
+import { FormProps } from '../../../schemas/yiqiFormSchema'
+import { generateUniqueIdYiqiForm } from '../utils'
 import { translations } from '@/lib/translations/translations'
 
 interface AddCardButtonProps {
@@ -31,7 +31,7 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
   )
 
   const handleAddCard = useCallback(() => {
-    addCard(focusedCardIndex, generateUniqueId())
+    addCard(focusedCardIndex, generateUniqueIdYiqiForm())
   }, [addCard, focusedCardIndex])
 
   return (

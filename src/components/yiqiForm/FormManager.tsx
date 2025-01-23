@@ -1,18 +1,20 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import FormBuild from './FormBuild'
+import FormBuild from './FormCreator/FormBuild'
 import {
+  FormModel,
   FormProps,
   InputTypes,
-  ItemTypeProps
+  ItemTypeProps,
+  submissionResponse
 } from '../../schemas/yiqiFormSchema'
-import AddCardButton from './AddCardButton'
+import AddCardButton from './FormCreator/AddCardButton'
 import YiqiFormLayout from './yiqiFormLayout'
-import { usePathname, useRouter } from 'next/navigation'
-import ResultForm from './ResultForm'
+import { usePathname } from 'next/navigation'
 import { Reorder, useDragControls } from 'framer-motion'
-import { generateUniqueId } from './utils'
+import { generateUniqueIdYiqiForm } from './utils'
 import { translations } from '@/lib/translations/translations'
+import ResultForm from './FormResults/Result'
 
 const initialCard = {
   id: 'TitleCard',
@@ -22,15 +24,27 @@ const initialCard = {
   isFocused: false,
   isRequired: false
 }
+interface MainFormProps {
+  orgId: string
+  formResponse: FormModel | null
+  submissions: submissionResponse | null
+  formId?: string
+}
 
-function MainForm({ orgId }: { orgId: string }) {
-  const [form, setForm] = useState<FormProps[]>([initialCard])
+function FormManager({
+  orgId,
+  formResponse,
+  submissions,
+  formId
+}: MainFormProps) {
+  const [form, setForm] = useState<FormProps[]>([])
   const [isMobile, setIsMobile] = useState(false)
-
   const dragControls = useDragControls()
   const pathname = usePathname()
-  const router = useRouter()
 
+  useEffect(() => {
+    setForm(formResponse?.fields ?? [initialCard])
+  }, [formResponse])
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -41,29 +55,20 @@ function MainForm({ orgId }: { orgId: string }) {
 
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
+  console.log(submissions)
   const [currentView, setCurrentView] = useState<'create' | 'results'>(
     pathname.includes('/results') ? 'results' : 'create'
   )
-
   const handleNavigation = (view: 'create' | 'results') => {
     setCurrentView(view)
-
-    if (view === 'create') {
-      router.push(`/admin/organizations/${orgId}/forms`)
-    } else {
-      router.push(`/admin/organizations/${orgId}/forms#responses`)
-    }
   }
-
-  // Helper Functions and field handler all
   const createNewCard = (cardId: string, cardTitle = ''): FormProps => ({
     id: cardId,
     cardTitle,
     inputType: InputTypes.RADIO,
     contents: [
       {
-        id: generateUniqueId(),
+        id: generateUniqueIdYiqiForm(),
         text: translations.es.option1
       }
     ],
@@ -183,7 +188,7 @@ function MainForm({ orgId }: { orgId: string }) {
           newInputType === InputTypes.SELECT
 
         if (!isCurrentItemType && isNewItemType) {
-          newContents = [{ id: generateUniqueId(), text: 'Opción 1' }]
+          newContents = [{ id: generateUniqueIdYiqiForm(), text: 'Opción 1' }]
         } else if (isCurrentItemType && !isNewItemType) {
           newContents = ''
         } else if (
@@ -296,7 +301,6 @@ function MainForm({ orgId }: { orgId: string }) {
       setForm(newOrder)
     }
   }
-  console.log(form)
   return (
     <YiqiFormLayout
       form={form}
@@ -355,10 +359,22 @@ function MainForm({ orgId }: { orgId: string }) {
           </div>
         </div>
       ) : (
-        <ResultForm />
+        <div className="min-h-screen bg-background p-4 md:p-8">
+          {submissions === null || submissions.length === 0 ? (
+            <div className="max-w-4xl mx-auto card bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md text-center">
+              <p className="text-gray-600 dark:text-gray-300">
+                {formId
+                  ? 'Esperando respuestas'
+                  : 'No hay respuestas. Publica tu formulario para comenzar a aceptar respuestas'}
+              </p>
+            </div>
+          ) : (
+            <ResultForm submissions={submissions} />
+          )}
+        </div>
       )}
     </YiqiFormLayout>
   )
 }
 
-export default MainForm
+export default FormManager

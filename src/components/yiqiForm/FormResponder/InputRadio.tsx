@@ -42,7 +42,8 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
                 onChange({
                   id: selectedOption.id,
                   text: selectedOption.isEtc ? '' : selectedOption.text,
-                  isEtc: selectedOption.isEtc || false
+                  isEtc: selectedOption.isEtc || false,
+                  question: currentField.cardTitle
                 })
 
                 if (selectedOption.isEtc) {
@@ -94,14 +95,16 @@ const InputRadio = ({ id, fields }: InputRadioProps) => {
                           onChange({
                             id: content.id,
                             text: etcRef.current?.value ?? '',
-                            isEtc: true
+                            isEtc: true,
+                            question: currentField.cardTitle
                           })
                         }}
                         onChange={e => {
                           onChange({
                             id: content.id,
                             text: e.target.value,
-                            isEtc: true
+                            isEtc: true,
+                            question: currentField.cardTitle
                           })
                         }}
                         placeholder={t('writeHere')}

@@ -43,7 +43,8 @@ const InputSelect = ({ id, fields }: InputSelectProps) => {
               )
               onChange({
                 id: selectedOption?.id ?? '',
-                text: selectedOption?.text ?? ''
+                text: selectedOption?.text ?? '',
+                question: currentField.cardTitle
               })
             }}
             defaultValue=""

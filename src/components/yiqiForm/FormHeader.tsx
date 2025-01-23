@@ -11,9 +11,9 @@ import { createTypeForm } from '@/services/actions/typeForm/typeFormActions'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { translations } from '@/lib/translations/translations'
-import { generateUniqueId } from './utils'
+import { generateUniqueIdYiqiForm } from './utils'
 import { Form, FormProps } from '../../schemas/yiqiFormSchema'
-import { PublishSuccessModal } from './PublishSuccessModal'
+import { PublishSuccessModal } from './FormCreator/PublishSuccessModal'
 import { useRouter } from 'next/navigation'
 
 export function FormHeader({
@@ -32,12 +32,12 @@ export function FormHeader({
       title: 'Preguntas',
       view: 'create' as const,
       disabled: false
+    },
+    {
+      title: 'Respuestas',
+      view: 'results' as const,
+      disabled: false
     }
-    // {
-    //   title: 'Respuestas',
-    //   view: 'results' as const,
-    //   disabled: false
-    // }
   ]
 
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
@@ -61,7 +61,7 @@ export function FormHeader({
       : (form[0]?.contents ?? '')
     try {
       const formToSubmit: Form = {
-        id: generateUniqueId(),
+        id: generateUniqueIdYiqiForm(),
         name: form[0]?.cardTitle,
         description: description,
         fields: form,
@@ -163,11 +163,11 @@ export function FormHeader({
 
           <div className="flex justify-center w-full px-4 py-2">
             <NavigationMenu className="w-full">
-              <NavigationMenuList className="flex flex-col sm:flex-row justify-center gap-6">
+              <NavigationMenuList className="flex flex-row sm:flex-row justify-center gap-6">
                 {navigationItems.map(({ title, view }) => (
                   <NavigationMenuItem
                     key={view}
-                    className="text-center group relative"
+                    className="text-center group relative "
                     onClick={() => onNavigate(view)}
                   >
                     <NavigationMenuLink

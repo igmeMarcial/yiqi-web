@@ -60,7 +60,8 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
       const formData = form.fields.map(field => {
         return {
           id: field.id,
-          value: formValues[field.id]
+          value: formValues[field.id],
+          inputType: field.inputType
         }
       })
       const submissionData = {

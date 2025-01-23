@@ -8,6 +8,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { FormProps } from '@/schemas/yiqiFormSchema'
 
+interface CheckboxItem {
+  id: string
+  text: string
+  checked: boolean
+  question: string
+}
 interface InputCheckboxProps {
   id: string
   fields: FormProps[]
@@ -41,18 +47,32 @@ const InputCheckbox = ({ id, fields }: InputCheckboxProps) => {
       {contents.map(content => (
         <Controller
           key={content.id}
-          name={`${id}.${content.id}`}
+          name={id}
           control={control}
-          render={({ field: { onChange } }) => (
+          defaultValue={[]}
+          render={({ field: { value = [], onChange } }) => (
             <div className="flex items-center space-x-4 rounded-lg p-4 py-2 ">
               <Checkbox
                 id={content.id}
                 onCheckedChange={checked => {
-                  onChange({
-                    id: content.id,
-                    text: content.text,
-                    checked
-                  })
+                  if (checked) {
+                    onChange([
+                      ...value,
+                      {
+                        id: content.id,
+                        text: content.text,
+                        checked: true,
+                        question: currentField.cardTitle
+                      }
+                    ])
+                  } else {
+                    // Remover del array si está unchecked
+                    onChange(
+                      value.filter(
+                        (item: CheckboxItem) => item.id !== content.id
+                      )
+                    )
+                  }
                 }}
                 className="h-5 w-5 border-2 border-gray-300 rounded-md 
                     hover:border-primary hover:ring-2 hover:ring-primary/20
