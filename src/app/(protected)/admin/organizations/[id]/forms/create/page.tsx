@@ -15,9 +15,7 @@ async function page({ params }: { params: { id: string } }) {
     return <div>Organization not found</div>
   }
   return (
-    <div className="h-screen dark:bg-[rgb(28, 28, 28)]">
-      <FormManager orgId={params.id} formResponse={null} submissions={null} />
-    </div>
+    <FormManager orgId={params.id} formResponse={null} submissions={null} />
   )
 }
 
