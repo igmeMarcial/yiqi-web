@@ -490,18 +490,19 @@
     "support": "soporte técnico"
   },
   "contactText": {
-    "contactDetails": "Detalles de Contacto:",
-    "Messages": "Mensajes",
+    "contactDetails": "Detalles del Contacto",
+    "messages": "Mensajes",
     "attendEvents": "Eventos Asistidos",
     "userDetails": "Detalles del Usuario",
-    "attendedEvents": "Eventos Asistidos:",
-    "Name": "Nombre:",
-    "Email": "Correo Electrónico:",
-    "number": "Número de Teléfono:",
-    "additionalData": "Datos Adicionales:",
-    "AttendedEvents": "Eventos Asistidos:",
-    "Status": "Estado:",
-    "back": "Volver a Contactos"
+    "attendedEvents": "Eventos Asistidos",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phoneNumber": "Número de Teléfono",
+    "additionalData": "Datos Adicionales",
+    "status": "Estado",
+    "backToContacts": "Volver a Contactos",
+    "noEvents": "Aún no ha asistido a ningún evento",
+    "na": "No disponible"
   },
   "user": {
     "useCase": "¿Cuál es tu caso de uso?",
