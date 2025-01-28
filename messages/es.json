@@ -152,14 +152,19 @@
     "downloadCsvTemplate": "Descargar plantilla de importación CSV"
   },
   "BulkSend": {
-    "bulkSendButton": "Envío masivo",
-    "bulkSendTitle": "Envío masivo",
+    "bulkSendButton": "Envío Masivo",
+    "bulkSendTitle": "Envío Masivo",
     "bulkSendLog": "Envío masivo iniciado con mensaje:",
     "typeYourMessage": "Escribe tu mensaje aquí.",
     "whatsapp": "WhatsApp",
-    "email": "Correo electrónico",
+    "email": "Correo",
     "send": "Enviar",
-    "messageValidation": "El mensaje debe tener al menos 1 caracter."
+    "messageValidation": "El mensaje debe tener al menos 1 carácter.",
+    "success": "Éxito",
+    "messagesSentSuccessfully": "Los mensajes han sido puestos en cola para envío",
+    "error": "Error",
+    "errorSendingMessages": "Hubo un error al enviar los mensajes",
+    "sending": "Enviando..."
   },
   "EventsList": {
     "createNewEvents": "Nuevo Evento",
