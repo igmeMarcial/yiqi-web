@@ -78,6 +78,11 @@ export async function sendEmail({
       attachments
     })
 
+    if (response.error) {
+      console.error('Error sending email:', response.error)
+      throw response.error
+    }
+
     console.log('Email sent successfully:', response)
   } catch (error) {
     console.error('Error sending email:', error)
