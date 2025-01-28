@@ -45,7 +45,6 @@ export async function sendBulkNotifications({
       return {
         userId: person.user.id,
         organizationId: orgId,
-        scheduledFor: new Date(),
         type: JobType.SEND_USER_MESSAGE,
         data: data
       }
@@ -61,7 +60,6 @@ export async function sendBulkNotifications({
       return {
         userId: person.user.id,
         organizationId: orgId,
-        scheduledFor: new Date(),
         type: JobType.SEND_USER_MESSAGE,
         data: data
       }
