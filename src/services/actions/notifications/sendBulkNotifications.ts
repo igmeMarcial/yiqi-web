@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+
 import { SendBaseMessageToUserProps } from '@/services/notifications/sendBaseMessageToUser'
 import { JobType, MessageThreadType } from '@prisma/client'
 
@@ -30,7 +31,8 @@ export async function sendBulkNotifications({
     },
     include: {
       user: true
-    }
+    },
+    distinct: ['userId']
   })
 
   const dataToTake = [
@@ -70,6 +72,7 @@ export async function sendBulkNotifications({
     data: dataToTake
   })
 
+  console.debug('sendBulkNotifications')
   console.debug(notifications)
   return { sucess: true }
 }
