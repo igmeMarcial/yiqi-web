@@ -72,7 +72,7 @@ export async function sendBulkNotifications({
     data: dataToTake
   })
 
-  console.debug('sendBulkNotifications')
-  console.debug(notifications)
+  console.warn('sendBulkNotifications')
+  console.warn(notifications)
   return { sucess: true }
 }
