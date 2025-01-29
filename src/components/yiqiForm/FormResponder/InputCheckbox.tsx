@@ -66,7 +66,6 @@ const InputCheckbox = ({ id, fields }: InputCheckboxProps) => {
                       }
                     ])
                   } else {
-                    // Remover del array si está unchecked
                     onChange(
                       value.filter(
                         (item: CheckboxItem) => item.id !== content.id

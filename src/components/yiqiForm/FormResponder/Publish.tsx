@@ -1,5 +1,9 @@
 'use client'
-import { FieldReponseSchemas, Form, FormProps } from '@/schemas/yiqiFormSchema'
+import {
+  FieldReponseSchemas,
+  FormModelResponse,
+  FormProps
+} from '@/schemas/yiqiFormSchema'
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -19,7 +23,7 @@ export interface UserProps {
   role: 'USER' | 'ADMIN' | 'ANDINO_ADMIN' | 'NEW_USER'
 }
 type PublishProps = {
-  form: Form
+  form: FormModelResponse
   user: UserProps | null
 }
 
@@ -272,6 +276,7 @@ const Publish: React.FC<PublishProps> = ({ form, user }) => {
                 onClick={() => {
                   methods.reset()
                   setFirstEmptyFieldId(null)
+                  window.location.reload()
                 }}
               >
                 {t('clear')}

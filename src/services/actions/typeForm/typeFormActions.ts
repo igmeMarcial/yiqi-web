@@ -2,22 +2,22 @@
 
 import { generateUniqueIdYiqiForm } from '@/components/yiqiForm/utils'
 import {
-  Form,
+  BaseFormSchema,
+  FormModel,
   FormModelSchema,
   FormProps,
-  FormSchema,
   SubmissionSchemaResponse
 } from '@/schemas/yiqiFormSchema'
 import { getUser } from '@/lib/auth/lucia'
 import prisma from '@/lib/prisma'
 
-export async function createTypeForm(orgId: string, formData: Form) {
+export async function createTypeForm(orgId: string, formData: FormModel) {
   try {
     const currentUser = await getUser()
     if (!currentUser) {
       throw new Error('Unauthorized: User not authenticated')
     }
-    const validatedForm = FormSchema.parse({
+    const validatedForm = BaseFormSchema.parse({
       ...formData,
       id: formData.id || generateUniqueIdYiqiForm(),
       organizationId: orgId
@@ -29,10 +29,7 @@ export async function createTypeForm(orgId: string, formData: Form) {
         eventId: validatedForm.eventId ?? null,
         name: validatedForm.name,
         description: validatedForm.description ?? null,
-        fields: validatedForm.fields, // Prisma uses Json type
-        createdAt: validatedForm.createdAt,
-        updatedAt: validatedForm.updatedAt,
-        deletedAt: validatedForm.deletedAt || null
+        fields: validatedForm.fields,
       }
     })
     return {
@@ -40,6 +37,50 @@ export async function createTypeForm(orgId: string, formData: Form) {
       form: {
         id: createdForm.id,
         name: createdForm.name
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: {
+        type: 'UnexpectedError',
+        message:
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred'
+      }
+    }
+  }
+}
+
+export async function updateTypeForm( formData: FormModel) {
+  try {
+    const currentUser = await getUser()
+    if (!currentUser) {
+      throw new Error('Unauthorized: User not authenticated')
+    }
+    const validatedForm = BaseFormSchema.parse({
+      ...formData,
+      id: formData.id
+    })
+    const UpdateForm = await prisma.form.update({
+      where: { id: formData.id },
+      data: {
+        eventId: validatedForm.eventId ?? null,
+        name: validatedForm.name,
+        description: validatedForm.description ?? null,
+        fields: validatedForm.fields
+      },
+      select: {
+        id: true,
+        name: true,
+      }
+    })
+    return {
+      success: true,
+      form: {
+        id: UpdateForm.id,
+        name: UpdateForm.name
       }
     }
   } catch (error) {
@@ -174,7 +215,6 @@ export async function getResultFormById(idForm: string) {
       createdAt: submission.createdAt.toISOString()
     }))
     const submissions = SubmissionSchemaResponse.parse(formattedSubmissions)
-    console.log(submissions)
     return {
       success: true,
       submissions

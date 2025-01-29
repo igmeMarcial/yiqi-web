@@ -89,7 +89,6 @@ export default async function FormsPage({
               {formsResponse.forms?.map(form => (
                 <div key={form.id} className="w-[150px] relative">
                   <FormCardMenu formId={form.id} />
-
                   <Link
                     href={`/admin/organizations/${organization.id}/forms/${form.id}`}
                   >

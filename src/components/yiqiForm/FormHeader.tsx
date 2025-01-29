@@ -7,26 +7,22 @@ import {
   NavigationMenuList,
   NavigationMenuLink
 } from '@/components/ui/navigation-menu'
-import { createTypeForm } from '@/services/actions/typeForm/typeFormActions'
+import {
+  createTypeForm,
+  updateTypeForm
+} from '@/services/actions/typeForm/typeFormActions'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { translations } from '@/lib/translations/translations'
 import { generateUniqueIdYiqiForm } from './utils'
-import { Form, FormProps } from '../../schemas/yiqiFormSchema'
+import { FormModel, FormProps } from '../../schemas/yiqiFormSchema'
 import { PublishSuccessModal } from './FormCreator/PublishSuccessModal'
 import AddCardButton from './FormCreator/AddCardButton'
 import FormBackButton from './FormBackButton'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useRouter } from 'next/navigation'
 
-export function FormHeader({
-  form,
-  orgId,
-  onNavigate,
-  currentView,
-  fields,
-  addCard,
-  isEditing
-}: {
+interface FormHeaderProps {
   form: FormProps[]
   orgId: string
   onNavigate: (view: 'create' | 'results') => void
@@ -38,7 +34,19 @@ export function FormHeader({
     cardTitle?: string
   ) => void
   isEditing: boolean
-}) {
+  formId?: string
+}
+
+export function FormHeader({
+  form,
+  orgId,
+  onNavigate,
+  currentView,
+  fields,
+  addCard,
+  isEditing,
+  formId
+}: FormHeaderProps) {
   const navigationItems = [
     {
       title: 'Preguntas',
@@ -56,6 +64,7 @@ export function FormHeader({
   const [publishedFormUrl, setPublishedFormUrl] = useState('')
   const { toast } = useToast()
   const isMobile = useIsMobile()
+  const router = useRouter()
   const handlePublish = async () => {
     if (form.length < 2) {
       toast({
@@ -69,26 +78,42 @@ export function FormHeader({
       ? form[0]?.contents.map(item => item.text).join(', ')
       : (form[0]?.contents ?? '')
     try {
-      const formToSubmit: Form = {
-        id: generateUniqueIdYiqiForm(),
-        name: form[0]?.cardTitle,
-        description: description,
-        fields: form,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
-      const response = await createTypeForm(orgId, formToSubmit)
-      if (response.success) {
-        setPublishedFormUrl(
-          `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`
-        )
-        setIsPublishModalOpen(true)
+      if (isEditing) {
+        if (!formId) return
+        const formToSubmit: FormModel = {
+          id: formId,
+          name: form[0]?.cardTitle,
+          description: description,
+          fields: form
+        }
+        const response = await updateTypeForm(formToSubmit)
+        if (response.success) {
+          toast({
+            description: `Formulario aactulizado`,
+            variant: 'default'
+          })
+        }
       } else {
-        toast({
-          title: `${translations.es.publishErrorTitle}`,
-          description: `${translations.es.publishErrorDescription}`,
-          variant: 'destructive'
-        })
+        const formToSubmit: FormModel = {
+          id: generateUniqueIdYiqiForm(),
+          name: form[0]?.cardTitle,
+          description: description,
+          fields: form
+        }
+        const response = await createTypeForm(orgId, formToSubmit)
+        if (response.success) {
+          setPublishedFormUrl(
+            `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`
+          )
+          setIsPublishModalOpen(true)
+          router.replace(`/admin/organizations/${orgId}/forms`)
+        } else {
+          toast({
+            title: `${translations.es.publishErrorTitle}`,
+            description: `${translations.es.publishErrorDescription}`,
+            variant: 'destructive'
+          })
+        }
       }
     } catch (error) {
       toast({
@@ -99,7 +124,6 @@ export function FormHeader({
       console.info(error)
     }
   }
-  console.log(isEditing)
   return (
     <>
       <header
@@ -142,7 +166,7 @@ export function FormHeader({
               >
                 <SendHorizonal className="h-4 w-4" />
 
-                {isEditing ? 'Publicado' : `${translations.es.publish}`}
+                {isEditing ? 'Actualizar' : `${translations.es.publish}`}
               </Button>
             </div>
           </div>

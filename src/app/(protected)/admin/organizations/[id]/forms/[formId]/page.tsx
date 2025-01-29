@@ -44,7 +44,6 @@ export default async function FormPage({
     )
   }
   const formResult = await getResultFormById(params.formId)
-  console.log(formResult)
   return (
     <div className="h-screen  dark:bg-[rgb(28, 28, 28)]">
       <FormManager

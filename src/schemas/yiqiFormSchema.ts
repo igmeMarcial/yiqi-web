@@ -13,7 +13,6 @@ const ItemTypePropsSchema = z.object({
   text: z.string().optional(),
   isEtc: z.boolean().optional()
 })
-
 export const FormFieldSchema = z.object({
   id: z.string(),
   cardTitle: z.string(),
@@ -26,43 +25,27 @@ export type InputTypesUnion = keyof typeof InputTypes
 export type FormProps = z.infer<typeof FormFieldSchema>
 export type ItemTypeProps = z.infer<typeof ItemTypePropsSchema>
 export const FormStatus = z.enum(['draft', 'published', 'archived'])
-// Schema for Thank You Page Settings
-const ThankYouPageSchema = z.object({
-  message: z.string(),
-  redirectUrl: z.string().optional()
-})
 
-// Schema for Form Settings
-const FormSettingsSchema = z.object({
-  allowMultipleSubmissions: z.boolean().optional(),
-  showProgressBar: z.boolean().optional(),
-  requiredErrorMessage: z.string().optional(),
-  thankYouPage: ThankYouPageSchema.optional()
-})
-
-// Form Schema
-export const FormSchema = z.object({
+export const BaseFormSchema = z.object({
   id: z.string(),
-  eventId: z.string().nullable().optional(),
   name: z.string(),
-  description: z.string().nullable().optional(),
+  description: z.string().optional().nullable(),
+  eventId: z.string().optional().nullable(),
   fields: z.array(FormFieldSchema),
+});
+  export const FormSchema = BaseFormSchema.extend({
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date().nullable().optional(),
-  settings: FormSettingsSchema.optional()
 })
-
-// FormModel Schema (extending Form with organizationId)
+export type FormModel = z.infer<typeof BaseFormSchema>
 export const FormModelSchema = FormSchema.extend({
   organizationId: z.string()
 })
 export const FormModelSchemaSubmissions = FormFieldSchema.extend({})
-// Type inference
-export type Form = z.infer<typeof FormSchema>
-export type FormModel = z.infer<typeof FormModelSchema>
+export type FormModelResponse = z.infer<typeof FormSchema>
+export type FormModelEditResponse = z.infer<typeof FormModelSchema>
 
-//Response
 export const FieldReponseSchemas = {
   [InputTypes.TEXT]: z
     .object({
@@ -112,8 +95,6 @@ export const FieldReponseSchemas = {
     })
     .refine(data => data.id, 'Este campo es requerido.')
 }
-export type FieldResponseKeys = keyof typeof FieldReponseSchemas
-
 const SubmissionDataField = z.object({
   id: z.string(),
   inputType: z.nativeEnum(InputTypes),
@@ -129,7 +110,6 @@ const SubmissionDataField = z.object({
     ])
     .optional()
 })
-export type SubmissionDataFieldType = z.infer<typeof SubmissionDataField>
 export const SubmissionSchemaResponse = z.array(
   z.object({
     submissionId: z.string(),
@@ -140,5 +120,6 @@ export const SubmissionSchemaResponse = z.array(
     createdAt: z.string()
   })
 )
-
+export type FieldResponseKeys = keyof typeof FieldReponseSchemas
+export type SubmissionDataFieldType = z.infer<typeof SubmissionDataField>
 export type submissionResponse = z.infer<typeof SubmissionSchemaResponse>

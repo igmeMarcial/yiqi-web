@@ -40,7 +40,7 @@ const InputTextField = ({ id, fields }: InputFieldProps) => {
           value={value?.text || ''}
           placeholder={t('writeYourAnswer')}
           className={cn(
-            'w-full border-0 border-b-2 rounded-none',
+            'w-full border-0 border-b-2 rounded-none ',
             'bg-transparent',
             'text-slate-900 border-slate-300 placeholder:text-slate-500',
             'dark:text-white dark:border-slate-700 dark:placeholder:text-muted-foreground',
@@ -49,7 +49,7 @@ const InputTextField = ({ id, fields }: InputFieldProps) => {
             'placeholder:text-base placeholder:font-light placeholder:tracking-wide',
             'hover:border-slate-400 dark:hover:border-slate-600',
             'text-lg py-2 px-0',
-            'font-medium tracking-tight',
+            'font-medium tracking-tight ',
             inputType === InputTypes.TEXT ? 'max-w-[350px]' : 'max-w-full'
           )}
           style={{

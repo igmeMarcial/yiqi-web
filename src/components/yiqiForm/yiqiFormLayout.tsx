@@ -6,16 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { FormProps } from '../../schemas/yiqiFormSchema'
 import { FormHeader } from './FormHeader'
 
-function YiqiFormLayout({
-  children,
-  form,
-  orgId,
-  currentView,
-  onNavigate,
-  fields,
-  addCard,
-  isEditing
-}: {
+interface YiqiFormLayoutProps {
   children: React.ReactNode
   form: FormProps[]
   orgId: string
@@ -28,7 +19,19 @@ function YiqiFormLayout({
     cardTitle?: string
   ) => void
   isEditing: boolean
-}) {
+  formId?: string
+}
+export function YiqiFormLayout({
+  children,
+  form,
+  orgId,
+  currentView,
+  onNavigate,
+  fields,
+  addCard,
+  isEditing,
+  formId
+}: YiqiFormLayoutProps) {
   return (
     <div className="dark:bg-[rgb(28, 28, 28)] relative ">
       <FormHeader
@@ -39,6 +42,7 @@ function YiqiFormLayout({
         addCard={addCard}
         fields={fields}
         isEditing={isEditing}
+        formId={formId}
       />
       <ScrollArea
         style={{

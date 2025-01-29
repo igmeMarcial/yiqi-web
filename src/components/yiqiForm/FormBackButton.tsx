@@ -13,7 +13,7 @@ import { translations } from '@/lib/translations/translations'
 function FormBackButton({ url: orgId }: { url: string }) {
   const router = useRouter()
   const handleBack = () => {
-    router.push(`/admin/organizations/${orgId}`)
+    router.push(`/admin/organizations/${orgId}/forms`)
   }
   return (
     <TooltipProvider>

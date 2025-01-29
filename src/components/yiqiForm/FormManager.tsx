@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import FormBuild from './FormCreator/FormBuild'
 import {
-  FormModel,
+  FormModelEditResponse,
   FormProps,
   InputTypes,
   ItemTypeProps,
@@ -26,7 +26,7 @@ const initialCard = {
 }
 interface MainFormProps {
   orgId: string
-  formResponse: FormModel | null
+  formResponse: FormModelEditResponse | null
   submissions: submissionResponse | null
   formId?: string
 }
@@ -44,8 +44,6 @@ function FormManager({
   useEffect(() => {
     setForm(formResponse?.fields ?? [initialCard])
   }, [formResponse])
-
-  // console.log(submissions)
   const [currentView, setCurrentView] = useState<'create' | 'results'>(
     pathname.includes('/results') ? 'results' : 'create'
   )
@@ -301,6 +299,7 @@ function FormManager({
       addCard={addCard}
       fields={form}
       isEditing={!!(formId && submissions !== null)}
+      formId={formId}
     >
       {currentView === 'create' ? (
         <section className="relative flex flex-col h-full w-full md:max-w-[760px] mx-auto">
