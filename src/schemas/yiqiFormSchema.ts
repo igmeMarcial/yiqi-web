@@ -31,12 +31,12 @@ export const BaseFormSchema = z.object({
   name: z.string(),
   description: z.string().optional().nullable(),
   eventId: z.string().optional().nullable(),
-  fields: z.array(FormFieldSchema),
-});
-  export const FormSchema = BaseFormSchema.extend({
+  fields: z.array(FormFieldSchema)
+})
+export const FormSchema = BaseFormSchema.extend({
   createdAt: z.date(),
   updatedAt: z.date(),
-  deletedAt: z.date().nullable().optional(),
+  deletedAt: z.date().nullable().optional()
 })
 export type FormModel = z.infer<typeof BaseFormSchema>
 export const FormModelSchema = FormSchema.extend({

@@ -29,7 +29,7 @@ export async function createTypeForm(orgId: string, formData: FormModel) {
         eventId: validatedForm.eventId ?? null,
         name: validatedForm.name,
         description: validatedForm.description ?? null,
-        fields: validatedForm.fields,
+        fields: validatedForm.fields
       }
     })
     return {
@@ -53,7 +53,7 @@ export async function createTypeForm(orgId: string, formData: FormModel) {
   }
 }
 
-export async function updateTypeForm( formData: FormModel) {
+export async function updateTypeForm(formData: FormModel) {
   try {
     const currentUser = await getUser()
     if (!currentUser) {
@@ -73,7 +73,7 @@ export async function updateTypeForm( formData: FormModel) {
       },
       select: {
         id: true,
-        name: true,
+        name: true
       }
     })
     return {
