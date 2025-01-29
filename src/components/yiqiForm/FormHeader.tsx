@@ -21,6 +21,7 @@ import AddCardButton from './FormCreator/AddCardButton'
 import FormBackButton from './FormBackButton'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 interface FormHeaderProps {
   form: FormProps[]
@@ -47,24 +48,27 @@ export function FormHeader({
   isEditing,
   formId
 }: FormHeaderProps) {
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
+  const [publishedFormUrl, setPublishedFormUrl] = useState({
+    url: '',
+    urlRedirect: ''
+  })
+  const { toast } = useToast()
+  const isMobile = useIsMobile()
+  const router = useRouter()
+  const t = useTranslations('yiqiForm')
   const navigationItems = [
     {
-      title: 'Preguntas',
+      title: t('questions'),
       view: 'create' as const,
       disabled: false
     },
     {
-      title: 'Respuestas',
+      title: t('responses'),
       view: 'results' as const,
       disabled: false
     }
   ]
-
-  const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
-  const [publishedFormUrl, setPublishedFormUrl] = useState('')
-  const { toast } = useToast()
-  const isMobile = useIsMobile()
-  const router = useRouter()
   const handlePublish = async () => {
     if (form.length < 2) {
       toast({
@@ -89,7 +93,7 @@ export function FormHeader({
         const response = await updateTypeForm(formToSubmit)
         if (response.success) {
           toast({
-            description: `Formulario aactulizado`,
+            description: t('formUpdated'),
             variant: 'default'
           })
         }
@@ -102,11 +106,11 @@ export function FormHeader({
         }
         const response = await createTypeForm(orgId, formToSubmit)
         if (response.success) {
-          setPublishedFormUrl(
-            `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`
-          )
+          setPublishedFormUrl({
+            url: `${process.env.NEXT_PUBLIC_URL}/form/${formToSubmit.id}`,
+            urlRedirect: formToSubmit.id
+          })
           setIsPublishModalOpen(true)
-          router.replace(`/admin/organizations/${orgId}/forms`)
         } else {
           toast({
             title: `${translations.es.publishErrorTitle}`,
@@ -166,7 +170,7 @@ export function FormHeader({
               >
                 <SendHorizonal className="h-4 w-4" />
 
-                {isEditing ? 'Actualizar' : `${translations.es.publish}`}
+                {isEditing ? t('update') : `${translations.es.publish}`}
               </Button>
             </div>
           </div>
@@ -183,8 +187,7 @@ export function FormHeader({
                     <NavigationMenuLink
                       className={`
                       text-black dark:text-white
-                      transition-colors
-                      
+                      transition-colors   
                       relative
                       cursor-pointer
                       ${currentView === view ? 'font-semibold' : 'hover:opacity-70 hover:text-gray-700 dark:hover:text-gray-300'}
@@ -214,8 +217,13 @@ export function FormHeader({
       </header>
       <PublishSuccessModal
         isOpen={isPublishModalOpen}
-        onClose={() => setIsPublishModalOpen(false)}
-        formUrl={publishedFormUrl}
+        onClose={() => {
+          setIsPublishModalOpen(false)
+          router.replace(
+            `/admin/organizations/${orgId}/forms/${publishedFormUrl.urlRedirect}`
+          )
+        }}
+        formUrl={publishedFormUrl.url}
       />
     </>
   )

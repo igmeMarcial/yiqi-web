@@ -5,8 +5,7 @@ import {
   getResultFormById,
   getFormById
 } from '@/services/actions/typeForm/typeFormActions'
-import { AlertCircle } from 'lucide-react'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import React from 'react'
 
 export default async function FormPage({
@@ -25,24 +24,7 @@ export default async function FormPage({
   }
   const form = await getFormById(params.formId)
 
-  if (!form.success) {
-    return (
-      <div className="h-screen dark:bg-[rgb(28, 28, 28)] w-full flex items-center justify-center">
-        <div className="max-w-md w-full text-center space-y-6">
-          <AlertCircle className="mx-auto h-16 w-16 text-red-500" />
-
-          <h1 className="text-3xl font-bold dark:text-white">
-            El archivo que solicitaste no existe.
-          </h1>
-
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Asegúrate de que tienes la dirección URL correcta y de que el
-            archivo existe.
-          </p>
-        </div>
-      </div>
-    )
-  }
+  if (!form.success) notFound()
   const formResult = await getResultFormById(params.formId)
   return (
     <div className="h-screen  dark:bg-[rgb(28, 28, 28)]">

@@ -15,6 +15,7 @@ import { generateUniqueIdYiqiForm } from './utils'
 import { translations } from '@/lib/translations/translations'
 import ResultForm from './FormResults/Result'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { useTranslations } from 'next-intl'
 
 const initialCard = {
   id: 'TitleCard',
@@ -39,6 +40,7 @@ function FormManager({
 }: MainFormProps) {
   const [form, setForm] = useState<FormProps[]>([])
   const dragControls = useDragControls()
+  const t = useTranslations('yiqiForm')
   const pathname = usePathname()
   const isMobile = useIsMobile()
   useEffect(() => {
@@ -89,7 +91,6 @@ function FormManager({
   ) => {
     setForm(prev => {
       const copiedState = prev.map(card => ({ ...card, isFocused: false }))
-
       if (focusedCardIndex > 0) {
         copiedState.splice(
           focusedCardIndex + 1,
@@ -99,7 +100,6 @@ function FormManager({
       } else {
         copiedState.push(createNewCard(cardId, cardTitle))
       }
-
       return copiedState
     })
   }
@@ -348,9 +348,7 @@ function FormManager({
           {submissions === null || submissions.length === 0 ? (
             <div className=" max-w-[500px] md:max-w-[760px]  mx-auto card bg-gray-100 dark:bg-transparent p-6 rounded-lg shadow-md text-center">
               <p className="text-gray-600 dark:text-gray-300">
-                {formId
-                  ? 'Esperando respuestas'
-                  : 'No hay respuestas. Publica tu formulario para comenzar a aceptar respuestas'}
+                {formId ? t('waitingForResponses') : t('noResponses')}
               </p>
             </div>
           ) : (

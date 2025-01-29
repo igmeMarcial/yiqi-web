@@ -611,6 +611,20 @@
   "fieldRequired": "Ce champ est requis",
   "writeYourAnswer": "Écrivez votre réponse...",
   "other": "Autre",
-  "writeHere": "Écrivez ici..."
+  "writeHere": "Écrivez ici...",
+   "questions": "Questions",
+    "responses": "Réponses",
+    "formUpdated": "Formulaire mis à jour",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "formDeleted": "Formulaire supprimé",
+    "formDeleteError": "Erreur lors de la suppression du formulaire",
+    "waitingForResponses": "En attente de réponses",
+    "noResponses": "Aucune réponse. Publiez votre formulaire pour commencer à recevoir des réponses",
+    "newForm": "Nouveau formulaire",
+    "noFormsCreated": "Aucun formulaire créé. Commencez par en créer un nouveau !",
+    "createForm": "Créer un formulaire",
+    "linkCopied": "Lien copié",
+    "copyLink": "Copier le lien"
 }
 }

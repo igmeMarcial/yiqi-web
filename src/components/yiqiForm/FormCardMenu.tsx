@@ -12,6 +12,7 @@ import { MoreVertical } from 'lucide-react'
 import { deleteForm } from '@/services/actions/typeForm/typeFormActions'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
+import { useTranslations } from 'next-intl'
 
 interface FormCardMenuProps {
   formId: string
@@ -20,26 +21,26 @@ interface FormCardMenuProps {
 export function FormCardMenu({ formId }: FormCardMenuProps) {
   const router = useRouter()
   const { toast } = useToast()
-
+  const t = useTranslations('yiqiForm')
   const handleDeleteClick = async (e: React.MouseEvent) => {
     e.preventDefault()
     try {
       const response = await deleteForm(formId)
       if (response.success) {
         toast({
-          description: 'Formulario eliminado',
+          description: t('formDeleted'),
           variant: 'default'
         })
         router.refresh()
       } else {
         toast({
-          description: 'Error al eliminar el formulario',
+          description: t('formDeleteError'),
           variant: 'destructive'
         })
       }
     } catch (error) {
       toast({
-        description: 'Error al eliminar el formulario',
+        description: t('formDeleteError'),
         variant: 'destructive'
       })
       console.error('Error:', error)
@@ -48,7 +49,7 @@ export function FormCardMenu({ formId }: FormCardMenuProps) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="absolute bottom-2 right-2 z-10">
+      <DropdownMenuTrigger className="absolute bottom-2 right-2 z-10 ">
         <MoreVertical className="h-5 w-5 text-gray-400 hover:text-gray-200" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
@@ -56,7 +57,7 @@ export function FormCardMenu({ formId }: FormCardMenuProps) {
           onClick={handleDeleteClick}
           className="text-red-500 focus:text-red-500"
         >
-          Eliminar
+          {t('delete')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

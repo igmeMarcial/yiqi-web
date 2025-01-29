@@ -665,6 +665,21 @@
     "fieldRequired": "This field is required",
     "writeYourAnswer": "Write your answer...",
     "other": "Other",
-    "writeHere": "Write here..."}
+    "writeHere": "Write here...",
+      "questions": "Questions",
+    "responses": "Responses",
+    "formUpdated": "Form updated",
+    "update": "Update",
+    "delete": "Delete",
+    "formDeleted": "Form deleted",
+    "formDeleteError": "Error deleting the form",
+    "waitingForResponses": "Waiting for responses",
+    "noResponses": "No responses. Publish your form to start accepting responses",
+    "newForm": "New Form",
+    "noFormsCreated": "No forms created. Start by creating a new one!",
+    "createForm": "Create form",
+    "linkCopied": "Link Copied",
+    "copyLink": "Copy Link"
+  }
 
 }
