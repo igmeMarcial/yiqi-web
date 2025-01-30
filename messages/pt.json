@@ -614,5 +614,11 @@
     "joinEvent": "Participar do Evento",
     "viewTicket": "Ver Ingresso",
     "linkUnvailable": "O link virtual não está disponível para este evento."
+  },
+  "ManagementEventTabs": {
+    "summary": "Resumo do Evento",
+    "attendes": "Participantes",
+    "registration": "Cadastro",
+    "broadcasts": "Transmissões"
   }
 }

@@ -612,5 +612,11 @@
     "joinEvent": "Rejoindre l'Événement",
     "viewTicket": "Voir le Billet",
     "linkUnvailable": "Le lien virtuel n'est pas disponible pour cet événement."
+  },
+  "ManagementEventTabs": {
+    "summary": "Résumé de l'événement",
+    "attendes": "Participantes",
+    "registration": "Inscription",
+    "broadcasts": "Diffusions"
   }
 }
