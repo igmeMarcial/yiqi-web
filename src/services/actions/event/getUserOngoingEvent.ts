@@ -20,7 +20,7 @@ export async function getUserOngoingEvent(email?: string) {
           OR: [
             {
               // Match events starting in the next 20 minutes
-              startDate: { gte: tenMinutesBefore, lte: now }
+              startDate: { gte: minutesBefore, lte: now }
             },
             {
               // Match ongoing events
