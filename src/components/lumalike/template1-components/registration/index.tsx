@@ -20,8 +20,7 @@ import {
   PublicEventType,
   registrationInputSchema,
   type RegistrationInput,
-  type EventRegistrationSchemaType,
-  CustomFieldType
+  type EventRegistrationSchemaType
 } from '@/schemas/eventSchema'
 import { TicketSelection } from './ticket-selection'
 import { RegistrationSummary } from './registration-summary'
@@ -38,14 +37,12 @@ export type RegistrationProps = {
   event: PublicEventType
   user: { name?: string; picture?: string; email?: string; role?: string }
   dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
-  customFields: CustomFieldType[]
 }
 
 export function Registration({
   event,
   user,
-  dialogTriggerRef,
-  customFields
+  dialogTriggerRef
 }: RegistrationProps) {
   const [ticketSelections, setTicketSelections] = useState<
     Record<string, number>
@@ -258,7 +255,6 @@ export function Registration({
                 calculateTotal={calculateTotal}
               />
               <RegistrationForm
-                customFields={customFields}
                 form={form}
                 onSubmit={onSubmit}
                 user={user}

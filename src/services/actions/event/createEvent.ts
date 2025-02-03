@@ -40,7 +40,6 @@ export async function createEvent(
   const event = await prisma.event.create({
     data: {
       ...validatedData,
-      customFields: JSON.stringify(validatedData.customFields),
       organizationId: orgId,
       startDate: new Date(validatedData.startDate),
       endDate: new Date(validatedData.endDate),

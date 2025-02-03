@@ -152,6 +152,12 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
             startDate: Date;
             endDate: Date;
             organizationId: string;
+            customFields: {
+                name: string;
+                type: "number" | "date" | "select" | "text";
+                required: boolean;
+                options?: string | undefined;
+            }[];
             createdAt: Date;
             updatedAt: Date;
             requiresApproval: boolean;
@@ -184,17 +190,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
-            customFields?: {
-                fields: {
-                    name: string;
-                    type: "number" | "boolean" | "date" | "text" | "url";
-                    description: string;
-                    inputType: "shortText" | "longText";
-                    required?: boolean | undefined;
-                    defaultValue?: string | number | boolean | undefined;
-                }[];
-                eventData?: Record<string, any>[] | undefined;
-            } | null | undefined;
             openGraphImage?: string | null | undefined;
             featuredIn?: {
                 name: string;
@@ -262,6 +257,12 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         startDate: Date;
         endDate: Date;
         organizationId: string;
+        customFields: {
+            name: string;
+            type: "number" | "date" | "select" | "text";
+            required: boolean;
+            options?: string | undefined;
+        }[];
         createdAt: Date;
         updatedAt: Date;
         requiresApproval: boolean;
@@ -276,17 +277,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
-        customFields?: {
-            fields: {
-                name: string;
-                type: "number" | "boolean" | "date" | "text" | "url";
-                description: string;
-                inputType: "shortText" | "longText";
-                required?: boolean | undefined;
-                defaultValue?: string | number | boolean | undefined;
-            }[];
-            eventData?: Record<string, any>[] | undefined;
-        } | null | undefined;
         openGraphImage?: string | null | undefined;
         tickets?: {
             name: string;
@@ -313,7 +303,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
-                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _input_out: {
@@ -322,7 +311,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
-                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _output_in: typeof node_modules__trpc_server_dist.unsetMarker;
@@ -581,17 +569,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
-            customFields?: {
-                fields: {
-                    name: string;
-                    type: "number" | "boolean" | "date" | "text" | "url";
-                    description: string;
-                    inputType: "shortText" | "longText";
-                    required?: boolean | undefined;
-                    defaultValue?: string | number | boolean | undefined;
-                }[];
-                eventData?: Record<string, any>[] | undefined;
-            } | null | undefined;
             openGraphImage?: string | null | undefined;
         }[];
         members: {
@@ -954,17 +931,6 @@ declare const appRouter: node_modules__trpc_server_dist.CreateRouterInner<node_m
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
-        customFields?: {
-            fields: {
-                name: string;
-                type: "number" | "boolean" | "date" | "text" | "url";
-                description: string;
-                inputType: "shortText" | "longText";
-                required?: boolean | undefined;
-                defaultValue?: string | number | boolean | undefined;
-            }[];
-            eventData?: Record<string, any>[] | undefined;
-        } | null | undefined;
         openGraphImage?: string | null | undefined;
     }[]>;
     getEventRegistrations: _trpc_server.BuildProcedure<"query", {

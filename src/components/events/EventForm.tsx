@@ -21,7 +21,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { createEvent } from '@/services/actions/event/createEvent'
 import {
-  CustomFieldType,
   EventInputSchema,
   EventInputType,
   EventTicketInputType,
@@ -30,7 +29,7 @@ import {
   SavedTicketOfferingType
 } from '@/schemas/eventSchema'
 import { useRouter } from 'next/navigation'
-import { MapPin, Clock, Users, Link as LinkIcon } from 'lucide-react'
+import { MapPin, Clock, Users } from 'lucide-react'
 import { useState } from 'react'
 import { TicketTypesManager } from './TicketTypesManager'
 import {
@@ -50,37 +49,20 @@ import { useTranslations } from 'next-intl'
 import { UploadIcon } from '@radix-ui/react-icons'
 import { Switch } from '@/components/ui/switch'
 import Link from 'next/link'
-import { CustomFieldsDialog } from './CustomFieldsDialog'
-import { updateCustomFields } from '@/services/actions/event/updateCustomFields'
+import { allTimezones, useTimezoneSelect } from 'react-timezone-select'
+import { extractGMTTime, getDateOrTimeByTimezoneLabel } from '../utils'
 
-const EventFormInputSchema = EventInputSchema.extend({
+type Props = {
+  organizationId: string
+  event?: SavedEventType
+}
+
+export const EventFormInputSchema = EventInputSchema.extend({
   startTime: z.string(),
   endTime: z.string(),
   startDate: z.string(),
-  endDate: z.string()
-}).superRefine((data, ctx) => {
-  if (data.type === EventTypeEnum.IN_PERSON && !data.location) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'Location is required for in-person events',
-      path: ['location']
-    })
-  }
-  if (data.type === EventTypeEnum.ONLINE) {
-    if (!data.virtualLink) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Virtual link is required for online events',
-        path: ['virtualLink']
-      })
-    } else if (!z.string().url().safeParse(data.virtualLink).success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Invalid URL format',
-        path: ['virtualLink']
-      })
-    }
-  }
+  endDate: z.string(),
+  timezoneLabel: z.string()
 })
 
 type LocationDetails = {
@@ -91,11 +73,6 @@ type LocationDetails = {
     lat: number
     lon: number
   }
-}
-
-type Props = {
-  organizationId: string
-  event?: SavedEventType
 }
 
 export function EventForm({ organizationId, event }: Props) {
@@ -132,7 +109,6 @@ export function EventForm({ organizationId, event }: Props) {
       }
     ]
   )
-
   const defaultValue = `
   <h1>${tPage('defaultValueH1')}</h1>
   <p>
@@ -160,30 +136,42 @@ export function EventForm({ organizationId, event }: Props) {
     event?.description ?? defaultValue
   )
 
+  const { options } = useTimezoneSelect({
+    timezones: allTimezones
+  })
   const [locationDetails, setLocationDetails] =
     useState<LocationDetails | null>(null)
-  const [showCustomFieldsDialog, setShowCustomFieldsDialog] = useState(false)
-  const [customFields, setCustomFields] = useState<CustomFieldType[]>(
-    event?.customFields?.fields ?? []
-  )
-
   const form = useForm<z.infer<typeof EventFormInputSchema>>({
     resolver: zodResolver(EventFormInputSchema),
     defaultValues: {
       title: event?.title ?? '',
       startDate: event
-        ? new Date(event.startDate).toLocaleDateString('en-CA')
+        ? getDateOrTimeByTimezoneLabel(
+            event.startDate,
+            event.timezoneLabel,
+            'date'
+          )
         : '',
       startTime: event
-        ? new Date(event.startDate)
-            .toLocaleTimeString('en-US', { hour12: false })
-            .slice(0, 5)
+        ? getDateOrTimeByTimezoneLabel(
+            event.startDate,
+            event.timezoneLabel,
+            'time'
+          )
         : '',
-      endDate: event ? new Date(event.endDate).toLocaleDateString('en-CA') : '',
+      endDate: event
+        ? getDateOrTimeByTimezoneLabel(
+            event.endDate,
+            event.timezoneLabel,
+            'date'
+          )
+        : '',
       endTime: event
-        ? new Date(event.endDate)
-            .toLocaleTimeString('en-US', { hour12: false })
-            .slice(0, 5)
+        ? getDateOrTimeByTimezoneLabel(
+            event.endDate,
+            event.timezoneLabel,
+            'time'
+          ).slice(0, 5)
         : '',
       location: event?.location ?? '',
       virtualLink: event?.virtualLink ?? '',
@@ -191,33 +179,30 @@ export function EventForm({ organizationId, event }: Props) {
       requiresApproval: event?.requiresApproval ?? false,
       openGraphImage: event?.openGraphImage ?? null,
       maxAttendees: event?.maxAttendees ?? undefined,
-      type: event?.type ?? EventTypeEnum.IN_PERSON
+      type: event?.type ?? EventTypeEnum.IN_PERSON,
+      timezoneLabel:
+        event?.timezoneLabel ??
+        options.filter(
+          option =>
+            option.offset &&
+            option.offset === -new Date().getTimezoneOffset() / 60
+        )[0].label
     }
   })
 
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
-  const [savedEventId, setSavedEventId] = useState<string | null>(null)
-
-  function handleAddCustomField(field: CustomFieldType) {
-    setCustomFields([...customFields, field])
-  }
-
-  function handleRemoveCustomField(index: number) {
-    setCustomFields(customFields.filter((_, i) => i !== index))
-  }
-
-  function handleImageSelect(event: React.ChangeEvent<HTMLInputElement>): void {
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       setSelectedImage(file)
+      // Create preview URL
       const previewUrl = URL.createObjectURL(file)
       setImagePreview(previewUrl)
     }
   }
 
-  function handleOnStartDateChange(
+  const handleOnStartDateChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ) => {
     const startDate = event.target.value
     form.setValue('startDate', startDate)
 
@@ -235,6 +220,7 @@ export function EventForm({ organizationId, event }: Props) {
         .padStart(2, '0')
       setMinStartTime(`${currentHours}:${currentMinutes}`)
 
+      // If the start date is today and the start time is less than the current time, set start time to ''
       const startTime = form.getValues('startTime')
       if (startTime && `${currentHours}:${currentMinutes}` > startTime) {
         form.setValue('startTime', '')
@@ -244,9 +230,9 @@ export function EventForm({ organizationId, event }: Props) {
     setMinEndDate(startDate)
   }
 
-  function handleOnStartTimeChange(
+  const handleOnStartTimeChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ) => {
     if (event.target.validity.valid) {
       const startTime = event.target.value
       form.setValue('startTime', startTime)
@@ -254,9 +240,9 @@ export function EventForm({ organizationId, event }: Props) {
     }
   }
 
-  function handleOnEndDateChange(
+  const handleOnEndDateChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ) => {
     const endDate = event.target.value
     form.setValue('endDate', endDate)
 
@@ -279,17 +265,18 @@ export function EventForm({ organizationId, event }: Props) {
     }
   }
 
-  function handleOnEndTimeChange(
+  const handleOnEndTimeChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ) => {
     if (event.target.validity.valid) {
       form.setValue('endTime', event.target.value)
     }
   }
 
-  async function onSubmit(
-    values: z.infer<typeof EventFormInputSchema>
-  ): Promise<void> {
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [savedEventId, setSavedEventId] = useState<string | null>(null)
+
+  async function onSubmit(values: z.infer<typeof EventFormInputSchema>) {
     if (!loading) {
       setLoading(true)
       try {
@@ -299,28 +286,28 @@ export function EventForm({ organizationId, event }: Props) {
         }
 
         const startDateTime = new Date(
-          `${values.startDate}T${values.startTime}`
+          `${values.startDate}T${values.startTime}${extractGMTTime(values.timezoneLabel)}`
         )
-        const endDateTime = new Date(`${values.endDate}T${values.endTime}`)
+        const endDateTime = new Date(
+          `${values.endDate}T${values.endTime}${extractGMTTime(values.timezoneLabel)}`
+        )
 
         const eventData: EventInputType = {
           ...values,
-          ...(values.type === EventTypeEnum.IN_PERSON ? locationDetails : {}),
+          ...locationDetails,
           startDate: startDateTime,
           endDate: endDateTime,
           openGraphImage: imageUrl || event?.openGraphImage,
-          description,
-          virtualLink:
-            values.type === EventTypeEnum.ONLINE ? values.virtualLink : null
+          description
         }
 
         if (event) {
+          // Update existing event
           await updateEvent(event.id, eventData, tickets)
           setSavedEventId(event.id)
-          await updateCustomFields(event.id, customFields)
         } else {
+          // Create new event
           const result = await createEvent(organizationId, eventData, tickets)
-          await updateCustomFields(result.id, customFields)
           setSavedEventId(result.id)
         }
 
@@ -345,6 +332,7 @@ export function EventForm({ organizationId, event }: Props) {
                 <FormItem>
                   <FormControl>
                     <Input
+                      id="event-name"
                       placeholder={t('eventName')}
                       className="text-xl font-medium border rounded-lg px-4 py-2 w-full focus:ring focus:ring-primary"
                       {...field}
@@ -355,8 +343,8 @@ export function EventForm({ organizationId, event }: Props) {
               )}
             />
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-[300px,1fr] gap-6">
+            {/* Columna izquierda */}
             <div className="space-y-4">
               <div className="border rounded-lg p-4">
                 <label
@@ -396,10 +384,18 @@ export function EventForm({ organizationId, event }: Props) {
                     />
                   </div>
                 </label>
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageSelect}
+                />
               </div>
-
+              {/* Fecha y Hora */}
               <div className="space-y-4">
                 <div className="grid grid-cols-1 gap-4">
+                  {/* Fecha de inicio */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       {t('start')}
@@ -434,7 +430,7 @@ export function EventForm({ organizationId, event }: Props) {
                       />
                     </div>
                   </div>
-
+                  {/* Fecha de fin */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       {t('end')}
@@ -470,118 +466,81 @@ export function EventForm({ organizationId, event }: Props) {
                     </div>
                   </div>
                 </div>
-                <Select defaultValue="GMT-05:00">
-                  <SelectTrigger className="w-full bg-transparent text-white">
-                    <SelectValue
-                      className="bg-transparent text-white"
-                      placeholder={t('selectTimezone')}
-                    />
-                  </SelectTrigger>
-                  <SelectContent className="bg-zinc-900 border-none text-white">
-                    <SelectItem
-                      className="focus:bg-accent/35 focus:text-[#61f1f8]"
-                      value="GMT-05:00"
-                    >
-                      GMT-05:00 Lima
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-6 max-w-3xl">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">
-                  Elije el tipo de evento:
-                </span>
                 <FormField
                   control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">
-                        {field.value === EventTypeEnum.IN_PERSON
-                          ? 'Presencial'
-                          : 'Online'}
-                      </span>
-                      <Switch
-                        checked={field.value === EventTypeEnum.ONLINE}
-                        onCheckedChange={checked => {
-                          field.onChange(
-                            checked
-                              ? EventTypeEnum.ONLINE
-                              : EventTypeEnum.IN_PERSON
-                          )
-                          form.resetField('location')
-                          form.resetField('virtualLink')
-                        }}
-                      />
-                    </div>
-                  )}
-                />
-              </div>
-
-              {form.watch('type') === EventTypeEnum.IN_PERSON ? (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                    {t('location')}
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5" />
-                    <FormField
-                      control={form.control}
-                      name="location"
-                      render={({ field }) => (
-                        <AddressAutocomplete
-                          defaultValue={field.value ?? ''}
-                          fieldName="location"
-                          onSetAddress={field.onChange}
-                          onAfterSelection={value => {
-                            if (value?.address_components && value?.geometry) {
-                              const locationDetails = getLocationDetails(
-                                value.address_components
-                              )
-                              if (locationDetails) {
-                                setLocationDetails({
-                                  ...locationDetails,
-                                  latLon: {
-                                    lat: value.geometry?.location?.lat() ?? 0,
-                                    lon: value.geometry?.location?.lng() ?? 0
-                                  }
-                                })
-                              }
-                            }
-                          }}
-                        />
-                      )}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <FormField
-                  control={form.control}
-                  name="virtualLink"
+                  name="timezoneLabel"
                   render={({ field }) => (
                     <FormItem>
-                      <div className="flex items-center gap-2">
-                        <LinkIcon className="h-5 w-5" />
-                        <FormControl>
-                          <Input
-                            placeholder="https://meet.example.com/your-event"
-                            className="w-full"
-                            {...field}
-                            value={field.value ?? ''}
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        name="timezoneLabel"
+                      >
+                        <SelectTrigger className="w-full bg-transparent text-white">
+                          <SelectValue
+                            className="bg-transparent text-white"
+                            placeholder={t('selectTimezone')}
                           />
-                        </FormControl>
-                      </div>
-                      <FormMessage />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-900 border-none text-white">
+                          {options.map((option, index) => (
+                            <SelectItem
+                              key={index}
+                              className="focus:bg-accent/35 focus:text-[#61f1f8]"
+                              value={option.label}
+                            >
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </FormItem>
                   )}
                 />
-              )}
+              </div>
+            </div>
 
+            {/* Columna derecha */}
+            <div className="space-y-6 max-w-3xl">
+              {/* Ubicación */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+                  {t('location')}
+                </label>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <AddressAutocomplete
+                        defaultValue={field.value ?? ''}
+                        fieldName="location"
+                        onSetAddress={field.onChange}
+                        onAfterSelection={value => {
+                          if (value?.address_components && value?.geometry) {
+                            const locationDetails = getLocationDetails(
+                              value.address_components
+                            )
+                            if (locationDetails) {
+                              setLocationDetails({
+                                ...locationDetails,
+                                latLon: {
+                                  lat: value.geometry?.location?.lat() ?? 0,
+                                  lon: value.geometry?.location?.lng() ?? 0
+                                }
+                              })
+                            }
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+              {/* Description */}
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                Descripción de tu evento:
+                {'Descripción'}
               </label>
               <FormField
                 control={form.control}
@@ -592,7 +551,9 @@ export function EventForm({ organizationId, event }: Props) {
                       <div className="max-h-96 overflow-y-auto border rounded p-2">
                         <MarkdownEditor
                           initialValue={description}
-                          onChange={val => setDescription(val)}
+                          onChange={val => {
+                            setDescription(val)
+                          }}
                         />
                       </div>
                     </FormControl>
@@ -600,45 +561,7 @@ export function EventForm({ organizationId, event }: Props) {
                 )}
               />
 
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                  Campos personalizados:
-                </span>
-                <Button
-                  type="button"
-                  onClick={() => setShowCustomFieldsDialog(true)}
-                  variant="outline"
-                  className="bg-secondary"
-                >
-                  Añade campos personalizados
-                </Button>
-              </div>
-
-              {customFields.length > 0 && (
-                <div className="space-y-2">
-                  {customFields.map((field, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between border-b py-2"
-                    >
-                      <div>
-                        <span className="font-medium">{field.name}</span> -{' '}
-                        <span className="text-sm text-gray-500">
-                          {field.description}
-                        </span>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        onClick={() => handleRemoveCustomField(index)}
-                      >
-                        {tPage('removeField')}
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              )}
-
+              {/* Capacity */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
@@ -666,6 +589,7 @@ export function EventForm({ organizationId, event }: Props) {
                 />
               </div>
 
+              {/* Requires Approval */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
@@ -685,12 +609,15 @@ export function EventForm({ organizationId, event }: Props) {
                 />
               </div>
 
+              {/* Tickets */}
               <div
                 className="flex items-center justify-between cursor-pointer"
                 onClick={() => setShowTicketManager(!showTicketManager)}
               >
                 <span>{t('tickets')}</span>
-                <span>{showTicketManager ? t('hide') : t('edit')}</span>
+                <span>
+                  {showTicketManager ? `${t('hide')}` : `${t('edit')}`}
+                </span>
               </div>
 
               {tickets.length > 0 && !showTicketManager && (
@@ -705,7 +632,9 @@ export function EventForm({ organizationId, event }: Props) {
                       </div>
                       <div className="text-center">
                         <span className="text-sm text-gray-500">
-                          {ticket.price > 0 ? `S/${ticket.price}` : t('free')}
+                          {ticket.price > 0
+                            ? `S/${ticket.price}`
+                            : `${t('free')}`}
                         </span>
                       </div>
                       <div className="text-right">
@@ -728,6 +657,7 @@ export function EventForm({ organizationId, event }: Props) {
                 />
               )}
 
+              {/* Submit */}
               <div className="pt-4">
                 <Button
                   type="submit"
@@ -735,11 +665,11 @@ export function EventForm({ organizationId, event }: Props) {
                 >
                   {loading
                     ? event
-                      ? t('updatingEvent')
-                      : t('creatingEvent')
+                      ? `${t('updatingEvent')}`
+                      : `${t('creatingEvent')}`
                     : event
-                      ? t('updateEvent')
-                      : t('createEvent')}
+                      ? `${t('updateEvent')}`
+                      : `${t('createEvent')}`}
                 </Button>
               </div>
             </div>
@@ -785,11 +715,6 @@ export function EventForm({ organizationId, event }: Props) {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-      <CustomFieldsDialog
-        open={showCustomFieldsDialog}
-        onOpenChange={setShowCustomFieldsDialog}
-        onAddCustomField={handleAddCustomField}
-      />
     </>
   )
 }

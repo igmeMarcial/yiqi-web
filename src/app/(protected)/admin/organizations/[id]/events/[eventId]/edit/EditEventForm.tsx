@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { CustomFieldType, EditEventInputType } from '@/schemas/eventSchema'
+import { CustomFieldInputType, EditEventInputType } from '@/schemas/eventSchema'
 
 interface EditEventFormProps {
   event: EditEventInputType
@@ -15,27 +15,20 @@ export default function EditEventForm({
   handleSubmit,
   organizationId
 }: EditEventFormProps) {
-  const [customFields, setCustomFields] = useState<CustomFieldType[]>(
-    event.customFields?.fields || []
+  const [customFields, setCustomFields] = useState<CustomFieldInputType[]>(
+    event.customFields
   )
 
   const addCustomField = () => {
     setCustomFields([
       ...customFields,
-      {
-        name: '',
-        description: '',
-        type: 'text',
-        inputType: 'shortText',
-        required: false,
-        defaultValue: undefined
-      }
+      { name: '', type: 'text', required: false }
     ])
   }
 
   const updateCustomField = (
     index: number,
-    field: Partial<CustomFieldType>
+    field: Partial<CustomFieldInputType>
   ) => {
     const newFields = [...customFields]
     newFields[index] = { ...newFields[index], ...field }
@@ -49,7 +42,7 @@ export default function EditEventForm({
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    formData.append('customFields', JSON.stringify({ fields: customFields }))
+    formData.append('customFields', JSON.stringify(customFields))
     await handleSubmit(formData)
   }
 
@@ -112,130 +105,61 @@ export default function EditEventForm({
       <div>
         <h2 className="text-xl font-semibold mb-2">Custom Fields</h2>
         {customFields.map((field, index) => (
-          <div key={index} className="mb-4 p-4 border rounded">
-            <div className="grid grid-cols-2 gap-4 mb-2">
-              <div>
-                <label className="block text-sm font-medium mb-1">Name</label>
-                <input
-                  value={field.name}
-                  onChange={e =>
-                    updateCustomField(index, { name: e.target.value })
-                  }
-                  placeholder="Field Name"
-                  className="w-full p-2 border rounded"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Type</label>
-                <select
-                  value={field.type}
-                  onChange={e =>
-                    updateCustomField(index, {
-                      type: e.target.value as CustomFieldType['type']
-                    })
-                  }
-                  className="w-full p-2 border rounded"
-                >
-                  {['text', 'number', 'date', 'boolean', 'url'].map(option => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 mb-2">
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Input Type
-                </label>
-                <select
-                  value={field.inputType}
-                  onChange={e =>
-                    updateCustomField(index, {
-                      inputType: e.target.value as CustomFieldType['inputType']
-                    })
-                  }
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="shortText">Short Text</option>
-                  <option value="longText">Long Text</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Default Value
-                </label>
-                <input
-                  type="text"
-                  value={field.defaultValue?.toString() || ''}
-                  onChange={e =>
-                    updateCustomField(index, { defaultValue: e.target.value })
-                  }
-                  placeholder="Default Value"
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-            </div>
-
-            <div className="mb-2">
-              <label className="block text-sm font-medium mb-1">
-                Description
-              </label>
+          <div key={index} className="mb-2">
+            <input
+              value={field.name}
+              onChange={e => updateCustomField(index, { name: e.target.value })}
+              placeholder="Field Name"
+              className="p-2 border rounded mr-2"
+            />
+            <select
+              value={field.type}
+              onChange={() => removeCustomField(index)}
+              className="p-2 border rounded"
+            >
+              <option value="text">Text</option>
+              <option value="number">Number</option>
+              <option value="select">Select</option>
+            </select>
+            {field.type === 'select' && (
               <input
-                value={field.description}
+                type="text"
+                value={field.options}
                 onChange={e =>
-                  updateCustomField(index, { description: e.target.value })
+                  updateCustomField(index, { options: e.target.value })
                 }
-                placeholder="Field Description"
-                className="w-full p-2 border rounded"
+                placeholder="Enter options separated by commas"
+                className="p-2 border rounded ml-2"
               />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={field.required || false}
-                  onChange={e =>
-                    updateCustomField(index, { required: e.target.checked })
-                  }
-                  className="h-4 w-4"
-                />
-                <span className="text-sm">Required</span>
-              </label>
-              <button
-                type="button"
-                onClick={() => removeCustomField(index)}
-                className="text-red-500 hover:text-red-700 text-sm"
-              >
-                Remove Field
-              </button>
-            </div>
+            )}
+            <button
+              type="button"
+              onClick={() => removeCustomField(index)}
+              className="text-red-500 ml-2"
+            >
+              Remove
+            </button>
           </div>
         ))}
-
         <button
           type="button"
           onClick={addCustomField}
-          className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="bg-green-500 text-white px-4 py-2 rounded"
         >
           Add Custom Field
         </button>
       </div>
 
-      <div className="flex gap-4">
+      <div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Update Event
         </button>
         <Link
           href={`/admin/organizations/${organizationId}/events`}
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          className="ml-4 text-blue-500 hover:underline"
         >
           Cancel
         </Link>
