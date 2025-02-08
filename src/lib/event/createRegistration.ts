@@ -83,7 +83,7 @@ export async function createRegistration(
       : await prisma.user.findUnique({
           where: { email: validatedData.email.toLocaleLowerCase() }
         })
-
+    // good stuff
     if (!user) {
       user = await prisma.user.create({
         data: {
