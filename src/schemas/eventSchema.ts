@@ -77,7 +77,16 @@ export const EventInputSchema = z.object({
     .optional()
     .nullable(),
   timezoneLabel: z.string(),
-  customFields: CustomFieldsSchema.optional().nullable()
+  customFields: z.preprocess(val => {
+    if (typeof val === 'string') {
+      try {
+        return JSON.parse(val)
+      } catch {
+        return val
+      }
+    }
+    return val
+  }, CustomFieldsSchema.optional().nullable())
 })
 
 export const EventCommunitySchema = z.object({
