@@ -32,6 +32,21 @@ export async function updateRegistrationStatus(
       data: { status }
     })
 
+    const ticketOfferings = await prisma.ticketOfferings.findMany({
+      where: { eventId: registration.eventId },
+      select: { id: true }
+    })
+
+    await prisma.ticket.updateMany({
+      where: {
+        AND: [
+          { userId: registration.userId },
+          { ticketTypeId: { in: ticketOfferings.map(_ => _.id) } }
+        ]
+      },
+      data: { deletedAt: status === 'APPROVED' ? null : new Date() }
+    })
+
     if (status === 'APPROVED') {
       await prisma.queueJob.create({
         data: {
