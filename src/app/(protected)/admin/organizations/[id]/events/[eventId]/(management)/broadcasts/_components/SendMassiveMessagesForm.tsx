@@ -18,6 +18,8 @@ import { notifyAudience } from '../actions'
 import { useParams } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { useTranslationByGroup } from '@/hooks/commons'
 
 enum ClientAttendeeStatus {
   APPROVED = 'APPROVED',
@@ -28,7 +30,7 @@ enum ClientAttendeeStatus {
 const schema = z.object({
   audienceType: z.nativeEnum(ClientAttendeeStatus),
   subject: z.string().optional(),
-  messageBody: z.string().min(10, 'Ingresar mensaje')
+  messageBody: z.string().min(10)
 })
 type SchemaType = z.infer<typeof schema>
 
@@ -40,6 +42,7 @@ export const SendMassiveMessagesForm = ({
     users: string[]
   }[]
 }) => {
+  const t = useTranslations('SendMassiveMessagesForm')
   const { toast } = useToast()
   const params = useParams<{ id: string }>()
   const [isFormVisible, setIsFormVisible] = useState(false)
@@ -60,12 +63,14 @@ export const SendMassiveMessagesForm = ({
     )[0].users
     await notifyAudience(params.id, userIds, data.messageBody, data.subject)
     toast({
-      title: 'Success!',
-      description: 'Your action was successful.',
-      duration: 3000
+      title: t('success'),
+      description: t('emailsSent'),
+      duration: 2000
     })
     setIsFormVisible(false)
   }
+
+  const { getTranslation } = useTranslationByGroup('attendeeStatus')
 
   return (
     <div>
@@ -78,7 +83,7 @@ export const SendMassiveMessagesForm = ({
           className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md transition-all"
         >
           <Send className="w-4 h-4" />
-          Enviar nuevo comunicado
+          {t('sendStatement')}
         </Button>
       </div>
 
@@ -87,7 +92,7 @@ export const SendMassiveMessagesForm = ({
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="max-w-[250px]">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                Destinatarios
+                {t('recipients')}
               </label>
               <Controller
                 control={control}
@@ -98,14 +103,14 @@ export const SendMassiveMessagesForm = ({
                     defaultValue={field.value}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Elije tu audiencia" />
+                      <SelectValue placeholder={t('chooseAudience')} />
                     </SelectTrigger>
                     <SelectContent>
                       {groupAudienceByStatus.map((audienceType, index) => {
                         return (
                           <SelectItem key={index} value={audienceType.status}>
-                            {audienceType.status} - {audienceType.users.length}{' '}
-                            registrados
+                            {getTranslation(audienceType.status.toString())} -{' '}
+                            {audienceType.users.length} {t('registered')}
                           </SelectItem>
                         )
                       })}
@@ -116,13 +121,13 @@ export const SendMassiveMessagesForm = ({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                Asunto (opcional)
+                {t('subject')}
               </label>
               <Input {...register('subject')} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-                Descripción
+                {t('description')}
               </label>
               <Controller
                 control={control}
@@ -130,7 +135,7 @@ export const SendMassiveMessagesForm = ({
                 render={({ field }) => (
                   <div className="max-h-[300px] overflow-y-auto">
                     <MarkdownEditor
-                      initialValue={`<p>Tu mensaje</p>`}
+                      initialValue={`<p>${t('defaultMessage')}</p>`}
                       onChange={value => field.onChange(value)}
                     />
                   </div>
@@ -144,7 +149,7 @@ export const SendMassiveMessagesForm = ({
                 variant="outline"
                 className="font-bold text-white"
               >
-                Enviar
+                {t('send')}
               </Button>
 
               <Button
@@ -155,7 +160,7 @@ export const SendMassiveMessagesForm = ({
                   setIsFormVisible(false)
                 }}
               >
-                Cerrar
+                {t('close')}
               </Button>
             </div>
           </form>

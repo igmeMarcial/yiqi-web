@@ -9,7 +9,6 @@ export default async function Page({
 }) {
   const t = await getTranslations('DeleteAccount')
   const attendees = await getEventRegistrations(params.eventId)
-  console.log(attendees)
 
   return (
     <div>

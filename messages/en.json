@@ -131,7 +131,9 @@
     "eventCreatedDescription": "Your event has been created and is now ready to be shared.",
     "eventUpdatedDescription": "Your event has been updated with the new changes.",
     "goToEvents": "Go to Events",
-    "viewEvent": "View Event"
+    "viewEvent": "View Event",
+    "editorTitle": "Edit content",
+    "defaultContent": "My content"
   },
   "contactFor": {
     "contact": "Contact",
@@ -673,5 +675,23 @@
     "registration": "Registration",
     "broadcasts": "Broadcasts",
     "checkin": "Check-in"
+  },
+  "SendMassiveMessagesForm": {
+    "sendStatement": "Send new statement",
+    "recipients": "Recipients",
+    "chooseAudience": "Choose your audience",
+    "registered": "registered",
+    "subject": "Subject (optional)",
+    "description": "Description",
+    "defaultMessage": "Default message",
+    "send": "Send",
+    "close": "Close",
+    "emailsSent": "The emails were sent",
+    "success": "Success!"
+  },
+  "attendeeStatus": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
   }
 }
