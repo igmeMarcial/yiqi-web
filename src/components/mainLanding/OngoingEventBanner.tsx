@@ -1,163 +1,24 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  LinkIcon,
-  Ticket,
-  UserPlus,
-  TicketIcon,
-  MapPin,
-  Calendar,
-  PartyPopper,
-  Dot
-} from 'lucide-react'
+import { MapPin, Calendar, Dot } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { toast } from '@/hooks/use-toast'
-import { EventTypeEnum, type SavedEventType } from '@/schemas/eventSchema'
-import {
-  userDataCollectedShema,
-  type LuciaUserType
-} from '@/schemas/userSchema'
-import { Button } from '@/components/ui/button'
+import { type SavedEventType } from '@/schemas/eventSchema'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { formatRangeDatesByTimezoneLabel } from '../utils'
+import Link from 'next/link'
 
 interface OngoingEventBannerProps {
   event: SavedEventType
-  isUserCheckedInOngoingEvent: boolean
-  user?: LuciaUserType
-}
-
-export function RenderMatchmakingInfo({
-  eventId,
-  isUserCheckedInOngoingEvent,
-  user
-}: {
-  eventId: string
-  isUserCheckedInOngoingEvent: boolean
-  user?: LuciaUserType
-}): JSX.Element | null {
-  const router = useRouter()
-  if (!user) return null
-
-  const validData = user.dataCollected ?? {}
-  const userData = userDataCollectedShema.parse(validData)
-
-  const isProfileComplete =
-    userData.professionalMotivations &&
-    userData.communicationStyle &&
-    userData.professionalValues &&
-    userData.careerAspirations &&
-    userData.significantChallenge
-
-  const getDescriptionLabel = (
-    isProfileComplete: boolean,
-    isUserCheckedInOngoingEvent: boolean
-  ) => {
-    if (!isProfileComplete)
-      return 'Completa tu perfil para el Matchmaking impulsado por IA'
-    if (!isUserCheckedInOngoingEvent)
-      return 'Haz checkin para ver tu Matchmaking '
-    return 'Ir a evento para ver mi Matchmaking'
-  }
-
-  const getActionButton = (
-    isProfileComplete: boolean,
-    isUserCheckedInOngoingEvent: boolean
-  ) => {
-    if (!isProfileComplete)
-      return (
-        <>
-          <UserPlus className="mr-2 h-4 w-4" /> Ir a mi perfil
-        </>
-      )
-    if (!isUserCheckedInOngoingEvent)
-      return (
-        <>
-          <TicketIcon className="mr-2 h-4 w-4" /> Ir a mis tickets
-        </>
-      )
-    return (
-      <>
-        <PartyPopper className="mr-2 h-4 w-4" /> Ir al evento
-      </>
-    )
-  }
-
-  const getLink = (
-    isProfileComplete: boolean,
-    isUserCheckedInOngoingEvent: boolean
-  ) => {
-    if (!isProfileComplete) return '/user/networking-settings'
-    if (!isUserCheckedInOngoingEvent) return `/user/tickets`
-    return `/${eventId}`
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
-      className="xl:flex-grow p-4 bg-[#6de4e8]/20 rounded-lg backdrop-blur-sm border border-[#6de4e8]/30"
-    >
-      <p className="text-sm text-[#6de4e8] mb-2 font-medium">
-        {getDescriptionLabel(!!isProfileComplete, isUserCheckedInOngoingEvent)}
-      </p>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() =>
-          router.push(getLink(!!isProfileComplete, isUserCheckedInOngoingEvent))
-        }
-        className="w-full sm:w-auto bg-[#6de4e8]/10 hover:bg-[#6de4e8]/20 text-[#6de4e8]"
-      >
-        {getActionButton(!!isProfileComplete, isUserCheckedInOngoingEvent)}
-      </Button>
-    </motion.div>
-  )
 }
 
 export function OngoingEventBanner({
-  event,
-  user,
-  isUserCheckedInOngoingEvent
+  event
 }: OngoingEventBannerProps): JSX.Element {
-  const {
-    id,
-    title,
-    openGraphImage,
-    startDate,
-    location,
-    virtualLink,
-    type,
-    timezoneLabel
-  } = event
-  const isOnlineEvent = type === EventTypeEnum.ONLINE
-  const router = useRouter()
-
-  function handleButtonClick(): void {
-    if (!user) {
-      router.push(`/${id}`)
-      return
-    }
-
-    if (isOnlineEvent) {
-      if (virtualLink) {
-        window.open(virtualLink, '_blank')
-      } else {
-        toast({
-          title: 'Error',
-          description: 'El enlace no está disponible',
-          variant: 'destructive'
-        })
-      }
-    } else {
-      router.push('/user/tickets')
-    }
-  }
+  const { title, openGraphImage, startDate, location, timezoneLabel, id } =
+    event
 
   const isEventOnGoing = (startDate: Date) =>
     new Date().getTime() >= startDate.getTime()
@@ -185,7 +46,7 @@ export function OngoingEventBanner({
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                   priority
                 />
-                <Badge className="absolute top-3 left-3 right-3 sm:right-auto bg-black/80 backdrop-blur-sm text-[#6de4e8] font-medium px-3 py-1.5 rounded-lg">
+                <Badge className="absolute top-3 left-3 right-3 bg-black/80 backdrop-blur-sm text-[#6de4e8] font-medium px-3 py-1.5 rounded-lg">
                   <Calendar className="w-4 h-4 mr-2" />
                   {formatRangeDatesByTimezoneLabel(startDate, timezoneLabel)}
                 </Badge>
@@ -215,36 +76,7 @@ export function OngoingEventBanner({
                 )}
 
                 <div className="space-y-3 xl:space-y-0 xl:flex xl:items-center xl:gap-x-4">
-                  {/* Matchmaking Info */}
-                  <RenderMatchmakingInfo
-                    eventId={event.id}
-                    user={user}
-                    isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
-                  />
-
-                  {/* Action Button */}
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      onClick={handleButtonClick}
-                      size="lg"
-                      className="w-full sm:w-auto bg-gradient-to-r from-[#04F1FF] to-[#6de4e8] text-black font-bold hover:from-[#6de4e8] hover:to-[#04F1FF] transition-all shadow-lg hover:shadow-xl hover:shadow-[#6de4e8]/30"
-                    >
-                      {isOnlineEvent ? (
-                        <>
-                          <LinkIcon className="mr-2 h-5 w-5" />
-                          Unirse al evento
-                        </>
-                      ) : (
-                        <>
-                          <Ticket className="mr-2 h-5 w-5" />
-                          Ver ticket
-                        </>
-                      )}
-                    </Button>
-                  </motion.div>
+                  <Link href={`/${id}`}>Ir al evento</Link>
                 </div>
               </div>
             </div>

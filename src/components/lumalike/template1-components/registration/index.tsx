@@ -37,6 +37,7 @@ export type RegistrationProps = {
   user?: LuciaUserType
   dialogTriggerRef?: React.RefObject<HTMLButtonElement> | null
   customFields?: CustomFieldType[]
+  isUserCheckedInOngoingEvent?: boolean
 }
 
 export function Registration({
