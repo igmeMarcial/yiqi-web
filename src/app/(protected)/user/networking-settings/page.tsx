@@ -3,21 +3,23 @@ import UserLayout from '@/components/user/UserLayout'
 import { getUser } from '@/lib/auth/lucia'
 import { profileDataSchema } from '@/schemas/userSchema'
 import { getUserProfile } from '@/services/actions/userActions'
-import { getTranslations } from 'next-intl/server'
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import React from 'react'
 
 export default async function page() {
   const userCurrent = await getUser()
-  const t = await getTranslations('user')
 
   if (!userCurrent?.id) {
-    return <div>{t('notFound')}</div>
+    await cookies().set('redirect', '/networking-settings')
+    return redirect('/auth')
   }
 
   const user = await getUserProfile(userCurrent.id)
 
   if (!user) {
-    return <div>{t('notFound')}</div>
+    await cookies().set('redirect', '/networking-settings')
+    return redirect('/auth')
   }
 
   // Extract networking specific data
