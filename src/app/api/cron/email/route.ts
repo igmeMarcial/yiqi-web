@@ -53,8 +53,21 @@ export async function GET() {
 
     // Parse the actual email notification
     const emailNotificationRaw = JSON.parse(snsMessage.Message)
-    const emailNotification =
-      EmailNotificationSchema.parse(emailNotificationRaw)
+    const { success, data: emailNotification } =
+      EmailNotificationSchema.safeParse(emailNotificationRaw)
+
+    if (!success) {
+      // Delete the message from the queue after processing
+      const deleteParams = {
+        QueueUrl: queueUrl,
+        ReceiptHandle: message.ReceiptHandle
+      }
+
+      const deleteCommand = new DeleteMessageCommand(deleteParams)
+      await sqsClient.send(deleteCommand)
+
+      return new NextResponse(null, { status: 200 })
+    }
 
     // Extract key details
     const fromEmail = emailNotification.mail.source
