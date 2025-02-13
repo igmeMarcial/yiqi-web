@@ -28,9 +28,8 @@ export async function scheduleMatchMaking() {
     )
     AND NOT EXISTS (
       SELECT 1 FROM "QueueJob" qj
-      WHERE (qj."userId" = er."userId" OR qj."eventId" = er."eventId")
+      WHERE (qj."userId" = er."userId" AND qj."eventId" = er."eventId")
       AND qj.type = ${JobType.MATCH_MAKING_GENERATION}::"JobType"
-      AND qj.status IN ('PENDING', 'PROCESSING')
     )
     GROUP BY er.id
     HAVING COUNT(t.id) > 0

@@ -4,6 +4,7 @@ import { SendBaseMessageToUserPropsSchema } from '@/services/notifications/sendB
 import { JobType, type QueueJob } from '@prisma/client'
 import { processUserFirstPartyData } from '../data/processors/processUserFirstPartyData'
 import { processUserMatches } from '../data/processors/processUserMatches'
+import prisma from '../prisma'
 type JobHandler = (job: QueueJob) => Promise<void>
 
 export const jobHandlers: Record<JobType, JobHandler> = {
@@ -30,6 +31,17 @@ export const jobHandlers: Record<JobType, JobHandler> = {
   [JobType.MATCH_MAKING_GENERATION]: async job => {
     if (!job.userId || !job.eventId) {
       throw new Error('MATCH MAKING GENERATION job requires userId and eventId')
+    }
+
+    const registrationCount = await prisma.eventRegistration.count({
+      where: {
+        eventId: job.eventId
+      }
+    })
+
+    if (registrationCount < 10) {
+      console.log('not enough registrations for match making')
+      return
     }
 
     await processUserMatches(job.userId, job.eventId)
