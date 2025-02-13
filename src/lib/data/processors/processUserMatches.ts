@@ -78,23 +78,57 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
   const rawEmbedding = await generateEmbedding(searchString)
   const embedding = pgvector.toSql(rawEmbedding)
 
-  console.log('embedding', embedding)
+  console.log('embedding done')
+
+  const test = await prisma.eventRegistration.findMany({
+    where: { eventId: eventId }
+  })
+
+  console.log(
+    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    test.map(v => v.userId)
+  )
+  const userWhitelist = test.filter(v => v.userId !== userId).map(v => v.userId)
+  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb', userWhitelist)
 
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
-    SELECT u.id 
-    FROM "User" u
-    INNER JOIN "EventRegistration" er ON u.id = er."userId"
-    WHERE er."eventId" = ${eventId}
-    AND u.id != ${userId}
+  SELECT u.id 
+  FROM "User" u
+  INNER JOIN "EventRegistration" er 
+    ON u.id = er."userId"
+    AND er."eventId" = ${eventId}
+  WHERE u.id != ${userId}
     AND u.embedding IS NOT NULL
-    ORDER BY u.embedding <=> ${embedding}::vector
-    LIMIT 3
-  `
+  ORDER BY u.embedding <=> ${embedding}::vector
+  LIMIT 3
+`
+
+  console.log('matches done')
+
+  if (matches.length === 0) {
+    console.log('no matches found')
+    return
+  }
 
   // Process each match with LLM
   for (const match of matches) {
     console.log('match starting now')
+
+    const existingMatch = await prisma.networkingMatch.findUnique({
+      where: {
+        userId_registrationId: {
+          userId,
+          registrationId: registration.id
+        }
+      }
+    })
+
+    if (existingMatch) {
+      console.log('match already exists')
+      continue
+    }
+
     const matchUser = await prisma.user.findUniqueOrThrow({
       where: { id: match.id },
       select: { userDetailedProfile: true }
@@ -161,16 +195,21 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
 
     console.log('collaborationReason')
 
-    // Create networking match
-    await prisma.networkingMatch.create({
-      data: {
-        userId,
-        eventId,
-        registrationId: registration.id,
-        personDescription: keyInsights,
-        matchReason: collaborationReason
-      }
-    })
+    try {
+      // Create networking match
+      await prisma.networkingMatch.create({
+        data: {
+          userId,
+          eventId,
+          registrationId: registration.id,
+          personDescription: keyInsights,
+          matchReason: collaborationReason
+        }
+      })
+    } catch (error) {
+      console.error('error creating networking match', error)
+      continue
+    }
 
     console.log('networking match created')
 

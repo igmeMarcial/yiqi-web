@@ -161,9 +161,9 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
   if (!dataCollected.significantChallenge)
     missingFields.push('significantChallenge')
 
-  if (missingFields.length > 0) {
+  if (missingFields.length > 4) {
     console.log('Missing information:', missingFields.join(', '))
-    throw new Error('Not enough information about the user to proceed')
+    return
   }
 
   const conversation = createConversation({
