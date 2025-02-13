@@ -91,6 +91,7 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
     ORDER BY u.embedding <=> ${embedding}::vector
     LIMIT 3
   `
+
   console.log('matches done')
 
   if (matches.length === 0) {

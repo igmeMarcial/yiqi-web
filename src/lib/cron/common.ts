@@ -39,9 +39,10 @@ export const jobHandlers: Record<JobType, JobHandler> = {
       }
     })
 
-    if (registrationCount < 5) {
+    console.log('registrationCount', registrationCount)
+    if (registrationCount <= 2) {
       console.log('not enough registrations for match making')
-      return
+      throw new Error('not enough registrations for match making')
     }
 
     await processUserMatches(job.userId, job.eventId)
