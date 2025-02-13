@@ -20,7 +20,6 @@ export default async function Home() {
     <>
       <div className="fixed inset-0 h-screen w-screen -z-10 bg-black"></div>
       <MainLandingNav user={user!} />
-
       <div className="lg:max-w-[80%] max-w-[90%] mx-auto pt-20">
         {ongoingEvent ? (
           <OngoingEventBanner user={user!} event={ongoingEvent} />

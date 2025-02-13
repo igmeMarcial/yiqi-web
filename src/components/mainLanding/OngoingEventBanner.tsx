@@ -10,7 +10,6 @@ import {
   Calendar,
   Dot
 } from 'lucide-react'
-import { format } from 'date-fns'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { toast } from '@/hooks/use-toast'
@@ -28,14 +27,11 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import { formatRangeDatesByTimezoneLabel } from '../utils'
 
 interface OngoingEventBannerProps {
   event: SavedEventType
   user?: LuciaUserType
-}
-
-function formatDate(dateString: Date): string {
-  return format(new Date(dateString), 'dd MMM | HH:mm')
 }
 
 export function RenderMatchmakingInfo({
@@ -94,8 +90,16 @@ export function OngoingEventBanner({
   event,
   user
 }: OngoingEventBannerProps): JSX.Element {
-  const { id, title, openGraphImage, startDate, location, virtualLink, type } =
-    event
+  const {
+    id,
+    title,
+    openGraphImage,
+    startDate,
+    location,
+    virtualLink,
+    type,
+    timezoneLabel
+  } = event
   const isOnlineEvent = type === EventTypeEnum.ONLINE
   const router = useRouter()
 
@@ -119,6 +123,9 @@ export function OngoingEventBanner({
       router.push('/user/tickets')
     }
   }
+
+  const isEventOnGoing = (startDate: Date) =>
+    new Date().getTime() >= startDate.getTime()
 
   return (
     <TooltipProvider>
@@ -145,7 +152,7 @@ export function OngoingEventBanner({
                 />
                 <Badge className="absolute top-3 left-3 bg-black/80 backdrop-blur-sm text-[#6de4e8] font-medium px-3 py-1.5 rounded-lg">
                   <Calendar className="w-4 h-4 mr-2" />
-                  {formatDate(startDate)}
+                  {formatRangeDatesByTimezoneLabel(startDate, timezoneLabel)}
                 </Badge>
               </motion.div>
 
@@ -154,7 +161,9 @@ export function OngoingEventBanner({
                 {/* Event Status */}
                 <Badge className="bg-[#6de4e8]/20 text-[#6de4e8] hover:bg-[#6de4e8]/30 px-3 py-1 rounded-md">
                   <Dot className="w-6 h-6 -ml-1.5 text-[#6de4e8] animate-pulse" />
-                  Evento en curso
+                  {isEventOnGoing(startDate)
+                    ? 'Evento en curso'
+                    : 'Proximo a empezar'}
                 </Badge>
 
                 {/* Event Title */}
