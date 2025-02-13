@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
@@ -17,7 +16,6 @@ import { useState } from 'react'
 import { markRegistrationPaid } from '@/services/actions/event/markRegistrationPaid'
 import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import { RenderMatchmakingInfo } from '@/components/mainLanding/OngoingEventBanner'
 import { LuciaUserType } from '@/schemas/userSchema'
 
 interface RegistrationConfirmationProps {
@@ -30,8 +28,7 @@ interface RegistrationConfirmationProps {
 export function RegistrationConfirmation({
   registration,
   requiresPayment = false,
-  isLoggedIn,
-  user
+  isLoggedIn
 }: RegistrationConfirmationProps) {
   const router = useRouter()
   const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false)
@@ -136,9 +133,6 @@ export function RegistrationConfirmation({
           </div>
         </CardContent>
       )}
-      <CardFooter>
-        <RenderMatchmakingInfo user={user} />
-      </CardFooter>
     </Card>
   )
 }

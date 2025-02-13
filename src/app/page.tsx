@@ -9,6 +9,7 @@ import { getPublicEvents } from '@/services/actions/event/getPublicEvents'
 import getCommunities from '@/services/actions/communities/getCommunities'
 import { OngoingEventBanner } from '@/components/mainLanding/OngoingEventBanner'
 import { getUserOngoingEvent } from '@/services/actions/event/getUserOngoingEvent'
+import { validateCheckIn } from '@/services/actions/event/validateCheckIn'
 
 export default async function Home() {
   const user = await getUser()
@@ -16,13 +17,24 @@ export default async function Home() {
   const { communities } = await getCommunities({ limit: 8 })
   const ongoingEvent = await getUserOngoingEvent(user?.email)
 
+  let isUserCheckedInOngoingEvent = false
+  if (user && ongoingEvent)
+    isUserCheckedInOngoingEvent = await validateCheckIn(
+      ongoingEvent.id,
+      user.id
+    )
+
   return (
     <>
       <div className="fixed inset-0 h-screen w-screen -z-10 bg-black"></div>
       <MainLandingNav user={user!} />
       <div className="lg:max-w-[80%] max-w-[90%] mx-auto pt-20">
         {ongoingEvent ? (
-          <OngoingEventBanner user={user!} event={ongoingEvent} />
+          <OngoingEventBanner
+            user={user!}
+            event={ongoingEvent}
+            isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
+          />
         ) : null}
         <Hero />
         <Features />
