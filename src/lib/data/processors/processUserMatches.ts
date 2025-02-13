@@ -48,7 +48,7 @@ export async function processUserMatches(userId: string, eventId: string) {
 
   // Create embedding search string
   const conversation = createConversation({
-    model: AWS_BEDROCK_MODELS.CLAUDE_3_5_v2_SONNET,
+    model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
     maxTokens: 1000,
     temperature: 0.5
   })
