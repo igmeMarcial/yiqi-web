@@ -24,19 +24,26 @@ function parseSendMessageResult(result: unknown): string {
 
 export async function processUserMatches(userId: string, eventId: string) {
   // Get user and event data
-  const [user, event] = await Promise.all([
-    prisma.user.findUniqueOrThrow({
-      where: { id: userId },
-      select: { userDetailedProfile: true }
-    }),
-    prisma.event.findUniqueOrThrow({
-      where: { id: eventId },
-      select: { description: true }
-    })
-  ])
 
-  if (!user.userDetailedProfile) {
-    throw new Error('User profile not processed yet')
+  const registration = await prisma.eventRegistration.findUniqueOrThrow({
+    where: {
+      eventId_userId: {
+        eventId,
+        userId
+      }
+    },
+    include: {
+      user: true,
+      event: true,
+      NetworkingMatch: true
+    }
+  })
+
+  const [user, event] = [registration.user, registration.event]
+
+  if (!user.userDetailedProfile || registration.NetworkingMatch.length > 0) {
+    console.debug('user already has matches or profile not processed yet')
+    return
   }
 
   // Create embedding search string
@@ -46,27 +53,32 @@ export async function processUserMatches(userId: string, eventId: string) {
     temperature: 0.5
   })
 
-  const embeddingPrompt = `Create a search query combining these elements:
-- My top skills: [Extract from profile]
-- Event focus: ${event.description}
-- Desired collaboration types: [Identify from career goals]
-- Industry keywords: [Extract from experience]
+  const embeddingPrompt = `Crea una cadena de búsqueda combinando estos elementos:
+- Mis principales habilidades: [Extraer del perfil]
+- Enfoque del evento: ${event.description}
+- Tipos de colaboración deseados: [Identificar de los objetivos profesionales]
+- Palabras clave de la industria: [Extraer de la experiencia]
 
-Combine these into a natural language search string for finding professionals with:
-1. Complementary expertise in [My Industry]
-2. Experience with [Relevant Technologies]
-3. Interest in [My Project Types]
+Combina estos en una cadena de búsqueda en lenguaje natural para encontrar profesionales con:
+1. Experiencia complementaria en [Mi Industria]
+2. Conocimiento en [Tecnologías Relevantes]
+3. Interés en [Mis Tipos de Proyectos]
 
-Profile: ${user.userDetailedProfile}
-Return only the search string without commentary.`
+Perfil: ${user.userDetailedProfile}
+Devuelve solo la cadena de búsqueda sin comentarios.`
 
+  console.log('embeddingPrompt', embeddingPrompt)
   const searchString = parseSendMessageResult(
     await sendMessage(conversation, embeddingPrompt)
   )
 
+  console.log('searchString', searchString)
+
   // Generate embedding for the search
   const rawEmbedding = await generateEmbedding(searchString)
   const embedding = pgvector.toSql(rawEmbedding)
+
+  console.log('embedding', embedding)
 
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
@@ -82,10 +94,13 @@ Return only the search string without commentary.`
 
   // Process each match with LLM
   for (const match of matches) {
+    console.log('match starting now')
     const matchUser = await prisma.user.findUniqueOrThrow({
       where: { id: match.id },
       select: { userDetailedProfile: true }
     })
+
+    console.log('matchUser')
 
     const conversation = createConversation({
       model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
@@ -94,71 +109,72 @@ Return only the search string without commentary.`
     })
 
     // Generate key insights
-    const keyInsightsPrompt = `Analyze these profiles and highlight 3 key matching factors. Focus on:
-    1. Complementary skills/experience pairing
-    2. Shared values or professional interests
-    3. Potential synergy areas
+    const keyInsightsPrompt = `Analiza estos perfiles y destaca 3 factores clave de coincidencia. Enfócate en:
+    1. Complementariedad de habilidades/experiencia
+    2. Valores compartidos o intereses profesionales
+    3. Áreas potenciales de sinergia
 
-    Format as:
-    - Key Match Factor 1: [Concise title] 
-      • [Specific reason from profiles]
-    - Key Match Factor 2: [Concise title]
-      • [Specific reason from profiles] 
-    - Key Match Factor 3: [Concise title]
-      • [Specific reason from profiles]
+    Formato:
+    - Factor Clave 1: [Título conciso] 
+      • [Razón específica de los perfiles]
+    - Factor Clave 2: [Título conciso]
+      • [Razón específica de los perfiles] 
+    - Factor Clave 3: [Título conciso]
+      • [Razón específica de los perfiles]
 
-    My Profile: ${user.userDetailedProfile}
-    Match Profile: ${matchUser.userDetailedProfile}
+    Mi Perfil: ${user.userDetailedProfile}
+    Perfil del Match: ${matchUser.userDetailedProfile}
 
-    Responde en español usando términos profesionales.`
+    Mantén un tono profesional y utiliza términos técnicos adecuados.`
+    await new Promise(resolve => setTimeout(resolve, 10000))
 
     const keyInsights = parseSendMessageResult(
       await sendMessage(conversation, keyInsightsPrompt)
     )
 
+    console.log('keyInsights')
+
     // Generate collaboration reasons
-    const collaborationPrompt = `Identify collaboration opportunities between these professionals. Consider:
-    - Industry trends they could address together
-    - Resource/knowledge exchange potential
-    - Complementary strengths that create new value
+    const collaborationPrompt = `Identifica oportunidades de colaboración entre estos profesionales. Considera:
+    - Tendencias de la industria que podrían abordar juntos
+    - Potencial de intercambio de recursos/conocimiento
+    - Fortalezas complementarias que creen nuevo valor
 
-    Structure response as:
-    Collaboration Potential: [1-sentence overview]
-    Opportunity Areas:
-    1. [Area 1] - [Specific reason]
-    2. [Area 2] - [Specific reason] 
-    3. [Area 3] - [Specific reason]
+    Estructura la respuesta como:
+    Potencial de Colaboración: [Resumen de 1 oración]
+    Áreas de Oportunidad:
+    1. [Área 1] - [Razón específica]
+    2. [Área 2] - [Razón específica] 
+    3. [Área 3] - [Razón específica]
 
-    Next Steps: [Actionable meeting suggestions]
+    Próximos Pasos: [Sugerencias accionables para reunión]
 
-    My Profile: ${user.userDetailedProfile}
-    Match Profile: ${matchUser.userDetailedProfile}
+    Mi Perfil: ${user.userDetailedProfile}
+    Perfil del Match: ${matchUser.userDetailedProfile}
 
-    Por favor responde en español usando un tono profesional.`
+    Por favor mantén un formato claro y profesional.`
+    await new Promise(resolve => setTimeout(resolve, 10000))
 
     const collaborationReason = parseSendMessageResult(
       await sendMessage(conversation, collaborationPrompt)
     )
 
+    console.log('collaborationReason')
+
     // Create networking match
     await prisma.networkingMatch.create({
       data: {
-        user: { connect: { id: userId } },
-        event: { connect: { id: eventId } },
-        registration: {
-          connect: {
-            eventId_userId: {
-              eventId,
-              userId
-            }
-          }
-        },
+        userId,
+        eventId,
+        registrationId: registration.id,
         personDescription: keyInsights,
         matchReason: collaborationReason
       }
     })
 
+    console.log('networking match created')
+
     // Rate limit delay
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise(resolve => setTimeout(resolve, 30000))
   }
 }
