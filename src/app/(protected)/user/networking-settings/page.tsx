@@ -11,14 +11,14 @@ export default async function page() {
   const userCurrent = await getUser()
 
   if (!userCurrent?.id) {
-    await cookies().set('redirect', '/networking-settings')
+    await cookies().set('redirect', '/user/networking-settings')
     return redirect('/auth')
   }
 
   const user = await getUserProfile(userCurrent.id)
 
   if (!user) {
-    await cookies().set('redirect', '/networking-settings')
+    await cookies().set('redirect', '/user/networking-settings')
     return redirect('/auth')
   }
 
