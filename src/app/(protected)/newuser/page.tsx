@@ -14,7 +14,6 @@ import { getUser } from '@/lib/auth/lucia'
 import { redirect } from 'next/navigation'
 import { Roles } from '@prisma/client'
 import { getTranslations } from 'next-intl/server'
-import { cookies } from 'next/headers'
 
 export default async function Page() {
   const t = await getTranslations('user')
@@ -44,12 +43,7 @@ export default async function Page() {
   } else if (user.role === Roles.ADMIN) {
     redirect(`/admin`)
   } else if (user.role === Roles.USER) {
-    const redirectCookie = cookies().get('redirect')
-    if (redirectCookie) {
-      cookies().delete('redirect')
-      redirect(redirectCookie.value)
-    }
-    redirect('/events')
+    redirect('/newuser/passthru')
   } else if (user.role === Roles.ANDINO_ADMIN) {
     redirect(`/andino-admin`)
   }

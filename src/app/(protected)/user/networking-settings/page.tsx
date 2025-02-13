@@ -4,22 +4,19 @@ import { getUser } from '@/lib/auth/lucia'
 import { profileDataSchema } from '@/schemas/userSchema'
 import { getUserProfile } from '@/services/actions/userActions'
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 import React from 'react'
 
 export default async function page() {
   const userCurrent = await getUser()
 
   if (!userCurrent?.id) {
-    await cookies().set('redirect', '/user/networking-settings')
-    return redirect('/auth')
+    return redirect('/user/networking-settings/passthru')
   }
 
   const user = await getUserProfile(userCurrent.id)
 
   if (!user) {
-    await cookies().set('redirect', '/user/networking-settings')
-    return redirect('/auth')
+    return redirect('/user/networking-settings/passthru')
   }
 
   // Extract networking specific data
