@@ -7,6 +7,7 @@ import {
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { handleEmailReceived } from '@/lib/email/handlers/handleEmailReceived'
+import prisma from '@/lib/prisma'
 const sqsClient = new SQSClient({ region: 'us-east-1' })
 const queueUrl = process.env.AWS_SQS_QUEUE_URL
 export const dynamic = 'force-dynamic'
@@ -52,8 +53,21 @@ export async function GET() {
 
     // Parse the actual email notification
     const emailNotificationRaw = JSON.parse(snsMessage.Message)
-    const emailNotification =
-      EmailNotificationSchema.parse(emailNotificationRaw)
+    const { success, data: emailNotification } =
+      EmailNotificationSchema.safeParse(emailNotificationRaw)
+
+    if (!success) {
+      // Delete the message from the queue after processing
+      const deleteParams = {
+        QueueUrl: queueUrl,
+        ReceiptHandle: message.ReceiptHandle
+      }
+
+      const deleteCommand = new DeleteMessageCommand(deleteParams)
+      await sqsClient.send(deleteCommand)
+
+      return new NextResponse(null, { status: 200 })
+    }
 
     // Extract key details
     const fromEmail = emailNotification.mail.source
@@ -79,13 +93,22 @@ export async function GET() {
       throw new Error('No body found in email')
     }
 
-    // Handle the email with all required fields
-    await handleEmailReceived({
-      fromEmail,
-      toEmail,
-      content: parsedBody,
-      subject
+    const fromUser = await prisma.user.findFirst({
+      where: {
+        email: { equals: fromEmail, mode: 'insensitive' }
+      }
     })
+
+    // only process emails if the user exists, if not just discard because they shouldnt be emailing us.
+    if (fromUser) {
+      // Handle the email with all required fields
+      await handleEmailReceived({
+        fromEmail,
+        toEmail,
+        content: parsedBody,
+        subject
+      })
+    }
 
     // Delete the message from the queue after processing
     const deleteParams = {
