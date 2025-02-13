@@ -31,7 +31,7 @@ export async function scheduleMatchMaking() {
     GROUP BY er.id
     HAVING COUNT(t.id) > 0
   `
-
+  console.log(registrations)
   return registrations.map(registration => ({
     type: JobType.MATCH_MAKING_GENERATION,
     data: {
