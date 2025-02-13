@@ -39,7 +39,7 @@ export const jobHandlers: Record<JobType, JobHandler> = {
       }
     })
 
-    if (registrationCount < 10) {
+    if (registrationCount < 5) {
       console.log('not enough registrations for match making')
       return
     }
