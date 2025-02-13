@@ -8,9 +8,9 @@ import { scheduleMatchMaking } from './scheduleMatchMaking'
 export async function notificationScheduler() {
   const paymentReminders = await scheduleMissingPayment()
   const eventReminders = await scheduleEventReminders()
-  await scheduleMatchMaking()
+  const matchMaking = await scheduleMatchMaking()
 
   await prisma.queueJob.createMany({
-    data: [...paymentReminders, ...eventReminders]
+    data: [...paymentReminders, ...eventReminders, ...matchMaking]
   })
 }
