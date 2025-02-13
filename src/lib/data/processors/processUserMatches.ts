@@ -80,17 +80,29 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
 
   console.log('embedding done')
 
+  const test = await prisma.eventRegistration.findMany({
+    where: { eventId: eventId }
+  })
+
+  console.log(
+    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    test.map(v => v.userId)
+  )
+  const userWhitelist = test.filter(v => v.userId !== userId).map(v => v.userId)
+  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb', userWhitelist)
+
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
-    SELECT u.id 
-    FROM "User" u
-    INNER JOIN "EventRegistration" er ON u.id = er."userId"
-    WHERE er."eventId" = ${eventId}
-    AND u.id != ${userId}
+  SELECT u.id 
+  FROM "User" u
+  INNER JOIN "EventRegistration" er 
+    ON u.id = er."userId"
+    AND er."eventId" = ${eventId}
+  WHERE u.id != ${userId}
     AND u.embedding IS NOT NULL
-    ORDER BY u.embedding <=> ${embedding}::vector
-    LIMIT 3
-  `
+  ORDER BY u.embedding <=> ${embedding}::vector
+  LIMIT 3
+`
 
   console.log('matches done')
 
