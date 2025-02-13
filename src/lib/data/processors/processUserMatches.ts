@@ -103,7 +103,7 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
     console.log('matchUser')
 
     const conversation = createConversation({
-      model: AWS_BEDROCK_MODELS.CLAUDE_3_5_v2_SONNET,
+      model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
       maxTokens: 500,
       temperature: 0.6
     })
@@ -126,7 +126,7 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
     Perfil del Match: ${matchUser.userDetailedProfile}
 
     Mantén un tono profesional y utiliza términos técnicos adecuados.`
-    await new Promise(resolve => setTimeout(resolve, 10000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
     const keyInsights = parseSendMessageResult(
       await sendMessage(conversation, keyInsightsPrompt)
@@ -174,7 +174,6 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
 
     console.log('networking match created')
 
-    // Rate limit delay
-    await new Promise(resolve => setTimeout(resolve, 30000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
   }
 }
