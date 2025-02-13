@@ -40,7 +40,7 @@ class RateLimiter {
 }
 
 // Create a rate limiter instance with 2 requests per second
-const rateLimiter = new RateLimiter(2)
+const rateLimiter = new RateLimiter(1)
 
 export async function sendEmail({
   to,
