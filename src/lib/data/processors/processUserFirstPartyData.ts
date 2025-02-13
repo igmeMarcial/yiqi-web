@@ -168,7 +168,7 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
   }
 
   const conversation = createConversation({
-    model: AWS_BEDROCK_MODELS.CLAUDE_3_5_v2_SONNET,
+    model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
     maxTokens: 2000,
     temperature: 0.7,
     topP: 1
