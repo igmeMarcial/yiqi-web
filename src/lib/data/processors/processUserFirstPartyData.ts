@@ -229,7 +229,11 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
     }
   })
 
+  await new Promise(resolve => {
+    setTimeout(resolve, 5000)
+  })
   const rawEmbedding = await generateEmbedding(userEmbeddableProfile)
+
   if (!rawEmbedding) {
     throw new Error('No embedding was generated')
   }

@@ -1,12 +1,18 @@
 import { notificationScheduler } from '@/lib/cron/notificationScheduler'
 import { processQueueJobs } from '@/lib/cron/queueCron'
+import { processQueueJobsHeavy } from '@/lib/cron/queueCronHeavy'
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
-    await Promise.all([processQueueJobs(), notificationScheduler()])
+    console.log('cron job starting')
+    await Promise.allSettled([
+      processQueueJobs(),
+      processQueueJobsHeavy(),
+      notificationScheduler()
+    ])
 
     return new NextResponse(null, { status: 200 })
   } catch (e) {
