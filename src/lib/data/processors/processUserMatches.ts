@@ -172,7 +172,9 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
       }
     })
 
+    console.log('networking match created')
+
     // Rate limit delay
-    await new Promise(resolve => setTimeout(resolve, 10000))
+    await new Promise(resolve => setTimeout(resolve, 30000))
   }
 }
