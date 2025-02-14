@@ -26,9 +26,12 @@ export default async function getCommunities(
         name: {
           contains: search,
           mode: 'insensitive' as const
-        }
+        },
+        deletedAt: null
       }
-    : {}
+    : {
+        deletedAt: null
+      }
 
   // Get total count for pagination
   const total = await prisma.organization.count({

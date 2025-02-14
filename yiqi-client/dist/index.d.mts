@@ -152,17 +152,12 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             startDate: Date;
             endDate: Date;
             organizationId: string;
-            customFields: {
-                name: string;
-                type: "number" | "date" | "select" | "text";
-                required: boolean;
-                options?: string | undefined;
-            }[];
             createdAt: Date;
             updatedAt: Date;
             requiresApproval: boolean;
             backgroundColor: string | null;
             heroImage: string | null;
+            timezoneLabel: string;
             organization: {
                 name: string;
                 logo: string | null;
@@ -190,6 +185,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
+            customFields?: {
+                fields: {
+                    name: string;
+                    type: "number" | "boolean" | "date" | "text" | "url";
+                    description: string;
+                    inputType: "shortText" | "longText";
+                    required?: boolean | undefined;
+                    defaultValue?: string | number | boolean | undefined;
+                }[];
+                eventData?: Record<string, any>[] | undefined;
+            } | null | undefined;
             openGraphImage?: string | null | undefined;
             featuredIn?: {
                 name: string;
@@ -257,15 +263,10 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         startDate: Date;
         endDate: Date;
         organizationId: string;
-        customFields: {
-            name: string;
-            type: "number" | "date" | "select" | "text";
-            required: boolean;
-            options?: string | undefined;
-        }[];
         createdAt: Date;
         updatedAt: Date;
         requiresApproval: boolean;
+        timezoneLabel: string;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
@@ -277,6 +278,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
+        customFields?: {
+            fields: {
+                name: string;
+                type: "number" | "boolean" | "date" | "text" | "url";
+                description: string;
+                inputType: "shortText" | "longText";
+                required?: boolean | undefined;
+                defaultValue?: string | number | boolean | undefined;
+            }[];
+            eventData?: Record<string, any>[] | undefined;
+        } | null | undefined;
         openGraphImage?: string | null | undefined;
         tickets?: {
             name: string;
@@ -303,6 +315,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
+                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _input_out: {
@@ -311,6 +324,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
+                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _output_in: typeof _trpc_server.unsetMarker;
@@ -397,7 +411,6 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
     }, {
         id: string;
         status: "PENDING" | "APPROVED" | "REJECTED";
-        customFields: Record<string, any>;
         createdAt: Date;
         updatedAt: Date;
         tickets: {
@@ -433,6 +446,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         };
         paid: boolean;
         paymentId: string | null;
+        customFields?: Record<string, any> | null | undefined;
     } | null>;
     createCheckoutSession: _trpc_server.BuildProcedure<"mutation", {
         _config: _trpc_server.RootConfig<{
@@ -558,6 +572,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             startDate: Date;
             endDate: Date;
             requiresApproval: boolean;
+            timezoneLabel: string;
             description?: string | undefined;
             location?: string | null | undefined;
             city?: string | null | undefined;
@@ -569,6 +584,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
+            customFields?: {
+                fields: {
+                    name: string;
+                    type: "number" | "boolean" | "date" | "text" | "url";
+                    description: string;
+                    inputType: "shortText" | "longText";
+                    required?: boolean | undefined;
+                    defaultValue?: string | number | boolean | undefined;
+                }[];
+                eventData?: Record<string, any>[] | undefined;
+            } | null | undefined;
             openGraphImage?: string | null | undefined;
         }[];
         members: {
@@ -920,6 +946,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         startDate: Date;
         endDate: Date;
         requiresApproval: boolean;
+        timezoneLabel: string;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
@@ -931,6 +958,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
+        customFields?: {
+            fields: {
+                name: string;
+                type: "number" | "boolean" | "date" | "text" | "url";
+                description: string;
+                inputType: "shortText" | "longText";
+                required?: boolean | undefined;
+                defaultValue?: string | number | boolean | undefined;
+            }[];
+            eventData?: Record<string, any>[] | undefined;
+        } | null | undefined;
         openGraphImage?: string | null | undefined;
     }[]>;
     getEventRegistrations: _trpc_server.BuildProcedure<"query", {
@@ -953,7 +991,6 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
     }, {
         id: string;
         status: "PENDING" | "APPROVED" | "REJECTED";
-        customFields: Record<string, any>;
         createdAt: Date;
         updatedAt: Date;
         tickets: {
@@ -989,6 +1026,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         };
         paid: boolean;
         paymentId: string | null;
+        customFields?: Record<string, any> | null | undefined;
     }[]>;
     checkInTicket: _trpc_server.BuildProcedure<"mutation", {
         _config: _trpc_server.RootConfig<{

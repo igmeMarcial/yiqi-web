@@ -131,7 +131,9 @@
     "eventCreatedDescription": "Your event has been created and is now ready to be shared.",
     "eventUpdatedDescription": "Your event has been updated with the new changes.",
     "goToEvents": "Go to Events",
-    "viewEvent": "View Event"
+    "viewEvent": "View Event",
+    "editorTitle": "Edit content",
+    "defaultContent": "My content"
   },
   "contactFor": {
     "contact": "Contact",
@@ -647,8 +649,49 @@
     "eventCheckInTableCheckIn": "Checked In",
     "eventCheckinBackButton": "Go to Tickets"
   },
+  "NetworkingUserList": {
+    "title": "Networking Matches",
+    "loadingMatches": "We are using advanced AI matchmaking to find the best connections for you. Keep checking back for new connections!",
+    "foundText": "You have {nbr} potential matches! Explore them to find your best connections.",
+    "buttonText": "View Recommendations",
+    "buttonLoading": "Still loading matches",
+    "modalSubTitle": "Here are the people you’ve matched with! Connect and collaborate to build meaningful relationships.",
+    "whyRecomeendation": "Why should we meet?",
+    "aboutPerson": "About"
+  },
+  "ongoingEventBanner": {
+    "ongoingEvent": "Ongoing Event",
+    "joinEvent": "Join Event",
+    "viewTicket": "View Ticket",
+    "linkUnvailable": "Virtual link is unavailable for this event."
+  },
   "RegistrationChart": {
     "title": "Registrations Last 7 Days",
     "noData": "No registration data available"
+  },
+  "ManagementEventTabs": {
+    "summary": "Event Summary",
+    "attendes": "Attendees",
+    "registration": "Registration",
+    "broadcasts": "Broadcasts",
+    "checkin": "Check-in"
+  },
+  "SendMassiveMessagesForm": {
+    "sendStatement": "Send new statement",
+    "recipients": "Recipients",
+    "chooseAudience": "Choose your audience",
+    "registered": "registered",
+    "subject": "Subject (optional)",
+    "description": "Description",
+    "defaultMessage": "Default message",
+    "send": "Send",
+    "close": "Close",
+    "emailsSent": "The emails were sent",
+    "success": "Success!"
+  },
+  "attendeeStatus": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
   }
 }

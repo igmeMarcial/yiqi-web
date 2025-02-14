@@ -25,7 +25,7 @@ import SignOutButton from './auth/sign-out'
 
 interface User {
   name?: string
-  picture?: string
+  picture?: string | null
   email?: string
   role?: string
 }

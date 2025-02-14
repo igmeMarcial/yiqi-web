@@ -1,5 +1,5 @@
-import { User, Event } from '@prisma/client'
-import { ReactElement } from 'react'
+import type { User, Event } from '@prisma/client'
+import type { ReactElement } from 'react'
 
 import {
   Html,
@@ -18,11 +18,12 @@ import {
   Img
 } from '@react-email/components'
 import { BASE_URL } from '@/lib/env'
+import { formatRangeDatesByTimezoneLabel } from '@/components/utils'
 
 // Define the props types for each template
 export interface ReservationReminderProps {
   user: User
-  event: Event
+  event: Event & { virtualLink?: string | null }
 }
 
 export function ReservationReminder({
@@ -30,7 +31,14 @@ export function ReservationReminder({
   event
 }: ReservationReminderProps): ReactElement {
   const { name } = user
-  const { title: eventName, startDate, endDate, location, id } = event
+  const {
+    title: eventName,
+    startDate,
+    endDate,
+    location,
+    id,
+    virtualLink
+  } = event
 
   const eventLink = `${BASE_URL}/${id}`
   const tickets = `${BASE_URL}/user/tickets`
@@ -38,7 +46,11 @@ export function ReservationReminder({
     'https://andinoweb.s3.us-east-1.amazonaws.com/logo_yiqi_+1.png'
 
   const encodedLocation = encodeURIComponent(location!)
-  const locationUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`
+  const locationUrl = virtualLink
+    ? virtualLink
+    : location
+      ? `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`
+      : undefined
 
   return (
     <Html>
@@ -104,19 +116,34 @@ export function ReservationReminder({
                   Fecha
                 </Text>
                 <Text style={detailValue} className="email-text">
-                  {new Date(startDate).toLocaleDateString()} -{' '}
-                  {new Date(endDate).toLocaleDateString()}
+                  {formatRangeDatesByTimezoneLabel(
+                    startDate,
+                    event.timezoneLabel,
+                    endDate
+                  )}
                 </Text>
               </div>
               <div style={detailItem}>
                 <Text style={detailLabel} className="email-subtext">
-                  Ubicación
+                  {virtualLink ? 'Enlace Virtual' : 'Ubicación'}
                 </Text>
-                <a href={locationUrl} target="_blank" rel="noopener noreferrer">
+                {locationUrl ? (
+                  <a
+                    href={locationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Text style={detailValue} className="email-text">
+                      {virtualLink
+                        ? `Unirse al evento virtual: ${virtualLink}`
+                        : location}
+                    </Text>
+                  </a>
+                ) : (
                   <Text style={detailValue} className="email-text">
-                    {location}
+                    Por determinar
                   </Text>
-                </a>
+                )}
               </div>
             </div>
           </Section>
@@ -146,7 +173,8 @@ export function ReservationReminder({
 
           <Text style={text} className="email-text">
             ¡El momento ha llegado! Asegúrate de tener todo listo para disfrutar
-            de esta experiencia única llena de innovación y tecnología.
+            de esta experiencia única {virtualLink ? 'en línea' : ''} llena de
+            innovación y tecnología.
           </Text>
 
           <Text style={text} className="email-subtext">

@@ -1,232 +1,242 @@
 'use server'
 
-import client from '@/lib/llm/openAI'
 import prisma from '@/lib/prisma'
 import { translations } from '@/lib/translations/translations'
-import { UserDataCollected, userDataCollectedShema } from '@/schemas/userSchema'
-import { encoding_for_model } from 'tiktoken'
-import { generateEmbedding } from './generateEmbedding'
+import {
+  type UserDataCollected,
+  userDataCollectedShema
+} from '@/schemas/userSchema'
 import pgvector from 'pgvector'
+import { generateEmbedding } from './generateEmbedding'
+import {
+  createConversation,
+  sendMessage
+} from '@/lib/llm/messages-api/bedrockWrapper'
+import { z } from 'zod'
 
-const createPrompt = (collectedData: UserDataCollected) => `
-Objective:
-Using the provided user data, generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.
+import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
 
-Instructions:
-Please analyze the user's LinkedIn data and answer the following questions thoroughly. Your responses should be concise yet informative, focusing on insights that would be valuable for networking and co-founder matching.
+const parseSchema = z.array(
+  z.object({
+    type: z.any(),
+    text: z.string().min(1)
+  })
+)
 
-Skills and Talents:
+function createPrompt(collectedData: UserDataCollected): string {
+  return `
+Objetivo:
+Utilizando los datos proporcionados del usuario, genera un perfil detallado que ayude a conectarlo con potenciales cofundadores u oportunidades de networking alineadas con sus objetivos e intereses.
 
-What skills or talents does the user have?
-Highlight any endorsements, certifications, or notable achievements.
-Ideal Role in a Startup:
+Instrucciones:
+Analiza los datos de LinkedIn del usuario y responde las siguientes preguntas de manera exhaustiva. Tus respuestas deben ser concisas pero informativas, enfocándote en insights valiosos para networking y búsqueda de cofundadores.
 
-In a room full of founders, what position would this person be best suited for if they were to start a company?
-Consider their strengths, experience, and leadership qualities.
-Reputation and Expertise:
+Habilidades y Talentos:
+¿Qué habilidades o talentos posee el usuario?
+Destaca endorsements, certificaciones o logros relevantes.
 
-What is the user known for?
-Are there specific projects or contributions that stand out?
-Desired Co-founder Qualities:
+Rol Ideal en una Startup:
+¿Qué posición ocuparía esta persona en una startup considerando sus fortalezas y experiencia?
+Considera sus habilidades de liderazgo y cualidades profesionales.
 
-What kind of co-founder would they need to create a valuable startup?
-Consider complementary skills, personalities, and values.
-Preferred Company Type:
+Reputación y Experiencia:
+¿Por qué es conocido el usuario?
+Menciona proyectos o contribuciones destacadas.
 
-What kind of company would they like to work for?
-Consider company size, culture, industry, and mission.
-Interests and Hobbies:
+Cualidades Deseadas en Cofundador:
+¿Qué tipo de cofundador necesitaría para crear una startup exitosa?
+Describe habilidades complementarias y valores compatibles.
 
-What does the user like to do?
-Include both professional and personal interests.
-Passions:
+Tipo de Compañía Preferida:
+¿En qué tipo de empresa le gustaría trabajar?
+Considera tamaño, cultura corporativa, industria y misión.
 
-What are they passionate about?
-Look for recurring themes in their posts and engagements.
-Career Intentions:
+Intereses y Pasatiempos:
+¿Qué actividades profesionales/personales disfruta?
+Incluye tanto intereses laborales como hobbies.
 
-What is their main intent when it comes to their career?
-Consider whether they are seeking growth, stability, innovation, etc.
-Career Goals:
+Pasiones:
+¿Qué temas le apasionan?
+Identifica patrones en sus publicaciones e interacciones.
 
-What are their short-term and long-term career goals?
-Include any stated objectives or inferred aspirations.
-Content Creation:
+Intenciones Profesionales:
+¿Cuál es su principal objetivo profesional?
+Menciona si busca crecimiento, estabilidad, innovación, etc.
 
-What kind of content do they post?
-Identify topics, themes, and the nature of their posts (e.g., informative, motivational).
-Content Engagement:
+Metas Profesionales:
+¿Cuáles son sus metas a corto y largo plazo?
+Incluye objetivos declarados o aspiraciones inferidas.
 
-What kind of content do they like or react to?
-This can reveal their interests and values.
-Values:
+Creación de Contenido:
+¿Qué tipo de contenido publica?
+Identifica temas, formatos y tono (ej. informativo, motivacional).
 
-What are their core values?
-Look for values expressed directly or implied through their activities.
-Role Models and Influencers:
+Interacción con Contenido:
+¿Qué tipo de contenido suele consumir o compartir?
+Esto revela sus intereses y valores personales.
 
-Who are people they look up to?
-This can include influencers they follow or individuals they frequently mention.
-Social Media Activity Level:
+Valores:
+¿Cuáles son sus valores fundamentales?
+Identifica principios expresados directa o indirectamente.
 
-How often do they spend time on social media?
-Consider the frequency of their posts and engagements.
-Industry Focus:
+Modelos a Seguir:
+¿A quiénes admira profesionalmente?
+Menciona influencers que sigue o personas que cita frecuentemente.
 
-What industry does the user currently look for job opportunities in?
-Include any industries of interest mentioned in their profile or activities.
-Desired Content and Topics:
+Actividad en Redes Sociales:
+¿Qué tan activo es en redes sociales?
+Considera frecuencia de publicaciones e interacciones.
 
-What are some topics or types of content that they would want to see more of?
-This can help tailor networking opportunities to their interests.
-Output Format:
-Provide the information in a well-structured profile, using headings and bullet points where appropriate. Ensure that the profile reads cohesively and offers actionable insights for networking and co-founder matching.
+Enfoque de Industria:
+¿En qué industria busca oportunidades laborales?
+Incluye sectores mencionados en su perfil.
 
-Example Structure:
+Contenido de Interés:
+¿Qué tipo de contenido le gustaría ver más?
+Útil para personalizar oportunidades de networking.
 
-Overview
-Skills and Talents
-Ideal Role in a Startup
-Reputation and Expertise
-Desired Co-founder Qualities
-Preferred Company Type
-Interests and Passions
-Career Intentions and Goals
-Content Creation and Engagement
-Core Values
-Role Models and Influencers
-Social Media Activity
-Industry Focus
-Desired Content and Topics
-Additional Notes:
+Formato de Salida:
+Proporciona la información en español usando encabezados y viñetas. Asegura coherencia y insights accionables para networking.
 
-Use the user's own words where appropriate to preserve authenticity.
-Ensure confidentiality and handle all data in compliance with privacy regulations.
-Avoid making assumptions; base your analysis solely on the provided data.
+Estructura Ejemplo:
+Resumen
+Habilidades y Talentos
+Rol Ideal en Startup
+Reputación y Experiencia
+Cualidades Deseadas en Cofundador
+Tipo de Compañía Preferida
+Intereses y Pasiones
+Metas Profesionales
+Creación e Interacción de Contenido
+Valores Fundamentales
+Modelos a Seguir
+Actividad en Redes
+Enfoque de Industria
+Contenido de Interés
 
+Notas Adicionales:
+1. Usa las palabras del usuario cuando sea posible para mantener autenticidad
+2. Asegura confidencialidad y cumplimiento de regulaciones de privacidad
+3. Evita suposiciones no respaldadas por datos
+4. Todas las respuestas deben estar exclusivamente en español
 
-Here is the user resume:
+Resumen del usuario:
 ${collectedData.resumeText}\n\n
 
 ==================
 
-Here are the user profile answers:
+Respuestas del cuestionario:
 
 ${translations.es.professionalMotivationsLabel}: ${collectedData.professionalMotivations}
 ${translations.es.communicationStyleLabel}: ${collectedData.communicationStyle}
 ${translations.es.professionalValuesLabel}: ${collectedData.professionalValues}
 ${translations.es.careerAspirationsLabel}: ${collectedData.careerAspirations}
 ${translations.es.significantChallengeLabel}: ${collectedData.significantChallenge}
-
- 
-
-
 `
-
-const MODEL = 'o1-preview'
-const SUMMARY_MODEL = 'gpt-4o-mini'
-type Props = {
-  userId: string
 }
 
-export async function processUserFirstPartyData({ userId }: Props) {
+function parseSendMessageResult(result: unknown): string {
+  const parsed = parseSchema.parse(result)
+  return parsed[0].text
+}
+
+export async function processUserFirstPartyData(userId: string): Promise<void> {
+  const systemPrompt: string =
+    "You are a community manager that is tasked with creating a deep understanding of your professional network in order to improve the quality of connections for your comunity. You will be provided with a user's LinkedIn data and your task is to generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests."
+
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } })
+
   const dataCollected = userDataCollectedShema.parse(user.dataCollected)
-  if (
-    !dataCollected.resumeText &&
-    !dataCollected.careerAspirations &&
-    !dataCollected.communicationStyle &&
-    !dataCollected.professionalMotivations &&
-    !dataCollected.professionalValues &&
-    !dataCollected.significantChallenge
-  ) {
-    throw new Error('Not enough information about the user to proceed')
+
+  const missingFields = []
+
+  if (!dataCollected.resumeText) missingFields.push('resumeText')
+  if (!dataCollected.careerAspirations) missingFields.push('careerAspirations')
+  if (!dataCollected.communicationStyle)
+    missingFields.push('communicationStyle')
+  if (!dataCollected.professionalMotivations)
+    missingFields.push('professionalMotivations')
+  if (!dataCollected.professionalValues)
+    missingFields.push('professionalValues')
+  if (!dataCollected.significantChallenge)
+    missingFields.push('significantChallenge')
+
+  if (missingFields.length > 4) {
+    console.log('Missing information:', missingFields.join(', '))
+    return
   }
+
+  const conversation = createConversation({
+    model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
+    maxTokens: 2000,
+    temperature: 0.7,
+    topP: 1
+  })
 
   const calculatedPrompt = createPrompt(dataCollected)
 
-  const encoder = encoding_for_model(MODEL)
-  const numberOfTokens = encoder.encode(calculatedPrompt).length
+  const profileResult = parseSendMessageResult(
+    await sendMessage(conversation, calculatedPrompt, systemPrompt)
+  )
 
-  console.log('Number of tokens:', numberOfTokens)
-
-  if (numberOfTokens > 110000) {
-    throw new Error('Number of tokens is too high')
-  }
-
-  const profileResult = await client.chat.completions.create({
-    model: MODEL,
-    messages: [
-      {
-        role: 'system',
-        content: `You are a community manager that is tasked with creating a deep understanding 
-        of your professional network in order to improve the quality of connections for your comunity.
-        You will be provided with a user's LinkedIn data and your task is to generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests.`
-      },
-      {
-        role: 'user',
-        content: calculatedPrompt
-      }
-    ]
-  })
-
-  const userDetailedProfile = profileResult.choices[0].message.content
-
-  if (!userDetailedProfile) {
+  if (!profileResult) {
     throw new Error('User detailed profile is empty')
   }
 
-  const userEmbeddableProfileResult = await client.chat.completions.create({
-    model: SUMMARY_MODEL,
-    messages: [
-      {
-        role: 'user',
-        content: `
-        Create a short version of the user profile that can be used to embedd in a database.
-        
-        ${userDetailedProfile}`
-      }
-    ]
+  console.info('Profile result call was successful')
+
+  await new Promise(resolve => {
+    setTimeout(resolve, 1000)
   })
 
-  const userEmbeddableProfile =
-    userEmbeddableProfileResult.choices[0].message.content
+  const userEmbeddableProfile = parseSendMessageResult(
+    await sendMessage(
+      conversation,
+      `Summarize the following user profile for embedding into a database: ${profileResult}`
+    )
+  )
 
   if (!userEmbeddableProfile) {
-    throw new Error('User embeddable profile is empty')
+    throw new Error('No embeddable profile was found')
   }
 
-  const userContentPreferencesResult = await client.chat.completions.create({
-    model: SUMMARY_MODEL,
-    messages: [
-      {
-        role: 'user',
-        content: `${userDetailedProfile}
-        \n\n
-        in 3 sentences or less, what are the user's content preferences?`
-      }
-    ]
+  console.info('User embeddable profile result call was successful')
+
+  await new Promise(resolve => {
+    setTimeout(resolve, 1000)
   })
 
-  const userContentPreferences =
-    userContentPreferencesResult.choices[0].message.content
+  const userContentPreferencesResult = parseSendMessageResult(
+    await sendMessage(
+      conversation,
+      `In 3 sentences or less, what are the user's content preferences?  \n\n ${profileResult}`
+    )
+  )
 
-  if (!userContentPreferences) {
-    throw new Error('User content preferences is empty')
+  if (!userContentPreferencesResult) {
+    throw new Error('No user content preference was done')
   }
+
+  console.info('userContentPreferencesResult call was successful')
 
   await prisma.user.update({
     where: { id: userId },
     data: {
-      userDetailedProfile: userDetailedProfile,
+      userDetailedProfile: profileResult,
       userEmbeddableProfile: userEmbeddableProfile,
-      userContentPreferences: userContentPreferences
+      userContentPreferences: userContentPreferencesResult
     }
   })
 
-  const rawEmbedding = await generateEmbedding(userEmbeddableProfile)
-  const embedding = pgvector.toSql(rawEmbedding)
+  await new Promise(resolve => {
+    setTimeout(resolve, 1000)
+  })
 
-  // we cannot use prisma.user.update here because the embedding is a vector and prisma does not support it
+  const rawEmbedding = await generateEmbedding(userEmbeddableProfile)
+
+  if (!rawEmbedding) {
+    throw new Error('No embedding was generated')
+  }
+  const embedding = pgvector.toSql(rawEmbedding)
   await prisma.$executeRaw`UPDATE "public"."User" SET embedding = ${embedding}::vector WHERE id = ${userId};`
 }
