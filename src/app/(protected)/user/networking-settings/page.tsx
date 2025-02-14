@@ -4,10 +4,12 @@ import { getUser } from '@/lib/auth/lucia'
 import { profileDataSchema } from '@/schemas/userSchema'
 import { getUserProfile } from '@/services/actions/userActions'
 import { redirect } from 'next/navigation'
-import React from 'react'
-
 export default async function page() {
   const userCurrent = await getUser()
+
+  if (!userCurrent) {
+    redirect('/auth')
+  }
 
   if (!userCurrent?.id) {
     return redirect('/user/networking-settings/passthru')
@@ -19,13 +21,12 @@ export default async function page() {
     return redirect('/user/networking-settings/passthru')
   }
 
-  // Extract networking specific data
   const networkingData = {
-    professionalMotivations: user.professionalMotivations,
-    communicationStyle: user.communicationStyle,
-    professionalValues: user.professionalValues,
-    careerAspirations: user.careerAspirations,
-    significantChallenge: user.significantChallenge
+    professionalMotivations: user?.professionalMotivations,
+    communicationStyle: user?.communicationStyle,
+    professionalValues: user?.professionalValues,
+    careerAspirations: user?.careerAspirations,
+    significantChallenge: user?.significantChallenge
   }
 
   return (

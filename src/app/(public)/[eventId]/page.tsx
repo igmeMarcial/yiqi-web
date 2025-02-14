@@ -4,6 +4,9 @@ import { getEventById } from '@/services/actions/event/getEventById'
 import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import { JSDOM } from 'jsdom'
+import { validateCheckIn } from '@/services/actions/event/validateCheckIn'
+import { getNetworkingMatches } from '@/services/actions/networking/getNetworkingMatches'
+import prisma from '@/lib/prisma'
 type Props = {
   params: { eventId: string }
 }
@@ -58,18 +61,33 @@ export default async function Page({
     redirect('/')
   }
 
+  let isUserCheckedInOngoingEvent = false
+  let eventRegistration: {
+    id: string
+  } | null = null
+  if (user) {
+    isUserCheckedInOngoingEvent = await validateCheckIn(params.eventId, user.id)
+    eventRegistration = await prisma.eventRegistration.findFirst({
+      where: { AND: [{ eventId: params.eventId }, { userId: user.id }] },
+      select: { id: true }
+    })
+  }
+
+  const isUserRegistered = eventRegistration ? !!eventRegistration.id : false
+  const networkingMatches = eventRegistration
+    ? await getNetworkingMatches(eventRegistration.id)
+    : null
+
   return (
     <>
       <div className="fixed inset-0 h-screen w-screen -z-10 bg-black"></div>
       <EventPage
         customFields={event.customFields?.fields}
         event={event}
-        user={{
-          email: user?.email,
-          name: user?.name,
-          role: user?.role,
-          picture: user?.picture || undefined
-        }}
+        user={user!}
+        isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
+        isUserRegistered={isUserRegistered}
+        networkingMatches={networkingMatches}
       />
     </>
   )

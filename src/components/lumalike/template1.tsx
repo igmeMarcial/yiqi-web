@@ -7,12 +7,29 @@ import { EventDetails } from './template1-components/event-details'
 import { Registration } from './template1-components/registration'
 import { Hosts } from './template1-components/hosts'
 import { EventDescription } from './template1-components/event-description'
-import { RegistrationProps } from './template1-components/registration'
 import { EventLocation } from './template1-components/event-location'
 import MainLandingNav from '../mainLanding/mainNav'
 import { useTranslations } from 'next-intl'
+import { ManageMatchmaking } from '../events/ManageMatchmaking'
+import { PublicEventType, CustomFieldType } from '@/schemas/eventSchema'
+import { LuciaUserType } from '@/schemas/userSchema'
+import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 
-export function EventPage({ event, customFields, user }: RegistrationProps) {
+export function EventPage({
+  event,
+  isUserCheckedInOngoingEvent,
+  networkingMatches,
+  isUserRegistered,
+  user,
+  customFields
+}: {
+  event: PublicEventType
+  isUserCheckedInOngoingEvent: boolean
+  isUserRegistered: boolean
+  user?: LuciaUserType
+  networkingMatches: NetworkingMatchesType | null
+  customFields?: CustomFieldType[]
+}) {
   const [isMobile, setIsMobile] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const registrationRef = useRef<HTMLDivElement>(null)
@@ -102,6 +119,14 @@ export function EventPage({ event, customFields, user }: RegistrationProps) {
                     dialogTriggerRef={dialogTriggerRef}
                   />
                 </motion.div>
+              )}
+              {!!isUserRegistered && (
+                <ManageMatchmaking
+                  user={user}
+                  event={event}
+                  isUserCheckedInOngoingEvent={!!isUserCheckedInOngoingEvent}
+                  networkingMatches={networkingMatches}
+                />
               )}
             </div>
             <div className="flex flex-col gap-8 w-full">
