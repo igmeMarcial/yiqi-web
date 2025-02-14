@@ -61,7 +61,7 @@ model User {
 
   linkedinAccessToken String?
 
-  embedding              Unsupported("vector(3072)")?
+  embedding              Unsupported("vector(1536)")?
   userDetailedProfile    String?
   userEmbeddableProfile  String?
   userContentPreferences String?
@@ -210,6 +210,7 @@ model Event {
   heroImage       String?
 
   NetworkingMatch NetworkingMatch[]
+  timezoneLabel   String            @default("(GMT-5:00) Bogota, Lima, Quito")
 }
 
 enum TicketCategory {
@@ -283,6 +284,7 @@ model Ticket {
   checkedInByUserId String?
   ticketType        TicketOfferings   @relation(fields: [ticketTypeId], references: [id])
   ticketTypeId      String
+  deletedAt         DateTime?
 }
 
 enum AttendeeStatus {
@@ -409,6 +411,8 @@ enum JobType {
   GENERATE_EVENT_OPEN_GRAPH
   COLLECT_USER_DATA
   SEND_USER_MESSAGE
+  PROCESS_USER_DATA
+  MATCH_MAKING_GENERATION
   // Add more job types as needed
 }
 
@@ -463,4 +467,6 @@ model NetworkingMatch {
   updatedAt         DateTime          @updatedAt
   personDescription String
   matchReason       String
+
+  @@unique([userId, registrationId])
 }

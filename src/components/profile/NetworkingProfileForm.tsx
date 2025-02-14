@@ -28,9 +28,9 @@ import { userDataCollectedShema } from '@/schemas/userSchema'
 import type { UserDataCollected } from '@/schemas/userSchema'
 import { useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
-import { useUpload } from '@/hooks/useUpload'
+import { scheduleUserDataProcessing } from '@/services/actions/networking/scheduleUserDataProcessing'
 
-type NetworkingData = Pick<
+export type NetworkingData = Pick<
   UserDataCollected,
   | 'professionalMotivations'
   | 'communicationStyle'
@@ -44,14 +44,15 @@ type NetworkingData = Pick<
 
 type Props = {
   initialData: NetworkingData
+  userId: string
 }
 
-export default function NetworkingProfileForm({ initialData }: Props) {
+export default function NetworkingProfileForm({ initialData, userId }: Props) {
   const { toast } = useToast()
   const router = useRouter()
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const { uploadSingle, isUploading } = useUpload()
   const [isProcessingFile, setIsProcessingFile] = useState(false)
 
   const form = useForm<NetworkingData>({
@@ -79,54 +80,160 @@ export default function NetworkingProfileForm({ initialData }: Props) {
     }
   })
 
-  console.log(form.formState.errors)
-
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      if (
-        file.type !== 'application/pdf' &&
-        file.type !== 'text/plain' &&
-        file.type !==
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ) {
-        toast({
-          title: translations.es.invalidFileType,
-          description: translations.es.onlyPDFAndTXTAndDOCXAllowed,
-          variant: 'destructive'
-        })
-        return
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: translations.es.fileTooLarge,
-          description: translations.es.maxFileSize,
-          variant: 'destructive'
-        })
-        return
-      }
-
-      try {
-        setIsProcessingFile(true)
-        setSelectedFile(file)
-        const url = await uploadSingle(file)
-        form.setValue('resumeUrl', url)
-        form.setValue('resumeLastUpdated', new Date().toISOString())
-      } catch (error) {
-        console.error('Error uploading file:', error)
-        toast({
-          title: translations.es.resumeUploadError,
-          variant: 'destructive'
-        })
-      } finally {
-        setIsProcessingFile(false)
-      }
+  async function processData(userId: string) {
+    try {
+      await scheduleUserDataProcessing(userId)
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `${error}`
+      })
     }
   }
 
-  const onSubmit = async (values: NetworkingData) => {
+  // Define Textract supported MIME types (add more as needed)
+  const TEXTRACT_SUPPORTED_TYPES = new Set([
+    'application/pdf',
+    'image/jpeg',
+    'image/png',
+    'image/tiff'
+  ])
+
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    try {
+      setIsProcessingFile(true)
+      setSelectedFile(file)
+
+      // 1. Get presigned URL
+      const presignedResponse = await fetch('/api/aws/presigned-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: file.name })
+      })
+
+      if (!presignedResponse.ok) throw new Error('Failed to get upload URL')
+      const { presignedUrl, s3Key, publicUrl } = await presignedResponse.json()
+
+      // 2. Upload file to S3
+      const uploadResponse = await fetch(presignedUrl, {
+        method: 'PUT',
+        body: file,
+        headers: { 'Content-Type': file.type }
+      })
+
+      if (!uploadResponse.ok) throw new Error('Upload failed')
+
+      // 3. Extract text based on file type
+      let extractedText: string
+      if (TEXTRACT_SUPPORTED_TYPES.has(file.type)) {
+        // Use Textract for supported types
+        const textractResponse = await fetch('/api/aws/textract', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ s3Key })
+        })
+        if (!textractResponse.ok) throw new Error('Text extraction failed')
+        extractedText = (await textractResponse.json()).text
+      } else {
+        // Client-side extraction for other document types
+        extractedText = await extractTextClientSide(file)
+      }
+
+      // 4. Update form values
+      form.setValue('resumeUrl', publicUrl)
+      form.setValue('resumeText', extractedText)
+      form.setValue('resumeLastUpdated', new Date().toISOString())
+    } catch (error) {
+      console.error('File processing error:', error)
+      toast({
+        title: translations.es.resumeUploadError,
+        description: error instanceof Error ? error.message : 'Unknown error',
+        variant: 'destructive'
+      })
+    } finally {
+      setIsProcessingFile(false)
+    }
+  }
+
+  async function extractTextClientSide(file: File): Promise<string> {
+    const fileExtension = file.name.split('.').pop()?.toLowerCase()
+
+    if (fileExtension === 'doc') {
+      throw new Error(
+        'formato DOC no esta soportado. por favor convertir a  DOCX  PDF.'
+      )
+    }
+
+    const arrayBuffer = await file.arrayBuffer()
+
+    switch (fileExtension) {
+      case 'docx':
+        return await parseDocx(arrayBuffer)
+      case 'odt':
+        return await parseOdt(arrayBuffer)
+      case 'txt':
+      case 'csv':
+        return await readFileAsText(file)
+      default:
+        throw new Error(`Unsupported file type: ${file.type}`)
+    }
+  }
+  function readFileAsText(file: File): Promise<string> {
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader()
+      reader.onload = function (event: ProgressEvent<FileReader>) {
+        if (event.target?.result) {
+          resolve(event.target.result.toString())
+        } else {
+          reject(new Error('Failed to read text file'))
+        }
+      }
+      reader.onerror = function () {
+        reject(new Error('File read error'))
+      }
+      reader.readAsText(file)
+    })
+  }
+
+  async function parseDocx(arrayBuffer: ArrayBuffer): Promise<string> {
+    try {
+      const mammoth = await import('mammoth')
+      const result = await mammoth.extractRawText({ arrayBuffer })
+      return result.value
+    } catch (error) {
+      throw new Error(
+        `DOCX parsing failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
+    }
+  }
+
+  async function parseOdt(arrayBuffer: ArrayBuffer): Promise<string> {
+    const JSZip = await import('jszip')
+    const zip = await new JSZip.default().loadAsync(arrayBuffer)
+    const content = await zip.file('content.xml')?.async('text')
+    if (!content) throw new Error('Invalid ODT file')
+    return extractTextFromOdtXml(content)
+  }
+
+  function extractTextFromOdtXml(xmlContent: string): string {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(xmlContent, 'text/xml')
+    const paragraphs = Array.from(doc.getElementsByTagName('text:p'))
+
+    return paragraphs
+      .map(function (p) {
+        return p.textContent ? p.textContent.replace(/\s+/g, ' ').trim() : ''
+      })
+      .filter(function (text) {
+        return text.length > 0
+      })
+      .join('\n\n')
+  }
+
+  async function onSubmit(values: NetworkingData) {
     setIsSubmitting(true)
     try {
       const formData = new FormData()
@@ -137,19 +244,14 @@ export default function NetworkingProfileForm({ initialData }: Props) {
         }
       })
 
-      const result = await saveNetworkingProfile(formData)
+      await saveNetworkingProfile(values, userId)
 
-      if (result.success) {
-        toast({
-          title: translations.es.networkingProfileSaved
-        })
-        router.refresh()
-      } else {
-        toast({
-          title: translations.es.networkingProfileError,
-          variant: 'destructive'
-        })
-      }
+      await processData(userId)
+
+      toast({
+        title: translations.es.networkingProfileSaved
+      })
+      router.refresh()
     } catch (error) {
       console.error('Error in onSubmit:', error)
       toast({
@@ -216,6 +318,12 @@ export default function NetworkingProfileForm({ initialData }: Props) {
                   </div>
                 )}
               </div>
+              {isProcessingFile && (
+                <div className="mt-2 text-sm text-muted-foreground">
+                  <Loader2 className="h-4 w-4 mr-2 inline animate-spin" />
+                  {translations.es.extractingText}
+                </div>
+              )}
               {initialData.resumeUrl && !selectedFile && !isProcessingFile && (
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <FileText className="h-4 w-4" />
@@ -348,7 +456,7 @@ export default function NetworkingProfileForm({ initialData }: Props) {
             <Button
               type="submit"
               className="w-full"
-              disabled={isSubmitting || isUploading}
+              disabled={isSubmitting || isProcessingFile}
             >
               {isSubmitting ? (
                 <>

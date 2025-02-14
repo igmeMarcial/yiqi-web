@@ -69,7 +69,7 @@ export function MarkdownEditor({
       Highlight,
       Image.configure({
         HTMLAttributes: {
-          class: 'max-w-full h-auto'
+          style: 'width: 100%; max-width: 500px;'
         }
       }),
       Youtube.configure({
@@ -117,7 +117,7 @@ export function MarkdownEditor({
         }}
       />
       <Card className="mx-auto max-w-full">
-        <CardContent className="p-6">
+        <CardContent className="p-3">
           <Dialog>
             <DialogTrigger asChild>
               <div className="prose prose-sm max-w-none mb-4 cursor-pointer dark:prose-invert">
@@ -129,8 +129,12 @@ export function MarkdownEditor({
               closeIcon={
                 <Button
                   onClick={() => {
-                    onChange(stagingContent)
-                    setContent(stagingContent)
+                    const editorContent =
+                      stagingContent === '<p></p>'
+                        ? `<p>${t('defaultContent')}</p>`
+                        : stagingContent
+                    onChange(editorContent)
+                    setContent(editorContent)
                   }}
                 >
                   <Check className="h-12 w-12 text-primary" />
@@ -138,7 +142,7 @@ export function MarkdownEditor({
               }
             >
               <DialogHeader>
-                <DialogTitle>Edit Content</DialogTitle>
+                <DialogTitle>{t(`editorTitle`)}</DialogTitle>
               </DialogHeader>
               <div className="mt-4">
                 <RichTextEditor

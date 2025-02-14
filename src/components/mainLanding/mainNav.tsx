@@ -20,7 +20,7 @@ import SignOutButton from '../auth/sign-out'
 
 export interface User {
   name?: string
-  picture?: string
+  picture?: string | null
   email?: string
   role?: string
 }

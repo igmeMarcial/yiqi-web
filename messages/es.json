@@ -131,7 +131,9 @@
     "eventCreatedDescription": "Tu evento ha sido creado y está listo para ser compartido.",
     "eventUpdatedDescription": "Tu evento ha sido actualizado con los nuevos cambios.",
     "goToEvents": "Ir a Eventos",
-    "viewEvent": "Ver Evento"
+    "viewEvent": "Ver Evento",
+    "editorTitle": "Editar contenido",
+    "defaultContent": "Mi contenido"
   },
   "contactFor": {
     "contact": "Contacto",
@@ -647,38 +649,49 @@
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
   },
+  "NetworkingUserList": {
+    "title": "Coincidencias de Networking",
+    "loadingMatches": "Estamos utilizando un avanzado sistema de emparejamiento con IA para encontrar las mejores conexiones para ti. ¡Sigue revisando para nuevas conexiones!",
+    "foundText": "¡Tienes {nbr} coincidencias potenciales! Explóralas para encontrar tus mejores conexiones.",
+    "buttonText": "Ver recomendaciones",
+    "buttonLoading": "Aún cargando las coincidencias",
+    "modalSubTitle": "¡Aquí están las personas con las que has hecho coincidir! Conéctate y colabora para construir relaciones significativas.",
+    "whyRecomeendation": "¿Por qué deberíamos encontrarnos?",
+    "aboutPerson": "Acerca de"
+  },
+  "ongoingEventBanner": {
+    "ongoingEvent": "Evento en Curso",
+    "joinEvent": "Unirse al Evento",
+    "viewTicket": "Ver Entrada",
+    "linkUnvailable": "El enlace virtual no está disponible para este evento."
+  },
   "RegistrationChart": {
     "title": "Registros de los Últimos 7 Días",
     "noData": "No hay datos de registro disponibles"
   },
-   "yiqiForm": {
-  "formNotFound": "Formulario no encontrado",
-  "brokenLinkOrDeleted": "El enlace que has seguido puede estar roto o el formulario ha sido eliminado.",
-  "createNewForm": "Crear un nuevo formulario",
-  "responsesSent": "Tus respuestas se han enviado correctamente",
-  "errorOccurred": "Ocurrió un error",
-  "loginToContinue": "Inicia sesión para continuar",
-  "loginToFillForm": "Para rellenar este formulario, debes iniciar sesión",
-  "or": "o",
-  "submit": "Enviar",
-  "clear": "Limpiar",
-  "fieldRequired": "Este campo es requerido",
-  "writeYourAnswer": "Escribe tu respuesta...",
-  "other": "Otro",
-  "writeHere": "Escribe aquí...",
-   "questions": "Preguntas",
-    "responses": "Respuestas",
-    "formUpdated": "Formulario actualizado",
-    "update": "Actualizar",
-    "delete": "Eliminar",
-    "formDeleted": "Formulario eliminado",
-    "formDeleteError": "Error al eliminar el formulario",
-    "waitingForResponses": "Esperando respuestas",
-    "noResponses": "No hay respuestas. Publica tu formulario para comenzar a aceptar respuestas",
-    "newForm": "Nuevo Formulario",
-    "noFormsCreated": "No hay formularios creados. ¡Comienza creando uno nuevo!",
-    "createForm": "Crear formulario",
-     "linkCopied": "Link Copiado",
-    "copyLink": "Copiar Link"
-}
+  "ManagementEventTabs": {
+    "summary": "Resumen del evento",
+    "attendes": "Asistentes",
+    "registration": "Registro",
+    "broadcasts": "Difusiones",
+    "checkin": "Check-in"
+  },
+  "SendMassiveMessagesForm": {
+    "sendStatement": "Enviar nuevo comunicado",
+    "recipients": "Destinatarios",
+    "chooseAudience": "Elije tu audiencia",
+    "registered": "registrados",
+    "subject": "Asunto (opcional)",
+    "description": "Descripción",
+    "defaultMessage": "Mensaje predeterminado",
+    "send": "Enviar",
+    "close": "Cerrar",
+    "emailsSent": "Los correos fueron enviados",
+    "success": "Éxito!"
+  },
+  "attendeeStatus": {
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado"
+  }
 }

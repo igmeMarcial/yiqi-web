@@ -20,18 +20,14 @@ function getLocaleFromHeader(acceptLanguage: string | null): string {
 
 export function middleware(request: NextRequest) {
   const localeCookie = request.cookies.get('locale')
-
   if (!localeCookie) {
     const acceptLanguage = request.headers.get('Accept-Language')
     const locale = getLocaleFromHeader(acceptLanguage)
 
-    const response = NextResponse.redirect(request.url)
-    response.cookies.set('locale', locale, {
-      maxAge: 60 * 60 * 24 * 365,
-      path: '/'
+    request.cookies.set({
+      name: 'locale',
+      value: locale
     })
-
-    return response
   }
 
   return NextResponse.next()
