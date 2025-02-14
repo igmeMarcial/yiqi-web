@@ -47,7 +47,7 @@ model User {
   QueueJob QueueJob[]
 
   // for actual shape of this checkout userDataCollectedShema
-  dataCollected Json? @default("{}")
+  dataCollected Json? 
 
   registeredEvents EventRegistration[] @relation("registrationUser")
 
