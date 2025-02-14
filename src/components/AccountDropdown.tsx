@@ -22,13 +22,15 @@ import {
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import SignOutButton from './auth/sign-out'
-import { LuciaUserType } from '@/schemas/userSchema'
 
-interface AccountDropdownProps {
-  readonly user: LuciaUserType | null
+interface User {
+  name?: string
+  picture?: string | null
+  email?: string
+  role?: string
 }
 
-export function AccountDropdown({ user }: AccountDropdownProps) {
+export function AccountDropdown({ user }: { user: User }) {
   const t = useTranslations('AccountDropdown')
   return (
     <DropdownMenu modal={false}>
