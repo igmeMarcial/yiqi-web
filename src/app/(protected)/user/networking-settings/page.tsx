@@ -4,7 +4,6 @@ import { getUser } from '@/lib/auth/lucia'
 import { profileDataSchema } from '@/schemas/userSchema'
 import { getUserProfile } from '@/services/actions/userActions'
 import { redirect } from 'next/navigation'
-
 export default async function page() {
   const userCurrent = await getUser()
 
@@ -12,7 +11,15 @@ export default async function page() {
     redirect('/auth')
   }
 
+  if (!userCurrent?.id) {
+    return redirect('/user/networking-settings/passthru')
+  }
+
   const user = await getUserProfile(userCurrent.id)
+
+  if (!user) {
+    return redirect('/user/networking-settings/passthru')
+  }
 
   const networkingData = {
     professionalMotivations: user?.professionalMotivations,

@@ -467,4 +467,6 @@ model NetworkingMatch {
   updatedAt         DateTime          @updatedAt
   personDescription String
   matchReason       String
+
+  @@unique([userId, registrationId])
 }
