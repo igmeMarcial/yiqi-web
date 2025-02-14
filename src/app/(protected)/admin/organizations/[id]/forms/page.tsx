@@ -1,8 +1,7 @@
-import OrganizationLayout from '@/components/orgs/OrganizationLayout'
 import FormsList from '@/components/yiqiForm/FormResults/FormsList'
 import { getUser } from '@/lib/auth/lucia'
-import { getOrganization } from '@/services/actions/organizationActions'
 import { getForms } from '@/services/actions/typeForm/typeFormActions'
+import { Roles } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import React from 'react'
 export default async function FormsPage({
@@ -11,15 +10,7 @@ export default async function FormsPage({
   params: { id: string }
 }) {
   const user = await getUser()
-  if (!user) {
-    redirect('/auth')
-  }
-
-  const organization = await getOrganization(params.id)
-  if (!organization) {
-    return <div>Organization not found</div>
-  }
-  const formsResponse = await getForms(organization.id)
+  const formsResponse = await getForms(params.id)
   if (!formsResponse.success) {
     return (
       <div className="text-center text-gray-700 dark:text-gray-300">
@@ -27,23 +18,18 @@ export default async function FormsPage({
       </div>
     )
   }
-
-  return (
-    <main className="flex flex-col items-center justify-center">
-      <OrganizationLayout
-        orgId={params.id}
-        userProps={{
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          picture: user.picture ?? ''
-        }}
-      >
+  if (user) {
+    if (user.role === Roles.ADMIN) {
+      return (
         <FormsList
-          organizationId={organization.id}
+          organizationId={params.id}
           forms={formsResponse.forms || []}
         />
-      </OrganizationLayout>
-    </main>
-  )
+      )
+    } else if (user.role === Roles.NEW_USER) {
+      redirect(`/newuser`)
+    } else if (user.role === Roles.USER) {
+      redirect(`/user`)
+    }
+  }
 }

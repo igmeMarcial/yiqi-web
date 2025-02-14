@@ -2,7 +2,6 @@
 
 import React from 'react'
 
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { FormProps } from '../../schemas/yiqiFormSchema'
 import { FormHeader } from './FormHeader'
 
@@ -44,15 +43,8 @@ export function YiqiFormLayout({
         isEditing={isEditing}
         formId={formId}
       />
-      <ScrollArea
-        style={{
-          position: 'absolute',
-          height: 'calc(100vh - 104px)',
-          width: '100%'
-        }}
-      >
-        {children}
-      </ScrollArea>
+
+      {children}
     </div>
   )
 }
