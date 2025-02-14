@@ -130,8 +130,8 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
     }
 
     const matchUser = await prisma.user.findUniqueOrThrow({
-      where: { id: match.id },
-      select: { userDetailedProfile: true }
+      where: { id: match.id, userDetailedProfile: { not: null } },
+      select: { userDetailedProfile: true, id: true }
     })
 
     console.log('matchUser')
@@ -199,7 +199,7 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
       // Create networking match
       await prisma.networkingMatch.create({
         data: {
-          userId,
+          userId: matchUser.id,
           eventId,
           registrationId: registration.id,
           personDescription: keyInsights,
