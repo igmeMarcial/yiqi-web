@@ -16,8 +16,6 @@ const textractClient = new TextractClient({
   }
 })
 
-export const maxDuration = 60
-
 async function getTextDetectionResult(jobId: string): Promise<string> {
   let text = ''
   let nextToken: string | undefined = undefined
