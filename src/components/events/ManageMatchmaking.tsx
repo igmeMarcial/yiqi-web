@@ -3,39 +3,28 @@
 import { motion } from 'framer-motion'
 import { UserPlus, TicketIcon, PartyPopper } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import {
-  userDataCollectedShema,
-  type LuciaUserType
-} from '@/schemas/userSchema'
 import { Button } from '@/components/ui/button'
 import { SavedEventType } from '@/schemas/eventSchema'
 import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 import { useTranslations } from 'next-intl'
+import { INetworkingData } from '../lumalike/template1'
 
 function RenderMatchmakingInfo({
   eventId,
   isUserCheckedInOngoingEvent,
-  user
+  networkingData
 }: {
   eventId: string
   isUserCheckedInOngoingEvent: boolean
   networkingMatches: NetworkingMatchesType | null
-  user?: LuciaUserType
+  networkingData: INetworkingData | null
 }): JSX.Element | null {
   const router = useRouter()
   const t = useTranslations('EventManageMatchmaking')
 
-  if (!user) return null
-
-  const validData = user.dataCollected ?? {}
-  const userData = userDataCollectedShema.parse(validData)
-
-  const isProfileComplete =
-    userData.professionalMotivations &&
-    userData.communicationStyle &&
-    userData.professionalValues &&
-    userData.careerAspirations &&
-    userData.significantChallenge
+  const isProfileComplete = networkingData
+    ? Object.values(networkingData).every(Boolean)
+    : false
 
   const getDescriptionLabel = (
     isProfileComplete: boolean,
@@ -116,20 +105,20 @@ export const ManageMatchmaking = ({
   event,
   isUserCheckedInOngoingEvent,
   networkingMatches,
-  user
+  networkingData
 }: {
   event: SavedEventType
   isUserCheckedInOngoingEvent: boolean
   networkingMatches: NetworkingMatchesType | null
-  user?: LuciaUserType
+  networkingData: INetworkingData | null
 }) => {
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
       <RenderMatchmakingInfo
         eventId={event.id}
-        user={user}
         isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
         networkingMatches={networkingMatches}
+        networkingData={networkingData}
       />
     </div>
   )
