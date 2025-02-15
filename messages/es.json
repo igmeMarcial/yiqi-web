@@ -693,5 +693,23 @@
     "pending": "Pendiente",
     "approved": "Aprobado",
     "rejected": "Rechazado"
+  },
+  "Networking": {
+    "profileImage": "Imagen de perfil",
+    "whyConnect": "Por Qué Deberían Conectar",
+    "aboutMatch": "Sobre Este Match",
+    "notRegistered": "No estás registrado para este evento",
+    "registerFirst": "Necesitas registrarte primero para ver tus matches",
+    "registerEvent": "Registrarme al evento",
+    "needMoreInfo": "Necesitamos más información sobre ti",
+    "completeProfile": "Para poder encontrar matches, necesitamos que completes tu perfil",
+    "completeProfileButton": "Completar mi perfil",
+    "generatingMatches": "Estamos generando tus matches",
+    "processingTime": "Este proceso puede tomar unos minutos...",
+    "matchGenerationFailed": "Hubo un problema al generar tus matches",
+    "contactOrganizer": "Por favor contacta al organizador del evento",
+    "matchProcessNotFound": "No encontramos el proceso de matches",
+    "contactOrganizerCheck": "Por favor contacta al organizador del evento para que revisen qué sucedió",
+    "noMatches": "No hay matches para ti en este momento"
   }
 }

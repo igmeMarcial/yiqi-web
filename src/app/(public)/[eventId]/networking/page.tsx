@@ -6,6 +6,7 @@ import { getNetworkingMatchesByEventUser } from '@/services/actions/networking/g
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,7 +15,9 @@ export default async function Page({
 }: {
   params: { eventId: string }
 }) {
+  const t = await getTranslations('Networking')
   const user = await getUser()
+
   if (!user) {
     redirect('/auth')
   }
@@ -38,14 +41,10 @@ export default async function Page({
     return (
       <Layout>
         <div className="text-center space-y-4">
-          <h2 className="text-2xl font-semibold">
-            No estás registrado para este evento
-          </h2>
-          <p className="text-gray-400">
-            Necesitas registrarte primero para ver tus matches
-          </p>
+          <h2 className="text-2xl font-semibold">{t('notRegistered')}</h2>
+          <p className="text-gray-400">{t('registerFirst')}</p>
           <Button variant="outline" asChild>
-            <Link href={`/${params.eventId}`}>Registrarme al evento</Link>
+            <Link href={`/${params.eventId}`}>{t('registerEvent')}</Link>
           </Button>
         </div>
       </Layout>
@@ -56,14 +55,12 @@ export default async function Page({
     return (
       <Layout>
         <div className="text-center space-y-4">
-          <h2 className="text-2xl font-semibold">
-            Necesitamos más información sobre ti
-          </h2>
-          <p className="text-gray-400">
-            Para poder encontrar matches, necesitamos que completes tu perfil
-          </p>
+          <h2 className="text-2xl font-semibold">{t('needMoreInfo')}</h2>
+          <p className="text-gray-400">{t('completeProfile')}</p>
           <Button variant="outline" asChild>
-            <Link href="/user/networking-settings">Completar mi perfil</Link>
+            <Link href="/user/networking-settings">
+              {t('completeProfileButton')}
+            </Link>
           </Button>
         </div>
       </Layout>
@@ -80,11 +77,9 @@ export default async function Page({
             <div className="text-center space-y-4">
               <Loader2 className="w-8 h-8 animate-spin mx-auto" />
               <h2 className="text-2xl font-semibold">
-                Estamos generando tus matches
+                {t('generatingMatches')}
               </h2>
-              <p className="text-gray-400">
-                Este proceso puede tomar unos minutos...
-              </p>
+              <p className="text-gray-400">{t('processingTime')}</p>
             </div>
           </Layout>
         )
@@ -93,11 +88,9 @@ export default async function Page({
           <Layout>
             <div className="text-center space-y-4">
               <h2 className="text-2xl font-semibold">
-                Hubo un problema al generar tus matches
+                {t('matchGenerationFailed')}
               </h2>
-              <p className="text-gray-400">
-                Por favor contacta al organizador del evento
-              </p>
+              <p className="text-gray-400">{t('contactOrganizer')}</p>
             </div>
           </Layout>
         )
@@ -106,12 +99,9 @@ export default async function Page({
           <Layout>
             <div className="text-center space-y-4">
               <h2 className="text-2xl font-semibold">
-                No encontramos el proceso de matches
+                {t('matchProcessNotFound')}
               </h2>
-              <p className="text-gray-400">
-                Por favor contacta al organizador del evento para que revisen
-                qué sucedió
-              </p>
+              <p className="text-gray-400">{t('contactOrganizerCheck')}</p>
             </div>
           </Layout>
         )
@@ -124,7 +114,7 @@ export default async function Page({
       {matches.length > 0 ? (
         <MatchesList matches={matches} />
       ) : (
-        <p className="text-xl">No hay matches para ti en este momento</p>
+        <p className="text-xl">{t('noMatches')}</p>
       )}
     </Layout>
   )
