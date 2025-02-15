@@ -1,13 +1,17 @@
 'use client'
+
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
+import { useTranslations } from 'next-intl'
 
 export const MatchesList = ({
   matches
 }: {
   matches: NetworkingMatchesType | null
 }) => {
+  const t = useTranslations('Networking')
+
   if (!matches || matches.length === 0) return null
 
   return (
@@ -26,7 +30,7 @@ export const MatchesList = ({
                   src={item.user.picture || '/placeholder.svg'}
                   width={96}
                   height={96}
-                  alt="Profile image"
+                  alt={t('profileImage')}
                   className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-[#6de4e8]"
                 />
               ) : (
@@ -46,7 +50,7 @@ export const MatchesList = ({
               <div className="space-y-2">
                 <div>
                   <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
-                    Why You Should Connect:
+                    {t('whyConnect')}:
                   </h4>
                   <p className="text-gray-300 text-sm leading-relaxed">
                     {item.matchReason}
@@ -55,11 +59,10 @@ export const MatchesList = ({
 
                 <div>
                   <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
-                    About This Match:
+                    {t('aboutMatch')}:
                   </h4>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    {item.matchReason}{' '}
-                    {/* Assuming this should be different content? */}
+                    {item.personDescription}
                   </p>
                 </div>
               </div>
