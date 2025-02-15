@@ -639,5 +639,13 @@
     "pending": "En attente",
     "approved": "Approuvée",
     "rejected": "Rejetée"
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complétez votre profil pour un jumelage alimenté par l'IA",
+    "missingCheckIn": "Enregistrez-vous pour afficher vos correspondances de réseautage",
+    "readyForAIMatching": "Vos correspondances de réseautage organisées par l’IA sont prêtes !",
+    "completeProfile": "Profil complet",
+    "viewTickets": "Voir les billets",
+    "viewMatches": "Voir les matchs"
   }
 }

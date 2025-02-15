@@ -641,5 +641,13 @@
     "pending": "Pendente",
     "approved": "Aprovada",
     "rejected": "Rejeitada"
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complete seu perfil para matchmaking com tecnologia de IA",
+    "missingCheckIn": "Faça check-in para ver suas correspondências de rede",
+    "readyForAIMatching": "Suas partidas de rede com curadoria de IA estão prontas!",
+    "completeProfile": "Perfil completo",
+    "viewTickets": "Ver ingressos",
+    "viewMatches": "Ver partidas"
   }
 }

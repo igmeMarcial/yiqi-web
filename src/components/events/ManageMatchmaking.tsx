@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { SavedEventType } from '@/schemas/eventSchema'
 import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
+import { useTranslations } from 'next-intl'
 
 function RenderMatchmakingInfo({
   eventId,
@@ -22,6 +23,7 @@ function RenderMatchmakingInfo({
   user?: LuciaUserType
 }): JSX.Element | null {
   const router = useRouter()
+  const t = useTranslations('EventManageMatchmaking')
 
   if (!user) return null
 
@@ -39,11 +41,9 @@ function RenderMatchmakingInfo({
     isProfileComplete: boolean,
     isUserCheckedInOngoingEvent: boolean
   ) => {
-    if (!isProfileComplete)
-      return 'Complete Your Profile for AI-Powered Matchmaking'
-    if (!isUserCheckedInOngoingEvent)
-      return 'Check In to View Your Networking Matches'
-    return 'Your AI-Curated Networking Matches Are Ready!'
+    if (!isProfileComplete) return t('missingProfile')
+    if (!isUserCheckedInOngoingEvent) return t(`missingCheckIn`)
+    return t(`readyForAIMatching`)
   }
 
   const getActionButton = (
@@ -54,20 +54,20 @@ function RenderMatchmakingInfo({
       return (
         <span className="flex items-center justify-center">
           <UserPlus className="mr-2 h-4 w-4 flex-shrink-0" />
-          Complete Profile
+          {t('completeProfile')}
         </span>
       )
     if (!isUserCheckedInOngoingEvent)
       return (
         <span className="flex items-center justify-center">
           <TicketIcon className="mr-2 h-4 w-4 flex-shrink-0" />
-          View Tickets
+          {t('viewTickets')}
         </span>
       )
     return (
       <span className="flex items-center justify-center">
         <PartyPopper className="mr-2 h-4 w-4 flex-shrink-0" />
-        View Matches
+        {t(`viewMatches`)}
       </span>
     )
   }
