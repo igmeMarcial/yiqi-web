@@ -7,6 +7,7 @@ import { JSDOM } from 'jsdom'
 import { validateCheckIn } from '@/services/actions/event/validateCheckIn'
 import { getNetworkingMatches } from '@/services/actions/networking/getNetworkingMatches'
 import prisma from '@/lib/prisma'
+import { getUserProfile } from '@/services/actions/userActions'
 type Props = {
   params: { eventId: string }
 }
@@ -54,7 +55,7 @@ export default async function Page({
 }: {
   params: { eventId: string }
 }) {
-  const user = await getUser()
+  const currentUser = await getUser()
   const event = await getEventById(params.eventId)
 
   if (!event) {
@@ -65,12 +66,35 @@ export default async function Page({
   let eventRegistration: {
     id: string
   } | null = null
-  if (user) {
-    isUserCheckedInOngoingEvent = await validateCheckIn(params.eventId, user.id)
+
+  let networkingData: {
+    professionalMotivations: string
+    communicationStyle: string
+    professionalValues: string
+    careerAspirations: string
+    significantChallenge: string
+  } | null = null
+
+  if (currentUser) {
+    isUserCheckedInOngoingEvent = await validateCheckIn(
+      params.eventId,
+      currentUser.id
+    )
     eventRegistration = await prisma.eventRegistration.findFirst({
-      where: { AND: [{ eventId: params.eventId }, { userId: user.id }] },
+      where: { AND: [{ eventId: params.eventId }, { userId: currentUser.id }] },
       select: { id: true }
     })
+
+    const userProfile = await getUserProfile(currentUser.id)
+    networkingData = userProfile
+      ? {
+          professionalMotivations: userProfile.professionalMotivations ?? '',
+          communicationStyle: userProfile.communicationStyle ?? '',
+          professionalValues: userProfile.professionalValues ?? '',
+          careerAspirations: userProfile.careerAspirations ?? '',
+          significantChallenge: userProfile.significantChallenge ?? ''
+        }
+      : null
   }
 
   const isUserRegistered = eventRegistration ? !!eventRegistration.id : false
@@ -84,10 +108,11 @@ export default async function Page({
       <EventPage
         customFields={event.customFields?.fields}
         event={event}
-        user={user!}
+        user={currentUser!}
         isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
         isUserRegistered={isUserRegistered}
         networkingMatches={networkingMatches}
+        networkingData={networkingData}
       />
     </>
   )

@@ -711,5 +711,13 @@
     "matchProcessNotFound": "No encontramos el proceso de matches",
     "contactOrganizerCheck": "Por favor contacta al organizador del evento para que revisen qué sucedió",
     "noMatches": "No hay matches para ti en este momento"
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
+    "missingCheckIn": "Regístrese para ver sus coincidencias de networking",
+    "readyForAIMatching": "¡Tus coincidencias de networking seleccionadas por IA están listas!",
+    "completeProfile": "Completar Perfil",
+    "viewTickets": "Ver Boletos",
+    "viewMatches": "Ver coincidencias"
   }
 }

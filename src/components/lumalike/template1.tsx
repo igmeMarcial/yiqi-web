@@ -15,13 +15,21 @@ import { PublicEventType, CustomFieldType } from '@/schemas/eventSchema'
 import { LuciaUserType } from '@/schemas/userSchema'
 import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 
+export interface INetworkingData {
+  professionalMotivations: string
+  communicationStyle: string
+  professionalValues: string
+  careerAspirations: string
+  significantChallenge: string
+}
 export function EventPage({
   event,
   isUserCheckedInOngoingEvent,
   networkingMatches,
   isUserRegistered,
   user,
-  customFields
+  customFields,
+  networkingData
 }: {
   event: PublicEventType
   isUserCheckedInOngoingEvent: boolean
@@ -29,6 +37,7 @@ export function EventPage({
   user?: LuciaUserType
   networkingMatches: NetworkingMatchesType | null
   customFields?: CustomFieldType[]
+  networkingData: INetworkingData | null
 }) {
   const [isMobile, setIsMobile] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
@@ -120,12 +129,12 @@ export function EventPage({
                   />
                 </motion.div>
               )}
-              {!!isUserRegistered && (
+              {!!isUserRegistered && user && (
                 <ManageMatchmaking
-                  user={user}
                   event={event}
                   isUserCheckedInOngoingEvent={!!isUserCheckedInOngoingEvent}
                   networkingMatches={networkingMatches}
+                  networkingData={networkingData}
                 />
               )}
             </div>
