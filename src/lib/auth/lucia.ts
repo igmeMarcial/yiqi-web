@@ -59,7 +59,7 @@ export const getUser = async () => {
   if (!dbUser) {
     return null
   }
-  const test = luciaUserSchema.omit({ dataCollected: true }).parse(dbUser)
+  const test = luciaUserSchema.parse(dbUser)
   return test as LuciaUserType
 }
 export async function isEventAdmin(
