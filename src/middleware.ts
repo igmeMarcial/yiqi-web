@@ -23,7 +23,8 @@ export function middleware(request: NextRequest) {
   const fullUrl = request.url
 
   // Clone the request headers and append the full URL
-  request.headers.set('x-full-url', fullUrl)
+  const requestHeaders = new Headers()
+  requestHeaders.set('x-full-url', fullUrl)
 
   if (!localeCookie) {
     const acceptLanguage = request.headers.get('Accept-Language')
@@ -35,7 +36,9 @@ export function middleware(request: NextRequest) {
     })
   }
 
-  return NextResponse.next()
+  return NextResponse.next({
+    headers: requestHeaders
+  })
 }
 
 export const config = {
