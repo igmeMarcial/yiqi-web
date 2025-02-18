@@ -714,7 +714,7 @@
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete Your Profile for AI-Powered Matchmaking",
-    "missingCheckIn": "Check In to View Your Networking Matches",
+    "missingCheckIn": "Make checkIn to view your Networking Matches",
     "readyForAIMatching": "Your AI-Curated Networking Matches Are Ready!",
     "completeProfile": "Complete Profile",
     "viewTickets": "View Tickets",

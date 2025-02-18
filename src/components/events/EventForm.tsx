@@ -303,7 +303,8 @@ export function EventForm({ organizationId, event }: Props) {
       endTime.setMinutes(minutes + 10)
       const endHours = endTime.getHours().toString().padStart(2, '0')
       const endMinutes = endTime.getMinutes().toString().padStart(2, '0')
-      setMinEndTime(`${endHours}:${endMinutes}`)
+      if (new Date(endDate) <= new Date(startDate))
+        setMinEndTime(`${endHours}:${endMinutes}`)
     }
   }
 
