@@ -1,50 +1,54 @@
+// the prompt is used to find the most important things a user should know about his match
 export function generateKeyInsightsPrompt(
   userDetailedProfile: string,
   matchUserDetailedProfile: string
 ) {
-  return `Analiza estos perfiles y destaca 3 factores clave de coincidencia. Enfócate en:
-    1. Complementariedad de habilidades/experiencia
-    2. Valores compartidos o intereses profesionales
-    3. Áreas potenciales de sinergia
+  return `Analiza estos perfiles y destaca los factores clave de conexión profesional. Enfócate en:
+    - Habilidades complementarias que resuelven necesidades inmediatas
+    - Proyectos actuales/recientes donde podrían colaborar
+    - Conexiones estratégicas relevantes para sus objetivos actuales
 
     Formato:
-    - Factor Clave 1: [Título conciso] 
-      • [Razón específica de los perfiles]
-    - Factor Clave 2: [Título conciso]
-      • [Razón específica de los perfiles] 
-    - Factor Clave 3: [Título conciso]
-      • [Razón específica de los perfiles]
+    Core Synergy: [Título de 5 palabras que capture la esencia]
+    Top Match Drivers:
+    • [Habilidad/Experiencia específica del match] → [Cómo resuelve necesidad del usuario]
+    • [Recurso único del match] → [Aplicación práctica en proyectos del usuario]
+    • [Conexión estratégica] → [Potencial impacto en objetivos actuales]
 
     Mi Perfil: ${userDetailedProfile}
     Perfil del Match: ${matchUserDetailedProfile}
 
-    Mantén un tono profesional y utiliza términos técnicos adecuados.`
+    Mantén un tono directo y orientado a la acción, máximo 150 palabras. Evita listas numeradas.`
 }
 
+// the prompt is used to find out what opportunities of collaboration exist between the user and his match
 export function generateCollaborationPrompt(
   userDetailedProfile: string,
   matchUserDetailedProfile: string
 ) {
-  return `Identifica oportunidades de colaboración entre estos profesionales. Considera:
-    - Tendencias de la industria que podrían abordar juntos
-    - Potencial de intercambio de recursos/conocimiento
-    - Fortalezas complementarias que creen nuevo valor
+  return `Identifica oportunidades concretas de colaboración inmediata basadas en:
+    - Proyectos activos mencionados en ambos perfiles
+    - Habilidades técnicas complementarias
+    - Recursos/contactos estratégicos compartidos
 
-    Estructura la respuesta como:
-    Potencial de Colaboración: [Resumen de 1 oración]
-    Áreas de Oportunidad:
-    1. [Área 1] - [Razón específica]
-    2. [Área 2] - [Razón específica] 
-    3. [Área 3] - [Razón específica]
+    Estructura:
+    Opportunity Spotlight: [Título de 3-5 palabras]
+    • Specific Fit: [Habilidad/recurso del match que cubre necesidad específica del usuario]
+    • Immediate Value: [Resultado tangible en los próximos 3-6 meses]
+    • Strategic Edge: [Ventaja competitiva que esta colaboración crea]
 
-    Próximos Pasos: [Sugerencias accionables para reunión]
+    Next-Step Collaboration:
+    - [Acción específica con entregable claro]
+    - [Formato ideal de primera interacción]
+    - [Métrica de éxito inicial]
 
     Mi Perfil: ${userDetailedProfile}
     Perfil del Match: ${matchUserDetailedProfile}
 
-    Por favor mantén un formato claro y profesional.`
+    Enfócate en resultados accionables, máximo 120 palabras. Sin marcadores numéricos.`
 }
 
+// the prompt is used to generate a search query to find professionals that match the user's profile and the event description
 export function generateEmbeddingPrompt(
   eventDescription: string,
   userDetailedProfile: string
