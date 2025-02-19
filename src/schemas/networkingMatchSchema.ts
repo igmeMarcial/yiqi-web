@@ -4,7 +4,14 @@ import { z } from 'zod'
 const networkingMatchUserSchema = z.object({
   id: z.string(),
   name: z.string().nullable(),
-  picture: z.string().nullable().optional()
+  picture: z.string().nullable().optional(),
+  dataCollected: z
+    .object({
+      linkedin: z.string().optional(),
+      x: z.string().optional(),
+      instagram: z.string().optional()
+    })
+    .nullable()
 })
 
 // Schema for a single networking match
