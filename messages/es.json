@@ -717,7 +717,7 @@
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
-    "missingCheckIn": "Regístrese para ver su red de networking",
+    "missingCheckIn": "Haga check-in para ver su red de networking",
     "readyForAIMatching": "¡Tu red de networking seleccionada por IA están listas!",
     "completeProfile": "Completar Perfil",
     "viewTickets": "Ver Boletos",
