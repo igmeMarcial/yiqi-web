@@ -327,7 +327,9 @@
     "importing": "Importing...",
     "importContacts": "Import Contacts",
     "noOrganizationFound": "No organization found",
-    "networkingSettings": "Networking Settings"
+    "networkingSettings": "Networking Settings",
+    "errorInDate": "Invalid date",
+    "errorInHours": "Invalid hours"
   },
 
   "AdminLayout": {

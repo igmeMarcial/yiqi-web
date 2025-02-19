@@ -295,7 +295,9 @@
     "importing": "Importation...",
     "importContacts": "Importer des contacts",
     "noOrganizationFound": "Aucune organisation trouvée",
-    "networkingSettings": "Paramètres de mise en réseau"
+    "networkingSettings": "Paramètres de mise en réseau",
+    "errorInDate": "Date invalide",
+    "errorInHours": "heures invalides"
   },
   "AdminLayout": {
     "organization": "Organisation",
