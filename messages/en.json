@@ -665,7 +665,8 @@
     "ongoingEvent": "Ongoing Event",
     "joinEvent": "Join Event",
     "viewTicket": "View Ticket",
-    "linkUnvailable": "Virtual link is unavailable for this event."
+    "linkUnvailable": "Virtual link is unavailable for this event.",
+    "nextToStart": "Next to start"
   },
   "RegistrationChart": {
     "title": "Registrations Last 7 Days",

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { UserPlus, TicketIcon, PartyPopper } from 'lucide-react'
+import { UserPlus, PartyPopper } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { SavedEventType } from '@/schemas/eventSchema'
@@ -46,19 +46,13 @@ function RenderMatchmakingInfo({
           {t('completeProfile')}
         </span>
       )
-    if (!isUserCheckedInOngoingEvent)
+    if (isProfileComplete && isUserCheckedInOngoingEvent)
       return (
         <span className="flex items-center justify-center">
-          <TicketIcon className="mr-2 h-4 w-4 flex-shrink-0" />
-          {t('viewTickets')}
+          <PartyPopper className="mr-2 h-4 w-4 flex-shrink-0" />
+          {t(`viewMatches`)}
         </span>
       )
-    return (
-      <span className="flex items-center justify-center">
-        <PartyPopper className="mr-2 h-4 w-4 flex-shrink-0" />
-        {t(`viewMatches`)}
-      </span>
-    )
   }
 
   const getLink = (
@@ -78,24 +72,28 @@ function RenderMatchmakingInfo({
         transition={{ delay: 0.2, duration: 0.3 }}
         className="p-6 bg-gradient-to-br from-[#6de4e8]/15 to-[#6de4e8]/5 rounded-xl backdrop-blur-lg border border-[#6de4e8]/30 shadow-lg shadow-[#6de4e8]/10 hover:shadow-[#6de4e8]/20 transition-shadow"
       >
-        <p className="text-sm md:text-base text-[#6de4e8] mb-4 font-semibold text-center md:text-left">
+        <p className="text-sm md:text-base text-[#6de4e8] font-semibold text-center md:text-left">
           {getDescriptionLabel(
             !!isProfileComplete,
             isUserCheckedInOngoingEvent
           )}
         </p>
-        <Button
-          variant="ghost"
-          size="lg"
-          onClick={() => {
-            router.push(
-              getLink(!!isProfileComplete, isUserCheckedInOngoingEvent)
-            )
-          }}
-          className="w-full md:w-auto bg-[#6de4e8]/10 hover:bg-[#6de4e8]/20 text-[#6de4e8] hover:text-[#6de4e8]/90 transition-all duration-300 transform hover:scale-[1.02] active:scale-95"
-        >
-          {getActionButton(!!isProfileComplete, isUserCheckedInOngoingEvent)}
-        </Button>
+        {!isProfileComplete || isUserCheckedInOngoingEvent ? (
+          <Button
+            variant="ghost"
+            size="lg"
+            onClick={() => {
+              router.push(
+                getLink(!!isProfileComplete, isUserCheckedInOngoingEvent)
+              )
+            }}
+            className="mt-4 w-full md:w-auto bg-[#6de4e8]/10 hover:bg-[#6de4e8]/20 text-[#6de4e8] hover:text-[#6de4e8]/90 transition-all duration-300 transform hover:scale-[1.02] active:scale-95"
+          >
+            {getActionButton(!!isProfileComplete, isUserCheckedInOngoingEvent)}
+          </Button>
+        ) : (
+          <></>
+        )}
       </motion.div>
     </div>
   )

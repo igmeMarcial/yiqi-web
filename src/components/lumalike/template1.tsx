@@ -21,6 +21,7 @@ export interface INetworkingData {
   professionalValues: string
   careerAspirations: string
   significantChallenge: string
+  resumeUrl: string
 }
 export function EventPage({
   event,

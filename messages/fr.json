@@ -615,7 +615,8 @@
     "ongoingEvent": "Événement en Cours",
     "joinEvent": "Rejoindre l'Événement",
     "viewTicket": "Voir le Billet",
-    "linkUnvailable": "Le lien virtuel n'est pas disponible pour cet événement."
+    "linkUnvailable": "Le lien virtuel n'est pas disponible pour cet événement.",
+    "nextToStart": "Bientôt pour commencer"
   },
   "ManagementEventTabs": {
     "summary": "Résumé de l'événement",
@@ -644,7 +645,7 @@
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complétez votre profil pour un jumelage alimenté par l'IA",
-    "missingCheckIn": "Enregistrez-vous pour afficher vos correspondances de réseautage",
+    "missingCheckIn": "Enregistrez-vous pour voir vos correspondances de réseautage",
     "readyForAIMatching": "Vos correspondances de réseautage organisées par l’IA sont prêtes !",
     "completeProfile": "Profil complet",
     "viewTickets": "Voir les billets",

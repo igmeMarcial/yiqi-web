@@ -617,7 +617,8 @@
     "ongoingEvent": "Evento em Andamento",
     "joinEvent": "Participar do Evento",
     "viewTicket": "Ver Ingresso",
-    "linkUnvailable": "O link virtual não está disponível para este evento."
+    "linkUnvailable": "O link virtual não está disponível para este evento.",
+    "nextToStart": "Em breve para começar"
   },
   "ManagementEventTabs": {
     "summary": "Resumo do Evento",

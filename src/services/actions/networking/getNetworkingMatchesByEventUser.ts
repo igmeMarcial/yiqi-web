@@ -22,7 +22,11 @@ export async function getNetworkingMatchesByEventUser(
   const matches = r?.id
     ? await prisma.networkingMatch.findMany({
         where: { registrationId: r.id },
-        include: { user: { select: { id: true, name: true, picture: true } } }
+        include: {
+          user: {
+            select: { id: true, name: true, picture: true, dataCollected: true }
+          }
+        }
       })
     : []
 

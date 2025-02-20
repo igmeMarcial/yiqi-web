@@ -665,7 +665,8 @@
     "ongoingEvent": "Evento en Curso",
     "joinEvent": "Unirse al Evento",
     "viewTicket": "Ver Entrada",
-    "linkUnvailable": "El enlace virtual no está disponible para este evento."
+    "linkUnvailable": "El enlace virtual no está disponible para este evento.",
+    "nextToStart": "Próximo a comenzar"
   },
   "RegistrationChart": {
     "title": "Registros de los Últimos 7 Días",
@@ -716,7 +717,7 @@
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
-    "missingCheckIn": "Regístrese para ver su red de networking",
+    "missingCheckIn": "Haga check-in para ver su red de networking",
     "readyForAIMatching": "¡Tu red de networking seleccionada por IA están listas!",
     "completeProfile": "Completar Perfil",
     "viewTickets": "Ver Boletos",
