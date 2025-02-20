@@ -5,7 +5,6 @@ import { UserPlus, PartyPopper } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { SavedEventType } from '@/schemas/eventSchema'
-import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 import { useTranslations } from 'next-intl'
 import { INetworkingData } from '../lumalike/template1'
 
@@ -16,7 +15,6 @@ function RenderMatchmakingInfo({
 }: {
   eventId: string
   isUserCheckedInOngoingEvent: boolean
-  networkingMatches: NetworkingMatchesType | null
   networkingData: INetworkingData | null
 }): JSX.Element | null {
   const router = useRouter()
@@ -102,12 +100,10 @@ function RenderMatchmakingInfo({
 export const ManageMatchmaking = ({
   event,
   isUserCheckedInOngoingEvent,
-  networkingMatches,
   networkingData
 }: {
   event: SavedEventType
   isUserCheckedInOngoingEvent: boolean
-  networkingMatches: NetworkingMatchesType | null
   networkingData: INetworkingData | null
 }) => {
   return (
@@ -115,7 +111,6 @@ export const ManageMatchmaking = ({
       <RenderMatchmakingInfo
         eventId={event.id}
         isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
-        networkingMatches={networkingMatches}
         networkingData={networkingData}
       />
     </div>

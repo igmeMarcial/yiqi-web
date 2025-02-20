@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import { JSDOM } from 'jsdom'
 import { validateCheckIn } from '@/services/actions/event/validateCheckIn'
-import { getNetworkingMatches } from '@/services/actions/networking/getNetworkingMatches'
 import prisma from '@/lib/prisma'
 import { getUserProfile } from '@/services/actions/userActions'
 type Props = {
@@ -100,9 +99,6 @@ export default async function Page({
   }
 
   const isUserRegistered = eventRegistration ? !!eventRegistration.id : false
-  const networkingMatches = eventRegistration
-    ? await getNetworkingMatches(eventRegistration.id)
-    : null
 
   return (
     <>
@@ -113,7 +109,6 @@ export default async function Page({
         user={currentUser!}
         isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
         isUserRegistered={isUserRegistered}
-        networkingMatches={networkingMatches}
         networkingData={networkingData}
       />
     </>

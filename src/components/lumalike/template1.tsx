@@ -13,7 +13,6 @@ import { useTranslations } from 'next-intl'
 import { ManageMatchmaking } from '../events/ManageMatchmaking'
 import { PublicEventType, CustomFieldType } from '@/schemas/eventSchema'
 import { LuciaUserType } from '@/schemas/userSchema'
-import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 
 export interface INetworkingData {
   professionalMotivations: string
@@ -26,7 +25,6 @@ export interface INetworkingData {
 export function EventPage({
   event,
   isUserCheckedInOngoingEvent,
-  networkingMatches,
   isUserRegistered,
   user,
   customFields,
@@ -36,7 +34,6 @@ export function EventPage({
   isUserCheckedInOngoingEvent: boolean
   isUserRegistered: boolean
   user?: LuciaUserType
-  networkingMatches: NetworkingMatchesType | null
   customFields?: CustomFieldType[]
   networkingData: INetworkingData | null
 }) {
@@ -134,7 +131,6 @@ export function EventPage({
                 <ManageMatchmaking
                   event={event}
                   isUserCheckedInOngoingEvent={!!isUserCheckedInOngoingEvent}
-                  networkingMatches={networkingMatches}
                   networkingData={networkingData}
                 />
               )}
