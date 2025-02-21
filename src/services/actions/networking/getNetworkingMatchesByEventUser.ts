@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma'
 import { JobType } from '@prisma/client'
-import { parseNetworkingMatches } from './commons'
+import { parseNetworkingMatches } from './parsers'
 
 export async function getNetworkingMatchesByEventUser(
   _userId: string,

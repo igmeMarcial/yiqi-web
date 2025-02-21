@@ -1,5 +1,15 @@
-import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  NetworkingMatchesType,
+  networkingMatchUserSchema
+} from '@/schemas/networkingMatchSchema'
 import { Prisma } from '@prisma/client'
+import { z } from 'zod'
+
+const dataCollectedSchema = networkingMatchUserSchema.pick({
+  dataCollected: true
+})
+type DataCollectedSchemaType = z.infer<typeof dataCollectedSchema>
 
 export const parseNetworkingMatches = (
   matches: {
@@ -20,11 +30,9 @@ export const parseNetworkingMatches = (
   }[]
 ): NetworkingMatchesType =>
   matches.map(match => {
-    const dataCollected = match.user.dataCollected as {
-      x?: string
-      instagram?: string
-      linkedin?: string
-    } | null
+    const userDataCollected: DataCollectedSchemaType =
+      match.user as DataCollectedSchemaType
+
     return {
       id: match.id,
       personDescription: match.personDescription,
@@ -37,7 +45,7 @@ export const parseNetworkingMatches = (
         id: match.user.id,
         name: match.user.name,
         picture: match.user.picture,
-        dataCollected
+        dataCollected: userDataCollected.dataCollected
       }
     }
   })
