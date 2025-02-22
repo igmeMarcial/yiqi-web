@@ -7,11 +7,13 @@ export default async function page() {
   const { userCurrent, user } = await getUserOrRedirect()
 
   const networkingData = {
-    professionalMotivations: user?.professionalMotivations,
-    communicationStyle: user?.communicationStyle,
-    professionalValues: user?.professionalValues,
-    careerAspirations: user?.careerAspirations,
-    significantChallenge: user?.significantChallenge
+    professionalMotivations: user.professionalMotivations,
+    communicationStyle: user.communicationStyle,
+    professionalValues: user.professionalValues,
+    careerAspirations: user.careerAspirations,
+    significantChallenge: user.significantChallenge,
+    resumeUrl: user.resumeUrl,
+    resumeFileName: user.resumeFileName
   }
 
   return (
