@@ -75,7 +75,8 @@ export async function fetchAndFormatUserProfile(
       role: user.role,
       resumeUrl: dataCollected?.resumeUrl ?? '',
       resumeLastUpdated: dataCollected?.resumeLastUpdated ?? '',
-      resumeFileName: dataCollected?.resumeFileName
+      resumeFileName: dataCollected?.resumeFileName ?? '',
+      resumeText: dataCollected?.resumeText ?? ''
     }
 
     if (isCurrentUser) {
