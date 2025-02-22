@@ -22,7 +22,7 @@ function RenderMatchmakingInfo({
   const router = useRouter()
   const t = useTranslations('EventManageMatchmaking')
 
-  const isProfileComplete = networkingData?.resumeText
+  const isProfileComplete = networkingData?.resumeText && !!userDetailedProfile
 
   const getDescriptionLabel = (
     isProfileComplete: boolean,
