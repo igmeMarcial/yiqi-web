@@ -719,6 +719,7 @@
     "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
     "missingCheckIn": "Haga check-in para ver su red de networking",
     "readyForAIMatching": "¡Tu red de networking seleccionada por IA están listas!",
+    "matchMakingInProgress": "Sus matches están siendo generadas, por favor vuelva a revisar en unos minutos!",
     "completeProfile": "Completar Perfil",
     "viewTickets": "Ver Boletos",
     "viewMatches": "Ver coincidencias"
