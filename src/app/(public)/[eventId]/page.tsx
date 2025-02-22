@@ -72,7 +72,7 @@ export default async function Page({
     professionalValues: string
     careerAspirations: string
     significantChallenge: string
-    resumeUrl: string
+    resumeText: string
   } | null = null
 
   if (currentUser) {
@@ -93,7 +93,7 @@ export default async function Page({
           professionalValues: userProfile.professionalValues ?? '',
           careerAspirations: userProfile.careerAspirations ?? '',
           significantChallenge: userProfile.significantChallenge ?? '',
-          resumeUrl: userProfile.resumeUrl ?? ''
+          resumeText: userProfile.resumeText ?? ''
         }
       : null
   }

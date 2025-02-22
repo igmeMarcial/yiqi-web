@@ -11,18 +11,18 @@ import { INetworkingData } from '../lumalike/template1'
 function RenderMatchmakingInfo({
   eventId,
   isUserCheckedInOngoingEvent,
-  networkingData
+  networkingData,
+  userDetailedProfile
 }: {
   eventId: string
   isUserCheckedInOngoingEvent: boolean
   networkingData: INetworkingData | null
+  userDetailedProfile: string | null | undefined
 }): JSX.Element | null {
   const router = useRouter()
   const t = useTranslations('EventManageMatchmaking')
 
-  const isProfileComplete = networkingData
-    ? Object.values(networkingData).every(Boolean)
-    : false
+  const isProfileComplete = networkingData?.resumeText
 
   const getDescriptionLabel = (
     isProfileComplete: boolean,
@@ -30,6 +30,11 @@ function RenderMatchmakingInfo({
   ) => {
     if (!isProfileComplete) return t('missingProfile')
     if (!isUserCheckedInOngoingEvent) return t(`missingCheckIn`)
+
+    if (userDetailedProfile) {
+      return t(`matchMakingInProgress`)
+    }
+
     return t(`readyForAIMatching`)
   }
 
@@ -100,15 +105,18 @@ function RenderMatchmakingInfo({
 export const ManageMatchmaking = ({
   event,
   isUserCheckedInOngoingEvent,
-  networkingData
+  networkingData,
+  userDetailedProfile
 }: {
   event: SavedEventType
   isUserCheckedInOngoingEvent: boolean
   networkingData: INetworkingData | null
+  userDetailedProfile: string | null | undefined
 }) => {
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
       <RenderMatchmakingInfo
+        userDetailedProfile={userDetailedProfile}
         eventId={event.id}
         isUserCheckedInOngoingEvent={isUserCheckedInOngoingEvent}
         networkingData={networkingData}

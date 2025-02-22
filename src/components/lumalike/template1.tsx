@@ -20,7 +20,7 @@ export interface INetworkingData {
   professionalValues: string
   careerAspirations: string
   significantChallenge: string
-  resumeUrl: string
+  resumeText: string
 }
 export function EventPage({
   event,
@@ -129,6 +129,7 @@ export function EventPage({
               )}
               {!!isUserRegistered && user && (
                 <ManageMatchmaking
+                  userDetailedProfile={user.userDetailedProfile}
                   event={event}
                   isUserCheckedInOngoingEvent={!!isUserCheckedInOngoingEvent}
                   networkingData={networkingData}

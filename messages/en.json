@@ -719,6 +719,7 @@
     "missingProfile": "Complete Your Profile for AI-Powered Matchmaking",
     "missingCheckIn": "Make checkIn to view your Networking Matches",
     "readyForAIMatching": "Your AI-Curated Networking Matches Are Ready!",
+    "matchMakingInProgress": "Your matches are being generated, please check back in a few minutes!",
     "completeProfile": "Complete Profile",
     "viewTickets": "View Tickets",
     "viewMatches": "View Matches"
