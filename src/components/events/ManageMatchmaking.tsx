@@ -31,7 +31,7 @@ function RenderMatchmakingInfo({
     if (!isProfileComplete) return t('missingProfile')
     if (!isUserCheckedInOngoingEvent) return t(`missingCheckIn`)
 
-    if (userDetailedProfile) {
+    if (!userDetailedProfile) {
       return t(`matchMakingInProgress`)
     }
 
