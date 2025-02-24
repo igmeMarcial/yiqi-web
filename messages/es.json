@@ -230,6 +230,8 @@
     "viewEvent": "Ver evento",
     "editEvent": "Editar evento",
     "uploadImage": "Subir imagen",
+    "settingsDescription": "Descripción",
+
     "allowedFormats": "Formatos permitidos: ",
     "location": "Ubicación",
     "settings": "Configuración",
