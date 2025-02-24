@@ -382,7 +382,8 @@
     "ticketHolder": "Titular del ticket",
     "date": "Fecha del evento",
     "purchaseDate": "Fecha de compra",
-    "ticketId": "ID del Ticket:"
+    "ticketId": "ID del Ticket:",
+    "minOneTicket": "Por favor, agrega al menos un tipo de ticket"
   },
   "Luma": {
     "featuredIn": "Destacado en",

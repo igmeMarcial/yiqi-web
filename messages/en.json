@@ -381,7 +381,8 @@
     "ticketHolder": "Ticket Holder",
     "date": "Event Date",
     "purchaseDate": "Purchase Date",
-    "ticketId": "Ticket ID:"
+    "ticketId": "Ticket ID:",
+    "minOneTicket": "Please add at least one ticket type"
   },
   "Luma": {
     "featuredIn": "Featured in",
