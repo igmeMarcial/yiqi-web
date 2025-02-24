@@ -225,6 +225,7 @@
     "role": "Role"
   },
   "DeleteAccount": {
+    "errorInForm": "Error in form",
     "editEvent": "Edit event",
     "uploadImage": "Upload image",
     "viewEvent": "View event",

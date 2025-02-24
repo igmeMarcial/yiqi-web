@@ -226,6 +226,7 @@
     "role": "Rol"
   },
   "DeleteAccount": {
+    "errorInForm": "Error en el formulario",
     "viewEvent": "Ver evento",
     "editEvent": "Editar evento",
     "uploadImage": "Subir imagen",
