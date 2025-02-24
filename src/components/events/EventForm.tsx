@@ -344,6 +344,18 @@ export function EventForm({ organizationId, event }: Props) {
   }
 
   async function onSubmit(values: z.infer<typeof EventFormInputSchema>) {
+    const isFormValid = form.formState.isValid
+
+    if (!isFormValid) {
+      toast({
+        title: t('errorInForm'),
+        description: JSON.stringify(form.formState.errors),
+        variant: 'destructive'
+      })
+
+      console.error(form.formState.errors)
+    }
+
     if (!loading) {
       setLoading(true)
       try {
