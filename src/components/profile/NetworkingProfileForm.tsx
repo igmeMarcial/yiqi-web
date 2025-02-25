@@ -31,6 +31,13 @@ import type {
 } from '@/schemas/userSchema'
 import { useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog'
+import { useTranslations } from 'next-intl'
 
 export type NetworkingData = Pick<
   UserDataCollected,
@@ -53,10 +60,12 @@ type Props = {
 export default function NetworkingProfileForm({ initialData, user }: Props) {
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations('Networking')
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isProcessingFile, setIsProcessingFile] = useState(false)
+  const [showLoadingModal, setShowLoadingModal] = useState(false)
 
   const form = useForm<NetworkingData>({
     resolver: zodResolver(
@@ -243,6 +252,7 @@ export default function NetworkingProfileForm({ initialData, user }: Props) {
 
   async function onSubmit(values: NetworkingData) {
     setIsSubmitting(true)
+    setShowLoadingModal(true)
     try {
       const formData = new FormData()
 
@@ -254,14 +264,19 @@ export default function NetworkingProfileForm({ initialData, user }: Props) {
 
       await saveNetworkingProfile(values, user.id)
 
-      toast({
-        title: translations.es.networkingProfileSaved
-      })
-      router.refresh()
+      // Keep the loading modal visible for at least 2 seconds for better UX
+      setTimeout(() => {
+        setShowLoadingModal(false)
+        toast({
+          title: t('networkingProfileSaved')
+        })
+        router.refresh()
+      }, 2000)
     } catch (error) {
       console.error('Error in onSubmit:', error)
+      setShowLoadingModal(false)
       toast({
-        title: translations.es.networkingProfileError,
+        title: t('networkingProfileError'),
         variant: 'destructive'
       })
     } finally {
@@ -270,213 +285,229 @@ export default function NetworkingProfileForm({ initialData, user }: Props) {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle>{translations.es.networkingProfileTitle}</CardTitle>
-        <CardDescription className="space-y-3">
-          {translations.es.networkingProfileDescription}
-        </CardDescription>
-        <CardDescription>{translations.es.networkingBenefits}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Resume Upload Section */}
-            <div className="space-y-4">
-              <FormLabel>{translations.es.resumeUploadLabel}</FormLabel>
-              <div className="flex items-center space-x-4">
-                <div className="flex-1">
-                  <Input
-                    type="file"
-                    accept=".pdf,.txt,.docx"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="resume-upload"
-                    disabled={isProcessingFile}
-                  />
-                  <label
-                    htmlFor="resume-upload"
-                    className={`flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium ${
-                      isProcessingFile
-                        ? 'bg-gray-100 cursor-not-allowed text-gray-500'
-                        : 'bg-white hover:bg-gray-50 cursor-pointer'
-                    }`}
-                  >
-                    {isProcessingFile ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        {translations.es.uploadingResume}
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-4 w-4 mr-2" />
-                        <p className="text-black">
-                          {initialData.resumeUrl
-                            ? 'Editar tu Hoja de Vida (PDF, TXT o DOCX)'
-                            : translations.es.selectResumeTypes}
-                        </p>
-                      </>
-                    )}
-                  </label>
+    <>
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle>{t('networkingProfileTitle')}</CardTitle>
+          <CardDescription className="space-y-3">
+            {t('networkingProfileDescription')}
+          </CardDescription>
+          <CardDescription>{t('networkingBenefits')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {/* Resume Upload Section */}
+              <div className="space-y-4">
+                <FormLabel>{t('resumeUploadLabel')}</FormLabel>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-1">
+                    <Input
+                      type="file"
+                      accept=".pdf,.txt,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="resume-upload"
+                      disabled={isProcessingFile}
+                    />
+                    <label
+                      htmlFor="resume-upload"
+                      className={`flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium ${
+                        isProcessingFile
+                          ? 'bg-gray-100 cursor-not-allowed text-gray-500'
+                          : 'bg-white hover:bg-gray-50 cursor-pointer'
+                      }`}
+                    >
+                      {isProcessingFile ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          {t('uploadingResume')}
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="h-4 w-4 mr-2" />
+                          <p className="text-black">
+                            {initialData.resumeUrl
+                              ? t('editResume')
+                              : t('selectResumeTypes')}
+                          </p>
+                        </>
+                      )}
+                    </label>
+                  </div>
+                  {selectedFile && !isProcessingFile && (
+                    <div className="flex items-center space-x-2">
+                      <FileText className="h-4 w-4" />
+                      <span className="text-sm">{selectedFile.name}</span>
+                    </div>
+                  )}
                 </div>
-                {selectedFile && !isProcessingFile && (
-                  <div className="flex items-center space-x-2">
-                    <FileText className="h-4 w-4" />
-                    <span className="text-sm">{selectedFile.name}</span>
+                {isProcessingFile && (
+                  <div className="mt-2 text-sm text-muted-foreground">
+                    <Loader2 className="h-4 w-4 mr-2 inline animate-spin" />
+                    {t('extractingText')}
                   </div>
                 )}
+                {initialData.resumeUrl &&
+                  !selectedFile &&
+                  !isProcessingFile && (
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <FileText className="h-4 w-4" />
+                      <span>{t('currentResume')}</span>
+                      <p className="text-primary hover:underline">
+                        {initialData.resumeFileName ||
+                          extractFilenameFromUrl(initialData.resumeUrl)}
+                      </p>
+                    </div>
+                  )}
               </div>
-              {isProcessingFile && (
-                <div className="mt-2 text-sm text-muted-foreground">
-                  <Loader2 className="h-4 w-4 mr-2 inline animate-spin" />
-                  Extrayendo texto
-                </div>
-              )}
-              {initialData.resumeUrl && !selectedFile && !isProcessingFile && (
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <FileText className="h-4 w-4" />
-                  <span>{translations.es.currentResume}</span>
-                  <p className="text-primary hover:underline">
-                    {initialData.resumeFileName ||
-                      extractFilenameFromUrl(initialData.resumeUrl)}
-                  </p>
-                </div>
-              )}
+
+              <FormField
+                control={form.control}
+                name="professionalMotivations"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('professionalMotivationsLabel')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('professionalMotivationsPlaceholder')}
+                        className="min-h-[100px]"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="communicationStyle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('communicationStyleLabel')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('communicationStylePlaceholder')}
+                        className="min-h-[100px]"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="professionalValues"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('professionalValuesLabel')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('professionalValuesPlaceholder')}
+                        className="min-h-[100px]"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="careerAspirations"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('careerAspirationsLabel')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('careerAspirationsPlaceholder')}
+                        className="min-h-[100px]"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="significantChallenge"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('significantChallengeLabel')}</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder={t('significantChallengePlaceholder')}
+                        className="min-h-[100px]"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting || isProcessingFile}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <span>...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    <span>{t('saveNetworkingProfile')}</span>
+                  </>
+                )}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+
+      {/* Loading Modal */}
+      <Dialog open={showLoadingModal} onOpenChange={setShowLoadingModal}>
+        <DialogContent className="sm:max-w-md" closeIcon={null}>
+          <DialogHeader>
+            <DialogTitle className="text-center">
+              {t('savingNetworkingProfile')}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center justify-center py-6">
+            <div className="space-y-3 text-base sm:text-lg">
+              <p className="text-[#B2B2B2] animate-pulse">
+                {t('savingProfileData')}
+              </p>
+              <p
+                className="text-[#B2B2B2] animate-pulse"
+                style={{ animationDelay: '0.5s' }}
+              >
+                {t('analyzingPreferences')}
+              </p>
+              <p
+                className="text-[#B2B2B2] animate-pulse"
+                style={{ animationDelay: '1s' }}
+              >
+                {t('determiningContentPreferences')}
+              </p>
             </div>
-
-            <FormField
-              control={form.control}
-              name="professionalMotivations"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {translations.es.professionalMotivationsLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={
-                        translations.es.professionalMotivationsPlaceholder
-                      }
-                      className="min-h-[100px]"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="communicationStyle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {translations.es.communicationStyleLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={
-                        translations.es.communicationStylePlaceholder
-                      }
-                      className="min-h-[100px]"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="professionalValues"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {translations.es.professionalValuesLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={
-                        translations.es.professionalValuesPlaceholder
-                      }
-                      className="min-h-[100px]"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="careerAspirations"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {translations.es.careerAspirationsLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={translations.es.careerAspirationsPlaceholder}
-                      className="min-h-[100px]"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="significantChallenge"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {translations.es.significantChallengeLabel}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder={
-                        translations.es.significantChallengePlaceholder
-                      }
-                      className="min-h-[100px]"
-                      {...field}
-                      value={field.value ?? ''}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isSubmitting || isProcessingFile}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  <span>...</span>
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4 mr-2" />
-                  <span>{translations.es.saveNetworkingProfile}</span>
-                </>
-              )}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

@@ -5,7 +5,7 @@ import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
 
 export default async function page() {
   const { user } = await getUserOrRedirect()
-  console.log(user)
+
   const networkingData = {
     professionalMotivations: user.professionalMotivations,
     communicationStyle: user.communicationStyle,
@@ -13,7 +13,8 @@ export default async function page() {
     careerAspirations: user.careerAspirations,
     significantChallenge: user.significantChallenge,
     resumeUrl: user.resumeUrl,
-    resumeFileName: user.resumeFileName
+    resumeFileName: user.resumeFileName,
+    resumeText: user.resumeText
   }
 
   return (

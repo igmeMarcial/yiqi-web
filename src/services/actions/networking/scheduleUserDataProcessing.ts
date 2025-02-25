@@ -12,8 +12,6 @@ export async function scheduleUserDataProcessing(
     console.time('processUserFirstPartyData')
     await processUserFirstPartyData(userId)
     console.timeEnd('processUserFirstPartyData')
-
-    console.log(`Scheduled PROCESS_USER_DATA job for user ${userId}`)
   } catch (error) {
     throw new Error(`${error}`)
   }
