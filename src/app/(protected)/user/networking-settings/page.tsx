@@ -1,7 +1,7 @@
-import NetworkingProfileForm from '@/components/profile/NetworkingProfileForm'
-import UserLayout from '@/components/user/UserLayout'
+import NetworkingSettingsManager from '@/components/profile/NetworkingSettingsManager'
 import { profileDataSchema } from '@/schemas/userSchema'
 import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
+import UserLayout from '@/components/user/UserLayout'
 
 export default async function page() {
   const { user } = await getUserOrRedirect()
@@ -20,7 +20,7 @@ export default async function page() {
   return (
     <main className="flex flex-col items-center justify-center">
       <UserLayout userProps={profileDataSchema.parse(user)}>
-        <NetworkingProfileForm user={user} initialData={networkingData} />
+        <NetworkingSettingsManager user={user} initialData={networkingData} />
       </UserLayout>
     </main>
   )

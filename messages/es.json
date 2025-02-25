@@ -743,7 +743,13 @@
     "currentResume": "Hoja de Vida Actual:",
     "uploadingResume": "Subiendo hoja de vida...",
     "editResume": "Editar tu Hoja de Vida (PDF, TXT o DOCX)",
-    "extractingText": "Extrayendo texto..."
+    "extractingText": "Extrayendo texto...",
+    "yourNetworkingProfile": "Tu Perfil de Networking",
+    "aiGeneratedProfileDescription": "Basado en la información que proporcionaste, hemos generado un perfil detallado para ayudarte a conectar con profesionales afines.",
+    "editProfile": "Editar Perfil",
+    "detailedProfile": "Tu Perfil Detallado",
+    "contentPreferences": "Tus Preferencias de Contenido",
+    "backToProfile": "Volver al Perfil"
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",

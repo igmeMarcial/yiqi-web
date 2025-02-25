@@ -23,12 +23,9 @@ import { Textarea } from '../ui/textarea'
 import { useToast } from '@/hooks/use-toast'
 import { saveNetworkingProfile } from '@/services/actions/user/saveNetworkingProfile'
 import { translations } from '@/lib/translations/translations'
-import { FileText, Loader2, Save, Upload } from 'lucide-react'
+import { FileText, Loader2, Save, Upload, ArrowLeft } from 'lucide-react'
 import { userDataCollectedShema } from '@/schemas/userSchema'
-import type {
-  ProfileWithPrivacy,
-  UserDataCollected
-} from '@/schemas/userSchema'
+
 import { useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
 import {
@@ -38,26 +35,17 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 import { useTranslations } from 'next-intl'
+import { NetworkingData, Props } from './common'
 
-export type NetworkingData = Pick<
-  UserDataCollected,
-  | 'professionalMotivations'
-  | 'communicationStyle'
-  | 'professionalValues'
-  | 'careerAspirations'
-  | 'significantChallenge'
-  | 'resumeUrl'
-  | 'resumeText'
-  | 'resumeLastUpdated'
-  | 'resumeFileName'
->
-
-type Props = {
-  initialData: NetworkingData
-  user: ProfileWithPrivacy
+type NetworkingProfileFormProps = Props & {
+  onComplete?: () => void
 }
 
-export default function NetworkingProfileForm({ initialData, user }: Props) {
+export default function NetworkingProfileForm({
+  initialData,
+  user,
+  onComplete
+}: NetworkingProfileFormProps) {
   const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations('Networking')
@@ -271,6 +259,9 @@ export default function NetworkingProfileForm({ initialData, user }: Props) {
           title: t('networkingProfileSaved')
         })
         router.refresh()
+        if (onComplete) {
+          onComplete()
+        }
       }, 2000)
     } catch (error) {
       console.error('Error in onSubmit:', error)
@@ -288,11 +279,30 @@ export default function NetworkingProfileForm({ initialData, user }: Props) {
     <>
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
+          {onComplete && (
+            <div className="flex items-center mb-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onComplete}
+                className="flex items-center gap-1 text-muted-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                {t('backToProfile')}
+              </Button>
+            </div>
+          )}
           <CardTitle>{t('networkingProfileTitle')}</CardTitle>
           <CardDescription className="space-y-3">
             {t('networkingProfileDescription')}
           </CardDescription>
           <CardDescription>{t('networkingBenefits')}</CardDescription>
+          <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-md">
+            <p className="text-amber-800 text-sm flex items-center">
+              <Loader2 className="h-4 w-4 mr-2 animate-spin text-amber-600" />
+              {t('processingTimeWarning')}
+            </p>
+          </div>
         </CardHeader>
         <CardContent>
           <Form {...form}>

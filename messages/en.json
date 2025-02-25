@@ -742,7 +742,13 @@
     "currentResume": "Current Resume:",
     "uploadingResume": "Uploading resume...",
     "editResume": "Edit Your Resume (PDF, TXT or DOCX)",
-    "extractingText": "Extracting text..."
+    "extractingText": "Extracting text...",
+    "yourNetworkingProfile": "Your Networking Profile",
+    "aiGeneratedProfileDescription": "Based on the information you provided, we've generated a detailed profile to help you connect with like-minded professionals.",
+    "editProfile": "Edit Profile",
+    "detailedProfile": "Your Detailed Profile",
+    "contentPreferences": "Your Content Preferences",
+    "backToProfile": "Back to Profile"
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete Your Profile for AI-Powered Matchmaking",
