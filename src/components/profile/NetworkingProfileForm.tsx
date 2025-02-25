@@ -297,12 +297,6 @@ export default function NetworkingProfileForm({
             {t('networkingProfileDescription')}
           </CardDescription>
           <CardDescription>{t('networkingBenefits')}</CardDescription>
-          <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-md">
-            <p className="text-amber-800 text-sm flex items-center">
-              <Loader2 className="h-4 w-4 mr-2 animate-spin text-amber-600" />
-              {t('processingTimeWarning')}
-            </p>
-          </div>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -498,7 +492,11 @@ export default function NetworkingProfileForm({
             </DialogTitle>
           </DialogHeader>
           <div className="flex items-center justify-center py-6">
-            <div className="space-y-3 text-base sm:text-lg">
+            <div className="space-y-3 text-base text-center sm:text-lg">
+              <p className="text-sm  mb-2">{t('processingTimeModalNotice')}</p>
+              <p className="text-sm max-w-lg ">
+                {t('profileBenefitsExplanation')}
+              </p>
               <p className="text-[#B2B2B2] animate-pulse">
                 {t('savingProfileData')}
               </p>

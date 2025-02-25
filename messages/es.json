@@ -749,7 +749,12 @@
     "editProfile": "Editar Perfil",
     "detailedProfile": "Tu Perfil Detallado",
     "contentPreferences": "Tus Preferencias de Contenido",
-    "backToProfile": "Volver al Perfil"
+    "backToProfile": "Volver al Perfil",
+    "processingTimeWarning": "Nota: El procesamiento de tu perfil toma aproximadamente 1 minuto. Por favor, no abandones esta página hasta que se complete.",
+    "aiGenerated": "Generado por IA",
+    "aiProfileExplanation": "Este perfil fue generado por IA basado en tu currículum y respuestas al cuestionario. Nos ayuda a conectarte con oportunidades y profesionales relevantes.",
+    "processingTimeModalNotice": "Este proceso puede tardar hasta un minuto en completarse. Por favor, no cierres esta ventana.",
+    "profileBenefitsExplanation": "Una vez que tu perfil sea procesado, nuestro sistema te ayudará a encontrar a las personas adecuadas con quienes hablar en los eventos. En el futuro, también te recomendará eventos específicos donde puedas conocer a personas que se alineen con tus objetivos profesionales."
   },
   "EventManageMatchmaking": {
     "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
