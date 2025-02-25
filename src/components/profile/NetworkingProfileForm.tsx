@@ -25,7 +25,10 @@ import { saveNetworkingProfile } from '@/services/actions/user/saveNetworkingPro
 import { translations } from '@/lib/translations/translations'
 import { FileText, Loader2, Save, Upload } from 'lucide-react'
 import { userDataCollectedShema } from '@/schemas/userSchema'
-import type { UserDataCollected } from '@/schemas/userSchema'
+import type {
+  ProfileWithPrivacy,
+  UserDataCollected
+} from '@/schemas/userSchema'
 import { useRouter } from 'next/navigation'
 import { Input } from '../ui/input'
 
@@ -44,10 +47,10 @@ export type NetworkingData = Pick<
 
 type Props = {
   initialData: NetworkingData
-  userId: string
+  user: ProfileWithPrivacy
 }
 
-export default function NetworkingProfileForm({ initialData, userId }: Props) {
+export default function NetworkingProfileForm({ initialData, user }: Props) {
   const { toast } = useToast()
   const router = useRouter()
 
@@ -249,7 +252,7 @@ export default function NetworkingProfileForm({ initialData, userId }: Props) {
         }
       })
 
-      await saveNetworkingProfile(values, userId)
+      await saveNetworkingProfile(values, user.id)
 
       toast({
         title: translations.es.networkingProfileSaved
