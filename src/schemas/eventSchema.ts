@@ -33,6 +33,23 @@ export const EventTicketOfferingInputSchema = z.object({
     .min(1, 'Must allow at least 1 ticket per purchase')
 })
 
+export const CustomField = z.object({
+  name: z.string(),
+  description: z.string(),
+  type: z.enum(['text', 'number', 'date', 'boolean', 'url']),
+  inputType: z.enum(['shortText', 'longText']),
+  required: z.boolean().optional(),
+  defaultValue: z.union([z.string(), z.number(), z.boolean()]).optional()
+})
+
+export const CustomFieldsSchema = z.object({
+  fields: z.array(CustomField),
+  eventData: z.array(z.record(z.any())).optional()
+})
+
+export type CustomFieldType = z.infer<typeof CustomField>
+export type CustomFieldsSchemaType = z.infer<typeof CustomFieldsSchema>
+
 export const EventInputSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   startDate: z.coerce.date(),
@@ -58,7 +75,18 @@ export const EventInputSchema = z.object({
       lon: z.number().optional().nullable()
     })
     .optional()
-    .nullable()
+    .nullable(),
+  timezoneLabel: z.string(),
+  customFields: z.preprocess(val => {
+    if (typeof val === 'string') {
+      try {
+        return JSON.parse(val)
+      } catch {
+        return val
+      }
+    }
+    return val
+  }, CustomFieldsSchema.optional().nullable())
 })
 
 export const EventCommunitySchema = z.object({
@@ -80,7 +108,8 @@ export const EventCommunitySchema = z.object({
   maxAttendees: z.number().int().positive().optional().nullable(),
   requiresApproval: z.boolean().default(false),
   openGraphImage: z.string().optional().nullable(),
-  type: z.nativeEnum(EventTypeEnum)
+  type: z.nativeEnum(EventTypeEnum),
+  timezoneLabel: z.string()
 })
 
 export const EventSchema = EventInputSchema.extend({
@@ -111,7 +140,7 @@ export const EventRegistrationSchema = z.object({
   id: z.string(),
   userId: z.string(),
   status: z.enum(['PENDING', 'APPROVED', 'REJECTED']),
-  customFields: z.record(z.any()),
+  customFields: z.record(z.any()).optional().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
   paid: z.boolean(),
@@ -176,11 +205,6 @@ export const SavedEventSchema = EventInputSchema.extend({
   organizationId: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  customFields: z
-    .array(CustomFieldSchema)
-    .optional()
-    .nullable()
-    .transform(val => val ?? []),
   tickets: z.array(SavedTicketOfferingSchema).optional().nullable()
 })
 
@@ -219,15 +243,26 @@ export type EventRegistrationSchemaType = z.infer<
   typeof EventRegistrationSchema
 >
 export type SavedEventType = z.infer<typeof SavedEventSchema>
+export const eventRegistrationStatusSchema = z.nativeEnum(AttendeeStatus)
+export const eventTicketTypeSchema = z.enum(['GENERAL', 'VIP', 'BACKSTAGE'])
 
 export const eventRegistrationsSchema = z.object({
   id: z.string(),
   user: userSchema,
-  status: z.nativeEnum(AttendeeStatus),
+  status: eventRegistrationStatusSchema,
   createdAt: z.date(),
   updatedAt: z.date(),
   paid: z.boolean(),
-  paymentId: z.string().optional().nullable()
+  paymentId: z.string().optional().nullable(),
+  customFields: z.any().optional().nullable(),
+  tickets: z.array(
+    z.object({
+      id: z.string(),
+      price: z.coerce.number(),
+      name: z.string(),
+      type: eventTicketTypeSchema
+    })
+  )
 })
 
 export type EventRegistrationsSchemaType = z.infer<
@@ -245,6 +280,7 @@ export type OrganizationEventSchemaType = z.infer<
 export const registrationInputSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
+  customFieldsData: z.record(z.any()).optional(),
   tickets: z.record(z.string(), z.number().min(0).max(5))
 })
 

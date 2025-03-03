@@ -7,12 +7,37 @@ import { EventDetails } from './template1-components/event-details'
 import { Registration } from './template1-components/registration'
 import { Hosts } from './template1-components/hosts'
 import { EventDescription } from './template1-components/event-description'
-import { RegistrationProps } from './template1-components/registration'
 import { EventLocation } from './template1-components/event-location'
 import MainLandingNav from '../mainLanding/mainNav'
 import { useTranslations } from 'next-intl'
+import {
+  MatchmakingStatus,
+  RenderMatchmakingInfo
+} from '../events/ManageMatchmaking'
+import { PublicEventType, CustomFieldType } from '@/schemas/eventSchema'
+import { LuciaUserType } from '@/schemas/userSchema'
 
-export function EventPage({ event, user }: RegistrationProps) {
+export interface INetworkingData {
+  professionalMotivations: string
+  communicationStyle: string
+  professionalValues: string
+  careerAspirations: string
+  significantChallenge: string
+  resumeText: string
+}
+export function EventPage({
+  initialStatus,
+  event,
+  isUserRegistered,
+  user,
+  customFields
+}: {
+  initialStatus?: MatchmakingStatus | null
+  event: PublicEventType
+  isUserRegistered: boolean
+  user?: LuciaUserType
+  customFields?: CustomFieldType[]
+}) {
   const [isMobile, setIsMobile] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const registrationRef = useRef<HTMLDivElement>(null)
@@ -96,12 +121,21 @@ export function EventPage({ event, user }: RegistrationProps) {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Registration
+                    customFields={customFields}
                     event={event}
                     user={user}
                     dialogTriggerRef={dialogTriggerRef}
                   />
                 </motion.div>
               )}
+              {isUserRegistered && user ? (
+                <div className="w-full max-w-4xl mx-auto px-4">
+                  <RenderMatchmakingInfo
+                    eventId={event.id}
+                    initialStatus={initialStatus}
+                  />
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-col gap-8 w-full">
               <EventDetails event={event} />
@@ -125,6 +159,7 @@ export function EventPage({ event, user }: RegistrationProps) {
                   <>
                     <hr className="my-6 border-t border-solid border-white-opacity-40 w-[100%] ml-0 mx-auto" />
                     <Registration
+                      customFields={customFields}
                       event={event}
                       user={user}
                       dialogTriggerRef={dialogTriggerRef}

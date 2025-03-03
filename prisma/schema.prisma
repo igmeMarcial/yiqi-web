@@ -1,0 +1,472 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+enum PrivacySetting {
+  hideEmail
+  hidePhoneNumber
+  hideLinkedIn
+  hideTwitter
+  hideWebsite
+}
+
+model User {
+  id                String          @id @default(cuid())
+  name              String
+  email             String          @unique
+  emailVerified     DateTime?
+  picture           String?
+  phoneNumber       String?
+  privacySettings   Json            @default("{}")
+  accounts          Account[]
+  session           Session[]
+  ownerOf           Organization[]
+  role              Roles           @default(NEW_USER)
+  stopCommunication Boolean         @default(false) // Add this line
+  messageThread     MessageThread[]
+
+  receivedMessages Message[] @relation("destinationUser")
+
+  sentMessages Message[] @relation("senderUser")
+
+  FormSubmission FormSubmission[]
+
+  Organizer Organizer[]
+
+  QueueJob QueueJob[]
+
+  // for actual shape of this checkout userDataCollectedShema
+  dataCollected Json?
+
+  registeredEvents EventRegistration[] @relation("registrationUser")
+
+  ticketsCheckedIn Ticket[] @relation("checkedInByUser")
+
+  tickets Ticket[] @relation("ticketOwner")
+
+  OrganizationContact OrganizationContact[]
+
+  deletedAt DateTime?
+
+  linkedinAccessToken String?
+
+  embedding              Unsupported("vector(1536)")?
+  userDetailedProfile    String?
+  userEmbeddableProfile  String?
+  userContentPreferences String?
+
+  NetworkingMatch NetworkingMatch[]
+}
+
+enum Roles {
+  USER
+  ADMIN
+  ANDINO_ADMIN
+  NEW_USER
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Organization {
+  id          String      @id @default(cuid())
+  name        String
+  colour      String?
+  description String?
+  logo        String?
+  events      Event[]
+  organizers  Organizer[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  queueJobs   QueueJob[]
+  billingInfo Json? // Store bank account details: accountName, accountNumber, country
+  facebook    String?
+  instagram   String?
+  tiktok      String?
+  linkedin    String?
+  website     String?
+
+  integration Integration[]
+
+  MessageThread MessageThread[]
+
+  deletedAt DateTime?
+  Form      Form[]
+  User      User?     @relation(fields: [userId], references: [id])
+  userId    String?
+
+  OrganizationContact OrganizationContact[]
+}
+
+model OrganizationContact {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+
+  @@unique([organizationId, userId])
+}
+
+model Organizer {
+  id             String        @id @default(cuid())
+  user           User          @relation(fields: [userId], references: [id])
+  userId         String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  organizationId String
+  role           OrganizerRole
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([userId, organizationId])
+}
+
+enum OrganizerRole {
+  ADMIN
+  VIEWER
+}
+
+enum EventTypes {
+  ONLINE
+  IN_PERSON
+}
+
+model Event {
+  id               String              @id @default(cuid())
+  title            String
+  subtitle         String?
+  description      String?
+  startDate        DateTime
+  endDate          DateTime
+  location         String?
+  city             String?
+  state            String?
+  country          String?
+  latLon           Json?               @default("{}")
+  virtualLink      String?
+  maxAttendees     Int?
+  organization     Organization        @relation(fields: [organizationId], references: [id])
+  organizationId   String
+  customFields     Json?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  requiresApproval Boolean             @default(false)
+  registrations    EventRegistration[]
+  EventBot         EventBot[]
+
+  Form            Form[]
+  FormSubmission  FormSubmission[]
+  openGraphImage  String?
+  GeneratedMedia  GeneratedMedia[]
+  queueJobs       QueueJob[]
+  tickets         TicketOfferings[]
+  type            EventTypes        @default(IN_PERSON)
+  deletedAt       DateTime?
+  backgroundColor String?
+  featuredIn      Json?
+  heroImage       String?
+
+  NetworkingMatch NetworkingMatch[]
+  timezoneLabel   String            @default("(GMT-5:00) Bogota, Lima, Quito")
+}
+
+enum TicketCategory {
+  GENERAL
+  VIP
+  BACKSTAGE
+}
+
+model TicketOfferings {
+  id                 String         @id @default(cuid())
+  name               String
+  category           TicketCategory
+  description        String?
+  price              Decimal
+  limit              Int
+  // some tickets are 2 for 1, some are 3 for 1, etc.
+  ticketsPerPurchase Int            @default(1)
+  event              Event          @relation(fields: [eventId], references: [id])
+  eventId            String
+
+  Ticket Ticket[]
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  PDF
+  OTHER
+}
+
+model GeneratedMedia {
+  id        String    @id @default(cuid())
+  event     Event?    @relation(fields: [eventId], references: [id])
+  eventId   String?
+  imageUrl  String
+  type      MediaType
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model EventRegistration {
+  id           String         @id @default(cuid())
+  user         User           @relation("registrationUser", fields: [userId], references: [id])
+  userId       String
+  event        Event          @relation(fields: [eventId], references: [id])
+  eventId      String
+  status       AttendeeStatus @default(PENDING)
+  customFields Json?
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  paid            Boolean           @default(false)
+  paymentId       String?
+  tickets         Ticket[]
+  NetworkingMatch NetworkingMatch[]
+
+  @@unique([eventId, userId]) // Add this line
+}
+
+model Ticket {
+  id                String            @id @default(cuid())
+  description       String?
+  registration      EventRegistration @relation(fields: [registrationId], references: [id])
+  registrationId    String
+  user              User              @relation("ticketOwner", fields: [userId], references: [id])
+  userId            String
+  category          TicketCategory
+  checkedInDate     DateTime?
+  checkedInBy       User?             @relation("checkedInByUser", fields: [checkedInByUserId], references: [id])
+  checkedInByUserId String?
+  ticketType        TicketOfferings   @relation(fields: [ticketTypeId], references: [id])
+  ticketTypeId      String
+  deletedAt         DateTime?
+}
+
+enum AttendeeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Integration {
+  id                     String               @id @default(cuid())
+  organization           Organization         @relation(fields: [organizationId], references: [id])
+  organizationId         String
+  whatsappIntegration    WhatsappIntegration?
+  whatsappIntegrationId  String?
+  defaultBotInstructions String
+  defaultBotName         String
+
+  @@unique([organizationId, whatsappIntegrationId])
+}
+
+enum EventBotType {
+  openAI
+}
+
+model EventBot {
+  id              String  @id @default(cuid())
+  model           String
+  externalId      String?
+  botInstructions String
+  botName         String
+  event           Event   @relation(fields: [eventId], references: [id])
+  eventId         String
+}
+
+enum MessageThreadType {
+  whatsapp
+  email
+}
+
+model MessageThread {
+  id             String            @id @default(cuid())
+  organization   Organization      @relation(fields: [organizationId], references: [id])
+  organizationId String
+  externalId     String?
+  type           MessageThreadType
+  contextUser    User              @relation(fields: [contextUserId], references: [id])
+  contextUserId  String
+  messages       Message[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now())
+}
+
+model Message {
+  id                String         @id @default(cuid())
+  messageThread     MessageThread? @relation(fields: [messageThreadId], references: [id])
+  messageThreadId   String?
+  senderUser        User?          @relation("senderUser", fields: [senderUserId], references: [id])
+  senderUserId      String?
+  destinationUser   User?          @relation("destinationUser", fields: [destinationUserId], references: [id])
+  destinationUserId String?
+  content           String
+  attachement       String?
+  externalId        String?
+  createdAt         DateTime       @default(now())
+}
+
+model WhatsappIntegration {
+  id                String      @id @default(cuid())
+  integrationId     String      @unique
+  integration       Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  verifyToken       String      @unique
+  phoneNumber       String
+  phoneNumberId     String
+  businessAccountId String
+  accessToken       String
+}
+
+enum NotificationType {
+  ORG_INVITE
+  PAYMENT_CONFIRMED
+  RESERVATION_PAYMENT_REMINDER
+  RESERVATION_CONFIRMED
+  RESERVATION_REJECTED
+  RESERVATION_REMINDER
+  BASE_NOTIFICATION
+}
+
+model Form {
+  id             String           @id @default(cuid())
+  organization   Organization     @relation(fields: [organizationId], references: [id])
+  organizationId String
+  event          Event?           @relation(fields: [eventId], references: [id])
+  eventId        String?
+  name           String
+  description    String?
+  fields         Json             @default("[]")
+  submissions    FormSubmission[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  deletedAt      DateTime?
+}
+
+model FormSubmission {
+  id        String   @id @default(cuid())
+  form      Form     @relation(fields: [formId], references: [id])
+  formId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  eventId   String?
+  event     Event?   @relation(fields: [eventId], references: [id])
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum JobType {
+  GENERATE_EVENT_OPEN_GRAPH
+  COLLECT_USER_DATA
+  SEND_USER_MESSAGE
+  PROCESS_USER_DATA
+  MATCH_MAKING_GENERATION
+  // Add more job types as needed
+}
+
+model QueueJob {
+  id          String    @id @default(cuid())
+  type        JobType
+  status      JobStatus @default(PENDING)
+  data        Json
+  priority    Int       @default(0)
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  startedAt   DateTime?
+  completedAt DateTime?
+  failedAt    DateTime?
+  error       String?
+
+  notificationType NotificationType?
+
+  // Optional: Add relations if jobs are associated with specific entities
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id])
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@index([status, type, priority])
+  @@index([createdAt])
+}
+
+// Add this model to your existing schema
+model CronLock {
+  id        String   @id @default(cuid())
+  jobName   String   @unique
+  lockedAt  DateTime
+  expiresAt DateTime
+}
+
+model NetworkingMatch {
+  id                String            @id @default(cuid())
+  user              User              @relation(fields: [userId], references: [id])
+  userId            String
+  event             Event             @relation(fields: [eventId], references: [id])
+  eventId           String
+  registration      EventRegistration @relation(fields: [registrationId], references: [id])
+  registrationId    String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  personDescription String
+  matchReason       String
+
+  @@unique([userId, registrationId])
+}

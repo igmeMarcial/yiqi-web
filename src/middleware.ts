@@ -20,21 +20,25 @@ function getLocaleFromHeader(acceptLanguage: string | null): string {
 
 export function middleware(request: NextRequest) {
   const localeCookie = request.cookies.get('locale')
+  const fullUrl = request.url
+
+  // Clone the request headers and append the full URL
+  const requestHeaders = new Headers()
+  requestHeaders.set('x-full-url', fullUrl)
 
   if (!localeCookie) {
     const acceptLanguage = request.headers.get('Accept-Language')
     const locale = getLocaleFromHeader(acceptLanguage)
 
-    const response = NextResponse.redirect(request.url)
-    response.cookies.set('locale', locale, {
-      maxAge: 60 * 60 * 24 * 365,
-      path: '/'
+    request.cookies.set({
+      name: 'locale',
+      value: locale
     })
-
-    return response
   }
 
-  return NextResponse.next()
+  return NextResponse.next({
+    headers: requestHeaders
+  })
 }
 
 export const config = {

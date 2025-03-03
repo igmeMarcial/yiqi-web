@@ -1,10 +1,11 @@
-import OrganizationLayout from '@/components/orgs/OrganizationLayout'
+import React from 'react'
 import FormsList from '@/components/yiqiForm/FormResults/FormsList'
 import { getUser } from '@/lib/auth/lucia'
 import { getOrganization } from '@/services/actions/organizationActions'
 import { getForms } from '@/services/actions/typeForm/typeFormActions'
 import { redirect } from 'next/navigation'
-import React from 'react'
+import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
+
 export default async function FormsPage({
   params
 }: {
@@ -14,6 +15,7 @@ export default async function FormsPage({
   if (!user) {
     redirect('/auth')
   }
+  await getUserOrRedirect()
 
   const organization = await getOrganization(params.id)
   if (!organization) {
@@ -30,20 +32,10 @@ export default async function FormsPage({
 
   return (
     <main className="flex flex-col items-center justify-center">
-      <OrganizationLayout
-        orgId={params.id}
-        userProps={{
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          picture: user.picture ?? ''
-        }}
-      >
-        <FormsList
-          organizationId={organization.id}
-          forms={formsResponse.forms || []}
-        />
-      </OrganizationLayout>
+      <FormsList
+        organizationId={organization.id}
+        forms={formsResponse.forms || []}
+      />
     </main>
   )
 }

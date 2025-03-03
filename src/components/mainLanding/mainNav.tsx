@@ -20,13 +20,13 @@ import SignOutButton from '../auth/sign-out'
 
 export interface User {
   name?: string
-  picture?: string
+  picture?: string | null
   email?: string
   role?: string
 }
 
 interface HeaderProps {
-  user: User | null
+  user?: User
   showExtraButton?: boolean
   buttonName?: string
   dialogTriggerRef?: React.RefObject<HTMLButtonElement>

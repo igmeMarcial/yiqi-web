@@ -13,18 +13,110 @@ declare const luciaUserSchema: z.ZodObject<{
     name: z.ZodString;
     email: z.ZodString;
     picture: z.ZodNullable<z.ZodString>;
+    dataCollected: z.ZodObject<{
+        company: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        position: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        shortDescription: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        linkedin: z.ZodUnion<[z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>, z.ZodLiteral<"">]>;
+        x: z.ZodUnion<[z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>, z.ZodLiteral<"">]>;
+        instagram: z.ZodUnion<[z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>, z.ZodLiteral<"">]>;
+        website: z.ZodUnion<[z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>, z.ZodLiteral<"">]>;
+        professionalMotivations: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        communicationStyle: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        professionalValues: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        careerAspirations: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        significantChallenge: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        resumeUrl: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        resumeText: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+        resumeLastUpdated: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
+    }, "strip", z.ZodTypeAny, {
+        company?: string | null | undefined;
+        position?: string | null | undefined;
+        shortDescription?: string | null | undefined;
+        linkedin?: string | null | undefined;
+        x?: string | null | undefined;
+        instagram?: string | null | undefined;
+        website?: string | null | undefined;
+        professionalMotivations?: string | null | undefined;
+        communicationStyle?: string | null | undefined;
+        professionalValues?: string | null | undefined;
+        careerAspirations?: string | null | undefined;
+        significantChallenge?: string | null | undefined;
+        resumeUrl?: string | null | undefined;
+        resumeText?: string | null | undefined;
+        resumeLastUpdated?: string | null | undefined;
+    }, {
+        company?: string | null | undefined;
+        position?: string | null | undefined;
+        shortDescription?: string | null | undefined;
+        linkedin?: string | null | undefined;
+        x?: string | null | undefined;
+        instagram?: string | null | undefined;
+        website?: string | null | undefined;
+        professionalMotivations?: string | null | undefined;
+        communicationStyle?: string | null | undefined;
+        professionalValues?: string | null | undefined;
+        careerAspirations?: string | null | undefined;
+        significantChallenge?: string | null | undefined;
+        resumeUrl?: string | null | undefined;
+        resumeText?: string | null | undefined;
+        resumeLastUpdated?: string | null | undefined;
+    }>;
+    userContentPreferences: z.ZodNullable<z.ZodString>;
+    userDetailedProfile: z.ZodNullable<z.ZodString>;
+    userEmbeddableProfile: z.ZodNullable<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     name: string;
     id: string;
     email: string;
     picture: string | null;
     role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+    dataCollected: {
+        company?: string | null | undefined;
+        position?: string | null | undefined;
+        shortDescription?: string | null | undefined;
+        linkedin?: string | null | undefined;
+        x?: string | null | undefined;
+        instagram?: string | null | undefined;
+        website?: string | null | undefined;
+        professionalMotivations?: string | null | undefined;
+        communicationStyle?: string | null | undefined;
+        professionalValues?: string | null | undefined;
+        careerAspirations?: string | null | undefined;
+        significantChallenge?: string | null | undefined;
+        resumeUrl?: string | null | undefined;
+        resumeText?: string | null | undefined;
+        resumeLastUpdated?: string | null | undefined;
+    };
+    userContentPreferences: string | null;
+    userDetailedProfile: string | null;
+    userEmbeddableProfile: string | null;
 }, {
     name: string;
     id: string;
     email: string;
     picture: string | null;
     role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+    dataCollected: {
+        company?: string | null | undefined;
+        position?: string | null | undefined;
+        shortDescription?: string | null | undefined;
+        linkedin?: string | null | undefined;
+        x?: string | null | undefined;
+        instagram?: string | null | undefined;
+        website?: string | null | undefined;
+        professionalMotivations?: string | null | undefined;
+        communicationStyle?: string | null | undefined;
+        professionalValues?: string | null | undefined;
+        careerAspirations?: string | null | undefined;
+        significantChallenge?: string | null | undefined;
+        resumeUrl?: string | null | undefined;
+        resumeText?: string | null | undefined;
+        resumeLastUpdated?: string | null | undefined;
+    };
+    userContentPreferences: string | null;
+    userDetailedProfile: string | null;
+    userEmbeddableProfile: string | null;
 }>;
 type LuciaUserType = z.infer<typeof luciaUserSchema>;
 
@@ -62,6 +154,26 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             email: string;
             picture: string | null;
             role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+            dataCollected: {
+                company?: string | null | undefined;
+                position?: string | null | undefined;
+                shortDescription?: string | null | undefined;
+                linkedin?: string | null | undefined;
+                x?: string | null | undefined;
+                instagram?: string | null | undefined;
+                website?: string | null | undefined;
+                professionalMotivations?: string | null | undefined;
+                communicationStyle?: string | null | undefined;
+                professionalValues?: string | null | undefined;
+                careerAspirations?: string | null | undefined;
+                significantChallenge?: string | null | undefined;
+                resumeUrl?: string | null | undefined;
+                resumeText?: string | null | undefined;
+                resumeLastUpdated?: string | null | undefined;
+            };
+            userContentPreferences: string | null;
+            userDetailedProfile: string | null;
+            userEmbeddableProfile: string | null;
         };
         sessionId: string;
     }>;
@@ -89,6 +201,26 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             email: string;
             picture: string | null;
             role: "USER" | "ADMIN" | "ANDINO_ADMIN" | "NEW_USER";
+            dataCollected: {
+                company?: string | null | undefined;
+                position?: string | null | undefined;
+                shortDescription?: string | null | undefined;
+                linkedin?: string | null | undefined;
+                x?: string | null | undefined;
+                instagram?: string | null | undefined;
+                website?: string | null | undefined;
+                professionalMotivations?: string | null | undefined;
+                communicationStyle?: string | null | undefined;
+                professionalValues?: string | null | undefined;
+                careerAspirations?: string | null | undefined;
+                significantChallenge?: string | null | undefined;
+                resumeUrl?: string | null | undefined;
+                resumeText?: string | null | undefined;
+                resumeLastUpdated?: string | null | undefined;
+            };
+            userContentPreferences: string | null;
+            userDetailedProfile: string | null;
+            userEmbeddableProfile: string | null;
         };
         sessionId: string;
     }>;
@@ -152,17 +284,12 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             startDate: Date;
             endDate: Date;
             organizationId: string;
-            customFields: {
-                name: string;
-                type: "number" | "date" | "select" | "text";
-                required: boolean;
-                options?: string | undefined;
-            }[];
             createdAt: Date;
             updatedAt: Date;
             requiresApproval: boolean;
             backgroundColor: string | null;
             heroImage: string | null;
+            timezoneLabel: string;
             organization: {
                 name: string;
                 logo: string | null;
@@ -190,6 +317,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
+            customFields?: {
+                fields: {
+                    name: string;
+                    type: "number" | "boolean" | "date" | "text" | "url";
+                    description: string;
+                    inputType: "shortText" | "longText";
+                    required?: boolean | undefined;
+                    defaultValue?: string | number | boolean | undefined;
+                }[];
+                eventData?: Record<string, any>[] | undefined;
+            } | null | undefined;
             openGraphImage?: string | null | undefined;
             featuredIn?: {
                 name: string;
@@ -257,15 +395,10 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         startDate: Date;
         endDate: Date;
         organizationId: string;
-        customFields: {
-            name: string;
-            type: "number" | "date" | "select" | "text";
-            required: boolean;
-            options?: string | undefined;
-        }[];
         createdAt: Date;
         updatedAt: Date;
         requiresApproval: boolean;
+        timezoneLabel: string;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
@@ -277,6 +410,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
+        customFields?: {
+            fields: {
+                name: string;
+                type: "number" | "boolean" | "date" | "text" | "url";
+                description: string;
+                inputType: "shortText" | "longText";
+                required?: boolean | undefined;
+                defaultValue?: string | number | boolean | undefined;
+            }[];
+            eventData?: Record<string, any>[] | undefined;
+        } | null | undefined;
         openGraphImage?: string | null | undefined;
         tickets?: {
             name: string;
@@ -303,6 +447,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
+                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _input_out: {
@@ -311,6 +456,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
                 name: string;
                 email: string;
                 tickets: Record<string, number>;
+                customFieldsData?: Record<string, any> | undefined;
             };
         };
         _output_in: typeof _trpc_server.unsetMarker;
@@ -397,7 +543,6 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
     }, {
         id: string;
         status: "PENDING" | "APPROVED" | "REJECTED";
-        customFields: Record<string, any>;
         createdAt: Date;
         updatedAt: Date;
         tickets: {
@@ -433,6 +578,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         };
         paid: boolean;
         paymentId: string | null;
+        customFields?: Record<string, any> | null | undefined;
     } | null>;
     createCheckoutSession: _trpc_server.BuildProcedure<"mutation", {
         _config: _trpc_server.RootConfig<{
@@ -558,6 +704,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             startDate: Date;
             endDate: Date;
             requiresApproval: boolean;
+            timezoneLabel: string;
             description?: string | undefined;
             location?: string | null | undefined;
             city?: string | null | undefined;
@@ -569,6 +716,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             } | null | undefined;
             virtualLink?: string | null | undefined;
             maxAttendees?: number | null | undefined;
+            customFields?: {
+                fields: {
+                    name: string;
+                    type: "number" | "boolean" | "date" | "text" | "url";
+                    description: string;
+                    inputType: "shortText" | "longText";
+                    required?: boolean | undefined;
+                    defaultValue?: string | number | boolean | undefined;
+                }[];
+                eventData?: Record<string, any>[] | undefined;
+            } | null | undefined;
             openGraphImage?: string | null | undefined;
         }[];
         members: {
@@ -624,13 +782,10 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
             category: "GENERAL" | "VIP" | "BACKSTAGE";
             checkedInDate: Date | null;
             registration: {
-                customFields: {
-                    name: string;
-                    email: string;
-                    tickets: Record<string, number>;
-                };
+                id: string;
                 paid: boolean;
                 paymentId: string | null;
+                customFields?: Record<string, any> | undefined;
             };
             registrationId: string;
             checkedInByUserId: string | null;
@@ -920,6 +1075,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         startDate: Date;
         endDate: Date;
         requiresApproval: boolean;
+        timezoneLabel: string;
         description?: string | undefined;
         location?: string | null | undefined;
         city?: string | null | undefined;
@@ -931,6 +1087,17 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         } | null | undefined;
         virtualLink?: string | null | undefined;
         maxAttendees?: number | null | undefined;
+        customFields?: {
+            fields: {
+                name: string;
+                type: "number" | "boolean" | "date" | "text" | "url";
+                description: string;
+                inputType: "shortText" | "longText";
+                required?: boolean | undefined;
+                defaultValue?: string | number | boolean | undefined;
+            }[];
+            eventData?: Record<string, any>[] | undefined;
+        } | null | undefined;
         openGraphImage?: string | null | undefined;
     }[]>;
     getEventRegistrations: _trpc_server.BuildProcedure<"query", {
@@ -953,7 +1120,6 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
     }, {
         id: string;
         status: "PENDING" | "APPROVED" | "REJECTED";
-        customFields: Record<string, any>;
         createdAt: Date;
         updatedAt: Date;
         tickets: {
@@ -989,6 +1155,7 @@ declare const appRouter: _trpc_server.CreateRouterInner<_trpc_server.RootConfig<
         };
         paid: boolean;
         paymentId: string | null;
+        customFields?: Record<string, any> | null | undefined;
     }[]>;
     checkInTicket: _trpc_server.BuildProcedure<"mutation", {
         _config: _trpc_server.RootConfig<{

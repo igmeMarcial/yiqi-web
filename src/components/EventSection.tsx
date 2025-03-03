@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Eye } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { EventCommunityType } from '@/schemas/eventSchema'
+import { formatRangeDatesByTimezoneLabel } from './utils'
 
 export default function EventSection({
   events,
@@ -90,7 +91,10 @@ export default function EventSection({
                     {event.title}
                   </div>
                   <div className="text-sm text-gray-400 mt-1">
-                    {new Date(event.startDate).toLocaleString()}
+                    {formatRangeDatesByTimezoneLabel(
+                      event.startDate,
+                      event.timezoneLabel
+                    )}
                   </div>
                 </div>
 
@@ -101,7 +105,7 @@ export default function EventSection({
                   }`}
                 >
                   <Link
-                    href={`/admin/organizations/${orgId}/events/${event.id}`}
+                    href={`/admin/organizations/${orgId}/events/${event.id}/summary`}
                     className="text-gray-300 hover:text-primary mt-4"
                   >
                     <Eye className="w-5 h-5" />

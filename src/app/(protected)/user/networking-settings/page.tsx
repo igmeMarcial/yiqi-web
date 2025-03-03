@@ -1,38 +1,26 @@
-import NetworkingProfileForm from '@/components/profile/NetworkingProfileForm'
-import UserLayout from '@/components/user/UserLayout'
-import { getUser } from '@/lib/auth/lucia'
+import NetworkingSettingsManager from '@/components/profile/NetworkingSettingsManager'
 import { profileDataSchema } from '@/schemas/userSchema'
-import { getUserProfile } from '@/services/actions/userActions'
-import { getTranslations } from 'next-intl/server'
-import React from 'react'
+import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
+import UserLayout from '@/components/user/UserLayout'
 
 export default async function page() {
-  const userCurrent = await getUser()
-  const t = await getTranslations('user')
+  const { user } = await getUserOrRedirect()
 
-  if (!userCurrent?.id) {
-    return <div>{t('notFound')}</div>
-  }
-
-  const user = await getUserProfile(userCurrent.id)
-
-  if (!user) {
-    return <div>{t('notFound')}</div>
-  }
-
-  // Extract networking specific data
   const networkingData = {
     professionalMotivations: user.professionalMotivations,
     communicationStyle: user.communicationStyle,
     professionalValues: user.professionalValues,
     careerAspirations: user.careerAspirations,
-    significantChallenge: user.significantChallenge
+    significantChallenge: user.significantChallenge,
+    resumeUrl: user.resumeUrl,
+    resumeFileName: user.resumeFileName,
+    resumeText: user.resumeText
   }
 
   return (
     <main className="flex flex-col items-center justify-center">
       <UserLayout userProps={profileDataSchema.parse(user)}>
-        <NetworkingProfileForm initialData={networkingData} />
+        <NetworkingSettingsManager user={user} initialData={networkingData} />
       </UserLayout>
     </main>
   )

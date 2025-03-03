@@ -131,7 +131,9 @@
     "eventCreatedDescription": "Tu evento ha sido creado y está listo para ser compartido.",
     "eventUpdatedDescription": "Tu evento ha sido actualizado con los nuevos cambios.",
     "goToEvents": "Ir a Eventos",
-    "viewEvent": "Ver Evento"
+    "viewEvent": "Ver Evento",
+    "editorTitle": "Editar contenido",
+    "defaultContent": "Mi contenido"
   },
   "contactFor": {
     "contact": "Contacto",
@@ -224,9 +226,12 @@
     "role": "Rol"
   },
   "DeleteAccount": {
+    "errorInForm": "Error en el formulario",
     "viewEvent": "Ver evento",
     "editEvent": "Editar evento",
     "uploadImage": "Subir imagen",
+    "settingsDescription": "Descripción",
+
     "allowedFormats": "Formatos permitidos: ",
     "location": "Ubicación",
     "settings": "Configuración",
@@ -326,7 +331,9 @@
     "importing": "Importando...",
     "importContacts": "Importar Contactos",
     "noOrganizationFound": "No se encontró la organización",
-    "networkingSettings": "Networking"
+    "networkingSettings": "Networking",
+    "errorInDate": "Fecha invalida",
+    "errorInHours": "Horas invalidas"
   },
 
   "AdminLayout": {
@@ -378,7 +385,8 @@
     "ticketHolder": "Titular del ticket",
     "date": "Fecha del evento",
     "purchaseDate": "Fecha de compra",
-    "ticketId": "ID del Ticket:"
+    "ticketId": "ID del Ticket:",
+    "minOneTicket": "Por favor, agrega al menos un tipo de ticket"
   },
   "Luma": {
     "featuredIn": "Destacado en",
@@ -647,26 +655,43 @@
     "eventCheckInTableCheckIn": "Verificado",
     "eventCheckinBackButton": "Volver a entradas"
   },
+  "NetworkingUserList": {
+    "title": "Coincidencias de Networking",
+    "loadingMatches": "Estamos utilizando un avanzado sistema de emparejamiento con IA para encontrar las mejores conexiones para ti. ¡Sigue revisando para nuevas conexiones!",
+    "foundText": "¡Tienes {nbr} coincidencias potenciales! Explóralas para encontrar tus mejores conexiones.",
+    "buttonText": "Ver recomendaciones",
+    "buttonLoading": "Aún cargando las coincidencias",
+    "modalSubTitle": "¡Aquí están las personas con las que has hecho coincidir! Conéctate y colabora para construir relaciones significativas.",
+    "whyRecomeendation": "¿Por qué deberíamos encontrarnos?",
+    "aboutPerson": "Acerca de"
+  },
+  "ongoingEventBanner": {
+    "ongoingEvent": "Evento en Curso",
+    "joinEvent": "Unirse al Evento",
+    "viewTicket": "Ver Entrada",
+    "linkUnvailable": "El enlace virtual no está disponible para este evento.",
+    "nextToStart": "Próximo a comenzar"
+  },
   "RegistrationChart": {
     "title": "Registros de los Últimos 7 Días",
     "noData": "No hay datos de registro disponibles"
   },
-   "yiqiForm": {
-  "formNotFound": "Formulario no encontrado",
-  "brokenLinkOrDeleted": "El enlace que has seguido puede estar roto o el formulario ha sido eliminado.",
-  "createNewForm": "Crear un nuevo formulario",
-  "responsesSent": "Tus respuestas se han enviado correctamente",
-  "errorOccurred": "Ocurrió un error",
-  "loginToContinue": "Inicia sesión para continuar",
-  "loginToFillForm": "Para rellenar este formulario, debes iniciar sesión",
-  "or": "o",
-  "submit": "Enviar",
-  "clear": "Limpiar",
-  "fieldRequired": "Este campo es requerido",
-  "writeYourAnswer": "Escribe tu respuesta...",
-  "other": "Otro",
-  "writeHere": "Escribe aquí...",
-   "questions": "Preguntas",
+  "yiqiForm": {
+    "formNotFound": "Formulario no encontrado",
+    "brokenLinkOrDeleted": "El enlace que has seguido puede estar roto o el formulario ha sido eliminado.",
+    "createNewForm": "Crear un nuevo formulario",
+    "responsesSent": "Tus respuestas se han enviado correctamente",
+    "errorOccurred": "Ocurrió un error",
+    "loginToContinue": "Inicia sesión para continuar",
+    "loginToFillForm": "Para rellenar este formulario, debes iniciar sesión",
+    "or": "o",
+    "submit": "Enviar",
+    "clear": "Limpiar",
+    "fieldRequired": "Este campo es requerido",
+    "writeYourAnswer": "Escribe tu respuesta...",
+    "other": "Otro",
+    "writeHere": "Escribe aquí...",
+    "questions": "Preguntas",
     "responses": "Respuestas",
     "formUpdated": "Formulario actualizado",
     "update": "Actualizar",
@@ -678,7 +703,96 @@
     "newForm": "Nuevo Formulario",
     "noFormsCreated": "No hay formularios creados. ¡Comienza creando uno nuevo!",
     "createForm": "Crear formulario",
-     "linkCopied": "Link Copiado",
+    "linkCopied": "Link Copiado",
     "copyLink": "Copiar Link"
-}
+  },
+  "ManagementEventTabs": {
+    "summary": "Resumen del evento",
+    "attendes": "Asistentes",
+    "registration": "Registro",
+    "broadcasts": "Difusiones",
+    "checkin": "Check-in"
+  },
+  "SendMassiveMessagesForm": {
+    "sendStatement": "Enviar nuevo comunicado",
+    "recipients": "Destinatarios",
+    "chooseAudience": "Elije tu audiencia",
+    "registered": "registrados",
+    "subject": "Asunto (opcional)",
+    "description": "Descripción",
+    "defaultMessage": "Mensaje predeterminado",
+    "send": "Enviar",
+    "close": "Cerrar",
+    "emailsSent": "Los correos fueron enviados",
+    "success": "Éxito!"
+  },
+  "attendeeStatus": {
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado"
+  },
+  "Networking": {
+    "profileImage": "Imagen de perfil",
+    "whyConnect": "Por qué deberías conectar",
+    "aboutMatch": "Acerca de esta coincidencia",
+    "notRegistered": "No estás registrado para este evento",
+    "registerFirst": "Necesitas registrarte primero para ver tus coincidencias",
+    "registerEvent": "Registrarse para el evento",
+    "needMoreInfo": "Necesitamos más información sobre ti",
+    "completeProfile": "Para encontrar coincidencias, necesitamos que completes tu perfil",
+    "completeProfileButton": "Completar mi perfil",
+    "generatingMatches": "Estamos generando tus coincidencias",
+    "processingTime": "Este proceso puede tardar unos minutos...",
+    "matchGenerationFailed": "Hubo un problema al generar tus coincidencias",
+    "contactOrganizer": "Por favor contacta al organizador del evento",
+    "matchProcessNotFound": "No pudimos encontrar el proceso de emparejamiento",
+    "contactOrganizerCheck": "Por favor contacta al organizador del evento para verificar qué sucedió",
+    "noMatches": "No hay coincidencias para ti en este momento",
+    "savingNetworkingProfile": "Actualizando Tu Perfil",
+    "savingProfileData": "Guardando tus datos de perfil...",
+    "analyzingPreferences": "Analizando tus preferencias...",
+    "determiningContentPreferences": "Determinando recomendaciones de contenido...",
+    "networkingProfileTitle": "Perfil de Networking Mejorado",
+    "networkingProfileDescription": "Ayúdanos a crear conexiones significativas para ti compartiendo más sobre tu viaje profesional. Esta información se utilizará para emparejarte con oportunidades relevantes, eventos y otros profesionales que comparten tus intereses y objetivos.",
+    "networkingBenefits": "Los beneficios incluyen recomendaciones de eventos personalizados, oportunidades de networking seleccionadas y contenido personalizado basado en tu perfil profesional.",
+    "professionalMotivationsLabel": "¿Qué te motiva para tener éxito?",
+    "professionalMotivationsPlaceholder": "Comparte lo que te apasiona—innovación, liderazgo, ayudar a otros, crecimiento personal...",
+    "communicationStyleLabel": "¿Cómo describirías tu estilo de comunicación y interacción?",
+    "communicationStylePlaceholder": "¿Eres más de un oyente o orador? ¿Prefieres colaborar o trabajar de manera independiente?",
+    "professionalValuesLabel": "¿Qué valores guían tu vida profesional?",
+    "professionalValuesPlaceholder": "Integridad, creatividad, trabajo en equipo, responsabilidad social...",
+    "careerAspirationsLabel": "¿Cuáles son tus objetivos profesionales a largo plazo?",
+    "careerAspirationsPlaceholder": "Roles de liderazgo, especialización, emprendimiento...",
+    "significantChallengeLabel": "Comparte un desafío profesional significativo que has superado",
+    "significantChallengePlaceholder": "¿Cuál fue el desafío y qué aprendiste de él?",
+    "saveNetworkingProfile": "Guardar Perfil de Networking",
+    "networkingProfileSaved": "Perfil de networking actualizado exitosamente",
+    "networkingProfileError": "Error al actualizar el perfil de networking",
+    "resumeUploadLabel": "Subir Su Hoja de Vida (CV)",
+    "selectResumeTypes": "Seleccionar Hoja de Vida (PDF, TXT o DOCX)",
+    "currentResume": "Hoja de Vida Actual:",
+    "uploadingResume": "Subiendo hoja de vida...",
+    "editResume": "Editar tu Hoja de Vida (PDF, TXT o DOCX)",
+    "extractingText": "Extrayendo texto...",
+    "yourNetworkingProfile": "Tu Perfil de Networking",
+    "aiGeneratedProfileDescription": "Basado en la información que proporcionaste, hemos generado un perfil detallado para ayudarte a conectar con profesionales afines.",
+    "editProfile": "Editar Perfil",
+    "detailedProfile": "Tu Perfil Detallado",
+    "contentPreferences": "Tus Preferencias de Contenido",
+    "backToProfile": "Volver al Perfil",
+    "processingTimeWarning": "Nota: El procesamiento de tu perfil toma aproximadamente 1 minuto. Por favor, no abandones esta página hasta que se complete.",
+    "aiGenerated": "Generado por IA",
+    "aiProfileExplanation": "Este perfil fue generado por IA basado en tu currículum y respuestas al cuestionario. Nos ayuda a conectarte con oportunidades y profesionales relevantes.",
+    "processingTimeModalNotice": "Este proceso puede tardar hasta un minuto en completarse. Por favor, no cierres esta ventana.",
+    "profileBenefitsExplanation": "Una vez que tu perfil sea procesado, nuestro sistema te ayudará a encontrar a las personas adecuadas con quienes hablar en los eventos. En el futuro, también te recomendará eventos específicos donde puedas conocer a personas que se alineen con tus objetivos profesionales."
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complete su perfil para el emparejamiento impulsado por IA",
+    "missingCheckIn": "Haga check-in para ver su red de networking",
+    "readyForAIMatching": "¡Tu red de networking seleccionada por IA están listas!",
+    "matchMakingInProgress": "Sus matches están siendo generadas, por favor vuelva a revisar en unos minutos!",
+    "completeProfile": "Completar Perfil",
+    "viewTickets": "Ver Boletos",
+    "viewMatches": "Ver coincidencias"
+  }
 }

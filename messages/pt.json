@@ -118,7 +118,9 @@
     "defaultValueP": "Este editor suporta",
     "defaultValueStrong": "negrito",
     "defaultValueItalic": "itálico",
-    "defaultValueP2": "e muitas outras opções de formatação. Você também pode inserir imagens e vídeos do YouTube!"
+    "defaultValueP2": "e muitas outras opções de formatação. Você também pode inserir imagens e vídeos do YouTube!",
+    "editorTitle": "Editar conteúdo",
+    "defaultContent": "Meu conteúdo"
   },
   "contactFor": {
     "contact": "Contacto",
@@ -293,7 +295,9 @@
     "importing": "A importar...",
     "importContacts": "Importar Contactos",
     "noOrganizationFound": "Nenhuma organização encontrada",
-    "networkingSettings": "Definições de Networking"
+    "networkingSettings": "Definições de Networking",
+    "errorInDate": "Data inválidae",
+    "errorInHours": "Horas inválidas"
   },
 
   "AdminLayout": {
@@ -600,21 +604,21 @@
     "eventCheckinBackButton": "Voltar aos Bilhetes"
   },
   "yiqiForm": {
-  "formNotFound": "Formulário não encontrado",
-  "brokenLinkOrDeleted": "O link que você seguiu pode estar quebrado ou o formulário foi excluído.",
-  "createNewForm": "Criar um novo formulário",
-  "responsesSent": "Suas respostas foram enviadas com sucesso",
-  "errorOccurred": "Ocorreu um erro",
-  "loginToContinue": "Faça login para continuar",
-  "loginToFillForm": "Para preencher este formulário, você deve fazer login",
-  "or": "ou",
-  "submit": "Enviar",
-  "clear": "Limpar",
-  "fieldRequired": "Este campo é obrigatório",
-  "writeYourAnswer": "Escreva sua resposta...",
-  "other": "Outro",
-  "writeHere": "Escreva aqui...",
-   "questions": "Perguntas",
+    "formNotFound": "Formulário não encontrado",
+    "brokenLinkOrDeleted": "O link que você seguiu pode estar quebrado ou o formulário foi excluído.",
+    "createNewForm": "Criar um novo formulário",
+    "responsesSent": "Suas respostas foram enviadas com sucesso",
+    "errorOccurred": "Ocorreu um erro",
+    "loginToContinue": "Faça login para continuar",
+    "loginToFillForm": "Para preencher este formulário, você deve fazer login",
+    "or": "ou",
+    "submit": "Enviar",
+    "clear": "Limpar",
+    "fieldRequired": "Este campo é obrigatório",
+    "writeYourAnswer": "Escreva sua resposta...",
+    "other": "Outro",
+    "writeHere": "Escreva aqui...",
+    "questions": "Perguntas",
     "responses": "Respostas",
     "formUpdated": "Formulário atualizado",
     "update": "Atualizar",
@@ -628,5 +632,55 @@
     "createForm": "Criar formulário",
     "linkCopied": "Link copiado",
     "copyLink": "Copiar link"
-}
+  },
+  "NetworkingUserList": {
+    "title": "Conexões de Networking",
+    "loadingMatches": "Estamos usando um sistema avançado de correspondência com IA para encontrar as melhores conexões para você. Continue verificando para novas conexões!",
+    "foundText": "Você tem {nbr} correspondências potenciais! Explore-as para encontrar suas melhores conexões.",
+    "buttonText": "Ver Recomendações",
+    "buttonLoading": "Ainda carregando as correspondências",
+    "modalSubTitle": "Aqui estão as pessoas com quem você fez correspondência! Conecte-se e colabore para construir relações significativas.",
+    "whyRecomeendation": "Por que deveríamos nos encontrar?",
+    "aboutPerson": "Sobre"
+  },
+  "ongoingEventBanner": {
+    "ongoingEvent": "Evento em Andamento",
+    "joinEvent": "Participar do Evento",
+    "viewTicket": "Ver Ingresso",
+    "linkUnvailable": "O link virtual não está disponível para este evento.",
+    "nextToStart": "Em breve para começar"
+  },
+  "ManagementEventTabs": {
+    "summary": "Resumo do Evento",
+    "attendes": "Participantes",
+    "registration": "Cadastro",
+    "broadcasts": "Transmissões",
+    "checkin": "Check-in"
+  },
+  "SendMassiveMessagesForm": {
+    "sendStatement": "Enviar novo extrato",
+    "recipients": "Destinatários",
+    "chooseAudience": "Escolha seu público",
+    "registered": "registrada",
+    "subject": "Assunto (opcional)",
+    "description": "Descrição",
+    "defaultMessage": "Mensagem padrão",
+    "send": "Enviar",
+    "close": "Fechar",
+    "emailsSent": "Os e-mails foram enviados",
+    "success": "Sucesso!"
+  },
+  "attendeeStatus": {
+    "pending": "Pendente",
+    "approved": "Aprovada",
+    "rejected": "Rejeitada"
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complete seu perfil para matchmaking com tecnologia de IA",
+    "missingCheckIn": "Faça check-in para ver suas correspondências de rede",
+    "readyForAIMatching": "Suas partidas de rede com curadoria de IA estão prontas!",
+    "completeProfile": "Perfil completo",
+    "viewTickets": "Ver ingressos",
+    "viewMatches": "Ver partidas"
+  }
 }
