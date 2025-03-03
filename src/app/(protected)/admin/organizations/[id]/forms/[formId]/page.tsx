@@ -1,11 +1,9 @@
 import FormManager from '@/components/yiqiForm/FormManager'
-import { getUser } from '@/lib/auth/lucia'
-import { getOrganization } from '@/services/actions/organizationActions'
 import {
   getResultFormById,
   getFormById
 } from '@/services/actions/typeForm/typeFormActions'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
 export default async function FormPage({
@@ -13,15 +11,6 @@ export default async function FormPage({
 }: {
   params: { id: string; formId: string }
 }) {
-  const user = await getUser()
-  if (!user) {
-    redirect('/auth')
-  }
-
-  const organization = await getOrganization(params.id)
-  if (!organization) {
-    return <div>Organization not found</div>
-  }
   const form = await getFormById(params.formId)
 
   if (!form.success) notFound()
