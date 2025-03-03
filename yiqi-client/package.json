@@ -14,8 +14,7 @@
     "@types/react": "^18.x.x",
     "dts-bundle-generator": "^8.x.x",
     "trpc-openapi": "^1.x.x",
-    "ts-node": "^10.x.x",
-    "typescript": "^4.x.x"
+    "ts-node": "^10.x.x"
   },
   "peerDependencies": {
     "react": "^18.x.x"
