@@ -687,7 +687,25 @@
     "noFormsCreated": "No hay formularios creados. ¡Comienza creando uno nuevo!",
     "createForm": "Crear formulario",
     "linkCopied": "Link Copiado",
-    "copyLink": "Copiar Link"
+    "copyLink": "Copiar Link",
+    "back": "Volver",
+    "publish": "Publicar",
+    "formEmptyErrorTitle": "Añade un campo para publicar",
+    "formEmptyErrorDescription": "El formulario debe tener al menos un campo antes de publicarlo.",
+    "publishErrorTitle": "Error al publicar",
+    "publishErrorDescription": "No se pudo publicar el formulario. Inténtalo nuevamente.",
+    "formErrorTitle": "Error inesperado",
+    "formErrorDescription": "Ocurrió un error al intentar publicar el formulario.",
+    "formWithoutTitle": "Formulario sin título",
+    "option1": "Opción 1",
+    "addQuestion": "Agregar pregunta",
+    "addNewQuestion": "Agregar nueva pregunta",
+    "formPublished": "¡Tu formulario ha sido publicado!",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyDescription": "El enlace ha sido copiado al portapapeles.",
+    "copyFailed": "Error al copiar",
+    "retryDescription": "Por favor, inténtalo de nuevo."
   },
   "ManagementEventTabs": {
     "summary": "Resumen del evento",
@@ -803,5 +821,23 @@
     "selectDate": "Seleccione una fecha",
     "nameRequired": "El nombre es obligatorio",
     "invalidEmail": "Correo electrónico inválido"
+  },
+  "QRModal": {
+    "ticketLabel": "Ticket #",
+    "ticketName": "Nombre",
+    "ticketEmail": "Correo",
+    "ticketStatus": "Estado",
+    "ticketChecked": "Verificado",
+    "ticketNotChecked": "No Verificado"
+  },
+  "UserProfile": {
+    "aboutMe": "Sobre mí",
+    "links": "Enlaces",
+    "availableLinks": "Enlaces Disponibles",
+    "notDescriptionAvailable": "Sin descripción disponible.",
+    "website": "Sitio web",
+    "linkedin": "LinkedIn",
+    "x": "X",
+    "instagram": "Instagram"
   }
 }

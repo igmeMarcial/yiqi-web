@@ -13,7 +13,6 @@ import {
 } from '@/services/actions/typeForm/typeFormActions'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { translations } from '@/lib/translations/translations'
 import { generateUniqueIdYiqiForm } from './utils'
 import { FormModel, FormProps } from '../../schemas/yiqiFormSchema'
 import { PublishSuccessModal } from './FormCreator/PublishSuccessModal'
@@ -56,7 +55,8 @@ export function FormHeader({
   const { toast } = useToast()
   const isMobile = useIsMobile()
   const router = useRouter()
-  const t = useTranslations('yiqiForm')
+  const t = useTranslations('YiqiForm')
+
   const navigationItems = [
     {
       title: t('questions'),
@@ -69,11 +69,12 @@ export function FormHeader({
       disabled: false
     }
   ]
+
   const handlePublish = async () => {
     if (form.length < 2) {
       toast({
-        title: translations.es.formEmptyErrorTitle,
-        description: translations.es.formEmptyErrorDescription,
+        title: t('formEmptyErrorTitle'),
+        description: t('formEmptyErrorDescription'),
         variant: 'destructive'
       })
       return
@@ -113,21 +114,22 @@ export function FormHeader({
           setIsPublishModalOpen(true)
         } else {
           toast({
-            title: `${translations.es.publishErrorTitle}`,
-            description: `${translations.es.publishErrorDescription}`,
+            title: t('publishErrorTitle'),
+            description: t('publishErrorDescription'),
             variant: 'destructive'
           })
         }
       }
     } catch (error) {
       toast({
-        title: `${translations.es.formErrorTitle}`,
-        description: `${translations.es.formErrorDescription}`,
+        title: t('formErrorTitle'),
+        description: t('formErrorDescription'),
         variant: 'destructive'
       })
       console.info(error)
     }
   }
+
   return (
     <>
       <header
@@ -169,8 +171,7 @@ export function FormHeader({
                 onClick={handlePublish}
               >
                 <SendHorizonal className="h-4 w-4" />
-
-                {isEditing ? t('update') : `${translations.es.publish}`}
+                {isEditing ? t('update') : t('publish')}
               </Button>
             </div>
           </div>

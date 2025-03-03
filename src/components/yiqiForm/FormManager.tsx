@@ -12,19 +12,10 @@ import YiqiFormLayout from './yiqiFormLayout'
 import { usePathname } from 'next/navigation'
 import { Reorder, useDragControls } from 'framer-motion'
 import { generateUniqueIdYiqiForm } from './utils'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 import ResultForm from './FormResults/Result'
 import { useIsMobile } from '@/hooks/use-mobile'
-import { useTranslations } from 'next-intl'
 
-const initialCard = {
-  id: 'TitleCard',
-  cardTitle: translations.es.formWithoutTitle,
-  inputType: InputTypes.TITLE,
-  contents: '',
-  isFocused: false,
-  isRequired: false
-}
 interface MainFormProps {
   orgId: string
   formResponse: FormModelEditResponse | null
@@ -40,18 +31,31 @@ function FormManager({
 }: MainFormProps) {
   const [form, setForm] = useState<FormProps[]>([])
   const dragControls = useDragControls()
-  const t = useTranslations('yiqiForm')
+  const t = useTranslations('YiqiForm')
   const pathname = usePathname()
   const isMobile = useIsMobile()
+
+  const initialCard = {
+    id: 'TitleCard',
+    cardTitle: t('formWithoutTitle'),
+    inputType: InputTypes.TITLE,
+    contents: '',
+    isFocused: false,
+    isRequired: false
+  }
+
   useEffect(() => {
     setForm(formResponse?.fields ?? [initialCard])
-  }, [formResponse])
+  }, [formResponse, initialCard])
+
   const [currentView, setCurrentView] = useState<'create' | 'results'>(
     pathname.includes('/results') ? 'results' : 'create'
   )
+
   const handleNavigation = (view: 'create' | 'results') => {
     setCurrentView(view)
   }
+
   const createNewCard = (cardId: string, cardTitle = ''): FormProps => ({
     id: cardId,
     cardTitle,
@@ -59,7 +63,7 @@ function FormManager({
     contents: [
       {
         id: generateUniqueIdYiqiForm(),
-        text: translations.es.option1
+        text: t('option1')
       }
     ],
     isFocused: true,
@@ -284,6 +288,7 @@ function FormManager({
       })
     })
   }
+
   const handleReorder = (newOrder: FormProps[]) => {
     if (!isMobile) {
       setForm(newOrder)

@@ -4,7 +4,8 @@ import { useForm, Controller } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { FormProps, InputTypes } from '@/schemas/yiqiFormSchema'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
+
 interface TextFieldSectionProps {
   id: string
   fields: FormProps[]
@@ -12,6 +13,7 @@ interface TextFieldSectionProps {
 }
 const TextFieldSection = ({ id, fields, setText }: TextFieldSectionProps) => {
   const { control } = useForm()
+  const t = useTranslations('YiqiForm')
 
   const currentField = fields.find(field => field.id === id)
   const inputType = currentField?.inputType
@@ -26,9 +28,9 @@ const TextFieldSection = ({ id, fields, setText }: TextFieldSectionProps) => {
   }
 
   const handlePlaceholder = () => {
-    if (isTitle) return translations.es.formDescription
-    if (inputType === InputTypes.TEXT) return translations.es.shortText
-    return translations.es.longText
+    if (isTitle) return t('formDescription')
+    if (inputType === InputTypes.TEXT) return t('shortText')
+    return t('longText')
   }
 
   return (

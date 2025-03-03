@@ -12,10 +12,11 @@ import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { useTranslations } from 'next-intl'
 
-import { translations } from '@/lib/translations/translations'
 import { FormProps } from '@/schemas/yiqiFormSchema'
 import { generateUniqueIdYiqiForm } from '../../utils'
+
 interface FieldFooterProps {
   id: string
   fields: FormProps[]
@@ -31,6 +32,8 @@ const FieldFooter = ({
   copyCard,
   toggleIsRequired
 }: FieldFooterProps) => {
+  const t = useTranslations('YiqiForm')
+
   const currentField = useMemo(
     () => fields.find(field => field.id === id),
     [fields, id]
@@ -79,13 +82,11 @@ const FieldFooter = ({
                   className="h-9 w-9 rounded-full hover:bg-accent"
                 >
                   <Copy className="h-4 w-4 text-muted-foreground" />
-                  <span className="sr-only">
-                    {translations.es.copyQuestion}
-                  </span>
+                  <span className="sr-only">{t('copyQuestion')}</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
-                {translations.es.copyField}
+                {t('copyField')}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -100,13 +101,11 @@ const FieldFooter = ({
                   className="h-9 w-9 rounded-full hover:bg-destructive/10 hover:text-destructive"
                 >
                   <Trash2 className="h-4 w-4" />
-                  <span className="sr-only">
-                    {translations.es.deleteQuestion}
-                  </span>
+                  <span className="sr-only">{t('deleteQuestion')}</span>
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
-                {translations.es.deleteQuestion}
+                {t('deleteQuestion')}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -117,7 +116,7 @@ const FieldFooter = ({
             htmlFor="required-toggle"
             className="text-sm font-medium text-muted-foreground cursor-pointer select-none"
           >
-            {translations.es.required}
+            {t('required')}
           </Label>
           <Switch
             id="required-toggle"

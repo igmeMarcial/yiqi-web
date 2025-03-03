@@ -658,35 +658,41 @@
     "title": "Registrations Last 7 Days",
     "noData": "No registration data available"
   },
-  "yiqiForm": {
-    "formNotFound": "Form not found",
-    "brokenLinkOrDeleted": "The link you followed may be broken or the form has been deleted.",
-    "createNewForm": "Create a new form",
-    "responsesSent": "Your responses have been sent successfully",
-    "errorOccurred": "An error occurred",
-    "loginToContinue": "Log in to continue",
-    "loginToFillForm": "To fill out this form, you must log in",
-    "or": "or",
-    "submit": "Submit",
-    "clear": "Clear",
-    "fieldRequired": "This field is required",
-    "writeYourAnswer": "Write your answer...",
-    "other": "Other",
-    "writeHere": "Write here...",
+  "UserProfile": {
+    "aboutMe": "About Me",
+    "links": "Links",
+    "availableLinks": "Available Links",
+    "notDescriptionAvailable": "No description available.",
+    "website": "Website",
+    "linkedin": "LinkedIn",
+    "x": "X",
+    "instagram": "Instagram"
+  },
+  "YiqiForm": {
+    "back": "Back",
     "questions": "Questions",
     "responses": "Responses",
     "formUpdated": "Form updated",
     "update": "Update",
-    "delete": "Delete",
-    "formDeleted": "Form deleted",
-    "formDeleteError": "Error deleting the form",
+    "publish": "Publish",
+    "formEmptyErrorTitle": "Add a field to publish",
+    "formEmptyErrorDescription": "The form must have at least one field before publishing.",
+    "publishErrorTitle": "Publishing error",
+    "publishErrorDescription": "Failed to publish the form. Please try again.",
+    "formErrorTitle": "Unexpected error",
+    "formErrorDescription": "An error occurred while trying to publish the form.",
+    "formWithoutTitle": "Form without title",
+    "option1": "Option 1",
     "waitingForResponses": "Waiting for responses",
     "noResponses": "No responses. Publish your form to start accepting responses",
-    "newForm": "New Form",
-    "noFormsCreated": "No forms created. Start by creating a new one!",
-    "createForm": "Create form",
-    "linkCopied": "Link Copied",
-    "copyLink": "Copy Link"
+    "addQuestion": "Add Question",
+    "addNewQuestion": "Add new question",
+    "formPublished": "Your form has been published!",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyDescription": "The link has been copied to the clipboard.",
+    "copyFailed": "Copy failed",
+    "retryDescription": "Please try again."
   },
   "ManagementEventTabs": {
     "summary": "Event Summary",
@@ -802,5 +808,13 @@
     "selectDate": "Select a date",
     "nameRequired": "Name is required",
     "invalidEmail": "Invalid email address"
+  },
+  "QRModal": {
+    "ticketLabel": "Ticket #",
+    "ticketName": "Name",
+    "ticketEmail": "Email",
+    "ticketStatus": "Status",
+    "ticketChecked": "Checked",
+    "ticketNotChecked": "Not Checked"
   }
 }
