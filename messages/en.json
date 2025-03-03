@@ -629,30 +629,13 @@
     "ticketStatusPending": "Pending",
     "ticketStatusRejected": "Rejected",
     "ticketTitlePage": "Your Tickets",
-    "ticketNo": "You don´t have any tickets",
+    "ticketNo": "You don't have any tickets",
     "ticketEventImageAlt": "Event Banner",
     "ticketNumber": "Ticket #",
     "ticketLabelView": "View Ticket",
     "ticketPaymentRequired": "Payment is required",
     "ticketPayment": "Pay now",
-    "qrModalTicketLabel": "Ticket #",
-    "qrModalTicketName": "Name",
-    "qrModalTicketEmail": "Email",
-    "qrModalTicketStatus": "Status",
-    "qrModalTicketChecked": "Checked",
-    "qrModalTicketNotChecked": "Not Checked",
-    "checkInQrEventNotFound": "Scan QR Code",
-    "checkInQrEventDontExist": "The event does not exist",
-    "checkInQrDontAccess": "You do not have access",
-    "checkInQrContactAdministrator": "To proceed, contact your organization's administrator to validate your ticket.",
-    "checkInQrOrganizationEventDontFound": "Organization or Event not found",
-    "checkInQrInformation": "Ensure the information is correct or contact support.",
-    "eventCheckInTableTitle": "Event Records:",
-    "eventCheckInSearchByName": "Search by name...",
-    "eventCheckInTableName": "Name",
-    "eventCheckInTableTicketId": "Ticket ID",
-    "eventCheckInTableCheckIn": "Checked In",
-    "eventCheckinBackButton": "Go to Tickets"
+    "userNotFound": "User not found"
   },
   "NetworkingUserList": {
     "title": "Networking Matches",
@@ -793,5 +776,31 @@
     "completeProfile": "Complete Profile",
     "viewTickets": "View Tickets",
     "viewMatches": "View Matches"
+  },
+  "MessageForm": {
+    "messageMinLength": "Message must be at least 1 character",
+    "typeYourMessage": "Type your message here",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "send": "Send",
+    "sending": "Sending...",
+    "error": "Error",
+    "errorSendingMessage": "Error sending message"
+  },
+  "EventLocation": {
+    "location": "Location"
+  },
+  "RegistrationForm": {
+    "eventPayment": "Event Payment",
+    "eventRegistration": "Event Registration",
+    "eventFormName": "Name",
+    "eventFormNamePlaceholder": "John Doe",
+    "eventFormEmail": "Email",
+    "eventFormEmailPlaceholder": "john@example.com",
+    "eventConfirmRegistration": "Confirm Registration",
+    "eventConfirmPurchase": "Confirm Purchase",
+    "selectDate": "Select a date",
+    "nameRequired": "Name is required",
+    "invalidEmail": "Invalid email address"
   }
 }

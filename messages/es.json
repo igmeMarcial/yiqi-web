@@ -629,31 +629,14 @@
     "ticketStatusApproved": "Aprobado",
     "ticketStatusPending": "Pendiente",
     "ticketStatusRejected": "Rechazado",
-    "ticketTitlePage": "Tus entradas",
+    "ticketTitlePage": "Tus Tickets",
     "ticketNo": "No tienes ningun ticket",
-    "ticketEventImageAlt": "Banner del evento",
-    "ticketNumber": "Entrada #",
-    "ticketLabelView": "Ver entrada",
-    "ticketPaymentRequired": "Se requiere pago",
+    "ticketEventImageAlt": "Banner del Evento",
+    "ticketNumber": "Ticket #",
+    "ticketLabelView": "Ver Ticket",
+    "ticketPaymentRequired": "El pago es requerido",
     "ticketPayment": "Pagar ahora",
-    "qrModalTicketLabel": "Entrada #",
-    "qrModalTicketName": "Nombre",
-    "qrModalTicketEmail": "Correo electrónico",
-    "qrModalTicketStatus": "Estado",
-    "qrModalTicketChecked": "Verificado",
-    "qrModalTicketNotChecked": "No verificado",
-    "checkInQrEventNotFound": "Escanear código QR",
-    "checkInQrEventDontExist": "El evento no existe",
-    "checkInQrDontAccess": "No tienes acceso",
-    "checkInQrContactAdministrator": "Para proceder, contacta al administrador de tu organización para validar tu entrada.",
-    "checkInQrOrganizationEventDontFound": "Organización o evento no encontrado",
-    "checkInQrInformation": "Asegúrate de que la información sea correcta o contacta con soporte.",
-    "eventCheckInTableTitle": "Registros del evento:",
-    "eventCheckInSearchByName": "Buscar por nombre...",
-    "eventCheckInTableName": "Nombre",
-    "eventCheckInTableTicketId": "ID de entrada",
-    "eventCheckInTableCheckIn": "Verificado",
-    "eventCheckinBackButton": "Volver a entradas"
+    "userNotFound": "Usuario no encontrado"
   },
   "NetworkingUserList": {
     "title": "Coincidencias de Networking",
@@ -794,5 +777,31 @@
     "completeProfile": "Completar Perfil",
     "viewTickets": "Ver Boletos",
     "viewMatches": "Ver coincidencias"
+  },
+  "MessageForm": {
+    "messageMinLength": "El mensaje debe tener al menos 1 carácter",
+    "typeYourMessage": "Escribe tu mensaje aquí",
+    "whatsapp": "WhatsApp",
+    "email": "Correo",
+    "send": "Enviar",
+    "sending": "Enviando...",
+    "error": "Error",
+    "errorSendingMessage": "Error al enviar el mensaje"
+  },
+  "EventLocation": {
+    "location": "Ubicación"
+  },
+  "RegistrationForm": {
+    "eventPayment": "Pago del Evento",
+    "eventRegistration": "Registro del Evento",
+    "eventFormName": "Nombre",
+    "eventFormNamePlaceholder": "Juan Pérez",
+    "eventFormEmail": "Correo electrónico",
+    "eventFormEmailPlaceholder": "juan@ejemplo.com",
+    "eventConfirmRegistration": "Confirmar Registro",
+    "eventConfirmPurchase": "Confirmar Compra",
+    "selectDate": "Seleccione una fecha",
+    "nameRequired": "El nombre es obligatorio",
+    "invalidEmail": "Correo electrónico inválido"
   }
 }
