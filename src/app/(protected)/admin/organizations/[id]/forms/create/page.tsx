@@ -3,7 +3,9 @@ import React from 'react'
 
 async function page({ params }: { params: { id: string } }) {
   return (
-    <FormManager orgId={params.id} formResponse={null} submissions={null} />
+    <section className="w-full flex flex-1">
+      <FormManager orgId={params.id} formResponse={null} submissions={null} />
+    </section>
   )
 }
 

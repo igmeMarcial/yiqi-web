@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import FormBuild from './FormCreator/FormBuild'
 import {
   FormModelEditResponse,
@@ -29,24 +29,23 @@ function FormManager({
   submissions,
   formId
 }: MainFormProps) {
-  const [form, setForm] = useState<FormProps[]>([])
-  const dragControls = useDragControls()
   const t = useTranslations('YiqiForm')
+
+  const [form, setForm] = useState<FormProps[]>(
+    formResponse?.fields ?? [
+      {
+        id: 'TitleCard',
+        cardTitle: t('formWithoutTitle'),
+        inputType: InputTypes.TITLE,
+        contents: '',
+        isFocused: false,
+        isRequired: false
+      }
+    ]
+  )
+  const dragControls = useDragControls()
   const pathname = usePathname()
   const isMobile = useIsMobile()
-
-  const initialCard = {
-    id: 'TitleCard',
-    cardTitle: t('formWithoutTitle'),
-    inputType: InputTypes.TITLE,
-    contents: '',
-    isFocused: false,
-    isRequired: false
-  }
-
-  useEffect(() => {
-    setForm(formResponse?.fields ?? [initialCard])
-  }, [formResponse, initialCard])
 
   const [currentView, setCurrentView] = useState<'create' | 'results'>(
     pathname.includes('/results') ? 'results' : 'create'

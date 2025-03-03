@@ -9,8 +9,7 @@ import {
   BookUser,
   ChevronDown,
   Building2,
-  // Banknote,
-  // Plus,
+  FolderEdit,
   Banknote,
   Settings
 } from 'lucide-react'
@@ -88,15 +87,15 @@ export default function OrganizationLayout({
       href: `/admin/organizations/${currentOrgId}/organizers`
     },
     {
+      name: `${tSidebar('forms')}`,
+      icon: FolderEdit,
+      href: `/admin/organizations/${currentOrgId}/forms`
+    },
+    {
       name: `${tSidebar('billing')}`,
       icon: Banknote,
       href: `/admin/organizations/${currentOrgId}/billing`
     }
-    // {
-    //   name: 'Formularios',
-    //   icon: Plus,
-    //   href: `/admin/organizations/${orgId}/forms`
-    // }
   ]
 
   return (
