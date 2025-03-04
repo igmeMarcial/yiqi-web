@@ -86,7 +86,7 @@ export default function OrganizationLayout({
       icon: Users,
       href: `/admin/organizations/${currentOrgId}/organizers`
     },
-    {
+    process.env.NEXT_PUBLIC_FORMS === 'true' && {
       name: `${tSidebar('forms')}`,
       icon: FolderEdit,
       href: `/admin/organizations/${currentOrgId}/forms`
@@ -96,7 +96,7 @@ export default function OrganizationLayout({
       icon: Banknote,
       href: `/admin/organizations/${currentOrgId}/billing`
     }
-  ]
+  ].filter(item => item !== false)
 
   return (
     <SidebarProvider className="bg-primary">
