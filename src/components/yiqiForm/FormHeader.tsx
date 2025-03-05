@@ -171,7 +171,9 @@ export function FormHeader({
                 onClick={handlePublish}
               >
                 <SendHorizonal className="h-4 w-4" />
-                {isEditing ? t('update') : t('publish')}
+                <span className="hidden md:block">
+                  {isEditing ? t('update') : t('publish')}
+                </span>
               </Button>
             </div>
           </div>

@@ -40,7 +40,7 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
       onClick={handleAddCard}
     >
       <Plus className="h-4 w-4" />
-      <span className=" ">{t('addQuestion')}</span>
+      <span className="hidden md:block">{t('addQuestion')}</span>
       <span className="sr-only">{t('addNewQuestion')}</span>
     </Button>
   )
