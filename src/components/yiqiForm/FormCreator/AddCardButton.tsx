@@ -17,7 +17,7 @@ interface AddCardButtonProps {
 }
 
 const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
-  const t = useTranslations('YiqiForm')
+  const t = useTranslations('yiqiForm')
   const focusedCardIndex = useMemo(
     () => fields.findIndex(card => card.isFocused),
     [fields]

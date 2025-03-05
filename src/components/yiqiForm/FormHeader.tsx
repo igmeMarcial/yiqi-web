@@ -55,7 +55,7 @@ export function FormHeader({
   const { toast } = useToast()
   const isMobile = useIsMobile()
   const router = useRouter()
-  const t = useTranslations('YiqiForm')
+  const t = useTranslations('yiqiForm')
 
   const navigationItems = [
     {
