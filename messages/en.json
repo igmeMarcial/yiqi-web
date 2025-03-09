@@ -574,7 +574,7 @@
     "eventRequestToJoin": "Request to Join",
     "eventRegistration": "Registration",
     "eventRegistrationDescription": "Fill out the form below to request to join the event.",
-    "eventFormName": "Name",
+    "eventFormName": "Full Name",
     "eventFormNamePlaceholder": "John Doe",
     "eventFormNameDescription": "This is your full name.",
     "eventFormEmail": "Email",
@@ -836,7 +836,7 @@
   "RegistrationForm": {
     "eventPayment": "Event Payment",
     "eventRegistration": "Event Registration",
-    "eventFormName": "Name",
+    "eventFormName": "FullName",
     "eventFormNamePlaceholder": "John Doe",
     "eventFormEmail": "Email",
     "eventFormEmailPlaceholder": "john@example.com",
