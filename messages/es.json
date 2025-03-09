@@ -575,7 +575,7 @@
     "eventRequestToJoin": "Solicitar unirse",
     "eventRegistration": "Registro",
     "eventRegistrationDescription": "Rellena el formulario a continuación para solicitar unirte al evento.",
-    "eventFormName": "Nombre",
+    "eventFormName": "Nombre Completo y Apellido",
     "eventFormNamePlaceholder": "Juan Pérez",
     "eventFormNameDescription": "Este es tu nombre completo.",
     "eventFormEmail": "Correo electrónico",
@@ -826,7 +826,7 @@
   "RegistrationForm": {
     "eventPayment": "Pago del Evento",
     "eventRegistration": "Registro del Evento",
-    "eventFormName": "Nombre",
+    "eventFormName": "Nombre Completo y Apellido",
     "eventFormNamePlaceholder": "Juan Pérez",
     "eventFormEmail": "Correo electrónico",
     "eventFormEmailPlaceholder": "juan@ejemplo.com",
