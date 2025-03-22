@@ -38,17 +38,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { v4 as uuidv4 } from 'uuid'
-
-type User = {
-  id: string
-  name: string
-  email: string
-  userDetailedProfile: string | null
-}
+import { AvailableVariables, VariableType } from './AvailableVariables'
+import { LuciaUserType } from '@/schemas/userSchema'
 
 type SimulationResult = {
   searchString: string
-  matchUsers: (User | null)[]
+  processedPrompt: string
+  matchUsers: (LuciaUserType | null)[]
 }
 
 type CustomPrompt = {
@@ -60,16 +56,16 @@ type CustomPrompt = {
 type PromptResult = {
   id: string
   label: string
+  processedPrompt: string
   output: string
 }
 
 export default function Simulator({ params }: { params: { eventId: string } }) {
-  const [users, setUsers] = useState<User[]>([])
+  const [users, setUsers] = useState<LuciaUserType[]>([])
   const [selectedUser, setSelectedUser] = useState<string>('')
-  const [customPrompt, setCustomPrompt] = useState('')
-  const [selectedUserDetail, setSelectedUserDetail] = useState<User | null>(
-    null
-  )
+  const [customPrompt, setCustomPrompt] = useState(DEFAULT_EMBEDDING_PROMPT)
+  const [selectedUserDetail, setSelectedUserDetail] =
+    useState<LuciaUserType | null>(null)
   const [isLoadingUsers, setIsLoadingUsers] = useState(true)
   const [isRunningSimulation, setIsRunningSimulation] = useState(false)
   const [simulationResult, setSimulationResult] =
@@ -239,7 +235,7 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
             )}
 
             {selectedUserDetail && (
-              <div className="p-4 rounded-md mt-2 max-h-96 overflow-auto">
+              <div className="p-4 rounded-md mt-2 max-h-96 overflow-auto border">
                 <p className="whitespace-pre-wrap">
                   {selectedUserDetail.userDetailedProfile}
                 </p>
@@ -259,15 +255,16 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
           <CardContent>
             <Textarea
               className="h-48"
-              placeholder="Enter your custom prompt here. Leave empty to use the default prompt."
-              defaultValue={DEFAULT_EMBEDDING_PROMPT}
+              placeholder="Enter your custom prompt here."
+              value={customPrompt}
               onChange={e => setCustomPrompt(e.target.value)}
             />
-            <p className="text-sm text-slate-500 mt-2">
-              Variables you can use in your prompt:{' '}
-              <code>{'${event.description}'}</code> and{' '}
-              <code>{'${user.userDetailedProfile}'}</code>
-            </p>
+            <div className="mt-3">
+              <AvailableVariables type={VariableType.USER} />
+            </div>
+            <div className="mt-2">
+              <AvailableVariables type={VariableType.EVENT} />
+            </div>
           </CardContent>
         </Card>
 
@@ -290,7 +287,7 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-md text-red-500">
+          <div className="p-4 border border-red-200 rounded-md text-red-500">
             {error}
           </div>
         )}
@@ -316,6 +313,15 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                 </div>
               </div>
 
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Processed Prompt:</h3>
+                <div className="p-4 rounded-md border">
+                  <p className="whitespace-pre-wrap text-sm">
+                    {simulationResult.processedPrompt}
+                  </p>
+                </div>
+              </div>
+
               <h3 className="text-lg font-medium mb-4">Top Matches:</h3>
               {simulationResult.matchUsers.length === 0 ? (
                 <p className="text-slate-500">No matches found.</p>
@@ -328,7 +334,7 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                           key={match.id}
                           className="border rounded-lg overflow-hidden"
                         >
-                          <div className="flex items-center justify-between p-4 ">
+                          <div className="flex items-center justify-between p-4">
                             <div className="flex items-center">
                               <span className="font-medium mr-2">
                                 {index + 1}. {match.name}
@@ -363,7 +369,7 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                                 </span>
                               </AccordionTrigger>
                               <AccordionContent>
-                                <div className="p-4 bg-white rounded-md mt-2 max-h-96 overflow-auto">
+                                <div className="p-4 rounded-md mt-2 max-h-96 overflow-auto border">
                                   <p className="whitespace-pre-wrap">
                                     {match.userDetailedProfile}
                                   </p>
@@ -454,16 +460,14 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                   Add Custom Prompt
                 </Button>
 
-                <div className="pt-4">
-                  <p className="text-sm text-slate-500 mb-2">
-                    Variables you can use in your prompts:{' '}
-                    <code>{'${userDetailedProfile}'}</code> and{' '}
-                    <code>{'${matchUserDetailedProfile}'}</code>
-                  </p>
+                <div className="pt-4 space-y-3">
+                  <AvailableVariables type={VariableType.USER} />
+                  <AvailableVariables type={VariableType.MATCH_USER} />
+
                   <Button
                     onClick={handleTestPrompts}
                     disabled={isTestingPrompts || !selectedMatchId}
-                    className="w-full"
+                    className="w-full mt-4"
                   >
                     {isTestingPrompts ? (
                       <>
@@ -494,7 +498,30 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                 {promptResults.map(result => (
                   <div key={result.id} className="border rounded-md p-4">
                     <h3 className="text-lg font-medium mb-2">{result.label}</h3>
-                    <div className="p-4  rounded-md">
+
+                    {/* Show processed prompt */}
+                    <Accordion type="single" collapsible className="mb-3">
+                      <AccordionItem
+                        value="processed-prompt"
+                        className="border rounded-md"
+                      >
+                        <AccordionTrigger className="px-4 py-2 hover:no-underline">
+                          <span className="text-sm font-medium">
+                            View Processed Prompt
+                          </span>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="p-4 rounded-md mt-2 border">
+                            <p className="whitespace-pre-wrap text-sm">
+                              {result.processedPrompt}
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+
+                    {/* Output */}
+                    <div className="p-4 rounded-md border">
                       <p className="whitespace-pre-wrap">{result.output}</p>
                     </div>
                   </div>

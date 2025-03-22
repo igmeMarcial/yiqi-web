@@ -10,6 +10,9 @@ import {
 } from '@/lib/llm/messages-api/bedrockWrapper'
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
 import { processUserMatchesSystemPrompt } from '@/lib/data/processors/prompts'
+import Mustache from 'mustache'
+import { luciaUserSchema } from '@/schemas/userSchema'
+import { DEFAULT_EMBEDDING_PROMPT } from '@/app/(public)/[eventId]/simulator/constants'
 
 const parseSchema = z.array(
   z.object({
@@ -35,16 +38,10 @@ export async function getEventUsers(eventId: string) {
       userDetailedProfile: {
         not: null
       }
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      userDetailedProfile: true
     }
   })
 
-  return users
+  return users.map(user => luciaUserSchema.parse(user))
 }
 
 // Generate embedding and find matches based on custom prompt
@@ -72,7 +69,8 @@ export async function simulateMatches({
       }
     })
 
-    const [user, event] = [registration.user, registration.event]
+    const user = luciaUserSchema.parse(registration.user)
+    const event = registration.event
 
     if (!user.userDetailedProfile) {
       throw new Error('User detailed profile not available')
@@ -89,25 +87,12 @@ export async function simulateMatches({
       temperature: 0.1
     })
 
-    // Use custom prompt or generate default prompt
-    const embeddingPrompt =
-      customPrompt ||
-      `Crea una cadena de búsqueda combinando estos elementos:
-        - Mis principales habilidades: [Extraer del perfil]
-        - Enfoque del evento: ${event.description}
-        - Tipos de colaboración deseados: [Identificar de los objetivos profesionales]
-        - Palabras clave de la industria: [Extraer de la experiencia]
-        
-        Combina estos en una cadena de búsqueda en lenguaje natural para encontrar profesionales con:
-        1. Experiencia complementaria en [Mi Industria]
-        2. Conocimiento en [Tecnologías Relevantes]
-        3. Interés en [Mis Tipos de Proyectos]
-        
-        Perfil: ${user.userDetailedProfile}
-        Devuelve solo la cadena de búsqueda sin comentarios. responde en español.`
+    // Process the prompt with Mustache
+    const promptTemplate = customPrompt || DEFAULT_EMBEDDING_PROMPT
+    const processedPrompt = Mustache.render(promptTemplate, { user, event })
 
     const searchString = parseSendMessageResult(
-      await sendMessage(conversation, embeddingPrompt)
+      await sendMessage(conversation, processedPrompt)
     )
 
     // Generate embedding for the search
@@ -131,20 +116,15 @@ export async function simulateMatches({
     const matchUsers = await Promise.all(
       matchIds.map(async ({ id }) => {
         const matchUser = await prisma.user.findUnique({
-          where: { id },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            userDetailedProfile: true
-          }
+          where: { id }
         })
-        return matchUser
+        return matchUser ? luciaUserSchema.parse(matchUser) : null
       })
     )
 
     return {
       searchString,
+      processedPrompt,
       matchUsers
     }
   } catch (error) {
@@ -170,20 +150,24 @@ export async function testPromptGeneration({
   try {
     // Get user and match data
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        userDetailedProfile: true
-      }
+      where: { id: userId }
     })
 
     const matchUser = await prisma.user.findUnique({
-      where: { id: matchId },
-      select: {
-        userDetailedProfile: true
-      }
+      where: { id: matchId }
     })
 
-    if (!user?.userDetailedProfile || !matchUser?.userDetailedProfile) {
+    if (!user || !matchUser) {
+      throw new Error('User or match user not found')
+    }
+
+    const parsedUser = luciaUserSchema.parse(user)
+    const parsedMatchUser = luciaUserSchema.parse(matchUser)
+
+    if (
+      !parsedUser.userDetailedProfile ||
+      !parsedMatchUser.userDetailedProfile
+    ) {
       throw new Error('User or match user detailed profile not available')
     }
 
@@ -197,13 +181,11 @@ export async function testPromptGeneration({
     // Process each prompt
     const results = await Promise.all(
       prompts.map(async ({ id, label, prompt }) => {
-        // Replace placeholders in the prompt
-        const processedPrompt = prompt
-          .replace(/\${userDetailedProfile}/g, user.userDetailedProfile!)
-          .replace(
-            /\${matchUserDetailedProfile}/g,
-            matchUser.userDetailedProfile!
-          )
+        // Use Mustache to render the template
+        const processedPrompt = Mustache.render(prompt, {
+          user: parsedUser,
+          matchUser: parsedMatchUser
+        })
 
         // Send to LLM
         const response = parseSendMessageResult(
@@ -217,6 +199,7 @@ export async function testPromptGeneration({
         return {
           id,
           label,
+          processedPrompt,
           output: response
         }
       })
