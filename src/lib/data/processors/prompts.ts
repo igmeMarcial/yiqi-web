@@ -1,5 +1,3 @@
-'use server'
-
 import Mustache from 'mustache'
 import { LuciaUserType } from '@/schemas/userSchema'
 

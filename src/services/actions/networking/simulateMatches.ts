@@ -139,7 +139,8 @@ export async function simulateMatches({
 export async function testPromptGeneration({
   userId,
   matchId,
-  prompts
+  prompts,
+  systemPrompt
 }: {
   userId: string
   matchId: string
@@ -148,6 +149,7 @@ export async function testPromptGeneration({
     label: string
     prompt: string
   }>
+  systemPrompt?: string
 }) {
   try {
     // Get user and match data
@@ -194,7 +196,7 @@ export async function testPromptGeneration({
           await sendMessage(
             conversation,
             processedPrompt,
-            processUserMatchesSystemPrompt
+            systemPrompt || processUserMatchesSystemPrompt
           )
         )
 

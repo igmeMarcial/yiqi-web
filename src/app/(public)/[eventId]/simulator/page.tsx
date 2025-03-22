@@ -33,7 +33,8 @@ import { Loader2, PlusCircle, Trash2 } from 'lucide-react'
 import {
   EMBEDDING_TEMPLATE,
   KEY_INSIGHTS_TEMPLATE,
-  COLLABORATION_TEMPLATE
+  COLLABORATION_TEMPLATE,
+  processUserMatchesSystemPrompt
 } from '@/lib/data/processors/prompts'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -78,6 +79,9 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
   )
   const [collaborationPrompt, setCollaborationPrompt] = useState(
     COLLABORATION_TEMPLATE
+  )
+  const [systemPrompt, setSystemPrompt] = useState(
+    processUserMatchesSystemPrompt
   )
   const [additionalPrompts, setAdditionalPrompts] = useState<CustomPrompt[]>([])
   const [selectedMatchId, setSelectedMatchId] = useState<string>('')
@@ -191,7 +195,8 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
       const results = await testPromptGeneration({
         userId: selectedUser,
         matchId: selectedMatchId,
-        prompts
+        prompts,
+        systemPrompt
       })
 
       setPromptResults(results)
@@ -398,12 +403,26 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
+                {/* System Prompt */}
+                <div>
+                  <Label className="text-base font-medium">System Prompt</Label>
+                  <p className="text-sm text-slate-500 mb-2">
+                    This prompt provides context to the AI model for all prompt
+                    testing
+                  </p>
+                  <Textarea
+                    className="h-48 mt-2"
+                    defaultValue={systemPrompt}
+                    onChange={e => setSystemPrompt(e.target.value)}
+                  />
+                </div>
+
                 {/* Key Insights Prompt */}
                 <div>
                   <Label className="text-base font-medium">Key Insights</Label>
                   <Textarea
                     className="h-48 mt-2"
-                    value={keyInsightsPrompt}
+                    defaultValue={keyInsightsPrompt}
                     onChange={e => setKeyInsightsPrompt(e.target.value)}
                   />
                 </div>
@@ -415,7 +434,7 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
                   </Label>
                   <Textarea
                     className="h-48 mt-2"
-                    value={collaborationPrompt}
+                    defaultValue={collaborationPrompt}
                     onChange={e => setCollaborationPrompt(e.target.value)}
                   />
                 </div>
