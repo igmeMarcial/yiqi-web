@@ -56,7 +56,7 @@ export async function processUserMatches(userId: string, eventId: string) {
   const conversation = createConversation({
     model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
     maxTokens: 1000,
-    temperature: 0.5
+    temperature: 0.1
   })
 
   if (!event.description) {
@@ -80,17 +80,6 @@ export async function processUserMatches(userId: string, eventId: string) {
   const embedding = pgvector.toSql(rawEmbedding)
 
   console.log('embedding done')
-
-  const test = await prisma.eventRegistration.findMany({
-    where: { eventId: eventId }
-  })
-
-  console.log(
-    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-    test.map(v => v.userId)
-  )
-  const userWhitelist = test.filter(v => v.userId !== userId).map(v => v.userId)
-  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb', userWhitelist)
 
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
@@ -145,7 +134,7 @@ export async function processUserMatches(userId: string, eventId: string) {
       const conversation = createConversation({
         model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
         maxTokens: 500,
-        temperature: 0.6
+        temperature: 0.1
       })
 
       if (!matchUser.userDetailedProfile) {

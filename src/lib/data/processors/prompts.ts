@@ -18,7 +18,7 @@ export function generateKeyInsightsPrompt(
     Mi Perfil: ${userDetailedProfile}
     Perfil del Match: ${matchUserDetailedProfile}
 
-    Mantén un tono directo y orientado a la acción, máximo 150 palabras. Evita listas numeradas.`
+    Mantén un tono directo y orientado a la acción, máximo 150 palabras. Evita listas numeradas. responde en español.`
 }
 
 // the prompt is used to find out what opportunities of collaboration exist between the user and his match
@@ -45,7 +45,7 @@ export function generateCollaborationPrompt(
     Mi Perfil: ${userDetailedProfile}
     Perfil del Match: ${matchUserDetailedProfile}
 
-    Enfócate en resultados accionables, máximo 120 palabras. Sin marcadores numéricos.`
+    Enfócate en resultados accionables, máximo 120 palabras. Sin marcadores numéricos. responde en español.`
 }
 
 // the prompt is used to generate a search query to find professionals that match the user's profile and the event description
@@ -65,7 +65,7 @@ Combina estos en una cadena de búsqueda en lenguaje natural para encontrar prof
 3. Interés en [Mis Tipos de Proyectos]
 
 Perfil: ${userDetailedProfile}
-Devuelve solo la cadena de búsqueda sin comentarios.`
+Devuelve solo la cadena de búsqueda sin comentarios. responde en español.`
 }
 
 export const processUserFirstPartyDataSystemPrompt = `Eres un gestor de comunidad en latinoamerica, encargado de crear un entendimiento profundo de tu red profesional 
