@@ -31,10 +31,10 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { Loader2, PlusCircle, Trash2 } from 'lucide-react'
 import {
-  DEFAULT_EMBEDDING_PROMPT,
-  DEFAULT_KEY_INSIGHTS_PROMPT,
-  DEFAULT_COLLABORATION_PROMPT
-} from './constants'
+  EMBEDDING_TEMPLATE,
+  KEY_INSIGHTS_TEMPLATE,
+  COLLABORATION_TEMPLATE
+} from '@/lib/data/processors/prompts'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { v4 as uuidv4 } from 'uuid'
@@ -63,7 +63,7 @@ type PromptResult = {
 export default function Simulator({ params }: { params: { eventId: string } }) {
   const [users, setUsers] = useState<LuciaUserType[]>([])
   const [selectedUser, setSelectedUser] = useState<string>('')
-  const [customPrompt, setCustomPrompt] = useState(DEFAULT_EMBEDDING_PROMPT)
+  const [customPrompt, setCustomPrompt] = useState(EMBEDDING_TEMPLATE)
   const [selectedUserDetail, setSelectedUserDetail] =
     useState<LuciaUserType | null>(null)
   const [isLoadingUsers, setIsLoadingUsers] = useState(true)
@@ -74,10 +74,10 @@ export default function Simulator({ params }: { params: { eventId: string } }) {
 
   // Prompt testing states
   const [keyInsightsPrompt, setKeyInsightsPrompt] = useState(
-    DEFAULT_KEY_INSIGHTS_PROMPT
+    KEY_INSIGHTS_TEMPLATE
   )
   const [collaborationPrompt, setCollaborationPrompt] = useState(
-    DEFAULT_COLLABORATION_PROMPT
+    COLLABORATION_TEMPLATE
   )
   const [additionalPrompts, setAdditionalPrompts] = useState<CustomPrompt[]>([])
   const [selectedMatchId, setSelectedMatchId] = useState<string>('')

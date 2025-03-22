@@ -15,6 +15,7 @@ import {
   generateKeyInsightsPrompt,
   processUserMatchesSystemPrompt
 } from './prompts'
+import { luciaUserSchema } from '@/schemas/userSchema'
 
 const parseSchema = z.array(
   z.object({
@@ -45,7 +46,8 @@ export async function processUserMatches(userId: string, eventId: string) {
     }
   })
 
-  const [user, event] = [registration.user, registration.event]
+  const user = luciaUserSchema.parse(registration.user)
+  const event = registration.event
 
   if (!user.userDetailedProfile || registration.NetworkingMatch.length > 0) {
     console.debug('user already has matches or profile not processed yet')
@@ -63,10 +65,10 @@ export async function processUserMatches(userId: string, eventId: string) {
     throw new Error('event.description is null')
   }
 
-  const embeddingPrompt = generateEmbeddingPrompt(
-    event.description,
-    user.userDetailedProfile
-  )
+  const embeddingPrompt = generateEmbeddingPrompt({
+    user,
+    event
+  })
 
   console.log('embeddingPrompt', embeddingPrompt)
   const searchString = parseSendMessageResult(
@@ -124,10 +126,11 @@ export async function processUserMatches(userId: string, eventId: string) {
         console.log('match already exists')
       }
 
-      const matchUser = await prisma.user.findUniqueOrThrow({
-        where: { id: match.id, userDetailedProfile: { not: null } },
-        select: { userDetailedProfile: true, id: true }
+      const matchUserData = await prisma.user.findUniqueOrThrow({
+        where: { id: match.id, userDetailedProfile: { not: null } }
       })
+
+      const matchUser = luciaUserSchema.parse(matchUserData)
 
       console.log('matchUser')
 
@@ -140,11 +143,12 @@ export async function processUserMatches(userId: string, eventId: string) {
       if (!matchUser.userDetailedProfile) {
         throw new Error('matchUser.userDetailedProfile is null')
       }
+
       // Generate key insights
-      const keyInsightsPrompt = generateKeyInsightsPrompt(
-        user.userDetailedProfile,
-        matchUser.userDetailedProfile
-      )
+      const keyInsightsPrompt = generateKeyInsightsPrompt({
+        user,
+        matchUser
+      })
 
       const keyInsights = parseSendMessageResult(
         await sendMessage(
@@ -154,10 +158,10 @@ export async function processUserMatches(userId: string, eventId: string) {
         )
       )
 
-      const collaborationPrompt = generateCollaborationPrompt(
-        user.userDetailedProfile,
-        matchUser.userDetailedProfile
-      )
+      const collaborationPrompt = generateCollaborationPrompt({
+        user,
+        matchUser
+      })
 
       const collaborationReason = parseSendMessageResult(
         await sendMessage(

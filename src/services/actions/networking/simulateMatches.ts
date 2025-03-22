@@ -9,10 +9,12 @@ import {
   sendMessage
 } from '@/lib/llm/messages-api/bedrockWrapper'
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
-import { processUserMatchesSystemPrompt } from '@/lib/data/processors/prompts'
+import {
+  EMBEDDING_TEMPLATE,
+  processUserMatchesSystemPrompt
+} from '@/lib/data/processors/prompts'
 import Mustache from 'mustache'
 import { luciaUserSchema } from '@/schemas/userSchema'
-import { DEFAULT_EMBEDDING_PROMPT } from '@/app/(public)/[eventId]/simulator/constants'
 
 const parseSchema = z.array(
   z.object({
@@ -88,7 +90,7 @@ export async function simulateMatches({
     })
 
     // Process the prompt with Mustache
-    const promptTemplate = customPrompt || DEFAULT_EMBEDDING_PROMPT
+    const promptTemplate = customPrompt || EMBEDDING_TEMPLATE
     const processedPrompt = Mustache.render(promptTemplate, { user, event })
 
     const searchString = parseSendMessageResult(
