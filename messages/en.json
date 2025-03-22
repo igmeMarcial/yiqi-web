@@ -836,9 +836,9 @@
   "RegistrationForm": {
     "eventPayment": "Event Payment",
     "eventRegistration": "Event Registration",
-    "eventFormName": "Full Name",
+    "eventFormName": "Full Name (required)",
     "eventFormNamePlaceholder": "John Doe",
-    "eventFormEmail": "Email",
+    "eventFormEmail": "Email (required)",
     "eventFormEmailPlaceholder": "john@example.com",
     "eventConfirmRegistration": "Confirm Registration",
     "eventConfirmPurchase": "Confirm Purchase",
