@@ -185,8 +185,6 @@ export async function processUserMatches(userId: string, eventId: string) {
       }
 
       console.log('networking match created')
-
-      await new Promise(resolve => setTimeout(resolve, 1000))
     })
   )
 }

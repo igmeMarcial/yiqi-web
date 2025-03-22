@@ -9,6 +9,7 @@ import {
   sendMessage
 } from '@/lib/llm/messages-api/bedrockWrapper'
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
+import { processUserMatchesSystemPrompt } from '@/lib/data/processors/prompts'
 
 const parseSchema = z.array(
   z.object({
@@ -148,6 +149,82 @@ export async function simulateMatches({
     }
   } catch (error) {
     console.error('Error in simulateMatches:', error)
+    throw error
+  }
+}
+
+// Test prompt generation for a specific match
+export async function testPromptGeneration({
+  userId,
+  matchId,
+  prompts
+}: {
+  userId: string
+  matchId: string
+  prompts: Array<{
+    id: string
+    label: string
+    prompt: string
+  }>
+}) {
+  try {
+    // Get user and match data
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        userDetailedProfile: true
+      }
+    })
+
+    const matchUser = await prisma.user.findUnique({
+      where: { id: matchId },
+      select: {
+        userDetailedProfile: true
+      }
+    })
+
+    if (!user?.userDetailedProfile || !matchUser?.userDetailedProfile) {
+      throw new Error('User or match user detailed profile not available')
+    }
+
+    // Create conversation for LLM
+    const conversation = createConversation({
+      model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
+      maxTokens: 1000,
+      temperature: 0.1
+    })
+
+    // Process each prompt
+    const results = await Promise.all(
+      prompts.map(async ({ id, label, prompt }) => {
+        // Replace placeholders in the prompt
+        const processedPrompt = prompt
+          .replace(/\${userDetailedProfile}/g, user.userDetailedProfile!)
+          .replace(
+            /\${matchUserDetailedProfile}/g,
+            matchUser.userDetailedProfile!
+          )
+
+        // Send to LLM
+        const response = parseSendMessageResult(
+          await sendMessage(
+            conversation,
+            processedPrompt,
+            processUserMatchesSystemPrompt
+          )
+        )
+
+        return {
+          id,
+          label,
+          output: response
+        }
+      })
+    )
+
+    return results
+  } catch (error) {
+    console.error('Error in testPromptGeneration:', error)
     throw error
   }
 }
