@@ -51,6 +51,8 @@ jobs:
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_dummy'
       OPENAI_API_KEY: 'dummy'
       JWT_SECRET: 'dummy'
+      NEXT_PUBLIC_CULQI_KEY: 'dummy'
+      CULQI_PRIVATE_KEY: 'dummy'
     steps:
       - uses: actions/checkout@v3
 
