@@ -92,7 +92,7 @@ export const MatchesList = ({
                     <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
                       {t('whyConnect')}:
                     </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
                       {item.matchReason}
                     </p>
                   </div>
@@ -101,7 +101,7 @@ export const MatchesList = ({
                     <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
                       {t('aboutMatch')}:
                     </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
                       {item.personDescription}
                     </p>
                   </div>
