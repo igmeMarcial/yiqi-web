@@ -19,8 +19,11 @@ export default function RedoMatches({ userId, eventId }: Props) {
     setError(null)
     try {
       await processUserMatches(userId, eventId, true)
+
+      setIsLoading(false)
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred')
+      setIsLoading(false)
     }
   }
 
