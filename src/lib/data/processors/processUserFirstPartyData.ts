@@ -15,6 +15,7 @@ import {
 import { z } from 'zod'
 
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
+import { processUserFirstPartyDataSystemPrompt } from './prompts'
 
 const parseSchema = z.array(
   z.object({
@@ -142,8 +143,6 @@ function parseSendMessageResult(result: unknown): string {
 
 export async function processUserFirstPartyData(userId: string): Promise<void> {
   console.log('processing user first party data')
-  const systemPrompt: string =
-    'Eres un gestor de comunidad encargado de crear un entendimiento profundo de tu red profesional para mejorar la calidad de las conexiones para tu comunidad. Se te proporcionarán datos de LinkedIn de un usuario y tu tarea es generar un perfil detallado que pueda ayudar a emparejarlo con potenciales cofundadores u oportunidades de networking alineadas con sus objetivos e intereses.'
 
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } })
 
@@ -164,7 +163,11 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
   const calculatedPrompt = createPrompt(dataCollected)
 
   const profileResult = parseSendMessageResult(
-    await sendMessage(conversation, calculatedPrompt, systemPrompt)
+    await sendMessage(
+      conversation,
+      calculatedPrompt,
+      processUserFirstPartyDataSystemPrompt
+    )
   )
 
   if (!profileResult) {
@@ -173,31 +176,31 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
 
   console.info('Profile result call was successful')
 
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000)
-  })
+  const [userEmbeddableProfileResult, userContentPreferencesResult] =
+    await Promise.all([
+      sendMessage(
+        conversation,
+        `Resume el siguiente perfil de usuario para incorporarlo a una base de datos: ${profileResult}`
+      ),
+      sendMessage(
+        conversation,
+        `En 3 oraciones o menos, ¿cuáles son las preferencias de contenido del usuario? \n\n ${profileResult}`
+      )
+    ])
 
   const userEmbeddableProfile = parseSendMessageResult(
-    await sendMessage(
-      conversation,
-      `Resume el siguiente perfil de usuario para incorporarlo a una base de datos: ${profileResult}`
-    )
+    userEmbeddableProfileResult
   )
 
   if (!userEmbeddableProfile) {
     throw new Error('No embeddable profile was found')
   }
 
-  console.info('User embeddable profile result call was successful')
-
-  const userContentPreferencesResult = parseSendMessageResult(
-    await sendMessage(
-      conversation,
-      `En 3 oraciones o menos, ¿cuáles son las preferencias de contenido del usuario? \n\n ${profileResult}`
-    )
+  const userContentPreferences = parseSendMessageResult(
+    userContentPreferencesResult
   )
 
-  if (!userContentPreferencesResult) {
+  if (!userContentPreferences) {
     throw new Error('No user content preference was done')
   }
 
@@ -208,7 +211,7 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
     data: {
       userDetailedProfile: profileResult,
       userEmbeddableProfile: userEmbeddableProfile,
-      userContentPreferences: userContentPreferencesResult
+      userContentPreferences: userContentPreferences
     }
   })
 

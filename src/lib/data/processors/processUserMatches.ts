@@ -12,8 +12,10 @@ import { z } from 'zod'
 import {
   generateCollaborationPrompt,
   generateEmbeddingPrompt,
-  generateKeyInsightsPrompt
+  generateKeyInsightsPrompt,
+  processUserMatchesSystemPrompt
 } from './prompts'
+import { luciaUserSchema } from '@/schemas/userSchema'
 
 const parseSchema = z.array(
   z.object({
@@ -44,7 +46,8 @@ export async function processUserMatches(userId: string, eventId: string) {
     }
   })
 
-  const [user, event] = [registration.user, registration.event]
+  const user = luciaUserSchema.parse(registration.user)
+  const event = registration.event
 
   if (!user.userDetailedProfile || registration.NetworkingMatch.length > 0) {
     console.debug('user already has matches or profile not processed yet')
@@ -55,17 +58,17 @@ export async function processUserMatches(userId: string, eventId: string) {
   const conversation = createConversation({
     model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
     maxTokens: 1000,
-    temperature: 0.5
+    temperature: 0.1
   })
 
   if (!event.description) {
     throw new Error('event.description is null')
   }
 
-  const embeddingPrompt = generateEmbeddingPrompt(
-    event.description,
-    user.userDetailedProfile
-  )
+  const embeddingPrompt = generateEmbeddingPrompt({
+    user,
+    event
+  })
 
   console.log('embeddingPrompt', embeddingPrompt)
   const searchString = parseSendMessageResult(
@@ -79,17 +82,6 @@ export async function processUserMatches(userId: string, eventId: string) {
   const embedding = pgvector.toSql(rawEmbedding)
 
   console.log('embedding done')
-
-  const test = await prisma.eventRegistration.findMany({
-    where: { eventId: eventId }
-  })
-
-  console.log(
-    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-    test.map(v => v.userId)
-  )
-  const userWhitelist = test.filter(v => v.userId !== userId).map(v => v.userId)
-  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb', userWhitelist)
 
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
@@ -112,84 +104,91 @@ export async function processUserMatches(userId: string, eventId: string) {
   }
 
   // Process each match with LLM
-  for (const match of matches) {
-    console.log('match starting now')
 
-    const existingMatch = await prisma.networkingMatch.findUnique({
-      where: {
-        userId_registrationId: {
-          userId,
-          registrationId: registration.id
-        }
+  await Promise.allSettled(
+    matches.map(async match => {
+      console.log('match starting now')
+
+      if (!user.userDetailedProfile) {
+        throw new Error('user.userDetailedProfile is null')
       }
-    })
 
-    if (existingMatch) {
-      console.log('match already exists')
-      continue
-    }
-
-    const matchUser = await prisma.user.findUniqueOrThrow({
-      where: { id: match.id, userDetailedProfile: { not: null } },
-      select: { userDetailedProfile: true, id: true }
-    })
-
-    console.log('matchUser')
-
-    const conversation = createConversation({
-      model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
-      maxTokens: 500,
-      temperature: 0.6
-    })
-
-    if (!matchUser.userDetailedProfile) {
-      throw new Error('matchUser.userDetailedProfile is null')
-    }
-    // Generate key insights
-    const keyInsightsPrompt = generateKeyInsightsPrompt(
-      user.userDetailedProfile,
-      matchUser.userDetailedProfile
-    )
-
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    const keyInsights = parseSendMessageResult(
-      await sendMessage(conversation, keyInsightsPrompt)
-    )
-
-    console.log('keyInsights')
-
-    const collaborationPrompt = generateCollaborationPrompt(
-      user.userDetailedProfile,
-      matchUser.userDetailedProfile
-    )
-
-    await new Promise(resolve => setTimeout(resolve, 10000))
-
-    const collaborationReason = parseSendMessageResult(
-      await sendMessage(conversation, collaborationPrompt)
-    )
-
-    console.log('collaborationReason')
-
-    try {
-      // Create networking match
-      await prisma.networkingMatch.create({
-        data: {
-          userId: matchUser.id,
-          eventId,
-          registrationId: registration.id,
-          personDescription: keyInsights,
-          matchReason: collaborationReason
+      const existingMatch = await prisma.networkingMatch.findUnique({
+        where: {
+          userId_registrationId: {
+            userId,
+            registrationId: registration.id
+          }
         }
       })
-    } catch (error) {
-      console.error('error creating networking match', error)
-      continue
-    }
 
-    console.log('networking match created')
+      if (existingMatch) {
+        console.log('match already exists')
+      }
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
-  }
+      const matchUserData = await prisma.user.findUniqueOrThrow({
+        where: { id: match.id, userDetailedProfile: { not: null } }
+      })
+
+      const matchUser = luciaUserSchema.parse(matchUserData)
+
+      console.log('matchUser')
+
+      const conversation = createConversation({
+        model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
+        maxTokens: 500,
+        temperature: 0.1
+      })
+
+      if (!matchUser.userDetailedProfile) {
+        throw new Error('matchUser.userDetailedProfile is null')
+      }
+
+      // Generate key insights
+      const keyInsightsPrompt = generateKeyInsightsPrompt({
+        user,
+        matchUser
+      })
+
+      const keyInsights = parseSendMessageResult(
+        await sendMessage(
+          conversation,
+          keyInsightsPrompt,
+          processUserMatchesSystemPrompt
+        )
+      )
+
+      const collaborationPrompt = generateCollaborationPrompt({
+        user,
+        matchUser
+      })
+
+      const collaborationReason = parseSendMessageResult(
+        await sendMessage(
+          conversation,
+          collaborationPrompt,
+          processUserMatchesSystemPrompt
+        )
+      )
+
+      console.log('collaborationReason')
+
+      try {
+        // Create networking match
+        await prisma.networkingMatch.create({
+          data: {
+            userId: matchUser.id,
+            eventId,
+            registrationId: registration.id,
+            personDescription: keyInsights,
+            matchReason: collaborationReason
+          }
+        })
+      } catch (error) {
+        console.error('error creating networking match', error)
+      }
+
+      console.log('networking match created')
+    })
+  )
 }
