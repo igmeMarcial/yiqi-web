@@ -3,49 +3,75 @@ import { LuciaUserType } from '@/schemas/userSchema'
 
 // Define the templates using Mustache syntax
 export const EMBEDDING_TEMPLATE = `
-Crea una cadena de búsqueda combinando estos elementos:
-- Mis principales habilidades: [Extraer del perfil]
-- Enfoque del evento: {{event.description}}
-- Tipos de colaboración deseados: [Identificar de los objetivos profesionales]
-- Palabras clave de la industria: [Extraer de la experiencia]
+Analiza el perfil del usuario tomando en cuenta los siguientes puntos:
+1. Descripción General: Resumen del perfil de {{user.userDetailedProfile}}.
+2. Nivel de Estudios: Información sobre su formación académica, universidad, instituto, centro de estudios, año de egresado o termino de estudios.
+3. Oportunidades de Conexión: Posibles áreas de colaboración.
+4. Emprendimiento Indica si es fundador de un emprendimiento.
+5. Razón para Conectar:Argumentos claros de por qué deberíamos hablar con esta persona.
+6. Habilidades Técnicas y Blandas:Enumera y describe sus competencias.
+7. Proximos Pasos de Colaboración:Sugerencias de acciones futuras.
+8. Puntos de Sirgia: Conexiones entre su experiencia y nuestros objetivos.
+
+Utiliza los datos disponibles y las variables: {{user.userDetailedProfile}}, {{user.dataCollected.shortDescription}}, {{user.dataCollected.position}}, y otros relevantes.
+Devuelve solo la cadena de búsqueda sin comentarios. responde en español.
+
 
 Combina estos en una cadena de búsqueda en lenguaje natural para encontrar profesionales con:
 1. Experiencia complementaria en [Mi Industria]
 2. Conocimiento en [Tecnologías Relevantes]
 3. Interés en [Mis Tipos de Proyectos]
+4. Estudios o capacitación en [Tecnologías Relevantes]
 
 Perfil: {{user.userDetailedProfile}}
-Devuelve solo la cadena de búsqueda sin comentarios. responde en español.`
+Devuelve solo la cadena de búsqueda sin comentarios. responde en español en primera persona entendible.
 
-export const KEY_INSIGHTS_TEMPLATE = `Analiza estos perfiles y destaca los factores clave de conexión profesional. Enfócate en:
-    - Habilidades complementarias que resuelven necesidades inmediatas
-    - Proyectos actuales/recientes donde podrían colaborar
-    - Conexiones estratégicas relevantes para sus objetivos actuales
+`
 
-    Formato:
-    Core Synergy: [Título de 5 palabras que capture la esencia]
-    Top Match Drivers:
-    • [Habilidad/Experiencia específica del match] → [Cómo resuelve necesidad del usuario]
-    • [Recurso único del match] → [Aplicación práctica en proyectos del usuario]
-    • [Conexión estratégica] → [Potencial impacto en objetivos actuales]
+export const KEY_INSIGHTS_TEMPLATE = `
+Analiza estos perfiles y destaca los factores clave de conexión profesional. Enfócate en:
+- Habilidades complementarias que resuelven necesidades inmediatas
+- Proyectos actuales/recientes donde podrían colaborar
+- Conexiones estratégicas relevantes para sus objetivos actuales
+- Experiencias laborales pasadas para tener claro su experiencia practica.
+- Que estudiaron o educación que recibieron que sea complementario.
+- Si fue fundador de un proyecto, startup anteriormente.
 
-    Mi Perfil: {{user.userDetailedProfile}}
-    Perfil del Match: {{matchUser.userDetailedProfile}}
 
-    Mantén un tono directo y orientado a la acción, máximo 150 palabras. Evita listas numeradas. responde en español.`
+Formato:
+Sinergia Principal: [Título de 5 palabras que capture la esencia]
+   Top Match Drivers:
+   • [Habilidad/Experiencia específica del match] → [Cómo resuelve necesidad del usuario]
+   • [Experiencia laboral] → [Potencial impacto en conocer las experiencias practicas  actuales]
+   • [Recurso único del match] → [Aplicación práctica en proyectos del usuario]
+   • [Conexión estratégica] → [Potencial impacto en objetivos actuales]
+  • [Educación] → [Potencial impacto de lo estudiado por ambas partes para los objetivos actuales de cada uno]
 
-export const COLLABORATION_TEMPLATE = `Identifica oportunidades concretas de colaboración inmediata basadas en:
+   Mi Perfil: {{user.userDetailedProfile}}
+   Perfil del Match: {{matchUser.userDetailedProfile}}
+
+Mantén un tono directo y orientado a la acción como coach, máximo 180 palabras. Evita listas numeradas. responde en español.
+Todos las repuestas sean como en primera persona, que  nosotros como plataforma le este recomendando.
+
+Todo en español entendible.
+
+
+`
+
+export const COLLABORATION_TEMPLATE = `
+  Identifica oportunidades concretas de colaboración inmediata basadas en:
     - Proyectos activos mencionados en ambos perfiles
     - Habilidades técnicas complementarias
     - Recursos/contactos estratégicos compartidos
 
     Estructura:
-    Opportunity Spotlight: [Título de 3-5 palabras]
+    Oportunidad destacada: [Título de 3-7 palabras]
     • Specific Fit: [Habilidad/recurso del match que cubre necesidad específica del usuario]
-    • Immediate Value: [Resultado tangible en los próximos 3-6 meses]
-    • Strategic Edge: [Ventaja competitiva que esta colaboración crea]
+    • Valor inmediato: [Resultado tangible en los próximos 3-6 meses]
+    • Ventaja estrategica: [Ventaja competitiva que esta colaboración crea]
 
-    Next-Step Collaboration:
+    
+  Colaboración de siguiente paso:
     - [Acción específica con entregable claro]
     - [Formato ideal de primera interacción]
     - [Métrica de éxito inicial]
@@ -53,7 +79,12 @@ export const COLLABORATION_TEMPLATE = `Identifica oportunidades concretas de col
     Mi Perfil: {{user.userDetailedProfile}}
     Perfil del Match: {{matchUser.userDetailedProfile}}
 
-    Enfócate en resultados accionables, máximo 120 palabras. Sin marcadores numéricos. responde en español.`
+  Enfócate en resultados accionables, recomendaciones de conexion inteligentes, máximo 180 palabras. Con marcadores numéricos. responde en español. 
+
+  Todos las repuestas sean como en primera persona, que  nosotros como plataforma le este recomendando.
+
+  Todo en español.
+`
 
 type TemplateData = {
   user: LuciaUserType
@@ -90,8 +121,17 @@ export const processUserFirstPartyDataSystemPrompt = `Eres un gestor de comunida
     emparejarlo con potenciales cofundadores u oportunidades de networking alineadas con sus objetivos e intereses. 
     El perfil debe ser en español. `
 
-export const processUserMatchesSystemPrompt = `Eres un community manager en Latinoamérica, encargado de ser el conector definitivo. 
-Tu misión es simple: utilizar la información proporcionada para crear perfiles de coincidencias 
-que ayuden a los miembros a entender a quién deben conocer y por qué. Se te entregarán detalles 
-de coincidencias calculadas, y con base en ellos, deberás elaborar perfiles claros y atractivos 
-que fomenten conexiones significativas entre los miembros. Recuerda que todas tus respuestas deben estar en español. `
+export const processUserMatchesSystemPrompt = `
+Eres un community manager en Latinoamérica, encargado de ser el conector definitivo. Experiencia en innovación, tecnología, desarrollo de negocios, aceleración, venture capital en startups, mentor de diferentes startups de diferentes rubros. 
+Tu misión es simple: utilizar la información proporcionada para crear perfiles de coincidencias
+que ayuden a los miembros a entender a quién deben conocer y por qué. Se te entregarán detalles
+de coincidencias calculadas, y con base en ellos, deberás elaborar perfiles claros y atractivos
+que fomenten conexiones significativas entre los miembros. Recuerda que todas tus respuestas deben estar en español.  Efocalo en innovacion, tecnología e emprendimiento.
+Que tenga un enfoque de encontrar un nuevo socio, posible colaboración hacer sinergias.
+El objetivo es mencionarle lo importante para que conecten entre los dos perfiles y que objetivos tiene cada uno para poder conectar y hacer sinergias, conexiones.
+
+Todos las repuestas sean como en primera persona, que  nosotros como Yiqi le recomendamos.
+Utiliza emojis para diferenciar cada titulo, subtitulo
+
+
+`
