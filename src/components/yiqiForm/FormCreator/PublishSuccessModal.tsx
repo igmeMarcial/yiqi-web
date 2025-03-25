@@ -6,24 +6,28 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Copy, PartyPopper } from 'lucide-react'
-import { translations } from '@/lib/translations/translations'
 import ButtonClipboard from './ButtonClipboard'
+import { useTranslations } from 'next-intl'
+
 interface PublishSuccessModalProps {
   isOpen: boolean
   onClose: () => void
   formUrl: string
 }
+
 export function PublishSuccessModal({
   isOpen,
   onClose,
   formUrl
 }: PublishSuccessModalProps) {
+  const t = useTranslations('YiqiForm')
+
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose()}>
       <DialogContent className="sm:max-w-[600px] md:max-w-[760px]">
         <DialogHeader>
           <DialogTitle className="text-center flex items-center justify-center gap-2 text-2xl">
-            {translations.es.formPublished}
+            {t('formPublished')}
             <PartyPopper className="h-6 w-6 text-yellow-500 animate-bounce" />
           </DialogTitle>
         </DialogHeader>
@@ -37,8 +41,8 @@ export function PublishSuccessModal({
             />
             <ButtonClipboard
               text={formUrl}
-              textCopied={translations.es.copied}
-              textCopy={translations.es.copy}
+              textCopied={t('copied')}
+              textCopy={t('copy')}
               icon={<Copy className="h-4 w-4" />}
             />
           </div>

@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { FormProps } from '../../../schemas/yiqiFormSchema'
 import { generateUniqueIdYiqiForm } from '../utils'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 interface AddCardButtonProps {
   fields: FormProps[]
@@ -17,6 +17,7 @@ interface AddCardButtonProps {
 }
 
 const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
+  const t = useTranslations('YiqiForm')
   const focusedCardIndex = useMemo(
     () => fields.findIndex(card => card.isFocused),
     [fields]
@@ -39,8 +40,8 @@ const AddCardButton = ({ fields, addCard }: AddCardButtonProps) => {
       onClick={handleAddCard}
     >
       <Plus className="h-4 w-4" />
-      <span className=" ">{translations.es.addQuestion}</span>
-      <span className="sr-only">{translations.es.addNewQuestion}</span>
+      <span className=" ">{t('addQuestion')}</span>
+      <span className="sr-only">{t('addNewQuestion')}</span>
     </Button>
   )
 }

@@ -1,9 +1,10 @@
 import OrganizationLayout from '@/components/orgs/OrganizationLayout'
-import { getUser } from '@/lib/auth/lucia'
 import { getAllOrganizationsForCurrentUser } from '@/services/actions/organizationActions'
-import { redirect } from 'next/navigation'
 import { OrganizationType } from '@/schemas/organizerSchema'
 import { getTranslations } from 'next-intl/server'
+import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
+import { isOrganizerAdmin } from '@/lib/auth/lucia'
+import { redirect } from 'next/navigation'
 
 export default async function Layout({
   params,
@@ -12,13 +13,22 @@ export default async function Layout({
   params: { id: string }
   children: React.ReactNode
 }) {
-  const user = await getUser()
-  if (!user) redirect('/auth')
+  const { user } = await getUserOrRedirect()
 
   const organizations: OrganizationType[] =
     await getAllOrganizationsForCurrentUser()
   const currentOrg = organizations.find(org => org.id === params.id)?.name
   const t = await getTranslations('contactFor')
+
+  if (!currentOrg) {
+    return <div>{t('organizationNotFound')}</div>
+  }
+
+  const isAdmin = await isOrganizerAdmin(params.id, user.id)
+
+  if (!isAdmin) {
+    redirect('/admin/organizations')
+  }
 
   return (
     <main className="flex flex-col items-center justify-center dark:bg-[rgb(28, 28, 28)]">
@@ -36,7 +46,7 @@ export default async function Layout({
         }))}
         currentOrg={currentOrg}
       >
-        {currentOrg ? children : <div>{t('organizationNotFound')}</div>}
+        {children}
       </OrganizationLayout>
     </main>
   )

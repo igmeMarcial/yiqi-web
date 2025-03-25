@@ -1,15 +1,12 @@
-import FormsList from '@/components/yiqiForm/FormResults/FormsList'
-import { getUser } from '@/lib/auth/lucia'
-import { getForms } from '@/services/actions/typeForm/typeFormActions'
-import { Roles } from '@prisma/client'
-import { redirect } from 'next/navigation'
 import React from 'react'
+import FormsList from '@/components/yiqiForm/FormResults/FormsList'
+import { getForms } from '@/services/actions/typeForm/typeFormActions'
+
 export default async function FormsPage({
   params
 }: {
   params: { id: string }
 }) {
-  const user = await getUser()
   const formsResponse = await getForms(params.id)
   if (!formsResponse.success) {
     return (
@@ -18,18 +15,10 @@ export default async function FormsPage({
       </div>
     )
   }
-  if (user) {
-    if (user.role === Roles.ADMIN) {
-      return (
-        <FormsList
-          organizationId={params.id}
-          forms={formsResponse.forms || []}
-        />
-      )
-    } else if (user.role === Roles.NEW_USER) {
-      redirect(`/newuser`)
-    } else if (user.role === Roles.USER) {
-      redirect(`/user`)
-    }
-  }
+
+  return (
+    <main className="flex flex-col items-center justify-center">
+      <FormsList organizationId={params.id} forms={formsResponse.forms || []} />
+    </main>
+  )
 }

@@ -8,13 +8,16 @@ import {
 import { Button } from '../ui/button'
 import { Undo2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { translations } from '@/lib/translations/translations'
+import { useTranslations } from 'next-intl'
 
 function FormBackButton({ url: orgId }: { url: string }) {
   const router = useRouter()
+  const t = useTranslations('YiqiForm')
+
   const handleBack = () => {
     router.push(`/admin/organizations/${orgId}/forms`)
   }
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -40,7 +43,7 @@ function FormBackButton({ url: orgId }: { url: string }) {
             <Undo2 className="h-4 w-4" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">{translations.es.back}</TooltipContent>
+        <TooltipContent side="bottom">{t('back')}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   )

@@ -32,7 +32,7 @@ export function YiqiFormLayout({
   formId
 }: YiqiFormLayoutProps) {
   return (
-    <div className="dark:bg-[rgb(28, 28, 28)] relative ">
+    <div className="w-full h-full flex flex-col">
       <FormHeader
         form={form}
         orgId={orgId}
@@ -43,7 +43,6 @@ export function YiqiFormLayout({
         isEditing={isEditing}
         formId={formId}
       />
-
       {children}
     </div>
   )
