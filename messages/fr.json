@@ -295,7 +295,9 @@
     "importing": "Importation...",
     "importContacts": "Importer des contacts",
     "noOrganizationFound": "Aucune organisation trouvée",
-    "networkingSettings": "Paramètres de mise en réseau"
+    "networkingSettings": "Paramètres de mise en réseau",
+    "errorInDate": "Date invalide",
+    "errorInHours": "heures invalides"
   },
   "AdminLayout": {
     "organization": "Organisation",
@@ -599,6 +601,36 @@
     "eventCheckInTableCheckIn": "Validé",
     "eventCheckinBackButton": "Retour aux billets"
   },
+  "yiqiForm": {
+    "formNotFound": "Formulaire introuvable",
+    "brokenLinkOrDeleted": "Le lien que vous avez suivi peut être cassé ou le formulaire a été supprimé.",
+    "createNewForm": "Créer un nouveau formulaire",
+    "responsesSent": "Vos réponses ont été envoyées avec succès",
+    "errorOccurred": "Une erreur est survenue",
+    "loginToContinue": "Connectez-vous pour continuer",
+    "loginToFillForm": "Pour remplir ce formulaire, vous devez vous connecter",
+    "or": "ou",
+    "submit": "Envoyer",
+    "clear": "Effacer",
+    "fieldRequired": "Ce champ est requis",
+    "writeYourAnswer": "Écrivez votre réponse...",
+    "other": "Autre",
+    "writeHere": "Écrivez ici...",
+    "questions": "Questions",
+    "responses": "Réponses",
+    "formUpdated": "Formulaire mis à jour",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "formDeleted": "Formulaire supprimé",
+    "formDeleteError": "Erreur lors de la suppression du formulaire",
+    "waitingForResponses": "En attente de réponses",
+    "noResponses": "Aucune réponse. Publiez votre formulaire pour commencer à recevoir des réponses",
+    "newForm": "Nouveau formulaire",
+    "noFormsCreated": "Aucun formulaire créé. Commencez par en créer un nouveau !",
+    "createForm": "Créer un formulaire",
+    "linkCopied": "Lien copié",
+    "copyLink": "Copier le lien"
+  },
   "NetworkingUserList": {
     "title": "Correspondances Networking",
     "loadingMatches": "Nous utilisons un système de mise en relation avancé avec IA pour trouver les meilleures connexions pour vous. Revenez régulièrement pour de nouvelles connexions !",
@@ -613,7 +645,8 @@
     "ongoingEvent": "Événement en Cours",
     "joinEvent": "Rejoindre l'Événement",
     "viewTicket": "Voir le Billet",
-    "linkUnvailable": "Le lien virtuel n'est pas disponible pour cet événement."
+    "linkUnvailable": "Le lien virtuel n'est pas disponible pour cet événement.",
+    "nextToStart": "Bientôt pour commencer"
   },
   "ManagementEventTabs": {
     "summary": "Résumé de l'événement",
@@ -639,5 +672,13 @@
     "pending": "En attente",
     "approved": "Approuvée",
     "rejected": "Rejetée"
+  },
+  "EventManageMatchmaking": {
+    "missingProfile": "Complétez votre profil pour un jumelage alimenté par l'IA",
+    "missingCheckIn": "Enregistrez-vous pour voir vos correspondances de réseautage",
+    "readyForAIMatching": "Vos correspondances de réseautage organisées par l’IA sont prêtes !",
+    "completeProfile": "Profil complet",
+    "viewTickets": "Voir les billets",
+    "viewMatches": "Voir les matchs"
   }
 }

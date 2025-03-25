@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { translations } from '@/lib/translations/translations'
 import type { CustomFieldType, RegistrationInput } from '@/schemas/eventSchema'
 import StripeCheckout from '@/components/billing/StripeCheckout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -29,6 +28,8 @@ import { CalendarIcon } from 'lucide-react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { LuciaUserType } from '@/schemas/userSchema'
+import { useTranslations } from 'next-intl'
 
 function createCustomFieldsSchema(
   customFields: CustomFieldType[]
@@ -120,7 +121,7 @@ function createCustomFieldsSchema(
 
 interface RegistrationFormProps {
   onSubmit: (values: RegistrationInput) => Promise<void>
-  user: { name?: string; picture?: string; email?: string; role?: string }
+  user?: LuciaUserType
   isFreeEvent: boolean
   registrationId?: string
   onPaymentComplete?: () => void
@@ -137,6 +138,7 @@ export function RegistrationForm({
   isSubmitting = false,
   customFields
 }: RegistrationFormProps): JSX.Element {
+  const t = useTranslations('RegistrationForm')
   const [showStripeCheckout, setShowStripeCheckout] = useState<boolean>(false)
 
   const customFieldsSchema = useMemo(
@@ -148,8 +150,8 @@ export function RegistrationForm({
   )
 
   const schema = z.object({
-    name: z.string().min(1, { message: 'Nombre es obligatorio' }),
-    email: z.string().email({ message: 'Correo electrónico inválido' }),
+    name: z.string().min(1, { message: t('nameRequired') }),
+    email: z.string().email({ message: t('invalidEmail') }),
     tickets: z.record(z.string(), z.number()),
     customFieldsData: customFieldsSchema
   })
@@ -159,8 +161,8 @@ export function RegistrationForm({
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: user.name || '',
-      email: user.email || '',
+      name: user?.name || '',
+      email: user?.email || '',
       tickets: {},
       customFieldsData: {}
     }
@@ -189,7 +191,7 @@ export function RegistrationForm({
     return (
       <Card className="w-full mx-auto">
         <CardHeader>
-          <CardTitle>{translations.es.eventPayment}</CardTitle>
+          <CardTitle>{t('eventPayment')}</CardTitle>
         </CardHeader>
         <CardContent>
           <StripeCheckout
@@ -207,7 +209,7 @@ export function RegistrationForm({
   return (
     <Card className="w-full mx-auto">
       <CardHeader>
-        <CardTitle>{translations.es.eventRegistration}</CardTitle>
+        <CardTitle>{t('eventRegistration')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -220,13 +222,13 @@ export function RegistrationForm({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{translations.es.eventFormName}</FormLabel>
+                  <FormLabel>{t('eventFormName')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={translations.es.eventFormNamePlaceholder}
+                      placeholder={t('eventFormNamePlaceholder')}
                       {...field}
-                      disabled={!!user.name || isSubmitting}
-                      className={user.name ? 'bg-muted' : ''}
+                      disabled={!!user?.name || isSubmitting}
+                      className={user?.name ? 'bg-muted' : ''}
                     />
                   </FormControl>
                   <FormMessage />
@@ -239,14 +241,14 @@ export function RegistrationForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{translations.es.eventFormEmail}</FormLabel>
+                  <FormLabel>{t('eventFormEmail')}</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={translations.es.eventFormEmailPlaceholder}
+                      placeholder={t('eventFormEmailPlaceholder')}
                       {...field}
-                      disabled={!!user.email || isSubmitting}
-                      className={user.email ? 'bg-muted' : ''}
+                      disabled={!!user?.email || isSubmitting}
+                      className={user?.email ? 'bg-muted' : ''}
                     />
                   </FormControl>
                   <FormMessage />
@@ -268,13 +270,13 @@ export function RegistrationForm({
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                   {isFreeEvent
-                    ? translations.es.eventConfirmRegistration
-                    : translations.es.eventConfirmPurchase}
+                    ? t('eventConfirmRegistration')
+                    : t('eventConfirmPurchase')}
                 </div>
               ) : isFreeEvent ? (
-                translations.es.eventConfirmRegistration
+                t('eventConfirmRegistration')
               ) : (
-                translations.es.eventConfirmPurchase
+                t('eventConfirmPurchase')
               )}
             </Button>
           </form>
@@ -383,6 +385,7 @@ export function DatePickerField({
   onChange,
   placeholder
 }: DatePickerFieldProps): JSX.Element {
+  const t = useTranslations('RegistrationForm')
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -394,7 +397,7 @@ export function DatePickerField({
           {value ? (
             format(value, 'PPP')
           ) : (
-            <span>{placeholder || 'Seleccione una fecha'}</span>
+            <span>{placeholder || t('selectDate')}</span>
           )}
         </Button>
       </PopoverTrigger>

@@ -9,6 +9,13 @@ import {
 } from '@/lib/llm/messages-api/bedrockWrapper'
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
 import { z } from 'zod'
+import {
+  generateCollaborationPrompt,
+  generateEmbeddingPrompt,
+  generateKeyInsightsPrompt,
+  processUserMatchesSystemPrompt
+} from './prompts'
+import { luciaUserSchema } from '@/schemas/userSchema'
 
 const parseSchema = z.array(
   z.object({
@@ -39,7 +46,8 @@ export async function processUserMatches(userId: string, eventId: string) {
     }
   })
 
-  const [user, event] = [registration.user, registration.event]
+  const user = luciaUserSchema.parse(registration.user)
+  const event = registration.event
 
   if (!user.userDetailedProfile || registration.NetworkingMatch.length > 0) {
     console.debug('user already has matches or profile not processed yet')
@@ -50,22 +58,17 @@ export async function processUserMatches(userId: string, eventId: string) {
   const conversation = createConversation({
     model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
     maxTokens: 1000,
-    temperature: 0.5
+    temperature: 0.1
   })
 
-  const embeddingPrompt = `Crea una cadena de búsqueda combinando estos elementos:
-- Mis principales habilidades: [Extraer del perfil]
-- Enfoque del evento: ${event.description}
-- Tipos de colaboración deseados: [Identificar de los objetivos profesionales]
-- Palabras clave de la industria: [Extraer de la experiencia]
+  if (!event.description) {
+    throw new Error('event.description is null')
+  }
 
-Combina estos en una cadena de búsqueda en lenguaje natural para encontrar profesionales con:
-1. Experiencia complementaria en [Mi Industria]
-2. Conocimiento en [Tecnologías Relevantes]
-3. Interés en [Mis Tipos de Proyectos]
-
-Perfil: ${user.userDetailedProfile}
-Devuelve solo la cadena de búsqueda sin comentarios.`
+  const embeddingPrompt = generateEmbeddingPrompt({
+    user,
+    event
+  })
 
   console.log('embeddingPrompt', embeddingPrompt)
   const searchString = parseSendMessageResult(
@@ -79,17 +82,6 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
   const embedding = pgvector.toSql(rawEmbedding)
 
   console.log('embedding done')
-
-  const test = await prisma.eventRegistration.findMany({
-    where: { eventId: eventId }
-  })
-
-  console.log(
-    'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-    test.map(v => v.userId)
-  )
-  const userWhitelist = test.filter(v => v.userId !== userId).map(v => v.userId)
-  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBb', userWhitelist)
 
   // Find top 3 matches
   const matches = await prisma.$queryRaw<Array<{ id: string }>>`
@@ -112,107 +104,91 @@ Devuelve solo la cadena de búsqueda sin comentarios.`
   }
 
   // Process each match with LLM
-  for (const match of matches) {
-    console.log('match starting now')
 
-    const existingMatch = await prisma.networkingMatch.findUnique({
-      where: {
-        userId_registrationId: {
-          userId,
-          registrationId: registration.id
-        }
+  await Promise.allSettled(
+    matches.map(async match => {
+      console.log('match starting now')
+
+      if (!user.userDetailedProfile) {
+        throw new Error('user.userDetailedProfile is null')
       }
-    })
 
-    if (existingMatch) {
-      console.log('match already exists')
-      continue
-    }
-
-    const matchUser = await prisma.user.findUniqueOrThrow({
-      where: { id: match.id, userDetailedProfile: { not: null } },
-      select: { userDetailedProfile: true, id: true }
-    })
-
-    console.log('matchUser')
-
-    const conversation = createConversation({
-      model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
-      maxTokens: 500,
-      temperature: 0.6
-    })
-
-    // Generate key insights
-    const keyInsightsPrompt = `Analiza estos perfiles y destaca 3 factores clave de coincidencia. Enfócate en:
-    1. Complementariedad de habilidades/experiencia
-    2. Valores compartidos o intereses profesionales
-    3. Áreas potenciales de sinergia
-
-    Formato:
-    - Factor Clave 1: [Título conciso] 
-      • [Razón específica de los perfiles]
-    - Factor Clave 2: [Título conciso]
-      • [Razón específica de los perfiles] 
-    - Factor Clave 3: [Título conciso]
-      • [Razón específica de los perfiles]
-
-    Mi Perfil: ${user.userDetailedProfile}
-    Perfil del Match: ${matchUser.userDetailedProfile}
-
-    Mantén un tono profesional y utiliza términos técnicos adecuados.`
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    const keyInsights = parseSendMessageResult(
-      await sendMessage(conversation, keyInsightsPrompt)
-    )
-
-    console.log('keyInsights')
-
-    // Generate collaboration reasons
-    const collaborationPrompt = `Identifica oportunidades de colaboración entre estos profesionales. Considera:
-    - Tendencias de la industria que podrían abordar juntos
-    - Potencial de intercambio de recursos/conocimiento
-    - Fortalezas complementarias que creen nuevo valor
-
-    Estructura la respuesta como:
-    Potencial de Colaboración: [Resumen de 1 oración]
-    Áreas de Oportunidad:
-    1. [Área 1] - [Razón específica]
-    2. [Área 2] - [Razón específica] 
-    3. [Área 3] - [Razón específica]
-
-    Próximos Pasos: [Sugerencias accionables para reunión]
-
-    Mi Perfil: ${user.userDetailedProfile}
-    Perfil del Match: ${matchUser.userDetailedProfile}
-
-    Por favor mantén un formato claro y profesional.`
-    await new Promise(resolve => setTimeout(resolve, 10000))
-
-    const collaborationReason = parseSendMessageResult(
-      await sendMessage(conversation, collaborationPrompt)
-    )
-
-    console.log('collaborationReason')
-
-    try {
-      // Create networking match
-      await prisma.networkingMatch.create({
-        data: {
-          userId: matchUser.id,
-          eventId,
-          registrationId: registration.id,
-          personDescription: keyInsights,
-          matchReason: collaborationReason
+      const existingMatch = await prisma.networkingMatch.findUnique({
+        where: {
+          userId_registrationId: {
+            userId,
+            registrationId: registration.id
+          }
         }
       })
-    } catch (error) {
-      console.error('error creating networking match', error)
-      continue
-    }
 
-    console.log('networking match created')
+      if (existingMatch) {
+        console.log('match already exists')
+      }
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
-  }
+      const matchUserData = await prisma.user.findUniqueOrThrow({
+        where: { id: match.id, userDetailedProfile: { not: null } }
+      })
+
+      const matchUser = luciaUserSchema.parse(matchUserData)
+
+      console.log('matchUser')
+
+      const conversation = createConversation({
+        model: AWS_BEDROCK_MODELS.CLAUDE_HAIKU_3_5,
+        maxTokens: 500,
+        temperature: 0.1
+      })
+
+      if (!matchUser.userDetailedProfile) {
+        throw new Error('matchUser.userDetailedProfile is null')
+      }
+
+      // Generate key insights
+      const keyInsightsPrompt = generateKeyInsightsPrompt({
+        user,
+        matchUser
+      })
+
+      const keyInsights = parseSendMessageResult(
+        await sendMessage(
+          conversation,
+          keyInsightsPrompt,
+          processUserMatchesSystemPrompt
+        )
+      )
+
+      const collaborationPrompt = generateCollaborationPrompt({
+        user,
+        matchUser
+      })
+
+      const collaborationReason = parseSendMessageResult(
+        await sendMessage(
+          conversation,
+          collaborationPrompt,
+          processUserMatchesSystemPrompt
+        )
+      )
+
+      console.log('collaborationReason')
+
+      try {
+        // Create networking match
+        await prisma.networkingMatch.create({
+          data: {
+            userId: matchUser.id,
+            eventId,
+            registrationId: registration.id,
+            personDescription: keyInsights,
+            matchReason: collaborationReason
+          }
+        })
+      } catch (error) {
+        console.error('error creating networking match', error)
+      }
+
+      console.log('networking match created')
+    })
+  )
 }

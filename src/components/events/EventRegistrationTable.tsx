@@ -18,6 +18,7 @@ import {
 } from '@/schemas/eventSchema'
 import { useTranslations } from 'next-intl'
 import { useTranslationByGroup } from '@/hooks/commons'
+import { GroupedTicketsDisplay } from './GroupedTicketsDisplay'
 
 type CustomFieldsData = Record<string, string | number | boolean>
 
@@ -161,7 +162,9 @@ export default function EventRegistrationTable({
           <TableRow>
             <TableHead>{t('name')}</TableHead>
             <TableHead>{t('email')}</TableHead>
+            <TableHead>Perfil Completado</TableHead>
             <TableHead>{t('status')}</TableHead>
+            <TableHead>{t('tickets')}</TableHead>
             {customFields.map(field => (
               <TableHead key={field}>{field}</TableHead>
             ))}
@@ -170,11 +173,21 @@ export default function EventRegistrationTable({
         </TableHeader>
         <TableBody>
           {registrations.map(
-            ({ user: attendee, status, id, customFieldsData }) => (
+            ({ user: attendee, status, id, customFieldsData, tickets }) => (
               <TableRow key={id}>
                 <TableCell>{attendee.name}</TableCell>
                 <TableCell>{attendee.email}</TableCell>
+                <TableCell>
+                  {attendee.userDetailedProfile ? (
+                    <Check className="w-4 h-4 mr-1" />
+                  ) : (
+                    <X className="w-4 h-4 mr-1" />
+                  )}
+                </TableCell>
                 <TableCell>{getTranslation(status.toString())}</TableCell>
+                <TableCell>
+                  <GroupedTicketsDisplay tickets={tickets} />
+                </TableCell>
                 {customFields.map(field => (
                   <TableCell key={field}>
                     {customFieldsData && customFieldsData[field] != null

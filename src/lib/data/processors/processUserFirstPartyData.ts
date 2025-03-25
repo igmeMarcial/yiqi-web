@@ -15,6 +15,7 @@ import {
 import { z } from 'zod'
 
 import { AWS_BEDROCK_MODELS } from '@/lib/llm/models'
+import { processUserFirstPartyDataSystemPrompt } from './prompts'
 
 const parseSchema = z.array(
   z.object({
@@ -141,28 +142,14 @@ function parseSendMessageResult(result: unknown): string {
 }
 
 export async function processUserFirstPartyData(userId: string): Promise<void> {
-  const systemPrompt: string =
-    "You are a community manager that is tasked with creating a deep understanding of your professional network in order to improve the quality of connections for your comunity. You will be provided with a user's LinkedIn data and your task is to generate a detailed user profile that can help in matching them with potential co-founders or networking opportunities aligned with their goals and interests."
+  console.log('processing user first party data')
 
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } })
 
   const dataCollected = userDataCollectedShema.parse(user.dataCollected)
 
-  const missingFields = []
-
-  if (!dataCollected.resumeText) missingFields.push('resumeText')
-  if (!dataCollected.careerAspirations) missingFields.push('careerAspirations')
-  if (!dataCollected.communicationStyle)
-    missingFields.push('communicationStyle')
-  if (!dataCollected.professionalMotivations)
-    missingFields.push('professionalMotivations')
-  if (!dataCollected.professionalValues)
-    missingFields.push('professionalValues')
-  if (!dataCollected.significantChallenge)
-    missingFields.push('significantChallenge')
-
-  if (missingFields.length > 4) {
-    console.log('Missing information:', missingFields.join(', '))
+  if (!dataCollected.resumeText) {
+    console.error('missing resume so we cannot process this user')
     return
   }
 
@@ -176,7 +163,11 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
   const calculatedPrompt = createPrompt(dataCollected)
 
   const profileResult = parseSendMessageResult(
-    await sendMessage(conversation, calculatedPrompt, systemPrompt)
+    await sendMessage(
+      conversation,
+      calculatedPrompt,
+      processUserFirstPartyDataSystemPrompt
+    )
   )
 
   if (!profileResult) {
@@ -185,35 +176,31 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
 
   console.info('Profile result call was successful')
 
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000)
-  })
+  const [userEmbeddableProfileResult, userContentPreferencesResult] =
+    await Promise.all([
+      sendMessage(
+        conversation,
+        `Resume el siguiente perfil de usuario para incorporarlo a una base de datos: ${profileResult}`
+      ),
+      sendMessage(
+        conversation,
+        `En 3 oraciones o menos, ¿cuáles son las preferencias de contenido del usuario? \n\n ${profileResult}`
+      )
+    ])
 
   const userEmbeddableProfile = parseSendMessageResult(
-    await sendMessage(
-      conversation,
-      `Summarize the following user profile for embedding into a database: ${profileResult}`
-    )
+    userEmbeddableProfileResult
   )
 
   if (!userEmbeddableProfile) {
     throw new Error('No embeddable profile was found')
   }
 
-  console.info('User embeddable profile result call was successful')
-
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000)
-  })
-
-  const userContentPreferencesResult = parseSendMessageResult(
-    await sendMessage(
-      conversation,
-      `In 3 sentences or less, what are the user's content preferences?  \n\n ${profileResult}`
-    )
+  const userContentPreferences = parseSendMessageResult(
+    userContentPreferencesResult
   )
 
-  if (!userContentPreferencesResult) {
+  if (!userContentPreferences) {
     throw new Error('No user content preference was done')
   }
 
@@ -224,12 +211,8 @@ export async function processUserFirstPartyData(userId: string): Promise<void> {
     data: {
       userDetailedProfile: profileResult,
       userEmbeddableProfile: userEmbeddableProfile,
-      userContentPreferences: userContentPreferencesResult
+      userContentPreferences: userContentPreferences
     }
-  })
-
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000)
   })
 
   const rawEmbedding = await generateEmbedding(userEmbeddableProfile)

@@ -1,24 +1,17 @@
-import Publish from '@/components/yiqiForm/publish/Publish'
+import FormNotFound from '@/components/yiqiForm/FormResponder/FormNotFound'
+import Publish from '@/components/yiqiForm/FormResponder/Publish'
 import { getUser } from '@/lib/auth/lucia'
-import { getTypeForm } from '@/services/actions/typeForm/typeFormActions'
+import { getFormById } from '@/services/actions/typeForm/typeFormActions'
 import React from 'react'
-
 type Props = {
   params: { id: string }
 }
 async function page({ params }: Props) {
   const user = await getUser()
-  const formResponse = await getTypeForm(params.id)
+  const formResponse = await getFormById(params.id)
 
   if (!formResponse.success || !formResponse.form) {
-    return (
-      <div>
-        <h1>No hay formulario</h1>
-        <p>
-          {formResponse.error?.message ?? 'El formulario solicitado no existe.'}
-        </p>
-      </div>
-    )
+    return <FormNotFound />
   }
 
   return <Publish form={formResponse.form} user={user} />
