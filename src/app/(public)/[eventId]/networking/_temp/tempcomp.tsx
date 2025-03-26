@@ -5,7 +5,55 @@ import Image from 'next/image'
 import { NetworkingMatchesType } from '@/schemas/networkingMatchSchema'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import { Linkedin, Instagram, X } from 'lucide-react'
+import { Linkedin, Instagram, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+const TextPreview = ({
+  text,
+  maxLines = 4,
+  className
+}: {
+  text: string
+  maxLines?: number
+  className?: string
+}) => {
+  const t = useTranslations('Networking')
+  const [isExpanded, setIsExpanded] = useState(false)
+  const lines = text.split('\n')
+  const hasMoreLines = lines.length > maxLines
+  const displayText = isExpanded ? text : lines.slice(0, maxLines).join('\n')
+
+  return (
+    <div className="space-y-2">
+      <p
+        className={cn(
+          'text-gray-300 text-sm leading-relaxed whitespace-pre-wrap',
+          className
+        )}
+      >
+        {displayText}
+        {!isExpanded && hasMoreLines && '...'}
+      </p>
+      {hasMoreLines && (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-[#6de4e8] hover:text-[#6de4e8]/80 p-0 h-auto font-medium"
+        >
+          {isExpanded ? (
+            <ChevronUp className="h-4 w-4 mr-1" />
+          ) : (
+            <ChevronDown className="h-4 w-4 mr-1" />
+          )}
+          {isExpanded ? t('showLess') : t('showMore')}
+        </Button>
+      )}
+    </div>
+  )
+}
 
 export const MatchesList = ({
   matches
@@ -92,18 +140,14 @@ export const MatchesList = ({
                     <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
                       {t('whyConnect')}:
                     </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                      {item.matchReason}
-                    </p>
+                    <TextPreview text={item.matchReason} />
                   </div>
 
                   <div>
                     <h4 className="text-sm font-semibold text-[#6de4e8] mb-1">
                       {t('aboutMatch')}:
                     </h4>
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                      {item.personDescription}
-                    </p>
+                    <TextPreview text={item.personDescription} />
                   </div>
                 </div>
               </div>

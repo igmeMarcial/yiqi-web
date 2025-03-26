@@ -763,6 +763,8 @@
     "matchProcessNotFound": "No pudimos encontrar el proceso de emparejamiento",
     "contactOrganizerCheck": "Por favor contacta al organizador del evento para verificar qué sucedió",
     "noMatches": "No hay coincidencias para ti en este momento",
+    "showMore": "Ver más",
+    "showLess": "Ver menos",
     "savingNetworkingProfile": "Actualizando Tu Perfil",
     "savingProfileData": "Guardando tus datos de perfil...",
     "analyzingPreferences": "Analizando tus preferencias...",

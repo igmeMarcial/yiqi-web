@@ -757,12 +757,12 @@
     "rejected": "Rejected"
   },
   "Networking": {
-    "profileImage": "Profile image",
+    "profileImage": "Profile Image",
     "whyConnect": "Why You Should Connect",
     "aboutMatch": "About This Match",
     "notRegistered": "You are not registered for this event",
     "registerFirst": "You need to register first to see your matches",
-    "registerEvent": "Register for event",
+    "registerEvent": "Register for Event",
     "needMoreInfo": "We need more information about you",
     "completeProfile": "To find matches, we need you to complete your profile",
     "completeProfileButton": "Complete my profile",
@@ -773,6 +773,8 @@
     "matchProcessNotFound": "We couldn't find the matching process",
     "contactOrganizerCheck": "Please contact the event organizer to check what happened",
     "noMatches": "No matches for you at this time",
+    "showMore": "Show more",
+    "showLess": "Show less",
     "savingNetworkingProfile": "Updating Your Profile",
     "savingProfileData": "Saving your profile data...",
     "analyzingPreferences": "Analyzing your preferences...",
