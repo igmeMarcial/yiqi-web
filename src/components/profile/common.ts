@@ -1,18 +1,16 @@
-import { UserDataCollected } from '@/schemas/userSchema'
 import { ProfileWithPrivacy } from '@/schemas/userSchema'
 
-export type NetworkingData = Pick<
-  UserDataCollected,
-  | 'professionalMotivations'
-  | 'communicationStyle'
-  | 'professionalValues'
-  | 'careerAspirations'
-  | 'significantChallenge'
-  | 'resumeUrl'
-  | 'resumeText'
-  | 'resumeLastUpdated'
-  | 'resumeFileName'
->
+export type NetworkingData = {
+  professionalMotivations: string
+  communicationStyle: string
+  professionalValues: string
+  careerAspirations: string
+  significantChallenge: string
+  resumeUrl: string
+  resumeText: string
+  resumeLastUpdated: string
+  resumeFileName: string
+}
 
 export type Props = {
   initialData: NetworkingData
