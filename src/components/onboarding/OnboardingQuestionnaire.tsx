@@ -70,7 +70,11 @@ export default function OnboardingQuestionnaire({
 
   // Fetch processed user data when showing completion step
   useEffect(() => {
-    if (steps[currentStep].type === 'complete' && !isSubmitting) {
+    if (
+      steps[currentStep].type === 'complete' &&
+      !isSubmitting &&
+      !processedUser?.userDetailedProfile
+    ) {
       getUserProfile(userId)
         .then(userData => {
           if (userData) {
@@ -81,7 +85,8 @@ export default function OnboardingQuestionnaire({
           console.error('Error fetching processed user data:', error)
         })
     }
-  }, [currentStep, isSubmitting, userId, steps])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, isSubmitting, userId])
 
   // Debug hook for monitoring data
   useEffect(() => {
