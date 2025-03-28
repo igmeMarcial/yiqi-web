@@ -208,6 +208,8 @@ export function useOnboardingState(
     () =>
       ONBOARDING_STEPS.map(step => ({
         ...step,
+        title: t(step.title),
+        description: t(step.description),
         options: step.options?.map(option => ({
           ...option,
           label: t(option.label)
