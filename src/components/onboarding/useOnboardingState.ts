@@ -7,21 +7,7 @@ import { makeRegularUser } from '@/services/actions/userActions'
 import { saveNetworkingProfile } from '@/services/actions/user/saveNetworkingProfile'
 import { processResume } from '@/lib/resume/resumeProcessor'
 import type { ProfileWithPrivacy } from '@/schemas/userSchema'
-
-type Option = {
-  value: string
-  label: string
-}
-
-export type QuestionStep = {
-  id: string
-  title: string
-  description: string
-  field: keyof NetworkingData | 'complete'
-  type: 'radio' | 'checkbox' | 'text' | 'textarea' | 'file' | 'complete'
-  options?: Option[]
-  placeholder?: string
-}
+import { ONBOARDING_STEPS, QuestionStep } from './constants'
 
 export function useOnboardingState(
   userId: string,
@@ -219,102 +205,14 @@ export function useOnboardingState(
 
   // Define steps
   const steps: QuestionStep[] = useMemo(
-    () => [
-      {
-        id: 'intro',
-        title: t('welcomeTitle'),
-        description: t('welcomeDescription'),
-        field: 'complete',
-        type: 'complete'
-      },
-      {
-        id: 'resume',
-        title: t('resumeTitle'),
-        description: t('resumeDescription'),
-        field: 'resumeUrl',
-        type: 'file'
-      },
-      {
-        id: 'professionalMotivations',
-        title: t('motivationsTitle'),
-        description: t('motivationsDescription'),
-        field: 'professionalMotivations',
-        type: 'radio',
-        options: [
-          { value: 'impact', label: t('motivationsOption1') },
-          { value: 'growth', label: t('motivationsOption2') },
-          { value: 'stability', label: t('motivationsOption3') },
-          { value: 'creativity', label: t('motivationsOption4') },
-          { value: 'leadership', label: t('motivationsOption5') },
-          { value: 'other', label: t('other') }
-        ]
-      },
-      {
-        id: 'communicationStyle',
-        title: t('communicationTitle'),
-        description: t('communicationDescription'),
-        field: 'communicationStyle',
-        type: 'radio',
-        options: [
-          { value: 'direct', label: t('communicationOption1') },
-          { value: 'collaborative', label: t('communicationOption2') },
-          { value: 'analytical', label: t('communicationOption3') },
-          { value: 'supportive', label: t('communicationOption4') },
-          { value: 'other', label: t('other') }
-        ]
-      },
-      {
-        id: 'professionalValues',
-        title: t('valuesTitle'),
-        description: t('valuesDescription'),
-        field: 'professionalValues',
-        type: 'checkbox',
-        options: [
-          { value: 'autonomy', label: t('valuesOption1') },
-          { value: 'balance', label: t('valuesOption2') },
-          { value: 'ethics', label: t('valuesOption3') },
-          { value: 'innovation', label: t('valuesOption4') },
-          { value: 'recognition', label: t('valuesOption5') },
-          { value: 'teamwork', label: t('valuesOption6') },
-          { value: 'other', label: t('other') }
-        ]
-      },
-      {
-        id: 'careerAspirations',
-        title: t('aspirationsTitle'),
-        description: t('aspirationsDescription'),
-        field: 'careerAspirations',
-        type: 'radio',
-        options: [
-          { value: 'leadership', label: t('aspirationsOption1') },
-          { value: 'specialist', label: t('aspirationsOption2') },
-          { value: 'entrepreneur', label: t('aspirationsOption3') },
-          { value: 'mentor', label: t('aspirationsOption4') },
-          { value: 'other', label: t('other') }
-        ]
-      },
-      {
-        id: 'significantChallenge',
-        title: t('challengeTitle'),
-        description: t('challengeDescription'),
-        field: 'significantChallenge',
-        type: 'radio',
-        options: [
-          { value: 'technical', label: t('challengeOption1') },
-          { value: 'team', label: t('challengeOption2') },
-          { value: 'resources', label: t('challengeOption3') },
-          { value: 'leadership', label: t('challengeOption4') },
-          { value: 'other', label: t('other') }
-        ]
-      },
-      {
-        id: 'completion',
-        title: t('completionTitle'),
-        description: t('completionDescription'),
-        field: 'complete',
-        type: 'complete'
-      }
-    ],
+    () =>
+      ONBOARDING_STEPS.map(step => ({
+        ...step,
+        options: step.options?.map(option => ({
+          ...option,
+          label: t(option.label)
+        }))
+      })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
@@ -548,6 +446,8 @@ export function useOnboardingState(
 
       // If we're moving to the completion screen, start showing loading state
       if (isMovingToCompletionScreen) {
+        router.prefetch('/events')
+
         setIsSubmitting(true)
         setProcessingStatus(t('processingProfileData'))
 
