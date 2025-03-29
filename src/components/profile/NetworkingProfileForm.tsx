@@ -146,8 +146,6 @@ export default function NetworkingProfileForm({
         extractedText = await extractTextClientSide(file)
       }
 
-      console.log(extractedText)
-
       // 4. Update form values
       form.setValue('resumeUrl', publicUrl)
       form.setValue('resumeFileName', file.name)
