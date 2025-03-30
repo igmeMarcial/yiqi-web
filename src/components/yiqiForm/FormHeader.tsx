@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { FileText, SendHorizonal } from 'lucide-react'
+import {  SendHorizonal } from 'lucide-react'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,8 +17,6 @@ import { generateUniqueIdYiqiForm } from './utils'
 import { FormModel, FormProps } from '../../schemas/yiqiFormSchema'
 import { PublishSuccessModal } from './FormCreator/PublishSuccessModal'
 import AddCardButton from './FormCreator/AddCardButton'
-import FormBackButton from './FormBackButton'
-import { useIsMobile } from '@/hooks/use-mobile'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
@@ -53,10 +51,8 @@ export function FormHeader({
     urlRedirect: ''
   })
   const { toast } = useToast()
-  const isMobile = useIsMobile()
   const router = useRouter()
   const t = useTranslations('yiqiForm')
-
   const navigationItems = [
     {
       title: t('questions'),
@@ -134,35 +130,23 @@ export function FormHeader({
     <>
       <header
         style={{ boxShadow: 'inset 0 -1px #ffffff24' }}
-        className="bg-white dark:bg-[#0A0A0A] z-30 w-full "
+        className="bg-white dark:bg-transparent z-30 w-full "
       >
         <div className="flex flex-col gap-3 md:gap-0">
           <div className="relative flex flex-col sm:flex-row items-center justify-between px-4 pr-4 md:pr-8 pt-4 gap-4">
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              {isMobile ? (
-                <FormBackButton url={orgId} />
-              ) : (
-                <>
-                  <div className="bg-gradient-to-r from-black to-[#04F1FF]/10 dark:from-gray-900 dark:to-[#04F1FF]/20 p-2 rounded-full shadow-lg">
-                    <FileText className="text-white" size={24} />
-                  </div>
-                  <span className="text-base font-bold dark:text-white text-black">
-                    YiqiForm
-                  </span>
-                  <span className="hidden md:block text-muted-foreground">
-                    /
-                  </span>
-                  <span className="hidden md:block text-base font-bold dark:text-white text-black">
-                    {form[0]?.cardTitle?.length > 30
-                      ? form[0]?.cardTitle.slice(0, 30) + '...'
-                      : form[0]?.cardTitle}
-                  </span>
-                </>
-              )}
+            <div className="flex items-center gap-2 w-full sm:w-auto md:hidden lg::block">
+              <span className="text-base font-bold dark:text-white text-black ">
+                YiqiForm
+              </span>
+              <span className="hidden md:block text-muted-foreground">/</span>
+              <span className="hidden md:block text-base font-bold dark:text-white text-black">
+                {form[0]?.cardTitle?.length > 30
+                  ? form[0]?.cardTitle.slice(0, 30) + '...'
+                  : form[0]?.cardTitle}
+              </span>
             </div>
 
             <div className="absolute top-4 right-8 sm:static">
-              {!isMobile && <FormBackButton url={orgId} />}
               <AddCardButton fields={fields} addCard={addCard} />
               <Button
                 variant="outline"

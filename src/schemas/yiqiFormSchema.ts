@@ -91,7 +91,7 @@ export const FieldReponseSchemas = {
     .object({
       id: z.string(),
       text: z.string(),
-      question: z.string().min(1, 'La pregunta es requerida.')
+      question: z.string()
     })
     .refine(data => data.id, 'Este campo es requerido.')
 }

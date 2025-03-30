@@ -179,6 +179,7 @@ export async function getFormById(id: string) {
     }
   }
 }
+
 export async function getResultFormById(idForm: string) {
   try {
     const currentUser = await getUser()
@@ -220,6 +221,7 @@ export async function getResultFormById(idForm: string) {
       submissions
     }
   } catch (error) {
+    console.log(error)
     return {
       success: false,
       error: {

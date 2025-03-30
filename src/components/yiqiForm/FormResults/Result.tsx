@@ -37,13 +37,12 @@ function ResultForm({ submissions }: { submissions: submissionResponse }) {
 
   const renderFieldValue = (field: SubmissionDataFieldType) => {
     if (!field.value) return null
-
     if (Array.isArray(field.value)) {
       return (
         <div className="grid grid-cols-3 gap-2 items-center border-b last:border-b-0 py-1">
           <div className="col-span-1 font-medium text-gray-300 flex flex-row gap-1">
             {getIcon(field.inputType)}
-            <div className="truncate hidden">{field.value[0]?.question}</div>
+            <div className="truncate ">{field.value[0]?.question}</div>
           </div>
           <div className="col-span-2 text-gray-200 truncate">
             {field.value.map(item => {

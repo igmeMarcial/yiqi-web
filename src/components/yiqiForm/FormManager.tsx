@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormBuild from './FormCreator/FormBuild'
 import {
   FormModelEditResponse,
@@ -8,13 +8,14 @@ import {
   ItemTypeProps,
   submissionResponse
 } from '../../schemas/yiqiFormSchema'
-import YiqiFormLayout from './yiqiFormLayout'
 import { usePathname } from 'next/navigation'
 import { Reorder, useDragControls } from 'framer-motion'
 import { generateUniqueIdYiqiForm } from './utils'
 import { useTranslations } from 'next-intl'
 import ResultForm from './FormResults/Result'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { FormHeader } from './FormHeader'
+import { useUrlParams } from '@/hooks/useUrlParams'
 
 interface MainFormProps {
   orgId: string
@@ -22,7 +23,7 @@ interface MainFormProps {
   submissions: submissionResponse | null
   formId?: string
 }
-
+type FormView = 'create' | 'results'
 function FormManager({
   orgId,
   formResponse,
@@ -46,12 +47,25 @@ function FormManager({
   const dragControls = useDragControls()
   const pathname = usePathname()
   const isMobile = useIsMobile()
+  const { setParam, getParam } = useUrlParams()
 
-  const [currentView, setCurrentView] = useState<'create' | 'results'>(
-    pathname.includes('/results') ? 'results' : 'create'
+  const urlView = getParam('view') as FormView | null
+  const defaultView = pathname.includes('/results') ? 'results' : 'create'
+
+  const [currentView, setCurrentView] = useState<FormView>(
+    urlView || defaultView
   )
 
-  const handleNavigation = (view: 'create' | 'results') => {
+  useEffect(() => {
+    if (!urlView) {
+      setParam('view', defaultView)
+    } else if (urlView !== currentView) {
+      setCurrentView(urlView)
+    }
+  }, [urlView,defaultView,setParam])
+
+  const handleNavigation = (view: FormView) => {
+    setParam('view', view)
     setCurrentView(view)
   }
 
@@ -129,7 +143,6 @@ function FormManager({
         }))
         copiedCard.contents = itemTypeCopiedCardContents
       }
-
       copiedState.splice(targetCardIndex + 1, 0, copiedCard)
       return copiedState
     })
@@ -292,19 +305,19 @@ function FormManager({
     if (!isMobile) {
       setForm(newOrder)
     }
-  }
-
+    }
   return (
-    <YiqiFormLayout
-      form={form}
-      orgId={orgId}
-      onNavigate={handleNavigation}
-      currentView={currentView}
-      addCard={addCard}
-      fields={form}
-      isEditing={!!(formId && submissions !== null)}
-      formId={formId}
-    >
+    <div className="w-full h-full flex flex-col">
+      <FormHeader
+        form={form}
+        orgId={orgId}
+        currentView={currentView}
+        onNavigate={handleNavigation}
+        addCard={addCard}
+        fields={form}
+        isEditing={formId !== undefined}
+        formId={formId}
+      />
       {currentView === 'create' ? (
         <section className="relative flex flex-col h-full w-full md:max-w-[760px] mx-auto">
           <div className="flex-1 pt-3 px-3 md:px-0 pb-20 md:pb-8 w-full">
@@ -360,7 +373,7 @@ function FormManager({
           )}
         </div>
       )}
-    </YiqiFormLayout>
+    </div>
   )
 }
 
