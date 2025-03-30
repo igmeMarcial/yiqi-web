@@ -34,6 +34,7 @@ import {
 } from '@/components/ui/dialog'
 import { useTranslations } from 'next-intl'
 import { NetworkingData, Props } from './common'
+import { extractTextMistral } from '@/services/mistral/extract-text'
 
 type NetworkingProfileFormProps = Props & {
   onComplete?: () => void
@@ -94,30 +95,37 @@ export default function NetworkingProfileForm({
   }
 
   // Define Textract supported MIME types (add more as needed)
-  const TEXTRACT_SUPPORTED_TYPES = new Set([
-    'application/pdf',
-    'image/jpeg',
-    'image/png',
-    'image/tiff'
-  ])
+  const TEXTRACT_SUPPORTED_TYPES = new Set(['application/pdf'])
 
   async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
     if (!file) return
+
+    if (file.type === 'application/pdf') {
+      const MAX_PDF_SIZE = 40 * 1024 * 1024 // 40MB in bytes
+      if (file.size > MAX_PDF_SIZE) {
+        toast({
+          title: 'El pdf a subir es demasiado grande',
+          description: 'Sube un pdf con tamaño menor a 40MB',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
 
     try {
       setIsProcessingFile(true)
       setSelectedFile(file)
 
       // 1. Get presigned URL
-      const presignedResponse = await fetch('/api/aws/presigned-url', {
+      const presignedResponse = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fileName: file.name })
       })
 
       if (!presignedResponse.ok) throw new Error('Failed to get upload URL')
-      const { presignedUrl, s3Key, publicUrl } = await presignedResponse.json()
+      const { presignedUrl, publicUrl } = await presignedResponse.json()
 
       // 2. Upload file to S3
       const uploadResponse = await fetch(presignedUrl, {
@@ -132,13 +140,7 @@ export default function NetworkingProfileForm({
       let extractedText: string
       if (TEXTRACT_SUPPORTED_TYPES.has(file.type)) {
         // Use Textract for supported types
-        const textractResponse = await fetch('/api/aws/textract', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ s3Key })
-        })
-        if (!textractResponse.ok) throw new Error('Text extraction failed')
-        extractedText = (await textractResponse.json()).text
+        extractedText = await extractTextMistral(publicUrl)
       } else {
         // Client-side extraction for other document types
         extractedText = await extractTextClientSide(file)

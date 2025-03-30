@@ -6,6 +6,7 @@ import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { getUserOrRedirect } from '@/lib/auth/getUserOrRedirect'
+import RedoMatches from './_temp/RedoMatches'
 
 export const dynamic = 'force-dynamic'
 
@@ -106,6 +107,7 @@ export default async function Page({
   // Show matches if everything is OK
   return (
     <Layout>
+      <RedoMatches userId={user.id} eventId={params.eventId} />
       {matches.length > 0 ? (
         <MatchesList matches={matches} />
       ) : (

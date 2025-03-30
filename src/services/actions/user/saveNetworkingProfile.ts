@@ -9,7 +9,8 @@ import { NetworkingData } from '@/components/profile/common'
 
 export async function saveNetworkingProfile(
   values: NetworkingData,
-  userId: string
+  userId: string,
+  processFirstPartyData = false
 ): Promise<void> {
   const user = await prisma.user.findUnique({ where: { id: userId } })
 
@@ -32,7 +33,9 @@ export async function saveNetworkingProfile(
       data: { dataCollected: updatedData }
     })
 
-    await scheduleUserDataProcessing(userId)
+    if (processFirstPartyData) {
+      await scheduleUserDataProcessing(userId)
+    }
   } catch (error) {
     throw new Error(`Failed to update networking profile: ${error}`)
   } finally {
