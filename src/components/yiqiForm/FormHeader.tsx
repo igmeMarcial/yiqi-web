@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import {  SendHorizonal } from 'lucide-react'
+import { SendHorizonal } from 'lucide-react'
 import {
   NavigationMenu,
   NavigationMenuItem,

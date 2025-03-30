@@ -1,7 +1,7 @@
 import FormManager from '@/components/yiqiForm/FormManager'
 import {
   getResultFormById,
-  getFormById,
+  getFormById
 } from '@/services/actions/typeForm/typeFormActions'
 import { notFound } from 'next/navigation'
 import React from 'react'

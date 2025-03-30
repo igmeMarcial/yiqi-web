@@ -62,7 +62,7 @@ function FormManager({
     } else if (urlView !== currentView) {
       setCurrentView(urlView)
     }
-  }, [urlView,defaultView,setParam])
+  }, [urlView, defaultView, setParam])
 
   const handleNavigation = (view: FormView) => {
     setParam('view', view)
@@ -305,7 +305,7 @@ function FormManager({
     if (!isMobile) {
       setForm(newOrder)
     }
-    }
+  }
   return (
     <div className="w-full h-full flex flex-col">
       <FormHeader
