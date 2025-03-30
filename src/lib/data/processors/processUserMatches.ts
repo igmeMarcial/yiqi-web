@@ -29,7 +29,11 @@ function parseSendMessageResult(result: unknown): string {
   return parsed[0].text
 }
 
-export async function processUserMatches(userId: string, eventId: string) {
+export async function processUserMatches(
+  userId: string,
+  eventId: string,
+  reprocess?: boolean
+) {
   // Get user and event data
 
   const registration = await prisma.eventRegistration.findUniqueOrThrow({
@@ -45,6 +49,14 @@ export async function processUserMatches(userId: string, eventId: string) {
       NetworkingMatch: true
     }
   })
+
+  if (reprocess) {
+    await prisma.networkingMatch.deleteMany({
+      where: {
+        registrationId: registration.id
+      }
+    })
+  }
 
   const user = luciaUserSchema.parse(registration.user)
   const event = registration.event
